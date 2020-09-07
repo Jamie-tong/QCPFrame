@@ -16,7 +16,17 @@
 
 三. 只要你遵循一、二条款规定，您就可以自由使用并传播本源代码，但必须原封不动地保留原作者信息。
 
- 
+//============================================
+开始使用：
 
+1. git init
+2. git pull https://github.com/Jamie-tong/QCPFrame.git 或者 git pull https://gitee.com/JamieT/QCPFrame.git，后者为码云地址，速度快一点。
+3. 打开 src/QCPF_HostView.pro
+4. 项目设置->Shadow build去掉勾选
+5. 编译运行。
+6. 愉快的玩积木吧。
+
+作者：Jamie.T
+QQ : 260271262
  
 
