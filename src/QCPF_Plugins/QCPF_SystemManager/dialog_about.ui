@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog_About</class>
+ <widget class="QDialog" name="Dialog_About">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>560</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>About</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../bin/debug/Images/about.png</normaloff>../../bin/debug/Images/about.png</iconset>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>10</y>
+     <width>181</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 87 10pt &quot;Arial Black&quot;;</string>
+   </property>
+   <property name="text">
+    <string>GPL . QCPFrame</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>230</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 87 10pt &quot;Arial Black&quot;;</string>
+   </property>
+   <property name="text">
+    <string>Powered by Jamie.T</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>20</y>
+     <width>111</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+   </property>
+   <property name="text">
+    <string>Version: v1.0.0.1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>70</y>
+     <width>491</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;Courier New&quot;;</string>
+   </property>
+   <property name="text">
+    <string>    QCPFrame is a plugin frame that base on Qt. it can help you and your team develop agilely. for QCPFrame family, any element of your program such as function, menu-bar item, tool-bar item, status-bar item, docks of workspace can be a plugin or widget, it can be loaded, unloaded, edited by the &quot;view editer&quot; who also is a plugin.  the &quot;Core&quot; of the QCPFrame can make you run a console with base plugin system, the &quot;View Model&quot; can run them with UI, it's a multi-layered plugin system that can run in Linxu and Windows. in the end, QCPFrame is a opensource project for you. any questions, please let me know, you can also submit your code, let's make it better together, thanks!</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::AutoText</enum>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnClose">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>260</y>
+     <width>141</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </widget>
+  <zorder>label</zorder>
+  <zorder>label_3</zorder>
+  <zorder>label_4</zorder>
+  <zorder>btnClose</zorder>
+  <zorder>label_2</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

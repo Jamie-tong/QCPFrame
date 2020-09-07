@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/file/icons">
+        <file>Images/exit.png</file>
+    </qresource>
+    <qresource prefix="/edit/icons"/>
+    <qresource prefix="/tool/icons">
+        <file>Images/config.png</file>
+    </qresource>
+    <qresource prefix="/help/icons">
+        <file>Images/about.png</file>
+    </qresource>
+    <qresource prefix="/utility/icons">
+        <file>Images/Plugin1.png</file>
+        <file>Images/Plugin2.png</file>
+        <file>Images/WatchSystemDoc.ico</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>Images/BackgroundImage2.jpg</file>
+        <file>Images/BackgroundImage5.jpg</file>
+        <file>Images/BackgroundImage.jpg</file>
+        <file>Images/BackgroundImage1.jpg</file>
+        <file>Images/BackgroundImage6.jpg</file>
+        <file>Images/docker.png</file>
+    </qresource>
+</RCC>

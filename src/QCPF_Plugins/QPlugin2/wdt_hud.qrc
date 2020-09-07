@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../../bin/debug/Images/about.png</file>
+        <file>../../bin/debug/Images/config.png</file>
+        <file>../../bin/debug/Images/docker.png</file>
+        <file>../../bin/debug/Images/exit.png</file>
+        <file>../../bin/debug/Images/hud.png</file>
+        <file>../../bin/debug/Images/map.png</file>
+        <file>../../bin/debug/Images/status.png</file>
+        <file>../../bin/debug/Images/viewedit.png</file>
+        <file>../../bin/debug/Images/新建文本文档.txt</file>
+    </qresource>
+</RCC>
