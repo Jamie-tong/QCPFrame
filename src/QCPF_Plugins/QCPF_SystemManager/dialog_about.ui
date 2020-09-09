@@ -21,7 +21,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>10</y>
+     <y>3</y>
      <width>181</width>
      <height>41</height>
     </rect>
@@ -53,7 +53,7 @@
    <property name="geometry">
     <rect>
      <x>430</x>
-     <y>20</y>
+     <y>13</y>
      <width>111</width>
      <height>31</height>
     </rect>
@@ -62,14 +62,14 @@
     <string notr="true">font: 9pt &quot;Arial&quot;;</string>
    </property>
    <property name="text">
-    <string>Version: v1.0.0.1</string>
+    <string>Version: v1.0.0.2</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>70</y>
+     <y>60</y>
      <width>491</width>
      <height>171</height>
     </rect>
@@ -78,7 +78,7 @@
     <string notr="true">font: 9pt &quot;Courier New&quot;;</string>
    </property>
    <property name="text">
-    <string>    QCPFrame is a plugin frame that base on Qt. it can help you and your team develop agilely. for QCPFrame family, any element of your program such as function, menu-bar item, tool-bar item, status-bar item, docks of workspace can be a plugin or widget, it can be loaded, unloaded, edited by the &quot;view editer&quot; who also is a plugin.  the &quot;Core&quot; of the QCPFrame can make you run a console with base plugin system, the &quot;View Model&quot; can run them with UI, it's a multi-layered plugin system that can run in Linxu and Windows. in the end, QCPFrame is a opensource project for you. any questions, please let me know, you can also submit your code, let's make it better together, thanks!</string>
+    <string>  QCPFrame is a plugin framework that base on Qt. it can help you and your team develop agilely. for QCPFrame family, any element of your program such as function, menu-bar item, tool-bar item, status-bar item, docks of workspace can be a plugin or widget, it can be loaded, unloaded, edited by the &quot;View Editor&quot; who also is a plugin.  the core of the QCPFrame can make you run a console with base plugin system, the View Model can run them with UI, it's a multi-layered plugin system that can run in Linux and Windows. in the end, QCPFrame is a open-source project for you. any questions or suggestions, please let me know, you can also submit your code, let's make it better together, thanks!</string>
    </property>
    <property name="textFormat">
     <enum>Qt::AutoText</enum>

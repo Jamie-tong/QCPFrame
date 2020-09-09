@@ -201,6 +201,29 @@ int SystemManager::setConfigToUI()
     //------------------------------
     for(int i=0; i<_core->_config._sysPlugins_Sel.count(); i++)
     {
+        //find the item from origin plugin list
+        bool canShow = false;
+        for(int j=0; j<ui->tablePluginLst->rowCount(); j++)
+        {
+            QString pluginID_OrigTable = ui->tablePluginLst->item(j, 2)->text();
+            bool isChecked = false;
+            if (QWidget *w = ui->tablePluginLst->cellWidget(j, 0))//先获取widget
+            {
+                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));  //通过children来访问checkbox
+                isChecked = checkBox->checkState()==2?true:false;
+            }
+            //if pluginId in the origin talbe and it's checked, then insert the item to talbOriginPluginSort
+            if(pluginID_OrigTable == _core->_config._sysPlugins_Sel[i]->_pluginID &&
+               isChecked)
+            {
+                canShow = true;
+                break;
+            }
+        }
+
+        if(!canShow)
+            continue;
+        //======================================
         int tRowCount = ui->tableOrigPluginsSort->rowCount();
         ui->tableOrigPluginsSort->insertRow(tRowCount);
 
@@ -376,6 +399,7 @@ void SystemManager::on_pluginCheckbox_selChanged(int state)
                 ui->tableOrigPluginsSort->setItem(i, 0, new QTableWidgetItem(QString::number(i+1)));
         }
     }
+
 }
 
 void TableItemMoveUp(QTableWidget *table)

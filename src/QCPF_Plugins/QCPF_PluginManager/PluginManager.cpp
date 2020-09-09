@@ -254,6 +254,29 @@ int PluginManager::setConfigToUI()
     //--------------------------
     foreach(ClonePluginInfo *tp, _core->_config._nSysClonePlugins)
     {
+        //find the item from origin plugin list
+        bool canShow = false;
+        for(int j=0; j<ui->tablePluginLst->rowCount(); j++)
+        {
+            QString pluginID_OrigTable = ui->tablePluginLst->item(j, 2)->text();
+            bool isChecked = false;
+            if (QWidget *w = ui->tablePluginLst->cellWidget(j, 0))//先获取widget
+            {
+                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));  //通过children来访问checkbox
+                isChecked = checkBox->checkState()==2?true:false;
+            }
+            //if pluginId in the origin talbe and it's checked, then insert the item to talbOriginPluginSort
+            if(pluginID_OrigTable == tp->_originalPluginID &&
+               isChecked)
+            {
+                canShow = true;
+                break;
+            }
+        }
+
+        if(!canShow)
+            continue;
+        //======================================
         int tIndex = -1;
         QTreeWidgetItem *origRootItem = nullptr;
         for(int i=0; i<ui->treePluginClone->topLevelItemCount(); i++)
@@ -286,11 +309,59 @@ int PluginManager::setConfigToUI()
 
     //加载原始组件的时候，就会自动给cbOriginPluginLst中添加item
     for(int i=0; i<_core->_config._nSysPlugins_Sel.count(); i++)
+    {
+        //find the item from origin plugin list
+        bool canShow = false;
+        for(int j=0; j<ui->tablePluginLst->rowCount(); j++)
+        {
+            QString pluginID_OrigTable = ui->tablePluginLst->item(j, 2)->text();
+            bool isChecked = false;
+            if (QWidget *w = ui->tablePluginLst->cellWidget(j, 0))//先获取widget
+            {
+                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));  //通过children来访问checkbox
+                isChecked = checkBox->checkState()==2?true:false;
+            }
+            //if pluginId in the origin talbe and it's checked, then insert the item to talbOriginPluginSort
+            if(pluginID_OrigTable == _core->_config._nSysPlugins_Sel[i]->_pluginID &&
+               isChecked)
+            {
+                canShow = true;
+                break;
+            }
+        }
+
+        if(!canShow)
+            continue;
+        //================================================
         ui->cbOriginPluginLst->addItem(_core->_config._nSysPlugins_Sel[i]->_pluginID);
+    }
 
     //给原始组件排序列表中填充数据
     for(int i=0; i<_core->_config._nSysPlugins_Sel.count(); i++)
     {
+        //find the item from origin plugin list
+        bool canShow = false;
+        for(int j=0; j<ui->tablePluginLst->rowCount(); j++)
+        {
+            QString pluginID_OrigTable = ui->tablePluginLst->item(j, 2)->text();
+            bool isChecked = false;
+            if (QWidget *w = ui->tablePluginLst->cellWidget(j, 0))//先获取widget
+            {
+                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));  //通过children来访问checkbox
+                isChecked = checkBox->checkState()==2?true:false;
+            }
+            //if pluginId in the origin talbe and it's checked, then insert the item to talbOriginPluginSort
+            if(pluginID_OrigTable == _core->_config._nSysPlugins_Sel[i]->_pluginID &&
+               isChecked)
+            {
+                canShow = true;
+                break;
+            }
+        }
+
+        if(!canShow)
+            continue;
+        //====================================================
         int tRowCount = ui->tableOrigPluginsSort->rowCount();
         ui->tableOrigPluginsSort->insertRow(tRowCount);
 
@@ -302,6 +373,30 @@ int PluginManager::setConfigToUI()
     //给所有原始组件和克隆组件表填充数据
     for(int i=0; i<_core->_config._nSysAllValidPlugins.count(); i++)
     {
+        //find the item from origin plugin list
+        bool canShow = false;
+        for(int j=0; j<ui->tablePluginLst->rowCount(); j++)
+        {
+            QString pluginID_OrigTable = ui->tablePluginLst->item(j, 2)->text();
+            bool isChecked = false;
+            if (QWidget *w = ui->tablePluginLst->cellWidget(j, 0))//先获取widget
+            {
+                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));  //通过children来访问checkbox
+                isChecked = checkBox->checkState()==2?true:false;
+            }
+            //if pluginId in the origin talbe and it's checked, then insert the item to talbOriginPluginSort
+            if(pluginID_OrigTable == _core->_config._nSysAllValidPlugins[i]->_originalPluginID &&
+               isChecked)
+            {
+                canShow = true;
+                break;
+            }
+        }
+
+        if(!canShow)
+            continue;
+        //====================================================
+
         int tRowCount = ui->tableAllValidPluginsSort->rowCount();
         ui->tableAllValidPluginsSort->insertRow(tRowCount);
 

@@ -32,7 +32,7 @@ SUBTARGETS    =  \
 		sub-QCPF_Model \
 		sub-QCPF_Plugins-QCPF_PluginManager \
 		sub-QCPF_Plugins-QCPF_SystemManager \
-		sub-QCPF_Plugins-QCPF_ViewEditer \
+		sub-QCPF_Plugins-QCPF_ViewEditor \
 		sub-QCPF_Plugins-QPlugin1 \
 		sub-QCPF_Plugins-QPlugin2 \
 		sub-QCPF_Plugins-QPlugin3 \
@@ -42,334 +42,334 @@ SUBTARGETS    =  \
 
 sub-QCPF_Host_View-QCPF_HostView-pro-qmake_all:  FORCE
 	@if not exist QCPF_Host_View\ mkdir QCPF_Host_View\ & if not exist QCPF_Host_View\ exit 1
-	cd QCPF_Host_View\ && $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\20200907\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd QCPF_Host_View\ && $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\GitHub\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd QCPF_Host_View\ && $(MAKE) -f Makefile.QCPF_HostView qmake_all
 sub-QCPF_Host_View-QCPF_HostView-pro: $(MAKEFILE) FORCE
 	@if not exist QCPF_Host_View\ mkdir QCPF_Host_View\ & if not exist QCPF_Host_View\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\20200907\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView
+	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\GitHub\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView
 sub-QCPF_Host_View-QCPF_HostView-pro-make_first: FORCE
 	@if not exist QCPF_Host_View\ mkdir QCPF_Host_View\ & if not exist QCPF_Host_View\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\20200907\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView 
+	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\GitHub\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView 
 sub-QCPF_Host_View-QCPF_HostView-pro-all: FORCE
 	@if not exist QCPF_Host_View\ mkdir QCPF_Host_View\ & if not exist QCPF_Host_View\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\20200907\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView all
+	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\GitHub\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView all
 sub-QCPF_Host_View-QCPF_HostView-pro-clean: FORCE
 	@if not exist QCPF_Host_View\ mkdir QCPF_Host_View\ & if not exist QCPF_Host_View\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\20200907\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView clean
+	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\GitHub\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView clean
 sub-QCPF_Host_View-QCPF_HostView-pro-distclean: FORCE
 	@if not exist QCPF_Host_View\ mkdir QCPF_Host_View\ & if not exist QCPF_Host_View\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\20200907\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView distclean
+	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\GitHub\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView distclean
 sub-QCPF_Host_View-QCPF_HostView-pro-install_subtargets: FORCE
 	@if not exist QCPF_Host_View\ mkdir QCPF_Host_View\ & if not exist QCPF_Host_View\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\20200907\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView install
+	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\GitHub\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView install
 sub-QCPF_Host_View-QCPF_HostView-pro-uninstall_subtargets: FORCE
 	@if not exist QCPF_Host_View\ mkdir QCPF_Host_View\ & if not exist QCPF_Host_View\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\20200907\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView uninstall
+	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\GitHub\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView uninstall
 sub-QCPF_Model-qmake_all:  FORCE
 	@if not exist QCPF_Model\ mkdir QCPF_Model\ & if not exist QCPF_Model\ exit 1
-	cd QCPF_Model\ && $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd QCPF_Model\ && $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd QCPF_Model\ && $(MAKE) -f Makefile qmake_all
 sub-QCPF_Model: $(MAKEFILE) FORCE
 	@if not exist QCPF_Model\ mkdir QCPF_Model\ & if not exist QCPF_Model\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
+	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
 sub-QCPF_Model-make_first: FORCE
 	@if not exist QCPF_Model\ mkdir QCPF_Model\ & if not exist QCPF_Model\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-QCPF_Model-all: FORCE
 	@if not exist QCPF_Model\ mkdir QCPF_Model\ & if not exist QCPF_Model\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-QCPF_Model-clean: FORCE
 	@if not exist QCPF_Model\ mkdir QCPF_Model\ & if not exist QCPF_Model\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-QCPF_Model-distclean: FORCE
 	@if not exist QCPF_Model\ mkdir QCPF_Model\ & if not exist QCPF_Model\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-QCPF_Model-install_subtargets: FORCE
 	@if not exist QCPF_Model\ mkdir QCPF_Model\ & if not exist QCPF_Model\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-QCPF_Model-uninstall_subtargets: FORCE
 	@if not exist QCPF_Model\ mkdir QCPF_Model\ & if not exist QCPF_Model\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 sub-QCPF_Plugins-QCPF_PluginManager-qmake_all:  FORCE
 	@if not exist QCPF_Plugins\QCPF_PluginManager\ mkdir QCPF_Plugins\QCPF_PluginManager\ & if not exist QCPF_Plugins\QCPF_PluginManager\ exit 1
-	cd QCPF_Plugins\QCPF_PluginManager\ && $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd QCPF_Plugins\QCPF_PluginManager\ && $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd QCPF_Plugins\QCPF_PluginManager\ && $(MAKE) -f Makefile qmake_all
 sub-QCPF_Plugins-QCPF_PluginManager: $(MAKEFILE) FORCE
 	@if not exist QCPF_Plugins\QCPF_PluginManager\ mkdir QCPF_Plugins\QCPF_PluginManager\ & if not exist QCPF_Plugins\QCPF_PluginManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
+	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
 sub-QCPF_Plugins-QCPF_PluginManager-make_first: FORCE
 	@if not exist QCPF_Plugins\QCPF_PluginManager\ mkdir QCPF_Plugins\QCPF_PluginManager\ & if not exist QCPF_Plugins\QCPF_PluginManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-QCPF_Plugins-QCPF_PluginManager-all: FORCE
 	@if not exist QCPF_Plugins\QCPF_PluginManager\ mkdir QCPF_Plugins\QCPF_PluginManager\ & if not exist QCPF_Plugins\QCPF_PluginManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-QCPF_Plugins-QCPF_PluginManager-clean: FORCE
 	@if not exist QCPF_Plugins\QCPF_PluginManager\ mkdir QCPF_Plugins\QCPF_PluginManager\ & if not exist QCPF_Plugins\QCPF_PluginManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-QCPF_Plugins-QCPF_PluginManager-distclean: FORCE
 	@if not exist QCPF_Plugins\QCPF_PluginManager\ mkdir QCPF_Plugins\QCPF_PluginManager\ & if not exist QCPF_Plugins\QCPF_PluginManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-QCPF_Plugins-QCPF_PluginManager-install_subtargets: FORCE
 	@if not exist QCPF_Plugins\QCPF_PluginManager\ mkdir QCPF_Plugins\QCPF_PluginManager\ & if not exist QCPF_Plugins\QCPF_PluginManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-QCPF_Plugins-QCPF_PluginManager-uninstall_subtargets: FORCE
 	@if not exist QCPF_Plugins\QCPF_PluginManager\ mkdir QCPF_Plugins\QCPF_PluginManager\ & if not exist QCPF_Plugins\QCPF_PluginManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 sub-QCPF_Plugins-QCPF_SystemManager-qmake_all:  FORCE
 	@if not exist QCPF_Plugins\QCPF_SystemManager\ mkdir QCPF_Plugins\QCPF_SystemManager\ & if not exist QCPF_Plugins\QCPF_SystemManager\ exit 1
-	cd QCPF_Plugins\QCPF_SystemManager\ && $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd QCPF_Plugins\QCPF_SystemManager\ && $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd QCPF_Plugins\QCPF_SystemManager\ && $(MAKE) -f Makefile qmake_all
 sub-QCPF_Plugins-QCPF_SystemManager: $(MAKEFILE) FORCE
 	@if not exist QCPF_Plugins\QCPF_SystemManager\ mkdir QCPF_Plugins\QCPF_SystemManager\ & if not exist QCPF_Plugins\QCPF_SystemManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
+	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
 sub-QCPF_Plugins-QCPF_SystemManager-make_first: FORCE
 	@if not exist QCPF_Plugins\QCPF_SystemManager\ mkdir QCPF_Plugins\QCPF_SystemManager\ & if not exist QCPF_Plugins\QCPF_SystemManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-QCPF_Plugins-QCPF_SystemManager-all: FORCE
 	@if not exist QCPF_Plugins\QCPF_SystemManager\ mkdir QCPF_Plugins\QCPF_SystemManager\ & if not exist QCPF_Plugins\QCPF_SystemManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-QCPF_Plugins-QCPF_SystemManager-clean: FORCE
 	@if not exist QCPF_Plugins\QCPF_SystemManager\ mkdir QCPF_Plugins\QCPF_SystemManager\ & if not exist QCPF_Plugins\QCPF_SystemManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-QCPF_Plugins-QCPF_SystemManager-distclean: FORCE
 	@if not exist QCPF_Plugins\QCPF_SystemManager\ mkdir QCPF_Plugins\QCPF_SystemManager\ & if not exist QCPF_Plugins\QCPF_SystemManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-QCPF_Plugins-QCPF_SystemManager-install_subtargets: FORCE
 	@if not exist QCPF_Plugins\QCPF_SystemManager\ mkdir QCPF_Plugins\QCPF_SystemManager\ & if not exist QCPF_Plugins\QCPF_SystemManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-QCPF_Plugins-QCPF_SystemManager-uninstall_subtargets: FORCE
 	@if not exist QCPF_Plugins\QCPF_SystemManager\ mkdir QCPF_Plugins\QCPF_SystemManager\ & if not exist QCPF_Plugins\QCPF_SystemManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
-sub-QCPF_Plugins-QCPF_ViewEditer-qmake_all:  FORCE
-	@if not exist QCPF_Plugins\QCPF_ViewEditer\ mkdir QCPF_Plugins\QCPF_ViewEditer\ & if not exist QCPF_Plugins\QCPF_ViewEditer\ exit 1
-	cd QCPF_Plugins\QCPF_ViewEditer\ && $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_ViewEditer\QCPF_ViewEditer.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+sub-QCPF_Plugins-QCPF_ViewEditor-qmake_all:  FORCE
+	@if not exist QCPF_Plugins\QCPF_ViewEditor\ mkdir QCPF_Plugins\QCPF_ViewEditor\ & if not exist QCPF_Plugins\QCPF_ViewEditor\ exit 1
+	cd QCPF_Plugins\QCPF_ViewEditor\ && $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_ViewEditor\QCPF_ViewEditor.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_ViewEditer\ && $(MAKE) -f Makefile qmake_all
-sub-QCPF_Plugins-QCPF_ViewEditer: $(MAKEFILE) FORCE
-	@if not exist QCPF_Plugins\QCPF_ViewEditer\ mkdir QCPF_Plugins\QCPF_ViewEditer\ & if not exist QCPF_Plugins\QCPF_ViewEditer\ exit 1
+	cd QCPF_Plugins\QCPF_ViewEditor\ && $(MAKE) -f Makefile qmake_all
+sub-QCPF_Plugins-QCPF_ViewEditor: $(MAKEFILE) FORCE
+	@if not exist QCPF_Plugins\QCPF_ViewEditor\ mkdir QCPF_Plugins\QCPF_ViewEditor\ & if not exist QCPF_Plugins\QCPF_ViewEditor\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_ViewEditer\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_ViewEditer\QCPF_ViewEditer.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
-sub-QCPF_Plugins-QCPF_ViewEditer-make_first: FORCE
-	@if not exist QCPF_Plugins\QCPF_ViewEditer\ mkdir QCPF_Plugins\QCPF_ViewEditer\ & if not exist QCPF_Plugins\QCPF_ViewEditer\ exit 1
+	cd QCPF_Plugins\QCPF_ViewEditor\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_ViewEditor\QCPF_ViewEditor.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
+sub-QCPF_Plugins-QCPF_ViewEditor-make_first: FORCE
+	@if not exist QCPF_Plugins\QCPF_ViewEditor\ mkdir QCPF_Plugins\QCPF_ViewEditor\ & if not exist QCPF_Plugins\QCPF_ViewEditor\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_ViewEditer\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_ViewEditer\QCPF_ViewEditer.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
-sub-QCPF_Plugins-QCPF_ViewEditer-all: FORCE
-	@if not exist QCPF_Plugins\QCPF_ViewEditer\ mkdir QCPF_Plugins\QCPF_ViewEditer\ & if not exist QCPF_Plugins\QCPF_ViewEditer\ exit 1
+	cd QCPF_Plugins\QCPF_ViewEditor\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_ViewEditor\QCPF_ViewEditor.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+sub-QCPF_Plugins-QCPF_ViewEditor-all: FORCE
+	@if not exist QCPF_Plugins\QCPF_ViewEditor\ mkdir QCPF_Plugins\QCPF_ViewEditor\ & if not exist QCPF_Plugins\QCPF_ViewEditor\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_ViewEditer\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_ViewEditer\QCPF_ViewEditer.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
-sub-QCPF_Plugins-QCPF_ViewEditer-clean: FORCE
-	@if not exist QCPF_Plugins\QCPF_ViewEditer\ mkdir QCPF_Plugins\QCPF_ViewEditer\ & if not exist QCPF_Plugins\QCPF_ViewEditer\ exit 1
+	cd QCPF_Plugins\QCPF_ViewEditor\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_ViewEditor\QCPF_ViewEditor.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+sub-QCPF_Plugins-QCPF_ViewEditor-clean: FORCE
+	@if not exist QCPF_Plugins\QCPF_ViewEditor\ mkdir QCPF_Plugins\QCPF_ViewEditor\ & if not exist QCPF_Plugins\QCPF_ViewEditor\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_ViewEditer\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_ViewEditer\QCPF_ViewEditer.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
-sub-QCPF_Plugins-QCPF_ViewEditer-distclean: FORCE
-	@if not exist QCPF_Plugins\QCPF_ViewEditer\ mkdir QCPF_Plugins\QCPF_ViewEditer\ & if not exist QCPF_Plugins\QCPF_ViewEditer\ exit 1
+	cd QCPF_Plugins\QCPF_ViewEditor\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_ViewEditor\QCPF_ViewEditor.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+sub-QCPF_Plugins-QCPF_ViewEditor-distclean: FORCE
+	@if not exist QCPF_Plugins\QCPF_ViewEditor\ mkdir QCPF_Plugins\QCPF_ViewEditor\ & if not exist QCPF_Plugins\QCPF_ViewEditor\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_ViewEditer\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_ViewEditer\QCPF_ViewEditer.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
-sub-QCPF_Plugins-QCPF_ViewEditer-install_subtargets: FORCE
-	@if not exist QCPF_Plugins\QCPF_ViewEditer\ mkdir QCPF_Plugins\QCPF_ViewEditer\ & if not exist QCPF_Plugins\QCPF_ViewEditer\ exit 1
+	cd QCPF_Plugins\QCPF_ViewEditor\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_ViewEditor\QCPF_ViewEditor.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+sub-QCPF_Plugins-QCPF_ViewEditor-install_subtargets: FORCE
+	@if not exist QCPF_Plugins\QCPF_ViewEditor\ mkdir QCPF_Plugins\QCPF_ViewEditor\ & if not exist QCPF_Plugins\QCPF_ViewEditor\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_ViewEditer\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_ViewEditer\QCPF_ViewEditer.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
-sub-QCPF_Plugins-QCPF_ViewEditer-uninstall_subtargets: FORCE
-	@if not exist QCPF_Plugins\QCPF_ViewEditer\ mkdir QCPF_Plugins\QCPF_ViewEditer\ & if not exist QCPF_Plugins\QCPF_ViewEditer\ exit 1
+	cd QCPF_Plugins\QCPF_ViewEditor\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_ViewEditor\QCPF_ViewEditor.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+sub-QCPF_Plugins-QCPF_ViewEditor-uninstall_subtargets: FORCE
+	@if not exist QCPF_Plugins\QCPF_ViewEditor\ mkdir QCPF_Plugins\QCPF_ViewEditor\ & if not exist QCPF_Plugins\QCPF_ViewEditor\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_ViewEditer\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_ViewEditer\QCPF_ViewEditer.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd QCPF_Plugins\QCPF_ViewEditor\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_ViewEditor\QCPF_ViewEditor.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 sub-QCPF_Plugins-QPlugin1-qmake_all:  FORCE
 	@if not exist QCPF_Plugins\QPlugin1\ mkdir QCPF_Plugins\QPlugin1\ & if not exist QCPF_Plugins\QPlugin1\ exit 1
-	cd QCPF_Plugins\QPlugin1\ && $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd QCPF_Plugins\QPlugin1\ && $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd QCPF_Plugins\QPlugin1\ && $(MAKE) -f Makefile qmake_all
 sub-QCPF_Plugins-QPlugin1: $(MAKEFILE) FORCE
 	@if not exist QCPF_Plugins\QPlugin1\ mkdir QCPF_Plugins\QPlugin1\ & if not exist QCPF_Plugins\QPlugin1\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
+	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
 sub-QCPF_Plugins-QPlugin1-make_first: FORCE
 	@if not exist QCPF_Plugins\QPlugin1\ mkdir QCPF_Plugins\QPlugin1\ & if not exist QCPF_Plugins\QPlugin1\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-QCPF_Plugins-QPlugin1-all: FORCE
 	@if not exist QCPF_Plugins\QPlugin1\ mkdir QCPF_Plugins\QPlugin1\ & if not exist QCPF_Plugins\QPlugin1\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-QCPF_Plugins-QPlugin1-clean: FORCE
 	@if not exist QCPF_Plugins\QPlugin1\ mkdir QCPF_Plugins\QPlugin1\ & if not exist QCPF_Plugins\QPlugin1\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-QCPF_Plugins-QPlugin1-distclean: FORCE
 	@if not exist QCPF_Plugins\QPlugin1\ mkdir QCPF_Plugins\QPlugin1\ & if not exist QCPF_Plugins\QPlugin1\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-QCPF_Plugins-QPlugin1-install_subtargets: FORCE
 	@if not exist QCPF_Plugins\QPlugin1\ mkdir QCPF_Plugins\QPlugin1\ & if not exist QCPF_Plugins\QPlugin1\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-QCPF_Plugins-QPlugin1-uninstall_subtargets: FORCE
 	@if not exist QCPF_Plugins\QPlugin1\ mkdir QCPF_Plugins\QPlugin1\ & if not exist QCPF_Plugins\QPlugin1\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 sub-QCPF_Plugins-QPlugin2-qmake_all:  FORCE
 	@if not exist QCPF_Plugins\QPlugin2\ mkdir QCPF_Plugins\QPlugin2\ & if not exist QCPF_Plugins\QPlugin2\ exit 1
-	cd QCPF_Plugins\QPlugin2\ && $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd QCPF_Plugins\QPlugin2\ && $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd QCPF_Plugins\QPlugin2\ && $(MAKE) -f Makefile qmake_all
 sub-QCPF_Plugins-QPlugin2: $(MAKEFILE) FORCE
 	@if not exist QCPF_Plugins\QPlugin2\ mkdir QCPF_Plugins\QPlugin2\ & if not exist QCPF_Plugins\QPlugin2\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
+	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
 sub-QCPF_Plugins-QPlugin2-make_first: FORCE
 	@if not exist QCPF_Plugins\QPlugin2\ mkdir QCPF_Plugins\QPlugin2\ & if not exist QCPF_Plugins\QPlugin2\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-QCPF_Plugins-QPlugin2-all: FORCE
 	@if not exist QCPF_Plugins\QPlugin2\ mkdir QCPF_Plugins\QPlugin2\ & if not exist QCPF_Plugins\QPlugin2\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-QCPF_Plugins-QPlugin2-clean: FORCE
 	@if not exist QCPF_Plugins\QPlugin2\ mkdir QCPF_Plugins\QPlugin2\ & if not exist QCPF_Plugins\QPlugin2\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-QCPF_Plugins-QPlugin2-distclean: FORCE
 	@if not exist QCPF_Plugins\QPlugin2\ mkdir QCPF_Plugins\QPlugin2\ & if not exist QCPF_Plugins\QPlugin2\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-QCPF_Plugins-QPlugin2-install_subtargets: FORCE
 	@if not exist QCPF_Plugins\QPlugin2\ mkdir QCPF_Plugins\QPlugin2\ & if not exist QCPF_Plugins\QPlugin2\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-QCPF_Plugins-QPlugin2-uninstall_subtargets: FORCE
 	@if not exist QCPF_Plugins\QPlugin2\ mkdir QCPF_Plugins\QPlugin2\ & if not exist QCPF_Plugins\QPlugin2\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 sub-QCPF_Plugins-QPlugin3-qmake_all:  FORCE
 	@if not exist QCPF_Plugins\QPlugin3\ mkdir QCPF_Plugins\QPlugin3\ & if not exist QCPF_Plugins\QPlugin3\ exit 1
-	cd QCPF_Plugins\QPlugin3\ && $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd QCPF_Plugins\QPlugin3\ && $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd QCPF_Plugins\QPlugin3\ && $(MAKE) -f Makefile qmake_all
 sub-QCPF_Plugins-QPlugin3: $(MAKEFILE) FORCE
 	@if not exist QCPF_Plugins\QPlugin3\ mkdir QCPF_Plugins\QPlugin3\ & if not exist QCPF_Plugins\QPlugin3\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
+	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
 sub-QCPF_Plugins-QPlugin3-make_first: FORCE
 	@if not exist QCPF_Plugins\QPlugin3\ mkdir QCPF_Plugins\QPlugin3\ & if not exist QCPF_Plugins\QPlugin3\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-QCPF_Plugins-QPlugin3-all: FORCE
 	@if not exist QCPF_Plugins\QPlugin3\ mkdir QCPF_Plugins\QPlugin3\ & if not exist QCPF_Plugins\QPlugin3\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-QCPF_Plugins-QPlugin3-clean: FORCE
 	@if not exist QCPF_Plugins\QPlugin3\ mkdir QCPF_Plugins\QPlugin3\ & if not exist QCPF_Plugins\QPlugin3\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-QCPF_Plugins-QPlugin3-distclean: FORCE
 	@if not exist QCPF_Plugins\QPlugin3\ mkdir QCPF_Plugins\QPlugin3\ & if not exist QCPF_Plugins\QPlugin3\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-QCPF_Plugins-QPlugin3-install_subtargets: FORCE
 	@if not exist QCPF_Plugins\QPlugin3\ mkdir QCPF_Plugins\QPlugin3\ & if not exist QCPF_Plugins\QPlugin3\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-QCPF_Plugins-QPlugin3-uninstall_subtargets: FORCE
 	@if not exist QCPF_Plugins\QPlugin3\ mkdir QCPF_Plugins\QPlugin3\ & if not exist QCPF_Plugins\QPlugin3\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 sub-QCPF_Plugins-QPlugin4-qmake_all:  FORCE
 	@if not exist QCPF_Plugins\QPlugin4\ mkdir QCPF_Plugins\QPlugin4\ & if not exist QCPF_Plugins\QPlugin4\ exit 1
-	cd QCPF_Plugins\QPlugin4\ && $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd QCPF_Plugins\QPlugin4\ && $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd QCPF_Plugins\QPlugin4\ && $(MAKE) -f Makefile qmake_all
 sub-QCPF_Plugins-QPlugin4: $(MAKEFILE) FORCE
 	@if not exist QCPF_Plugins\QPlugin4\ mkdir QCPF_Plugins\QPlugin4\ & if not exist QCPF_Plugins\QPlugin4\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
+	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
 sub-QCPF_Plugins-QPlugin4-make_first: FORCE
 	@if not exist QCPF_Plugins\QPlugin4\ mkdir QCPF_Plugins\QPlugin4\ & if not exist QCPF_Plugins\QPlugin4\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-QCPF_Plugins-QPlugin4-all: FORCE
 	@if not exist QCPF_Plugins\QPlugin4\ mkdir QCPF_Plugins\QPlugin4\ & if not exist QCPF_Plugins\QPlugin4\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-QCPF_Plugins-QPlugin4-clean: FORCE
 	@if not exist QCPF_Plugins\QPlugin4\ mkdir QCPF_Plugins\QPlugin4\ & if not exist QCPF_Plugins\QPlugin4\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-QCPF_Plugins-QPlugin4-distclean: FORCE
 	@if not exist QCPF_Plugins\QPlugin4\ mkdir QCPF_Plugins\QPlugin4\ & if not exist QCPF_Plugins\QPlugin4\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-QCPF_Plugins-QPlugin4-install_subtargets: FORCE
 	@if not exist QCPF_Plugins\QPlugin4\ mkdir QCPF_Plugins\QPlugin4\ & if not exist QCPF_Plugins\QPlugin4\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-QCPF_Plugins-QPlugin4-uninstall_subtargets: FORCE
 	@if not exist QCPF_Plugins\QPlugin4\ mkdir QCPF_Plugins\QPlugin4\ & if not exist QCPF_Plugins\QPlugin4\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 sub-QCPF_ViewModel-qmake_all:  FORCE
 	@if not exist QCPF_ViewModel\ mkdir QCPF_ViewModel\ & if not exist QCPF_ViewModel\ exit 1
-	cd QCPF_ViewModel\ && $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+	cd QCPF_ViewModel\ && $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 	@set MAKEFLAGS=$(MAKEFLAGS)
 	cd QCPF_ViewModel\ && $(MAKE) -f Makefile qmake_all
 sub-QCPF_ViewModel: $(MAKEFILE) FORCE
 	@if not exist QCPF_ViewModel\ mkdir QCPF_ViewModel\ & if not exist QCPF_ViewModel\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
+	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile
 sub-QCPF_ViewModel-make_first: FORCE
 	@if not exist QCPF_ViewModel\ mkdir QCPF_ViewModel\ & if not exist QCPF_ViewModel\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
+	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile 
 sub-QCPF_ViewModel-all: FORCE
 	@if not exist QCPF_ViewModel\ mkdir QCPF_ViewModel\ & if not exist QCPF_ViewModel\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
+	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile all
 sub-QCPF_ViewModel-clean: FORCE
 	@if not exist QCPF_ViewModel\ mkdir QCPF_ViewModel\ & if not exist QCPF_ViewModel\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
+	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile clean
 sub-QCPF_ViewModel-distclean: FORCE
 	@if not exist QCPF_ViewModel\ mkdir QCPF_ViewModel\ & if not exist QCPF_ViewModel\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
+	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile distclean
 sub-QCPF_ViewModel-install_subtargets: FORCE
 	@if not exist QCPF_ViewModel\ mkdir QCPF_ViewModel\ & if not exist QCPF_ViewModel\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
+	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile install
 sub-QCPF_ViewModel-uninstall_subtargets: FORCE
 	@if not exist QCPF_ViewModel\ mkdir QCPF_ViewModel\ & if not exist QCPF_ViewModel\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
+	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile uninstall
 
 Makefile: QCPF_HostView.pro C:\Qt\Qt5.13.1\5.13.1\msvc2017_64\mkspecs\win32-msvc\qmake.conf C:\Qt\Qt5.13.1\5.13.1\msvc2017_64\mkspecs\features\spec_pre.prf \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017_64\mkspecs\common\angle.conf \
@@ -719,184 +719,184 @@ QCPF_HostView.pro:
 qmake: FORCE
 	@$(QMAKE) -o Makefile QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 
-qmake_all: sub-QCPF_Host_View-QCPF_HostView-pro-qmake_all sub-QCPF_Model-qmake_all sub-QCPF_Plugins-QCPF_PluginManager-qmake_all sub-QCPF_Plugins-QCPF_SystemManager-qmake_all sub-QCPF_Plugins-QCPF_ViewEditer-qmake_all sub-QCPF_Plugins-QPlugin1-qmake_all sub-QCPF_Plugins-QPlugin2-qmake_all sub-QCPF_Plugins-QPlugin3-qmake_all sub-QCPF_Plugins-QPlugin4-qmake_all sub-QCPF_ViewModel-qmake_all FORCE
+qmake_all: sub-QCPF_Host_View-QCPF_HostView-pro-qmake_all sub-QCPF_Model-qmake_all sub-QCPF_Plugins-QCPF_PluginManager-qmake_all sub-QCPF_Plugins-QCPF_SystemManager-qmake_all sub-QCPF_Plugins-QCPF_ViewEditor-qmake_all sub-QCPF_Plugins-QPlugin1-qmake_all sub-QCPF_Plugins-QPlugin2-qmake_all sub-QCPF_Plugins-QPlugin3-qmake_all sub-QCPF_Plugins-QPlugin4-qmake_all sub-QCPF_ViewModel-qmake_all FORCE
 
-make_first: sub-QCPF_Host_View-QCPF_HostView-pro-make_first sub-QCPF_Model-make_first sub-QCPF_Plugins-QCPF_PluginManager-make_first sub-QCPF_Plugins-QCPF_SystemManager-make_first sub-QCPF_Plugins-QCPF_ViewEditer-make_first sub-QCPF_Plugins-QPlugin1-make_first sub-QCPF_Plugins-QPlugin2-make_first sub-QCPF_Plugins-QPlugin3-make_first sub-QCPF_Plugins-QPlugin4-make_first sub-QCPF_ViewModel-make_first  FORCE
-all: sub-QCPF_Host_View-QCPF_HostView-pro-all sub-QCPF_Model-all sub-QCPF_Plugins-QCPF_PluginManager-all sub-QCPF_Plugins-QCPF_SystemManager-all sub-QCPF_Plugins-QCPF_ViewEditer-all sub-QCPF_Plugins-QPlugin1-all sub-QCPF_Plugins-QPlugin2-all sub-QCPF_Plugins-QPlugin3-all sub-QCPF_Plugins-QPlugin4-all sub-QCPF_ViewModel-all  FORCE
-clean: sub-QCPF_Host_View-QCPF_HostView-pro-clean sub-QCPF_Model-clean sub-QCPF_Plugins-QCPF_PluginManager-clean sub-QCPF_Plugins-QCPF_SystemManager-clean sub-QCPF_Plugins-QCPF_ViewEditer-clean sub-QCPF_Plugins-QPlugin1-clean sub-QCPF_Plugins-QPlugin2-clean sub-QCPF_Plugins-QPlugin3-clean sub-QCPF_Plugins-QPlugin4-clean sub-QCPF_ViewModel-clean  FORCE
-distclean: sub-QCPF_Host_View-QCPF_HostView-pro-distclean sub-QCPF_Model-distclean sub-QCPF_Plugins-QCPF_PluginManager-distclean sub-QCPF_Plugins-QCPF_SystemManager-distclean sub-QCPF_Plugins-QCPF_ViewEditer-distclean sub-QCPF_Plugins-QPlugin1-distclean sub-QCPF_Plugins-QPlugin2-distclean sub-QCPF_Plugins-QPlugin3-distclean sub-QCPF_Plugins-QPlugin4-distclean sub-QCPF_ViewModel-distclean  FORCE
+make_first: sub-QCPF_Host_View-QCPF_HostView-pro-make_first sub-QCPF_Model-make_first sub-QCPF_Plugins-QCPF_PluginManager-make_first sub-QCPF_Plugins-QCPF_SystemManager-make_first sub-QCPF_Plugins-QCPF_ViewEditor-make_first sub-QCPF_Plugins-QPlugin1-make_first sub-QCPF_Plugins-QPlugin2-make_first sub-QCPF_Plugins-QPlugin3-make_first sub-QCPF_Plugins-QPlugin4-make_first sub-QCPF_ViewModel-make_first  FORCE
+all: sub-QCPF_Host_View-QCPF_HostView-pro-all sub-QCPF_Model-all sub-QCPF_Plugins-QCPF_PluginManager-all sub-QCPF_Plugins-QCPF_SystemManager-all sub-QCPF_Plugins-QCPF_ViewEditor-all sub-QCPF_Plugins-QPlugin1-all sub-QCPF_Plugins-QPlugin2-all sub-QCPF_Plugins-QPlugin3-all sub-QCPF_Plugins-QPlugin4-all sub-QCPF_ViewModel-all  FORCE
+clean: sub-QCPF_Host_View-QCPF_HostView-pro-clean sub-QCPF_Model-clean sub-QCPF_Plugins-QCPF_PluginManager-clean sub-QCPF_Plugins-QCPF_SystemManager-clean sub-QCPF_Plugins-QCPF_ViewEditor-clean sub-QCPF_Plugins-QPlugin1-clean sub-QCPF_Plugins-QPlugin2-clean sub-QCPF_Plugins-QPlugin3-clean sub-QCPF_Plugins-QPlugin4-clean sub-QCPF_ViewModel-clean  FORCE
+distclean: sub-QCPF_Host_View-QCPF_HostView-pro-distclean sub-QCPF_Model-distclean sub-QCPF_Plugins-QCPF_PluginManager-distclean sub-QCPF_Plugins-QCPF_SystemManager-distclean sub-QCPF_Plugins-QCPF_ViewEditor-distclean sub-QCPF_Plugins-QPlugin1-distclean sub-QCPF_Plugins-QPlugin2-distclean sub-QCPF_Plugins-QPlugin3-distclean sub-QCPF_Plugins-QPlugin4-distclean sub-QCPF_ViewModel-distclean  FORCE
 	-$(DEL_FILE) Makefile
 	-$(DEL_FILE) .qmake.stash
-install_subtargets: sub-QCPF_Host_View-QCPF_HostView-pro-install_subtargets sub-QCPF_Model-install_subtargets sub-QCPF_Plugins-QCPF_PluginManager-install_subtargets sub-QCPF_Plugins-QCPF_SystemManager-install_subtargets sub-QCPF_Plugins-QCPF_ViewEditer-install_subtargets sub-QCPF_Plugins-QPlugin1-install_subtargets sub-QCPF_Plugins-QPlugin2-install_subtargets sub-QCPF_Plugins-QPlugin3-install_subtargets sub-QCPF_Plugins-QPlugin4-install_subtargets sub-QCPF_ViewModel-install_subtargets FORCE
-uninstall_subtargets: sub-QCPF_Host_View-QCPF_HostView-pro-uninstall_subtargets sub-QCPF_Model-uninstall_subtargets sub-QCPF_Plugins-QCPF_PluginManager-uninstall_subtargets sub-QCPF_Plugins-QCPF_SystemManager-uninstall_subtargets sub-QCPF_Plugins-QCPF_ViewEditer-uninstall_subtargets sub-QCPF_Plugins-QPlugin1-uninstall_subtargets sub-QCPF_Plugins-QPlugin2-uninstall_subtargets sub-QCPF_Plugins-QPlugin3-uninstall_subtargets sub-QCPF_Plugins-QPlugin4-uninstall_subtargets sub-QCPF_ViewModel-uninstall_subtargets FORCE
+install_subtargets: sub-QCPF_Host_View-QCPF_HostView-pro-install_subtargets sub-QCPF_Model-install_subtargets sub-QCPF_Plugins-QCPF_PluginManager-install_subtargets sub-QCPF_Plugins-QCPF_SystemManager-install_subtargets sub-QCPF_Plugins-QCPF_ViewEditor-install_subtargets sub-QCPF_Plugins-QPlugin1-install_subtargets sub-QCPF_Plugins-QPlugin2-install_subtargets sub-QCPF_Plugins-QPlugin3-install_subtargets sub-QCPF_Plugins-QPlugin4-install_subtargets sub-QCPF_ViewModel-install_subtargets FORCE
+uninstall_subtargets: sub-QCPF_Host_View-QCPF_HostView-pro-uninstall_subtargets sub-QCPF_Model-uninstall_subtargets sub-QCPF_Plugins-QCPF_PluginManager-uninstall_subtargets sub-QCPF_Plugins-QCPF_SystemManager-uninstall_subtargets sub-QCPF_Plugins-QCPF_ViewEditor-uninstall_subtargets sub-QCPF_Plugins-QPlugin1-uninstall_subtargets sub-QCPF_Plugins-QPlugin2-uninstall_subtargets sub-QCPF_Plugins-QPlugin3-uninstall_subtargets sub-QCPF_Plugins-QPlugin4-uninstall_subtargets sub-QCPF_ViewModel-uninstall_subtargets FORCE
 
 sub-QCPF_Host_View-QCPF_HostView-pro-debug:
 	@if not exist QCPF_Host_View\ mkdir QCPF_Host_View\ & if not exist QCPF_Host_View\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\20200907\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView debug
+	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\GitHub\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView debug
 sub-QCPF_Model-debug:
 	@if not exist QCPF_Model\ mkdir QCPF_Model\ & if not exist QCPF_Model\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
+	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
 sub-QCPF_Plugins-QCPF_PluginManager-debug:
 	@if not exist QCPF_Plugins\QCPF_PluginManager\ mkdir QCPF_Plugins\QCPF_PluginManager\ & if not exist QCPF_Plugins\QCPF_PluginManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
+	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
 sub-QCPF_Plugins-QCPF_SystemManager-debug:
 	@if not exist QCPF_Plugins\QCPF_SystemManager\ mkdir QCPF_Plugins\QCPF_SystemManager\ & if not exist QCPF_Plugins\QCPF_SystemManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
-sub-QCPF_Plugins-QCPF_ViewEditer-debug:
-	@if not exist QCPF_Plugins\QCPF_ViewEditer\ mkdir QCPF_Plugins\QCPF_ViewEditer\ & if not exist QCPF_Plugins\QCPF_ViewEditer\ exit 1
+	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
+sub-QCPF_Plugins-QCPF_ViewEditor-debug:
+	@if not exist QCPF_Plugins\QCPF_ViewEditor\ mkdir QCPF_Plugins\QCPF_ViewEditor\ & if not exist QCPF_Plugins\QCPF_ViewEditor\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_ViewEditer\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_ViewEditer\QCPF_ViewEditer.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
+	cd QCPF_Plugins\QCPF_ViewEditor\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_ViewEditor\QCPF_ViewEditor.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
 sub-QCPF_Plugins-QPlugin1-debug:
 	@if not exist QCPF_Plugins\QPlugin1\ mkdir QCPF_Plugins\QPlugin1\ & if not exist QCPF_Plugins\QPlugin1\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
+	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
 sub-QCPF_Plugins-QPlugin2-debug:
 	@if not exist QCPF_Plugins\QPlugin2\ mkdir QCPF_Plugins\QPlugin2\ & if not exist QCPF_Plugins\QPlugin2\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
+	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
 sub-QCPF_Plugins-QPlugin3-debug:
 	@if not exist QCPF_Plugins\QPlugin3\ mkdir QCPF_Plugins\QPlugin3\ & if not exist QCPF_Plugins\QPlugin3\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
+	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
 sub-QCPF_Plugins-QPlugin4-debug:
 	@if not exist QCPF_Plugins\QPlugin4\ mkdir QCPF_Plugins\QPlugin4\ & if not exist QCPF_Plugins\QPlugin4\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
+	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
 sub-QCPF_ViewModel-debug:
 	@if not exist QCPF_ViewModel\ mkdir QCPF_ViewModel\ & if not exist QCPF_ViewModel\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
-debug: sub-QCPF_Host_View-QCPF_HostView-pro-debug sub-QCPF_Model-debug sub-QCPF_Plugins-QCPF_PluginManager-debug sub-QCPF_Plugins-QCPF_SystemManager-debug sub-QCPF_Plugins-QCPF_ViewEditer-debug sub-QCPF_Plugins-QPlugin1-debug sub-QCPF_Plugins-QPlugin2-debug sub-QCPF_Plugins-QPlugin3-debug sub-QCPF_Plugins-QPlugin4-debug sub-QCPF_ViewModel-debug
+	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile debug
+debug: sub-QCPF_Host_View-QCPF_HostView-pro-debug sub-QCPF_Model-debug sub-QCPF_Plugins-QCPF_PluginManager-debug sub-QCPF_Plugins-QCPF_SystemManager-debug sub-QCPF_Plugins-QCPF_ViewEditor-debug sub-QCPF_Plugins-QPlugin1-debug sub-QCPF_Plugins-QPlugin2-debug sub-QCPF_Plugins-QPlugin3-debug sub-QCPF_Plugins-QPlugin4-debug sub-QCPF_ViewModel-debug
 
 sub-QCPF_Host_View-QCPF_HostView-pro-release:
 	@if not exist QCPF_Host_View\ mkdir QCPF_Host_View\ & if not exist QCPF_Host_View\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\20200907\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView release
+	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\GitHub\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView release
 sub-QCPF_Model-release:
 	@if not exist QCPF_Model\ mkdir QCPF_Model\ & if not exist QCPF_Model\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
+	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
 sub-QCPF_Plugins-QCPF_PluginManager-release:
 	@if not exist QCPF_Plugins\QCPF_PluginManager\ mkdir QCPF_Plugins\QCPF_PluginManager\ & if not exist QCPF_Plugins\QCPF_PluginManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
+	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
 sub-QCPF_Plugins-QCPF_SystemManager-release:
 	@if not exist QCPF_Plugins\QCPF_SystemManager\ mkdir QCPF_Plugins\QCPF_SystemManager\ & if not exist QCPF_Plugins\QCPF_SystemManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
-sub-QCPF_Plugins-QCPF_ViewEditer-release:
-	@if not exist QCPF_Plugins\QCPF_ViewEditer\ mkdir QCPF_Plugins\QCPF_ViewEditer\ & if not exist QCPF_Plugins\QCPF_ViewEditer\ exit 1
+	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
+sub-QCPF_Plugins-QCPF_ViewEditor-release:
+	@if not exist QCPF_Plugins\QCPF_ViewEditor\ mkdir QCPF_Plugins\QCPF_ViewEditor\ & if not exist QCPF_Plugins\QCPF_ViewEditor\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_ViewEditer\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_ViewEditer\QCPF_ViewEditer.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
+	cd QCPF_Plugins\QCPF_ViewEditor\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_ViewEditor\QCPF_ViewEditor.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
 sub-QCPF_Plugins-QPlugin1-release:
 	@if not exist QCPF_Plugins\QPlugin1\ mkdir QCPF_Plugins\QPlugin1\ & if not exist QCPF_Plugins\QPlugin1\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
+	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
 sub-QCPF_Plugins-QPlugin2-release:
 	@if not exist QCPF_Plugins\QPlugin2\ mkdir QCPF_Plugins\QPlugin2\ & if not exist QCPF_Plugins\QPlugin2\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
+	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
 sub-QCPF_Plugins-QPlugin3-release:
 	@if not exist QCPF_Plugins\QPlugin3\ mkdir QCPF_Plugins\QPlugin3\ & if not exist QCPF_Plugins\QPlugin3\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
+	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
 sub-QCPF_Plugins-QPlugin4-release:
 	@if not exist QCPF_Plugins\QPlugin4\ mkdir QCPF_Plugins\QPlugin4\ & if not exist QCPF_Plugins\QPlugin4\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
+	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
 sub-QCPF_ViewModel-release:
 	@if not exist QCPF_ViewModel\ mkdir QCPF_ViewModel\ & if not exist QCPF_ViewModel\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
-release: sub-QCPF_Host_View-QCPF_HostView-pro-release sub-QCPF_Model-release sub-QCPF_Plugins-QCPF_PluginManager-release sub-QCPF_Plugins-QCPF_SystemManager-release sub-QCPF_Plugins-QCPF_ViewEditer-release sub-QCPF_Plugins-QPlugin1-release sub-QCPF_Plugins-QPlugin2-release sub-QCPF_Plugins-QPlugin3-release sub-QCPF_Plugins-QPlugin4-release sub-QCPF_ViewModel-release
+	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile release
+release: sub-QCPF_Host_View-QCPF_HostView-pro-release sub-QCPF_Model-release sub-QCPF_Plugins-QCPF_PluginManager-release sub-QCPF_Plugins-QCPF_SystemManager-release sub-QCPF_Plugins-QCPF_ViewEditor-release sub-QCPF_Plugins-QPlugin1-release sub-QCPF_Plugins-QPlugin2-release sub-QCPF_Plugins-QPlugin3-release sub-QCPF_Plugins-QPlugin4-release sub-QCPF_ViewModel-release
 
 sub-QCPF_Host_View-QCPF_HostView-pro-check:
 	@if not exist QCPF_Host_View\ mkdir QCPF_Host_View\ & if not exist QCPF_Host_View\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\20200907\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView check
+	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\GitHub\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView check
 sub-QCPF_Model-check:
 	@if not exist QCPF_Model\ mkdir QCPF_Model\ & if not exist QCPF_Model\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
+	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
 sub-QCPF_Plugins-QCPF_PluginManager-check:
 	@if not exist QCPF_Plugins\QCPF_PluginManager\ mkdir QCPF_Plugins\QCPF_PluginManager\ & if not exist QCPF_Plugins\QCPF_PluginManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
+	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
 sub-QCPF_Plugins-QCPF_SystemManager-check:
 	@if not exist QCPF_Plugins\QCPF_SystemManager\ mkdir QCPF_Plugins\QCPF_SystemManager\ & if not exist QCPF_Plugins\QCPF_SystemManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
-sub-QCPF_Plugins-QCPF_ViewEditer-check:
-	@if not exist QCPF_Plugins\QCPF_ViewEditer\ mkdir QCPF_Plugins\QCPF_ViewEditer\ & if not exist QCPF_Plugins\QCPF_ViewEditer\ exit 1
+	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
+sub-QCPF_Plugins-QCPF_ViewEditor-check:
+	@if not exist QCPF_Plugins\QCPF_ViewEditor\ mkdir QCPF_Plugins\QCPF_ViewEditor\ & if not exist QCPF_Plugins\QCPF_ViewEditor\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_ViewEditer\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_ViewEditer\QCPF_ViewEditer.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
+	cd QCPF_Plugins\QCPF_ViewEditor\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_ViewEditor\QCPF_ViewEditor.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
 sub-QCPF_Plugins-QPlugin1-check:
 	@if not exist QCPF_Plugins\QPlugin1\ mkdir QCPF_Plugins\QPlugin1\ & if not exist QCPF_Plugins\QPlugin1\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
+	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
 sub-QCPF_Plugins-QPlugin2-check:
 	@if not exist QCPF_Plugins\QPlugin2\ mkdir QCPF_Plugins\QPlugin2\ & if not exist QCPF_Plugins\QPlugin2\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
+	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
 sub-QCPF_Plugins-QPlugin3-check:
 	@if not exist QCPF_Plugins\QPlugin3\ mkdir QCPF_Plugins\QPlugin3\ & if not exist QCPF_Plugins\QPlugin3\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
+	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
 sub-QCPF_Plugins-QPlugin4-check:
 	@if not exist QCPF_Plugins\QPlugin4\ mkdir QCPF_Plugins\QPlugin4\ & if not exist QCPF_Plugins\QPlugin4\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
+	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
 sub-QCPF_ViewModel-check:
 	@if not exist QCPF_ViewModel\ mkdir QCPF_ViewModel\ & if not exist QCPF_ViewModel\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
-check: sub-QCPF_Host_View-QCPF_HostView-pro-check sub-QCPF_Model-check sub-QCPF_Plugins-QCPF_PluginManager-check sub-QCPF_Plugins-QCPF_SystemManager-check sub-QCPF_Plugins-QCPF_ViewEditer-check sub-QCPF_Plugins-QPlugin1-check sub-QCPF_Plugins-QPlugin2-check sub-QCPF_Plugins-QPlugin3-check sub-QCPF_Plugins-QPlugin4-check sub-QCPF_ViewModel-check
+	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile check
+check: sub-QCPF_Host_View-QCPF_HostView-pro-check sub-QCPF_Model-check sub-QCPF_Plugins-QCPF_PluginManager-check sub-QCPF_Plugins-QCPF_SystemManager-check sub-QCPF_Plugins-QCPF_ViewEditor-check sub-QCPF_Plugins-QPlugin1-check sub-QCPF_Plugins-QPlugin2-check sub-QCPF_Plugins-QPlugin3-check sub-QCPF_Plugins-QPlugin4-check sub-QCPF_ViewModel-check
 
 sub-QCPF_Host_View-QCPF_HostView-pro-benchmark:
 	@if not exist QCPF_Host_View\ mkdir QCPF_Host_View\ & if not exist QCPF_Host_View\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\20200907\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView benchmark
+	cd QCPF_Host_View\ && ( if not exist Makefile.QCPF_HostView $(QMAKE) -o Makefile.QCPF_HostView G:\QCPFrame\GitHub\src\QCPF_Host_View\QCPF_HostView.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile.QCPF_HostView benchmark
 sub-QCPF_Model-benchmark:
 	@if not exist QCPF_Model\ mkdir QCPF_Model\ & if not exist QCPF_Model\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
+	cd QCPF_Model\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Model\QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
 sub-QCPF_Plugins-QCPF_PluginManager-benchmark:
 	@if not exist QCPF_Plugins\QCPF_PluginManager\ mkdir QCPF_Plugins\QCPF_PluginManager\ & if not exist QCPF_Plugins\QCPF_PluginManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
+	cd QCPF_Plugins\QCPF_PluginManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_PluginManager\QCPF_PluginManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
 sub-QCPF_Plugins-QCPF_SystemManager-benchmark:
 	@if not exist QCPF_Plugins\QCPF_SystemManager\ mkdir QCPF_Plugins\QCPF_SystemManager\ & if not exist QCPF_Plugins\QCPF_SystemManager\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
-sub-QCPF_Plugins-QCPF_ViewEditer-benchmark:
-	@if not exist QCPF_Plugins\QCPF_ViewEditer\ mkdir QCPF_Plugins\QCPF_ViewEditer\ & if not exist QCPF_Plugins\QCPF_ViewEditer\ exit 1
+	cd QCPF_Plugins\QCPF_SystemManager\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_SystemManager\QCPF_SystemManager.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
+sub-QCPF_Plugins-QCPF_ViewEditor-benchmark:
+	@if not exist QCPF_Plugins\QCPF_ViewEditor\ mkdir QCPF_Plugins\QCPF_ViewEditor\ & if not exist QCPF_Plugins\QCPF_ViewEditor\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QCPF_ViewEditer\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QCPF_ViewEditer\QCPF_ViewEditer.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
+	cd QCPF_Plugins\QCPF_ViewEditor\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QCPF_ViewEditor\QCPF_ViewEditor.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
 sub-QCPF_Plugins-QPlugin1-benchmark:
 	@if not exist QCPF_Plugins\QPlugin1\ mkdir QCPF_Plugins\QPlugin1\ & if not exist QCPF_Plugins\QPlugin1\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
+	cd QCPF_Plugins\QPlugin1\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin1\QPlugin1.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
 sub-QCPF_Plugins-QPlugin2-benchmark:
 	@if not exist QCPF_Plugins\QPlugin2\ mkdir QCPF_Plugins\QPlugin2\ & if not exist QCPF_Plugins\QPlugin2\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
+	cd QCPF_Plugins\QPlugin2\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin2\QPlugin2.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
 sub-QCPF_Plugins-QPlugin3-benchmark:
 	@if not exist QCPF_Plugins\QPlugin3\ mkdir QCPF_Plugins\QPlugin3\ & if not exist QCPF_Plugins\QPlugin3\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
+	cd QCPF_Plugins\QPlugin3\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin3\QPlugin3.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
 sub-QCPF_Plugins-QPlugin4-benchmark:
 	@if not exist QCPF_Plugins\QPlugin4\ mkdir QCPF_Plugins\QPlugin4\ & if not exist QCPF_Plugins\QPlugin4\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
+	cd QCPF_Plugins\QPlugin4\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_Plugins\QPlugin4\QPlugin4.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
 sub-QCPF_ViewModel-benchmark:
 	@if not exist QCPF_ViewModel\ mkdir QCPF_ViewModel\ & if not exist QCPF_ViewModel\ exit 1
 	@set MAKEFLAGS=$(MAKEFLAGS)
-	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\20200907\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
-benchmark: sub-QCPF_Host_View-QCPF_HostView-pro-benchmark sub-QCPF_Model-benchmark sub-QCPF_Plugins-QCPF_PluginManager-benchmark sub-QCPF_Plugins-QCPF_SystemManager-benchmark sub-QCPF_Plugins-QCPF_ViewEditer-benchmark sub-QCPF_Plugins-QPlugin1-benchmark sub-QCPF_Plugins-QPlugin2-benchmark sub-QCPF_Plugins-QPlugin3-benchmark sub-QCPF_Plugins-QPlugin4-benchmark sub-QCPF_ViewModel-benchmark
+	cd QCPF_ViewModel\ && ( if not exist Makefile $(QMAKE) -o Makefile G:\QCPFrame\GitHub\src\QCPF_ViewModel\QCPF_ViewModel.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug" ) && $(MAKE) -f Makefile benchmark
+benchmark: sub-QCPF_Host_View-QCPF_HostView-pro-benchmark sub-QCPF_Model-benchmark sub-QCPF_Plugins-QCPF_PluginManager-benchmark sub-QCPF_Plugins-QCPF_SystemManager-benchmark sub-QCPF_Plugins-QCPF_ViewEditor-benchmark sub-QCPF_Plugins-QPlugin1-benchmark sub-QCPF_Plugins-QPlugin2-benchmark sub-QCPF_Plugins-QPlugin3-benchmark sub-QCPF_Plugins-QPlugin4-benchmark sub-QCPF_ViewModel-benchmark
 install:install_subtargets  FORCE
 
 uninstall: uninstall_subtargets FORCE

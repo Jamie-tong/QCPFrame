@@ -123,7 +123,7 @@ public:
         laSystemName->setText(QCoreApplication::translate("formLoading", "QCPF Framework", nullptr));
         lb_LoadingInfo->setText(QString());
         labInfoPrefix_2->setText(QCoreApplication::translate("formLoading", "Copyright \302\251 Jamie.T", nullptr));
-        labInfoPrefix_3->setText(QCoreApplication::translate("formLoading", "Frame Verson:1.0.0.1", nullptr));
+        labInfoPrefix_3->setText(QCoreApplication::translate("formLoading", "Frame Verson:1.0.0.2", nullptr));
     } // retranslateUi
 
 };

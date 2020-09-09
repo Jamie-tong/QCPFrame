@@ -1,0 +1,3 @@
+2020.09.09
+1. 优化了Plugin manager和System manager中组件排序列表，修复了当组件改名后，前者仍存在与排序列表的bug.
+2. 优化了View editor的clear function后同时删除action下拉框的项。

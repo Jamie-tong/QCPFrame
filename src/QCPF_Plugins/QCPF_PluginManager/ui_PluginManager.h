@@ -286,7 +286,7 @@ public:
 
         retranslateUi(PluginManager);
 
-        tabPlugin_Sort->setCurrentIndex(1);
+        tabPlugin_Sort->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(PluginManager);
