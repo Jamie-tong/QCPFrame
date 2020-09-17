@@ -20,7 +20,7 @@ PluginIO* instance;
 PluginIO::PluginIO()
 {
     instance = this;
-    PluginIO::I_PluginID = tr("QCFViewEditor");
+    PluginIO::I_PluginID = tr("QCPF_ViewEditor");
     PluginIO::I_PluginType = PT_SYS;
     PluginIO::I_PluginAliasName = tr("View Editor");
     PluginIO::I_PluginAuther = tr("Jamie.T");
@@ -45,84 +45,61 @@ PluginIO* PluginIO::getInstance()
 ***************************************************/
 PluginInterface* PluginIO::Clone(QString copyID, QString copyAliasName, QString copyComment)
 {
-    PluginIO *_clonePlugin = new PluginIO();
-
-    _clonePlugin->I_PluginID = this->I_PluginID;
-    _clonePlugin->I_PluginType = this->I_PluginType;
-    _clonePlugin->I_PluginAliasName = this->I_PluginAliasName;
-    _clonePlugin->I_PluginVersion = this->I_PluginVersion;
-    _clonePlugin->I_PluginAuther = this->I_PluginAuther;
-    _clonePlugin->I_PluginComment = this->I_PluginComment;
-    _clonePlugin->I_PluginFilePath = this->I_PluginFilePath;
-    _clonePlugin->I_PluginTag = this->I_PluginTag;
-    _clonePlugin->I_PluginAuthority = this->I_PluginAuthority;
-
-    _clonePlugin->I_IsCopy = true;
-
-    _clonePlugin->I_CopyID = copyID;
-    _clonePlugin->I_CopyAliasName = copyAliasName;
-    _clonePlugin->I_CopyComment = copyComment;
-
-    _clonePlugin->I_PluginVar = this->I_PluginVar;
-    _clonePlugin->I_PluginVarList = this->I_PluginVarList;
-    _clonePlugin->I_FunctionList = this->I_FunctionList;
-    _clonePlugin->I_WidgetList = this->I_WidgetList;
-    return _clonePlugin;
+    return nullptr;
 }
 
 bool PluginIO::ConnectCore(QObject* core){
 
-    _core = (QCPF_Interface*)(core);
+    _core = (QCPF_Model*)(core);
+    InitActionList(this);
+    InitFunctionList(this);
+    if(_core->I_RunMode == RM_APPLICATION)
+            InitWidgetList(this);
 
     return _core?true:false;
-}
-
-bool PluginIO::ConnectViewModel(QObject *view){
-
-    _view = (QCPF_ViewModel*)view;
-
-    InitFunctionList();
-    InitWidgetList();
-
-    return _view?true:false;
 }
 
 void PluginIO::slot_Action(bool checkState){
     QAction *action = (QAction*)sender();
     QString actionName =  action->property("ItemActionName").toString();
 
-    foreach (PluginFunctionInfo* pfi, I_FunctionList) {
-        if(pfi->_functonName == action->text() || pfi->_functonName == actionName)
+    foreach (PluginActionInfo* pai, I_ActionList) {
+        if(pai->_actionName == action->text() || pai->_actionName == actionName)
         {
-            pfi->pFunction(checkState);
+            (this->*pai->_pAction)(checkState);
             break;
         }
     }
 }
 
-void ShowViewEditor(bool);
-void PluginIO::InitFunctionList()
+void PluginIO::InitActionList(PluginIO* plugin)
 {
-    PluginFunctionInfo* pai = new PluginFunctionInfo();
-    pai->_functonName = tr("View editor");
-    pai->_functionDetail = tr("It's used for editing menubar,toolbar,statusbar,workspace and any other ui elements of main appliction frame.");
-    pai->pFunction = &ShowViewEditor;
+    //--------------------------------------------
+    PluginActionInfo* pai1 = new PluginActionInfo();
+    pai1->_actionName = tr("View editor");
+    pai1->_actionDetail = tr("It's used for editing menubar,toolbar,statusbar,workspace and any other ui elements of main appliction frame.");
+    pai1->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowViewEditor);
 
-    I_FunctionList.append(pai);
+    plugin->I_ActionList.append(pai1);
 }
 
-void PluginIO::InitWidgetList()
+void PluginIO::InitFunctionList(PluginIO* plugin)
 {
-    PluginWidgetInfo *nFormInfo = new PluginWidgetInfo();
 
-    nFormInfo->_showType = ST_POPUP;
-    nFormInfo->_widget = new ViewEditor(_view);
-    nFormInfo->_widget->setObjectName(QStringLiteral("wdt_ViewEditor"));
-    nFormInfo->_origWidth = nFormInfo->_widget->width();
-    nFormInfo->_origWidth = nFormInfo->_widget->height();
-    nFormInfo->_widgetDetail = tr("It's used for editing the view that refer to menu,toolbar,worke eara and status bar.");
+}
 
-    PluginIO::I_WidgetList.append(nFormInfo);
+void PluginIO::InitWidgetList(PluginIO* plugin)
+{
+    PluginWidgetInfo *nWdtViewEditor = new PluginWidgetInfo();
+
+    nWdtViewEditor->_showType = ST_POPUP;
+    nWdtViewEditor->_widget = new ViewEditor();
+    nWdtViewEditor->_widget->setObjectName(QStringLiteral("wdt_ViewEditor"));
+    nWdtViewEditor->_origWidth = nWdtViewEditor->_widget->width();
+    nWdtViewEditor->_origWidth = nWdtViewEditor->_widget->height();
+    nWdtViewEditor->_widgetDetail = tr("It's used for editing the view that refer to menu,toolbar,worke eara and status bar.");
+
+    plugin->I_WidgetList.append(nWdtViewEditor);
 }
 
 //通用方法
@@ -151,11 +128,6 @@ int PluginIO::OnCoreInitialize(){
     return 0;
 }
 
-int PluginIO::OnViewModelInitialize(){
-
-    return 0;
-}
-
 int PluginIO::OnViewCreated(){
 
     return 0;
@@ -174,9 +146,9 @@ int PluginIO::OnViewClosing(){
 /***********************************************************************
  *  action 函数指针所对应的回调函数
  * *********************************************************************/
-void ShowViewEditor(bool checkState)
+void PluginIO::Action_ShowViewEditor(bool checkState)
 {
-    if(instance->I_WidgetList.count()>0)
+    if(I_WidgetList.count()>0)
     {
         foreach (PluginWidgetInfo* pwi, instance->I_WidgetList) {
             if(pwi->_widget->objectName() == QStringLiteral("wdt_ViewEditor"))

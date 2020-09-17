@@ -63,6 +63,7 @@ private slots:
     void on_btnValidPluginMoveUp_clicked();
     void on_btnValidPluginMoveDown_clicked();
 
+
 private:
     Ui::PluginManager *ui;
     QCPF_Model *_core;

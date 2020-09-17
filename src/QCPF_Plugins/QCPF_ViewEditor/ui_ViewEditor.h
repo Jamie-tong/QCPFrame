@@ -61,7 +61,7 @@ public:
     QFrame *frame_5;
     QPushButton *btnIconFinder;
     QFrame *frame_3;
-    QPushButton *btnAddAction;
+    QPushButton *btnLoadAction;
     QPushButton *btnClearAction;
     QTreeWidget *treeMenuEdit;
     QWidget *tab_3;
@@ -234,9 +234,9 @@ public:
         frame_3->setObjectName(QString::fromUtf8("frame_3"));
         frame_3->setFrameShape(QFrame::Box);
         frame_3->setFrameShadow(QFrame::Sunken);
-        btnAddAction = new QPushButton(frame_3);
-        btnAddAction->setObjectName(QString::fromUtf8("btnAddAction"));
-        btnAddAction->setGeometry(QRect(10, 15, 141, 41));
+        btnLoadAction = new QPushButton(frame_3);
+        btnLoadAction->setObjectName(QString::fromUtf8("btnLoadAction"));
+        btnLoadAction->setGeometry(QRect(10, 15, 141, 41));
         btnClearAction = new QPushButton(frame_3);
         btnClearAction->setObjectName(QString::fromUtf8("btnClearAction"));
         btnClearAction->setGeometry(QRect(10, 65, 141, 41));
@@ -504,7 +504,7 @@ public:
 
         retranslateUi(ViewEditor);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
         cbMenuAuthority->setCurrentIndex(6);
 
 
@@ -541,8 +541,8 @@ public:
         btnDown->setText(QCoreApplication::translate("ViewEditor", "Down", nullptr));
         btnRight->setText(QCoreApplication::translate("ViewEditor", "Right", nullptr));
         btnIconFinder->setText(QCoreApplication::translate("ViewEditor", "Load Icon", nullptr));
-        btnAddAction->setText(QCoreApplication::translate("ViewEditor", "Map Function", nullptr));
-        btnClearAction->setText(QCoreApplication::translate("ViewEditor", "Clear Function", nullptr));
+        btnLoadAction->setText(QCoreApplication::translate("ViewEditor", "Load Action", nullptr));
+        btnClearAction->setText(QCoreApplication::translate("ViewEditor", "Clear Aaction", nullptr));
         QTreeWidgetItem *___qtreewidgetitem = treeMenuEdit->headerItem();
         ___qtreewidgetitem->setText(5, QCoreApplication::translate("ViewEditor", "\345\244\207\346\263\250", nullptr));
         ___qtreewidgetitem->setText(4, QCoreApplication::translate("ViewEditor", "Action", nullptr));
@@ -551,7 +551,7 @@ public:
         ___qtreewidgetitem->setText(1, QCoreApplication::translate("ViewEditor", "\345\277\253\346\215\267\351\224\256", nullptr));
         ___qtreewidgetitem->setText(0, QCoreApplication::translate("ViewEditor", "\350\217\234\345\215\225\346\240\217", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("ViewEditor", "MenuBar", nullptr));
-        groupBox_3->setTitle(QCoreApplication::translate("ViewEditor", "ToolBar", nullptr));
+        groupBox_3->setTitle(QCoreApplication::translate("ViewEditor", "ToolBar Editor", nullptr));
         label_3->setText(QCoreApplication::translate("ViewEditor", "Action From Menu:", nullptr));
         btnAddAction_Toolbar->setText(QCoreApplication::translate("ViewEditor", "Add Action", nullptr));
         btnAddSeperator_Toolbar->setText(QCoreApplication::translate("ViewEditor", "Add Seperator", nullptr));
@@ -563,7 +563,7 @@ public:
         btnMoveDown_Toolbar->setText(QCoreApplication::translate("ViewEditor", "Down", nullptr));
         btnMoveUp_Toolbar->setText(QCoreApplication::translate("ViewEditor", "Up", nullptr));
         btnAddToolbar->setText(QCoreApplication::translate("ViewEditor", "Add Bar", nullptr));
-        groupBox_4->setTitle(QCoreApplication::translate("ViewEditor", "StatusBar", nullptr));
+        groupBox_4->setTitle(QCoreApplication::translate("ViewEditor", "StatusBar Editor", nullptr));
         btnDeleteItem_Statusbar->setText(QCoreApplication::translate("ViewEditor", "Delete Item", nullptr));
         btnAddWidget_Statusbar->setText(QCoreApplication::translate("ViewEditor", "Add Widget", nullptr));
         label_9->setText(QCoreApplication::translate("ViewEditor", "Statusbar height:", nullptr));

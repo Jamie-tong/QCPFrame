@@ -11,7 +11,12 @@ License: GPL v3.0
 #include <QObject>
 #include <QList>
 #include <QVector>
-#include<QQueue>
+#include <QQueue>
+#include <QThreadPool>
+#include <QMutex>
+#include <QReadWriteLock>
+#include <QSemaphore>
+#include <QWaitCondition>
 
 #include "plugininterface.h"
 
@@ -37,6 +42,12 @@ public:
     }
 };
 
+enum RunMode
+{
+    RM_CORE_APPLICATION,//运行模式基于控制台
+    RM_APPLICATION//运行模式基于widget
+};
+
 class QCPF_Interface : public QObject
 {
         Q_OBJECT
@@ -47,6 +58,7 @@ class QCPF_Interface : public QObject
          *     2. 系统组件可以选择哪些可用哪些不可用，这可以用于用户权限管理等功能
          *     3. 系统为单例组件，可排序，但是不容许被克隆。
          **********************************************************************************/
+        RunMode I_RunMode;
         //所有系统组件集合
         QList<PluginInterface*> I_SysPlugins;
         //所有被选中的系统组件集合
@@ -69,6 +81,8 @@ class QCPF_Interface : public QObject
         //=====================当前配置文件目录和组件目录
         QString I_SystemID;
         QString I_SystemName;
+        QString I_SystemVersion;
+        QString I_OrganizationName;
         QString I_ApplicationDirPath;
         QString I_SystemPluginDirPath;
         QString I_NonSysPluginDirPath;
@@ -90,11 +104,18 @@ class QCPF_Interface : public QObject
         double I_SMDoubleVar2;
         QString I_SMStrVar1;
         QString I_SMStrVar2;
-        QObject* I_SMObject1;
-        QObject* I_SMObject2;
+        QObject I_SMObject1;
+        QObject I_SMObject2;
         QList<QObject*> I_SMObjectLst;
         QVector<QObject*> I_SMObjectVec;
         QQueue<QObject*> I_SMObjectQue;
+        //Thead
+        QThreadPool I_SMThreadPool;
+        QThread I_SMThread;
+        QMutex I_SMMutex;
+        QReadWriteLock I_SMReadWriteLock;
+        QSemaphore I_SMSemaphore;
+        QWaitCondition I_SMWaitCondition;
 
 signals:
         int HostSignal_OnLoading();

@@ -8,20 +8,31 @@ License: GPL v3.0
 #include "qcpf_viewmodel.h"
 #include <QDataStream>
 #include <QDir>
-#include "../QCPF_Model/qcpf_model.h"
 #include <QtWidgets/QMainWindow>
 #include <QDockWidget>
 
-QCPF_Model* _instCore;
-QCPF_ViewModel::QCPF_ViewModel(QObject* parent):_config(this)
+#define MASK_END_STR "_tp"
+#define SYSTEM_VERSION "1.0.0.3"
+#define ORGANIZATION_NAME "Jamie.T"
+
+QCPF_ViewModel::QCPF_ViewModel(QCPF_Model* model, QObject* parent):_config(this)
 {
+    _version = SYSTEM_VERSION;
+    _organization = ORGANIZATION_NAME;
+
     this->setParent(parent);
+    _core = model;
+
     slot_LoadConfigFile(_config);
 }
 
-QCPF_ViewModel::QCPF_ViewModel(QObject* parent, QString configDirPath, QString configFileName):_config(this)
+QCPF_ViewModel::QCPF_ViewModel(QCPF_Model* model, QObject* parent, QString configDirPath, QString configFileName):_config(this)
 {
+    _version = SYSTEM_VERSION;
+    _organization = ORGANIZATION_NAME;
+
     this->setParent(parent);
+    _core = model;
 
     _configDirPath = configDirPath;
     _configFileName = configFileName;
@@ -129,7 +140,7 @@ int QCPF_ViewModel::slot_LoadConfigFile(viewConfigModel &config)
     config.resetData();
 
     _outputInfo._type = InfoType::INFT_STATUS_INFO;
-    _outputInfo._content = tr("trying to read view config file...");
+    _outputInfo._content = tr("Trying to read view config file...");
     emit sig_OutputInfo(_outputInfo);
 
     if(!QFile::exists(_configFullFilePath))
@@ -196,35 +207,24 @@ int QCPF_ViewModel::slot_CancelConfig()
 
     if(0!=compareFiles(tempConfigFullFilePath, _configFullFilePath))
     {
-        _config.resetData();
         slot_LoadConfigFile(_config);
     }
     return 0;
 }
 
-int QCPF_ViewModel::slot_Initialize(QString user, QString pwd, QString extInfo)
+int QCPF_ViewModel::slot_Initialize()
 {
-    _instCore = (QCPF_Model*)_core;
-    if(user!="tt" || pwd!="1")
-    {
-        _outputInfo._type = InfoType::INFT_MSG_INFO;
-        _outputInfo._content = tr("Please input the correct user name and password!") ;
+    try {
+        slot_LoadConfigFile(_config);
+
+        _outputInfo._type = InfoType::INFT_INITIALIZE_FINISHED;
         emit sig_OutputInfo(_outputInfo);
-        return -1;
+    } catch (int) {
+        _outputInfo._type = InfoType::INFT_MSG_INFO;
+        _outputInfo._content = tr("ViewModel Initialize failed!") ;
+        emit sig_OutputInfo(_outputInfo);
+        return -255;
     }
-
-
-    //invoke plugin functions
-    foreach (PluginInterface* tp, _instCore->I_SysPlugins) {
-        tp->ConnectViewModel(this);
-        tp->OnViewModelInitialize();
-    }
-    foreach (PluginInterface* tp, _instCore->I_NSysAllValidPlugins) {
-        tp->ConnectViewModel(this);
-        tp->OnViewModelInitialize();
-    }
-    _outputInfo._type = InfoType::INFT_INITIALIZE_FINISHED;
-    emit sig_OutputInfo(_outputInfo);
 
     return 0;
 }
@@ -248,7 +248,7 @@ void QCPF_ViewModel::parseMenu(QMenu* nMenu, JMenuNode* nNode)
             QKeySequence key(nNode->_menuShortCut);
             tChildAction->setShortcut(key);
 
-            if(_instCore->I_CurrentUserInfo._authority <= nNode->_menuAuthority)
+            if(_core->I_CurrentUserInfo._authority <= nNode->_menuAuthority)
                 tChildAction->setEnabled(true);
             else
                 tChildAction->setEnabled(false);
@@ -258,7 +258,7 @@ void QCPF_ViewModel::parseMenu(QMenu* nMenu, JMenuNode* nNode)
 
             if(nNode->_pluginType == PT_SYS)//系统组件
             {
-                foreach (PluginInterface* pi, _instCore->I_SysPlugins_Sel)
+                foreach (PluginInterface* pi, _core->I_SysPlugins_Sel)
                 {
                     if(pi->I_PluginID == nNode->_pluginID)
                     {
@@ -269,7 +269,7 @@ void QCPF_ViewModel::parseMenu(QMenu* nMenu, JMenuNode* nNode)
             }
             else
             {
-                foreach (PluginInterface* pi, _instCore->I_NSysOrigPlugins_Sel)
+                foreach (PluginInterface* pi, _core->I_NSysOrigPlugins_Sel)
                 {
                     if(pi->I_PluginID == nNode->_pluginID)
                     {
@@ -290,7 +290,7 @@ void QCPF_ViewModel::parseMenu(QMenu* nMenu, JMenuNode* nNode)
         childMenu->setIcon(QIcon(nNode->_menuIconPath));
         nMenu->addMenu(childMenu);
 
-        if(_instCore->I_CurrentUserInfo._authority == nNode->_menuAuthority)
+        if(_core->I_CurrentUserInfo._authority == nNode->_menuAuthority)
             childMenu->setEnabled(true);
         else
             childMenu->setEnabled(false);
@@ -350,7 +350,7 @@ void QCPF_ViewModel::drawMenuFromConfig(QMenuBar* mainMenu)
         QMenu* tTopMenu = new QMenu(mainMenu);
         tTopMenu->setTitle(_config._menuTopItemLst[i]->_menuTitle);
 
-        if(_instCore->I_CurrentUserInfo._authority <= _config._menuTopItemLst[i]->_menuAuthority)
+        if(_core->I_CurrentUserInfo._authority <= _config._menuTopItemLst[i]->_menuAuthority)
             tTopMenu->setEnabled(true);
         else
             tTopMenu->setEnabled(false);
@@ -387,9 +387,9 @@ void QCPF_ViewModel::drawToolBarFromConfig(QList<QToolBar*> mainToolbarLst)
 
                 QList<PluginInterface*> tPluginLst;
                 if(pluginType == "System")
-                    tPluginLst = ((QCPF_Model*)_core)->I_SysPlugins_Sel;
+                    tPluginLst = _core->I_SysPlugins_Sel;
                 else
-                    tPluginLst = ((QCPF_Model*)_core)->I_NSysAllValidPlugins;
+                    tPluginLst = _core->I_NSysAllValidPlugins;
 
                 foreach (PluginInterface* pi, tPluginLst) {
                     if(pi->I_PluginID == pluginID && pi->I_CopyID == copyID)
@@ -432,9 +432,9 @@ void QCPF_ViewModel::drawStatusBarFromConfig(QStatusBar* mainStatusbar)
 
             QList<PluginInterface*> tPluginLst;
             if(pluginType == "System")
-                tPluginLst = ((QCPF_Model*)_core)->I_SysPlugins_Sel;
+                tPluginLst = _core->I_SysPlugins_Sel;
             else
-                tPluginLst = ((QCPF_Model*)_core)->I_NSysAllValidPlugins;
+                tPluginLst = _core->I_NSysAllValidPlugins;
 
             foreach (PluginInterface* pi, tPluginLst) {
                 if(pi->I_PluginID == pluginID && pi->I_CopyID == copyID)
@@ -472,9 +472,9 @@ void QCPF_ViewModel::drawDockWidgetFromConfig(QMainWindow* viewHost)
 
         QList<PluginInterface*> tPluginLst;
         if(wi->_pluginType == PT_SYS)
-            tPluginLst = ((QCPF_Interface*)_core)->I_SysPlugins;
+            tPluginLst = _core->I_SysPlugins;
         else
-            tPluginLst = ((QCPF_Interface*)_core)->I_NSysAllValidPlugins;
+            tPluginLst = _core->I_NSysAllValidPlugins;
 
         foreach (PluginInterface* pi, tPluginLst) {
             if(pi->I_PluginType == wi->_pluginType &&
@@ -487,12 +487,11 @@ void QCPF_ViewModel::drawDockWidgetFromConfig(QMainWindow* viewHost)
                         QDockWidget *tDw = new QDockWidget(pwi->_widget->windowTitle());
 
                         tDw->setObjectName(tDockWidgetObjectName);//要想存储布局，每个dock必须有唯一的objectName
-                        tDw->setFeatures(QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable); //具有全部特性
+                        tDw->setFeatures(QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetClosable); //具有全部特性
                         tDw->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
                         tDw->setStyleSheet("border:1px solid #ccc;");
 
                         tDw->setWidget(pwi->_widget);
-                        tDw->setVisible(true);
                         viewHost->addDockWidget(Qt::RightDockWidgetArea,tDw);
                     }
                 }

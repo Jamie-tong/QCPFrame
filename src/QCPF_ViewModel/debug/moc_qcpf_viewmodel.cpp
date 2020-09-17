@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QCPF_ViewModel_t {
-    QByteArrayData data[15];
-    char stringdata0[183];
+    QByteArrayData data[12];
+    char stringdata0[166];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,22 +38,19 @@ QT_MOC_LITERAL(2, 30, 0), // ""
 QT_MOC_LITERAL(3, 31, 14), // "tagOutputInfo&"
 QT_MOC_LITERAL(4, 46, 4), // "info"
 QT_MOC_LITERAL(5, 51, 15), // "slot_Initialize"
-QT_MOC_LITERAL(6, 67, 4), // "user"
-QT_MOC_LITERAL(7, 72, 3), // "pwd"
-QT_MOC_LITERAL(8, 76, 7), // "extInfo"
-QT_MOC_LITERAL(9, 84, 19), // "slot_LoadConfigFile"
-QT_MOC_LITERAL(10, 104, 16), // "viewConfigModel&"
-QT_MOC_LITERAL(11, 121, 6), // "config"
-QT_MOC_LITERAL(12, 128, 19), // "slot_SaveConfigFile"
-QT_MOC_LITERAL(13, 148, 16), // "slot_ApplyConfig"
-QT_MOC_LITERAL(14, 165, 17) // "slot_CancelConfig"
+QT_MOC_LITERAL(6, 67, 19), // "slot_LoadConfigFile"
+QT_MOC_LITERAL(7, 87, 16), // "viewConfigModel&"
+QT_MOC_LITERAL(8, 104, 6), // "config"
+QT_MOC_LITERAL(9, 111, 19), // "slot_SaveConfigFile"
+QT_MOC_LITERAL(10, 131, 16), // "slot_ApplyConfig"
+QT_MOC_LITERAL(11, 148, 17) // "slot_CancelConfig"
 
     },
     "QCPF_ViewModel\0sig_OutputInfo\0\0"
     "tagOutputInfo&\0info\0slot_Initialize\0"
-    "user\0pwd\0extInfo\0slot_LoadConfigFile\0"
-    "viewConfigModel&\0config\0slot_SaveConfigFile\0"
-    "slot_ApplyConfig\0slot_CancelConfig"
+    "slot_LoadConfigFile\0viewConfigModel&\0"
+    "config\0slot_SaveConfigFile\0slot_ApplyConfig\0"
+    "slot_CancelConfig"
 };
 #undef QT_MOC_LITERAL
 
@@ -74,18 +71,18 @@ static const uint qt_meta_data_QCPF_ViewModel[] = {
        1,    1,   44,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    3,   47,    2, 0x0a /* Public */,
-       9,    1,   54,    2, 0x0a /* Public */,
-      12,    0,   57,    2, 0x0a /* Public */,
-      13,    0,   58,    2, 0x0a /* Public */,
-      14,    0,   59,    2, 0x0a /* Public */,
+       5,    0,   47,    2, 0x0a /* Public */,
+       6,    1,   48,    2, 0x0a /* Public */,
+       9,    0,   51,    2, 0x0a /* Public */,
+      10,    0,   52,    2, 0x0a /* Public */,
+      11,    0,   53,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Int, 0x80000000 | 3,    4,
 
  // slots: parameters
-    QMetaType::Int, QMetaType::QString, QMetaType::QString, QMetaType::QString,    6,    7,    8,
-    QMetaType::Int, 0x80000000 | 10,   11,
+    QMetaType::Int,
+    QMetaType::Int, 0x80000000 | 7,    8,
     QMetaType::Int,
     QMetaType::Int,
     QMetaType::Int,
@@ -101,7 +98,7 @@ void QCPF_ViewModel::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         switch (_id) {
         case 0: { int _r = _t->sig_OutputInfo((*reinterpret_cast< tagOutputInfo(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 1: { int _r = _t->slot_Initialize((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])));
+        case 1: { int _r = _t->slot_Initialize();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         case 2: { int _r = _t->slot_LoadConfigFile((*reinterpret_cast< viewConfigModel(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;

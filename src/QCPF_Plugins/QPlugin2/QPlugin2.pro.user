@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.10.0, 2020-05-29T10:10:48. -->
+<!-- Written by QtCreator 4.10.0, 2020-09-16T13:37:24. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -8,7 +8,7 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
-  <value type="int">0</value>
+  <value type="int">1</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.EditorSettings</variable>
@@ -325,14 +325,14 @@
  <data>
   <variable>ProjectExplorer.Project.Target.1</variable>
   <valuemap type="QVariantMap">
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop Qt 5.13.1 MinGW 64-bit</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop Qt 5.13.1 MinGW 64-bit</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">qt.qt5.5131.win64_mingw73_kit</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">MinGw 64-bit</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">MinGw 64-bit</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{de8a932b-47a6-40d6-824d-1e5b6248ccab}</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">G:/QCommonFrame/20200528/build-QPlugin2-Desktop_Qt_5_13_1_MinGW_64_bit-Debug</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">G:/QCPFrame/GitHub/src/QCPF_Plugins/QPlugin2</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -388,7 +388,7 @@
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.1">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">G:/QCommonFrame/20200528/build-QPlugin2-Desktop_Qt_5_13_1_MinGW_64_bit-Release</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">G:/QCPFrame/GitHub/src/QCPF_Plugins/build-QPlugin2-MinGw_64_bit-Release</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -444,7 +444,7 @@
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.2">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">G:/QCommonFrame/20200528/build-QPlugin2-Desktop_Qt_5_13_1_MinGW_64_bit-Profile</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">G:/QCPFrame/GitHub/src/QCPF_Plugins/build-QPlugin2-MinGw_64_bit-Profile</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>

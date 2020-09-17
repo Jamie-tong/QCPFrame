@@ -13,16 +13,24 @@ License: GPL v3.0
 #include <QMap>
 
 #define MASK_END_STR "_tp"
+#define SYSTEM_VERSION "1.0.0.3"
+#define ORGANIZATION_NAME "Jamie.T"
 
-QCPF_Model::QCPF_Model(QObject* parent):_config(this)
+QCPF_Model::QCPF_Model(RunMode runMode, QObject* parent):_config(this)
 {
+    I_RunMode = runMode;
+    I_SystemVersion = SYSTEM_VERSION;
+    I_OrganizationName = ORGANIZATION_NAME;
     this->setParent(parent);
 
-    slot_LoadConfigFile(_config);
+    slot_LoadConfigFile(_config);//由于系统起来便要显示系统名称，因此在构造的时候就读取一次配置文件。
 }
 
-QCPF_Model::QCPF_Model(QObject* parent, QString applicationDirPath, QString sysPluginDirPath, QString nSysPluginDirPath, QString configDirPath, QString configFileName, bool isEnableHotPlug):_config(this)
+QCPF_Model::QCPF_Model(RunMode runMode, QObject* parent, QString applicationDirPath, QString sysPluginDirPath, QString nSysPluginDirPath, QString configDirPath, QString configFileName, bool isEnableHotPlug):_config(this)
 {
+    I_RunMode = runMode;
+    I_SystemVersion = SYSTEM_VERSION;
+    I_OrganizationName = ORGANIZATION_NAME;
     this->setParent(parent);
 
     I_ApplicationDirPath = applicationDirPath;
@@ -38,7 +46,7 @@ QCPF_Model::QCPF_Model(QObject* parent, QString applicationDirPath, QString sysP
 
     I_IsEnableHotPlug = isEnableHotPlug;
 
-    slot_LoadConfigFile(_config);
+    slot_LoadConfigFile(_config);//由于系统起来便要显示系统名称，因此在构造的时候就读取一次配置文件。
 }
 
 QCPF_Model::~QCPF_Model()
@@ -297,25 +305,19 @@ int QCPF_Model::pluginInstance(QFileInfo fi, PluginType type)
                     return -244;//连接组件时出现异常
                 }
 
-
                 if(plugin->I_PluginType == PT_SYS && type == PT_SYS)//两个条件的限制结果是，系统组件放到非系统组件目录不会被加载，反之非系统组件放到系统组件目录也不会被加载。
                     this->I_SysPlugins.append(plugin);
 
                 if(plugin->I_PluginType == PT_NON_SYS && type == PT_NON_SYS)
                     this->I_NSysOrigPlugins.append(plugin);
-                /*
-                动态建立信号槽的连接
-                */
-                connect(this, SIGNAL(sig_Core(QVariant, QVariant&)), plugin, SLOT(PluginInterface::slot_Plugin(QVariant, QVariant&)));
-                connect(plugin, SIGNAL(PluginInterface::sig_Plugin(QVariant, QVariant&)), this, SLOT(slot_Core(QVariant, QVariant&)));
-                //发送组件信息信号，通过LoadingControllor连接到需要显示的view里去
 
+                //发送组件信息信号，通过LoadingControllor连接到需要显示的view里去
                 _outputInfo._type = InfoType::INFT_STATUS_INFO;
 
                 if(type==PT_SYS)
-                    _outputInfo._content = QString(tr("Collecting system plugin information:%1")).arg(plugin->I_PluginID);
+                    _outputInfo._content = QString(tr("Collecting system plugin:%1")).arg(plugin->I_PluginID);
                 else
-                    _outputInfo._content = QString(tr("Collecting non-system plugin information:%1")).arg(plugin->I_PluginID);
+                    _outputInfo._content = QString(tr("Collecting non-system plugin:%1")).arg(plugin->I_PluginID);
 
                 emit sig_OutputInfo(_outputInfo);
             }
@@ -325,45 +327,76 @@ int QCPF_Model::pluginInstance(QFileInfo fi, PluginType type)
 
 int QCPF_Model::slot_Initialize(QString user, QString pwd, QString extInfo)
 {
-    if(user!="tt" || pwd!="1")
+    try
+    {
+        _config.resetData();
+        slot_LoadConfigFile(_config);
+
+        if(user!="tt" || pwd!="1")
+        {
+            _outputInfo._type = InfoType::INFT_MSG_INFO;
+            _outputInfo._content = tr("Load failed，Please check your user name and password!") ;
+            emit sig_OutputInfo(_outputInfo);
+            return -1;
+        }
+
+        foreach (PluginInterface* pi, I_SysPlugins) {
+            delete pi;
+        }
+        foreach (PluginInterface* pi, I_NSysOrigPlugins) {
+            delete pi;
+        }
+        foreach (PluginInterface* pi, I_NSysClonePlugins) {
+            delete pi;
+        }
+        foreach (PluginInterface* pi, I_NSysAllValidPlugins) {
+            delete pi;
+        }
+        foreach (PluginInterface* pi, I_NSysOrigPlugins_Sel) {
+            delete pi;
+        }
+
+        //收集系统组件信息
+        pluginsCollect(I_IsEnableHotPlug, I_SystemPluginDirPath, _config._sysPlugins_Sel, PT_SYS);
+
+        //收集非系统组件信息
+        pluginsCollect(I_IsEnableHotPlug, I_NonSysPluginDirPath, _config._nSysPlugins_Sel, PT_NON_SYS);
+
+        //安装配置信息
+        installConfig(_config);
+
+        //为所有组件建立公共信号槽连接
+        foreach (PluginInterface* pi, I_SysPlugins_Sel) {
+            /*
+            动态建立信号槽的连接
+            */
+            connect(this, &QCPF_Model::sig_Core, pi, &PluginInterface::slot_Plugin);
+            connect(pi, &PluginInterface::sig_Plugin, this, &QCPF_Model::slot_Core);
+            connect(pi, &PluginInterface::sig_OutputInfo, this, &QCPF_Model::slot_OutputInfo);//组件通过Core向外发送输出信息，这便于Core统一处理组件的不同类型的输出信息。
+        }
+        foreach (PluginInterface* npi, I_NSysAllValidPlugins) {
+            /*
+            动态建立信号槽的连接
+            */
+            connect(this, &QCPF_Model::sig_Core, npi, &PluginInterface::slot_Plugin);
+            connect(npi, &PluginInterface::sig_Plugin, this, &QCPF_Model::slot_Core);
+            connect(npi, &PluginInterface::sig_OutputInfo, this, &QCPF_Model::slot_OutputInfo);//组件通过Core向外发送输出信息，这便于Core统一处理组件的不同类型的输出信息。
+        }
+
+        //invoke plugin functions
+        foreach (PluginInterface* tp, this->I_SysPlugins) {
+            tp->OnCoreInitialize();
+        }
+        foreach (PluginInterface* tp, this->I_NSysAllValidPlugins) {
+            tp->OnCoreInitialize();
+        }
+    }
+    catch(int)
     {
         _outputInfo._type = InfoType::INFT_MSG_INFO;
-        _outputInfo._content = tr("Load failed，Please check your user name and password!") ;
+        _outputInfo._content = tr("Core Initialize failed!") ;
         emit sig_OutputInfo(_outputInfo);
-        return -1;
-    }
-
-    foreach (PluginInterface* pi, I_SysPlugins) {
-        delete pi;
-    }
-    foreach (PluginInterface* pi, I_NSysOrigPlugins) {
-        delete pi;
-    }
-    foreach (PluginInterface* pi, I_NSysClonePlugins) {
-        delete pi;
-    }
-    foreach (PluginInterface* pi, I_NSysAllValidPlugins) {
-        delete pi;
-    }
-    foreach (PluginInterface* pi, I_NSysOrigPlugins_Sel) {
-        delete pi;
-    }
-
-    //收集系统组件信息
-    pluginsCollect(I_IsEnableHotPlug, I_SystemPluginDirPath, _config._sysPlugins_Sel, PT_SYS);
-
-    //收集非系统组件信息
-    pluginsCollect(I_IsEnableHotPlug, I_NonSysPluginDirPath, _config._nSysPlugins_Sel, PT_NON_SYS);
-
-    //安装配置信息
-    installConfig(_config);
-
-    //invoke plugin functions
-    foreach (PluginInterface* tp, this->I_SysPlugins) {
-        tp->OnViewModelInitialize();
-    }
-    foreach (PluginInterface* tp, this->I_NSysAllValidPlugins) {
-        tp->OnViewModelInitialize();
+        return -255;
     }
 
     return 0;
@@ -372,6 +405,12 @@ int QCPF_Model::slot_Initialize(QString user, QString pwd, QString extInfo)
 int QCPF_Model::slot_Core(QVariant arg_in, QVariant &arg_out)
 {
 
+    return 0;
+}
+
+int QCPF_Model::slot_OutputInfo(tagOutputInfo& info)
+{
+    emit sig_OutputInfo(info);
     return 0;
 }
 

@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -6,7 +6,7 @@ TARGET =  ../../../bin/debug/Plugins/QPlugin2
 TEMPLATE = lib
 DEFINES += QPLUGIN2_LIBRARY
 
-CONFIG += c++11
+CONFIG += plugin c++11
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -35,7 +35,6 @@ HEADERS += \
 
 DISTFILES +=  \
     QPlugin.json \
-    QPlugin.json
 
 # Default rules for deployment.
 unix {

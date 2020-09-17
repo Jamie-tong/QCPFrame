@@ -32,7 +32,8 @@ public:
     QLabel *laSystemName;
     QLabel *lb_LoadingInfo;
     QLabel *labInfoPrefix_2;
-    QLabel *labInfoPrefix_3;
+    QLabel *labCoreVersion;
+    QLabel *labViewVersion;
 
     void setupUi(QDialog *formLoading)
     {
@@ -49,7 +50,7 @@ public:
         formLoading->setStyleSheet(QString::fromUtf8("#formLoading {border-image: url(:/Images/BackgroundImage6.jpg);}"));
         frame = new QFrame(formLoading);
         frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(210, 40, 351, 301));
+        frame->setGeometry(QRect(210, 50, 351, 301));
         frame->setStyleSheet(QString::fromUtf8("#frame { background-color: rgb(231, 231, 231);}"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
@@ -88,22 +89,30 @@ public:
         font.setWeight(9);
         laSystemName->setFont(font);
         laSystemName->setStyleSheet(QString::fromUtf8("font: 75 20pt \"Microsoft YaHei UI\";"));
+        laSystemName->setAlignment(Qt::AlignCenter);
         laSystemName->setWordWrap(true);
+        laSystemName->setMargin(5);
         lb_LoadingInfo = new QLabel(formLoading);
         lb_LoadingInfo->setObjectName(QString::fromUtf8("lb_LoadingInfo"));
-        lb_LoadingInfo->setGeometry(QRect(210, 350, 351, 61));
+        lb_LoadingInfo->setGeometry(QRect(210, 360, 351, 61));
         lb_LoadingInfo->setWordWrap(true);
         labInfoPrefix_2 = new QLabel(formLoading);
         labInfoPrefix_2->setObjectName(QString::fromUtf8("labInfoPrefix_2"));
         labInfoPrefix_2->setEnabled(true);
-        labInfoPrefix_2->setGeometry(QRect(7, 434, 131, 20));
+        labInfoPrefix_2->setGeometry(QRect(30, 430, 131, 20));
         labInfoPrefix_2->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";\n"
 "color: rgb(104, 104, 104);"));
-        labInfoPrefix_3 = new QLabel(formLoading);
-        labInfoPrefix_3->setObjectName(QString::fromUtf8("labInfoPrefix_3"));
-        labInfoPrefix_3->setEnabled(true);
-        labInfoPrefix_3->setGeometry(QRect(471, 434, 131, 20));
-        labInfoPrefix_3->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";\n"
+        labCoreVersion = new QLabel(formLoading);
+        labCoreVersion->setObjectName(QString::fromUtf8("labCoreVersion"));
+        labCoreVersion->setEnabled(true);
+        labCoreVersion->setGeometry(QRect(210, 430, 131, 20));
+        labCoreVersion->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";\n"
+"color: rgb(104, 104, 104);"));
+        labViewVersion = new QLabel(formLoading);
+        labViewVersion->setObjectName(QString::fromUtf8("labViewVersion"));
+        labViewVersion->setEnabled(true);
+        labViewVersion->setGeometry(QRect(470, 430, 131, 20));
+        labViewVersion->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";\n"
 "color: rgb(104, 104, 104);"));
 
         retranslateUi(formLoading);
@@ -123,7 +132,8 @@ public:
         laSystemName->setText(QCoreApplication::translate("formLoading", "QCPF Framework", nullptr));
         lb_LoadingInfo->setText(QString());
         labInfoPrefix_2->setText(QCoreApplication::translate("formLoading", "Copyright \302\251 Jamie.T", nullptr));
-        labInfoPrefix_3->setText(QCoreApplication::translate("formLoading", "Frame Verson:1.0.0.2", nullptr));
+        labCoreVersion->setText(QCoreApplication::translate("formLoading", "Core Verson:", nullptr));
+        labViewVersion->setText(QCoreApplication::translate("formLoading", "View Verson:", nullptr));
     } // retranslateUi
 
 };

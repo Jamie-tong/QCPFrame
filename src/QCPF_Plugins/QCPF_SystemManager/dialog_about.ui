@@ -36,40 +36,40 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>230</y>
-     <width>161</width>
+     <x>393</x>
+     <y>220</y>
+     <width>141</width>
      <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 87 10pt &quot;Arial Black&quot;;</string>
+    <string notr="true">font: 85 9.3pt &quot;Arial Black&quot;;</string>
    </property>
    <property name="text">
     <string>Powered by Jamie.T</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="labCoreVersion">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>13</y>
-     <width>111</width>
-     <height>31</height>
+     <x>40</x>
+     <y>250</y>
+     <width>151</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 9pt &quot;Arial&quot;;</string>
    </property>
    <property name="text">
-    <string>Version: v1.0.0.2</string>
+    <string>Core Version:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>60</y>
+     <y>55</y>
      <width>491</width>
      <height>171</height>
     </rect>
@@ -94,20 +94,37 @@
    <property name="geometry">
     <rect>
      <x>390</x>
-     <y>260</y>
+     <y>250</y>
      <width>141</width>
-     <height>31</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
     <string>Close</string>
    </property>
   </widget>
+  <widget class="QLabel" name="labViewVersion">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>270</y>
+     <width>141</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+   </property>
+   <property name="text">
+    <string>View Version:</string>
+   </property>
+  </widget>
   <zorder>label</zorder>
-  <zorder>label_3</zorder>
+  <zorder>labCoreVersion</zorder>
   <zorder>label_4</zorder>
   <zorder>btnClose</zorder>
   <zorder>label_2</zorder>
+  <zorder>labViewVersion</zorder>
  </widget>
  <resources/>
  <connections/>

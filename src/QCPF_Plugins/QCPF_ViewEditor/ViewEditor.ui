@@ -93,7 +93,7 @@
     <string notr="true"/>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="documentMode">
     <bool>true</bool>
@@ -415,7 +415,7 @@ border-color: rgb(159, 159, 159);</string>
         <property name="frameShadow">
          <enum>QFrame::Sunken</enum>
         </property>
-        <widget class="QPushButton" name="btnAddAction">
+        <widget class="QPushButton" name="btnLoadAction">
          <property name="geometry">
           <rect>
            <x>10</x>
@@ -425,7 +425,7 @@ border-color: rgb(159, 159, 159);</string>
           </rect>
          </property>
          <property name="text">
-          <string>Map Function</string>
+          <string>Load Action</string>
          </property>
         </widget>
         <widget class="QPushButton" name="btnClearAction">
@@ -438,7 +438,7 @@ border-color: rgb(159, 159, 159);</string>
           </rect>
          </property>
          <property name="text">
-          <string>Clear Function</string>
+          <string>Clear Aaction</string>
          </property>
         </widget>
        </widget>
@@ -515,7 +515,7 @@ border-color: rgb(159, 159, 159);</string>
       </rect>
      </property>
      <property name="title">
-      <string>ToolBar</string>
+      <string>ToolBar Editor</string>
      </property>
      <widget class="QFrame" name="frame_8">
       <property name="geometry">
@@ -864,7 +864,7 @@ border-color: rgb(159, 159, 159);</string>
       </rect>
      </property>
      <property name="title">
-      <string>StatusBar</string>
+      <string>StatusBar Editor</string>
      </property>
      <widget class="QFrame" name="frame_12">
       <property name="geometry">

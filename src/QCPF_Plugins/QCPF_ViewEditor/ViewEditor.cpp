@@ -16,18 +16,20 @@ License: GPL v3.0
 #include "PluginWidgetViewer.h"
 #include <QFileDialog>
 #include "utility/ccheckboxheaderview.h"
+#include "PluginIO.h"
 
 ViewEditor* instance;
 
-ViewEditor::ViewEditor(QCPF_ViewModel* view, QWidget *parent) :
+ViewEditor::ViewEditor(QWidget *parent) :
     QDialog(parent),ui(new Ui::ViewEditor)
 {
     ui->setupUi(this);
 
-    _view = view;
     this->setParent(parent);
 
     instance = this;
+    pluginInst = PluginIO::getInstance();
+    _view = (QCPF_ViewModel*)pluginInst->_core->_view;
     connect(this,SIGNAL(sig_SelAllOrNot(bool)),this,SLOT(slot_SelAllOrNot(bool)));//for 全选/不选复选框
 
     //去掉问号按钮
@@ -234,14 +236,15 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
         else
             tWidgetItem->_isVisible = false;
 
-        if(ui->tablePluginWidget->item(i, 2)->text()=="System")
+        tWidgetItem->_widgetObjectName = ui->tablePluginWidget->item(i, 2)->text();
+
+        if(ui->tablePluginWidget->item(i, 3)->text()=="System")
             tWidgetItem->_pluginType = PT_SYS;
-        else if(ui->tablePluginWidget->item(i, 2)->text()=="NonSystem")
+        else if(ui->tablePluginWidget->item(i, 3)->text()=="NonSystem")
             tWidgetItem->_pluginType = PT_NON_SYS;
 
-        tWidgetItem->_pluginID = ui->tablePluginWidget->item(i, 3)->text();
+        tWidgetItem->_pluginID = ui->tablePluginWidget->item(i, 4)->text();
         tWidgetItem->_copyID = ui->tablePluginWidget->item(i, 5)->text();
-        tWidgetItem->_widgetObjectName = ui->tablePluginWidget->item(i, 6)->text();
     }
      return 0;
  }
@@ -469,7 +472,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
     ui->tablePluginWidget->clear();
 
     nHeadLst.clear();
-    nHeadLst<<""<<tr("No.")<<tr("Plugin Type")<<tr("Plugin ID")<<tr("Is a Copy")<<tr("Copy ID")<<tr("Widget")<<tr("Widget Detail");
+    nHeadLst<<""<<tr("No.")<<tr("Widget")<<tr("Plugin Type")<<tr("Plugin ID")<<tr("Copy ID")<<tr("Is a Copy")<<tr("Widget Detail");
 
     CCheckBoxHeaderView *myHeader = new CCheckBoxHeaderView(0, Qt::Horizontal, ui->tablePluginWidget);
     ui->tablePluginWidget->setHorizontalHeader(myHeader);
@@ -480,21 +483,22 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
     ui->tablePluginWidget->setColumnWidth(1, 100);
     ui->tablePluginWidget->setColumnWidth(2, 150);
     ui->tablePluginWidget->setColumnWidth(3, 150);
-    ui->tablePluginWidget->setColumnWidth(4, 80);
-    ui->tablePluginWidget->setColumnWidth(5, 150);
+    ui->tablePluginWidget->setColumnWidth(4, 150);
+    ui->tablePluginWidget->setColumnWidth(5, 80);
     ui->tablePluginWidget->setColumnWidth(6, 150);
     ui->tablePluginWidget->setColumnWidth(7, 200);
 
     setTableStyle(ui->tablePluginWidget);
 
     count = 0;
-    //把每个系统组件的widget信息都加载到table中
+    //把每个系统组件的ShowType为ST_DOCK的widget信息都加载到table中
     foreach (PluginInterface* pi, ((QCPF_Interface*)_view->_core)->I_SysPlugins) {
         foreach (PluginWidgetInfo* pwi, pi->I_WidgetList) {
 
             bool isExist = false;
             bool isChecked = false;
-
+            if(pwi->_showType != ST_DOCK)
+                continue;
             foreach (WidgetItem* wi, _view->_config._workspaceWidgetLst) {
                 if(wi->_pluginType == pi->I_PluginType &&
                    wi->_pluginID == pi->I_PluginID &&
@@ -518,11 +522,11 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
                 ui->tablePluginWidget->item(tRowCount, 0)->setCheckState(Qt::CheckState::Unchecked);
 
             ui->tablePluginWidget->setItem(tRowCount, 1, new QTableWidgetItem(QString::number(++count)));
-            ui->tablePluginWidget->setItem(tRowCount, 2, new QTableWidgetItem(tr("System")));
-            ui->tablePluginWidget->setItem(tRowCount, 3, new QTableWidgetItem(pi->I_PluginID));
-            ui->tablePluginWidget->setItem(tRowCount, 4, new QTableWidgetItem(tr("No")));
+            ui->tablePluginWidget->setItem(tRowCount, 2, new QTableWidgetItem(pwi->_widget->objectName()));
+            ui->tablePluginWidget->setItem(tRowCount, 3, new QTableWidgetItem(tr("System")));
+            ui->tablePluginWidget->setItem(tRowCount, 4, new QTableWidgetItem(pi->I_PluginID));
             ui->tablePluginWidget->setItem(tRowCount, 5, new QTableWidgetItem(pi->I_CopyID));
-            ui->tablePluginWidget->setItem(tRowCount, 6, new QTableWidgetItem(pwi->_widget->objectName()));
+            ui->tablePluginWidget->setItem(tRowCount, 6, new QTableWidgetItem(tr("No")));
             ui->tablePluginWidget->setItem(tRowCount, 7, new QTableWidgetItem(pwi->_widgetDetail));
         }
     }
@@ -558,11 +562,11 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
                 ui->tablePluginWidget->item(tRowCount, 0)->setCheckState(Qt::CheckState::Unchecked);
 
             ui->tablePluginWidget->setItem(tRowCount, 1, new QTableWidgetItem(QString::number(++count)));
-            ui->tablePluginWidget->setItem(tRowCount, 2, new QTableWidgetItem(tr("NonSystem")));
-            ui->tablePluginWidget->setItem(tRowCount, 3, new QTableWidgetItem(pi->I_PluginID));
-            ui->tablePluginWidget->setItem(tRowCount, 4, new QTableWidgetItem(pi->I_CopyID==""?tr("No"):tr("Yes")));
+            ui->tablePluginWidget->setItem(tRowCount, 2, new QTableWidgetItem(pwi->_widget->objectName()));
+            ui->tablePluginWidget->setItem(tRowCount, 3, new QTableWidgetItem(tr("NonSystem")));
+            ui->tablePluginWidget->setItem(tRowCount, 4, new QTableWidgetItem(pi->I_PluginID));
             ui->tablePluginWidget->setItem(tRowCount, 5, new QTableWidgetItem(pi->I_CopyID));
-            ui->tablePluginWidget->setItem(tRowCount, 6, new QTableWidgetItem(pwi->_widget->objectName()));
+            ui->tablePluginWidget->setItem(tRowCount, 6, new QTableWidgetItem(pi->I_CopyID==""?tr("No"):tr("Yes")));
             ui->tablePluginWidget->setItem(tRowCount, 7, new QTableWidgetItem(pwi->_widgetDetail));
         }
     }
@@ -740,7 +744,20 @@ void ViewEditor::on_btnRight_clicked()
     TreeItemMoveRight(ui->treeMenuEdit);
 }
 
-void ViewEditor::on_btnAddAction_clicked()
+void ViewEditor::on_btnAddSeperator_clicked()
+{
+    QTreeWidgetItem* curSelItem= ui->treeMenuEdit->currentItem();
+    if(curSelItem==nullptr || curSelItem->parent()==nullptr)//如果没有选中任何项，或者所选项为根节点，就不添加分隔符
+        return;
+    else
+    {
+        QTreeWidgetItem* seperator = new QTreeWidgetItem();
+        seperator->setText(0, QStringLiteral("--------------------"));
+        curSelItem->parent()->addChild(seperator);
+    }
+}
+
+void ViewEditor::on_btnLoadAction_clicked()
 {
     if(ui->treeMenuEdit->selectedItems().count()==0)
         return;
@@ -772,18 +789,6 @@ void ViewEditor::on_btnAddAction_clicked()
     delete  ce;
 }
 
-void ViewEditor::on_btnAddSeperator_clicked()
-{
-    QTreeWidgetItem* curSelItem= ui->treeMenuEdit->currentItem();
-    if(curSelItem==nullptr || curSelItem->parent()==nullptr)//如果没有选中任何项，或者所选项为根节点，就不添加分隔符
-        return;
-    else
-    {
-        QTreeWidgetItem* seperator = new QTreeWidgetItem();
-        seperator->setText(0, QStringLiteral("--------------------"));
-        curSelItem->parent()->addChild(seperator);
-    }
-}
 
 void ViewEditor::on_btnClearAction_clicked()
 {
@@ -916,12 +921,37 @@ void ViewEditor::on_btnAddWidget_Toolbar_clicked()
     PluginWidgetViewer* ce = new PluginWidgetViewer(plugInst->_core, this);
     ce->exec();
 
-    if(ui->treeToolbarEdit->findItems(ce->_itemTag, Qt::MatchFlag::MatchExactly).count()>0)
+    //从Toolbar editor, workspace editor, statusbar editor中查找是否有重复的项
+    if(ui->tableStatusbarEditer->findItems(ce->_itemTag, Qt::MatchFlag::MatchExactly).count()>0)
     {
-        QMessageBox::information(this, tr("Infomation"), tr("There is a same action existed!"));
+        QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in statusbar editor!"));
         return;
     }
 
+    bool isExitInPluginWidgetTable = false;
+    for(int i=0; i<ui->tablePluginWidget->rowCount(); i++)
+    {
+        QString tableTtemTag = getPluginWidgetTag(i);
+        if(ce->_itemTag == tableTtemTag)
+        {
+            isExitInPluginWidgetTable = true;
+            break;
+        }
+    }
+    if(isExitInPluginWidgetTable)
+    {
+        QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in workspace editor!"));
+        return;
+    }
+
+    //MatchExactly遍历根节点，MatchRecursive遍历整个树节点
+    if(ui->treeToolbarEdit->findItems(ce->_itemTag, Qt::MatchFlag::MatchRecursive).count()>0)
+    {
+        QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in toolbar editor!"));
+        return;
+    }
+
+    //=============================================
     if(tItem->parent() == nullptr)//说明是toplevelnode
     {
         if(ce->_isOk)
@@ -1200,13 +1230,37 @@ void ViewEditor::on_btnAddWidget_Statusbar_clicked()
     PluginWidgetViewer* ce = new PluginWidgetViewer(plugInst->_core, this);
     ce->exec();
 
-
-    if(ui->tableStatusbarEditer->findItems(ce->_itemTag, Qt::MatchFlag::MatchExactly).count()>0)
+    //从Toolbar editor, workspace editor, statusbar editor中查找是否有重复的项
+    //MatchExactly遍历根节点，MatchRecursive遍历整个树节点
+    if(ui->treeToolbarEdit->findItems(ce->_itemTag, Qt::MatchFlag::MatchRecursive).count()>0, 1)
     {
-        QMessageBox::information(this, tr("Infomation"), tr("There is a same action existed!"));
+        QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in toolbar editor!"));
         return;
     }
 
+    bool isExitInPluginWidgetTable = false;
+    for(int i=0; i<ui->tablePluginWidget->rowCount(); i++)
+    {
+        QString tableTtemTag = getPluginWidgetTag(i);
+        if(ce->_itemTag == tableTtemTag)
+        {
+            isExitInPluginWidgetTable = true;
+            break;
+        }
+    }
+    if(isExitInPluginWidgetTable)
+    {
+        QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in workspace editor!"));
+        return;
+    }
+
+    if(ui->tableStatusbarEditer->findItems(ce->_itemTag, Qt::MatchFlag::MatchExactly).count()>0)
+    {
+        QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in statusbar editor!"));
+        return;
+    }
+
+    //==========================================
     if(ce->_isOk)
     {
         int tRowCount = ui->tableStatusbarEditer->rowCount();
@@ -1304,4 +1358,38 @@ void ViewEditor::slot_SelAllOrNot(bool flag)
         for(;i<row;i++)
             ui->tablePluginWidget->item(i, 0)->setCheckState(Qt::CheckState::Unchecked);
     }
+}
+
+void ViewEditor::on_tablePluginWidget_itemClicked(QTableWidgetItem *item)
+{
+    if(item->column()!=0)
+        return;
+
+    //从Toolbar editor, workspace editor, statusbar editor中查找是否有重复的项
+    //检查此widget是否已经在工具栏或状态栏里添加过了。
+    if(item->checkState()==Qt::CheckState::Checked)
+    {
+        int rowIndex = item->row();
+        QString itemTag =getPluginWidgetTag(rowIndex);
+        if(ui->tableStatusbarEditer->findItems(itemTag, Qt::MatchFlag::MatchExactly).count()>0)
+        {
+            QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in statusbar editor!"));
+            item->setCheckState(Qt::CheckState::Unchecked);
+            return;
+        }
+        //MatchExactly遍历根节点，MatchRecursive遍历整个树节点
+        if(ui->treeToolbarEdit->findItems(itemTag, Qt::MatchFlag::MatchRecursive).count()>0)
+        {
+            QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in toolbar editor!"));
+            item->setCheckState(Qt::CheckState::Unchecked);
+            return;
+        }
+    }
+
+    //检查选择项是否ST_POPUP，这将意味着它有可能会被action调用而展示，有可能产生显示异常，提醒用户确认
+}
+
+QString ViewEditor::getPluginWidgetTag(int rowIndex)
+{
+    return QString(tr("%1;%2;%3;%4")).arg(ui->tablePluginWidget->item(rowIndex, 2)->text()).arg(ui->tablePluginWidget->item(rowIndex, 3)->text()).arg(ui->tablePluginWidget->item(rowIndex, 4)->text()).arg(ui->tablePluginWidget->item(rowIndex, 5)->text());
 }

@@ -5,7 +5,7 @@ DEFINES += QCFMANAGER_LIBRARY
 
 TARGET =  ../../../bin/debug/Bin/Plugins/QCPF_ViewEditor
 TEMPLATE = lib
-CONFIG += plugin
+CONFIG += plugin c++11
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -49,7 +49,7 @@ FORMS += \
     pluginwidgetviewer.ui
 
 
-unix:!macx|win32: LIBS += -L$$PWD/../../bin/debug/Bin/ -lQCPF_ViewModel
+unix:!macx|win32: LIBS += -L$$PWD/../../bin/debug/ -lQCPF_ViewModel
 
 INCLUDEPATH += $$PWD/../../QCPF_ViewModel
 DEPENDPATH += $$PWD/../../QCPF_ViewModel

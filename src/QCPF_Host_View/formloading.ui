@@ -32,7 +32,7 @@
    <property name="geometry">
     <rect>
      <x>210</x>
-     <y>40</y>
+     <y>50</y>
      <width>351</width>
      <height>301</height>
     </rect>
@@ -166,8 +166,14 @@
     <property name="text">
      <string>QCPF Framework</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
     <property name="wordWrap">
      <bool>true</bool>
+    </property>
+    <property name="margin">
+     <number>5</number>
     </property>
    </widget>
   </widget>
@@ -175,7 +181,7 @@
    <property name="geometry">
     <rect>
      <x>210</x>
-     <y>350</y>
+     <y>360</y>
      <width>351</width>
      <height>61</height>
     </rect>
@@ -193,8 +199,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>7</x>
-     <y>434</y>
+     <x>30</x>
+     <y>430</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -207,14 +213,14 @@ color: rgb(104, 104, 104);</string>
     <string>Copyright © Jamie.T</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labInfoPrefix_3">
+  <widget class="QLabel" name="labCoreVersion">
    <property name="enabled">
     <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
-     <x>471</x>
-     <y>434</y>
+     <x>210</x>
+     <y>430</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -224,7 +230,27 @@ color: rgb(104, 104, 104);</string>
 color: rgb(104, 104, 104);</string>
    </property>
    <property name="text">
-    <string>Frame Verson:1.0.0.2</string>
+    <string>Core Verson:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labViewVersion">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>430</y>
+     <width>131</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;
+color: rgb(104, 104, 104);</string>
+   </property>
+   <property name="text">
+    <string>View Verson:</string>
    </property>
   </widget>
  </widget>

@@ -23,7 +23,7 @@ PluginIO* instance;
 PluginIO::PluginIO()
 {
     instance = this;
-    PluginIO::I_PluginID = tr("QCFSystemManager");
+    PluginIO::I_PluginID = tr("QCPF_SystemManager");
     PluginIO::I_PluginType = PT_SYS;
     PluginIO::I_PluginAliasName = tr("System Manager");
     PluginIO::I_PluginAuther = tr("Jamie.T");
@@ -48,126 +48,101 @@ PluginIO* PluginIO::getInstance()
 ***************************************************/
 PluginInterface* PluginIO::Clone(QString copyID, QString copyAliasName, QString copyComment)
 {
-    PluginIO *_clonePlugin = new PluginIO();
-
-    _clonePlugin->I_PluginID = this->I_PluginID;
-    _clonePlugin->I_PluginType = this->I_PluginType;
-    _clonePlugin->I_PluginAliasName = this->I_PluginAliasName;
-    _clonePlugin->I_PluginVersion = this->I_PluginVersion;
-    _clonePlugin->I_PluginAuther = this->I_PluginAuther;
-    _clonePlugin->I_PluginComment = this->I_PluginComment;
-    _clonePlugin->I_PluginFilePath = this->I_PluginFilePath;
-    _clonePlugin->I_PluginTag = this->I_PluginTag;
-    _clonePlugin->I_PluginAuthority = this->I_PluginAuthority;
-
-    _clonePlugin->I_IsCopy = true;
-
-    _clonePlugin->I_CopyID = copyID;
-    _clonePlugin->I_CopyAliasName = copyAliasName;
-    _clonePlugin->I_CopyComment = copyComment;
-
-    _clonePlugin->I_PluginVar = this->I_PluginVar;
-    _clonePlugin->I_PluginVarList = this->I_PluginVarList;
-    _clonePlugin->I_FunctionList = this->I_FunctionList;
-    _clonePlugin->I_WidgetList = this->I_WidgetList;
-    return _clonePlugin;
+    return nullptr;
 }
 
 bool PluginIO::ConnectCore(QObject* core){
 
-    _core = (QCPF_Interface*)(core);
+    _core = (QCPF_Model*)(core);
+    InitActionList(this);
+    InitFunctionList(this);
+    if(_core->I_RunMode == RM_APPLICATION)
+            InitWidgetList(this);
 
     return _core?true:false;
 }
 
-bool PluginIO::ConnectViewModel(QObject *view){
-
-    _view = (QCPF_ViewModel*)view;
-
-    InitFunctionList();
-    InitWidgetList();
-
-    return _view?true:false;
-}
-
 void PluginIO::slot_Action(bool checkState){
     QAction *action = (QAction*)sender();
-    QString actionName;
+    QString actionName =  action->property("ItemActionName").toString();
 
-    foreach (PluginFunctionInfo* pfi, I_FunctionList) {
-        if(pfi->_functonName == action->text() || pfi->_functonName == actionName)
+    foreach (PluginActionInfo* pai, I_ActionList) {
+        if(pai->_actionName == action->text() || pai->_actionName == actionName)
         {
-            pfi->pFunction(checkState);
+            (this->*pai->_pAction)(checkState);
             break;
         }
     }
 }
 
-void ShowSystemPluginManager(bool);
-void ShowRouteManager(bool);
-void CloseMainApplication(bool);
-void ShowAboutForm(bool checkState);
-void PluginIO::InitFunctionList()
+void PluginIO::InitActionList(PluginIO* plugin)
 {
-    PluginFunctionInfo* pai = new PluginFunctionInfo();
-    pai->_functonName = tr("System Manager");
-    pai->_functionDetail = tr("Manage the system module and params.");
-    pai->pFunction = &ShowSystemPluginManager;
+    PluginActionInfo* pai = new PluginActionInfo();
+    pai->_actionName = tr("System Manager");
+    pai->_actionDetail = tr("Manage the system module and params.");
+    pai->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowSystemPluginManager);
 
-    I_FunctionList.append(pai);
+    plugin->I_ActionList.append(pai);
 
-    PluginFunctionInfo* pai2 = new PluginFunctionInfo();
-    pai2->_functonName = tr("Plugin route editer.");
-    pai2->_functionDetail = tr("config the connect route in plugin functions");
-    pai2->pFunction = &ShowRouteManager;
+    PluginActionInfo* pai2 = new PluginActionInfo();
+    pai2->_actionName = tr("Plugin Route Editer.");
+    pai2->_actionDetail = tr("config the connect route in plugin functions");
+    pai2->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowRouteManager);
 
-    I_FunctionList.append(pai2);
+    plugin->I_ActionList.append(pai2);
 
-    PluginFunctionInfo* pai3 = new PluginFunctionInfo();
-    pai3->_functonName = tr("Exit");
-    pai3->_functionDetail = tr("Exit and close the main application.");
-    pai3->pFunction = &CloseMainApplication;
+    PluginActionInfo* pai3 = new PluginActionInfo();
+    pai3->_actionName = tr("Exit");
+    pai3->_actionDetail = tr("Exit and close the main application.");
+    pai3->_pAction = (FPTR_ACTION)(&PluginIO::Action_CloseMainApplication);
 
-    I_FunctionList.append(pai3);
+    plugin->I_ActionList.append(pai3);
 
-    PluginFunctionInfo* pai4 = new PluginFunctionInfo();
-    pai4->_functonName = tr("About");
-    pai4->_functionDetail = tr("show about form.");
-    pai4->pFunction = &ShowAboutForm;
+    PluginActionInfo* pai4 = new PluginActionInfo();
+    pai4->_actionName = tr("About");
+    pai4->_actionDetail = tr("show about form.");
+    pai4->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowAboutForm);
 
-    I_FunctionList.append(pai4);
+    plugin->I_ActionList.append(pai4);
 }
 
-void PluginIO::InitWidgetList()
+void PluginIO::InitFunctionList(PluginIO* plugin)
+{
+
+}
+
+void PluginIO::InitWidgetList(PluginIO* plugin)
 {
     QCPF_Model* core = (QCPF_Model*)_core;
-    PluginWidgetInfo *nFormInfo = new PluginWidgetInfo();
+    PluginWidgetInfo *nWdtPluginManager = new PluginWidgetInfo();
 
-    nFormInfo->_showType = ST_POPUP;
-    nFormInfo->_widget = new SystemManager(core);
-    nFormInfo->_widget->setObjectName("wdt_SystemPluginManager");
-    nFormInfo->_origWidth = nFormInfo->_widget->width();
-    nFormInfo->_origHeight = nFormInfo->_widget->height();
-    nFormInfo->_widgetDetail = tr("It's used for managing the System plugins.");
-    PluginIO::I_WidgetList.append(nFormInfo);
+    nWdtPluginManager->_showType = ST_POPUP;
+    nWdtPluginManager->_widget = new SystemManager(core);
+    nWdtPluginManager->_widget->setObjectName("wdt_SystemPluginManager");
+    nWdtPluginManager->_origWidth = nWdtPluginManager->_widget->width();
+    nWdtPluginManager->_origHeight = nWdtPluginManager->_widget->height();
+    nWdtPluginManager->_widgetDetail = tr("It's used for managing the System plugins.");
+    plugin->I_WidgetList.append(nWdtPluginManager);
     //-------------------
-    PluginWidgetInfo *nFormInfo2 = new PluginWidgetInfo();
+    PluginWidgetInfo *nWdtCurrentDateTime = new PluginWidgetInfo();
 
-    nFormInfo2->_widget = new wdt_CurrentDataTime();
-    nFormInfo2->_origWidth = nFormInfo2->_widget->width();
-    nFormInfo2->_origHeight = nFormInfo2->_widget->height();
-    nFormInfo2->_widgetDetail = tr("It's used for showwing the data time.");
+    nWdtCurrentDateTime->_showType = ST_DOCK;
+    nWdtCurrentDateTime->_widget = new wdt_CurrentDataTime();
+    nWdtCurrentDateTime->_origWidth = nWdtCurrentDateTime->_widget->width();
+    nWdtCurrentDateTime->_origHeight = nWdtCurrentDateTime->_widget->height();
+    nWdtCurrentDateTime->_widgetDetail = tr("It's used for showwing the data time.");
 
-    PluginIO::I_WidgetList.append(nFormInfo2);
+    plugin->I_WidgetList.append(nWdtCurrentDateTime);
     //-------------------
-    PluginWidgetInfo *nFormAbout = new PluginWidgetInfo();
+    PluginWidgetInfo *nWdtAbout = new PluginWidgetInfo();
 
-    nFormAbout->_widget = new Dialog_About();
-    nFormAbout->_origWidth = nFormAbout->_widget->width();
-    nFormAbout->_origHeight = nFormAbout->_widget->height();
-    nFormAbout->_widgetDetail = tr("It's used for introducing QCommonFrame.");
+    nWdtAbout->_showType = ST_POPUP;
+    nWdtAbout->_widget = new Dialog_About();
+    nWdtAbout->_origWidth = nWdtAbout->_widget->width();
+    nWdtAbout->_origHeight = nWdtAbout->_widget->height();
+    nWdtAbout->_widgetDetail = tr("It's used for introducing QCommonFrame.");
 
-    PluginIO::I_WidgetList.append(nFormAbout);
+    plugin->I_WidgetList.append(nWdtAbout);
 }
 
 //通用方法
@@ -196,11 +171,6 @@ int PluginIO::OnCoreInitialize(){
     return 0;
 }
 
-int PluginIO::OnViewModelInitialize(){
-
-    return 0;
-}
-
 int PluginIO::OnViewCreated(){
 
     return 0;
@@ -219,9 +189,9 @@ int PluginIO::OnViewClosing(){
 /***********************************************************************
  *  action 函数指针所对应的回调函数
  * *********************************************************************/
-void ShowSystemPluginManager(bool checkState)
+void PluginIO::Action_ShowSystemPluginManager(bool checkState)
 {
-    if(instance->I_WidgetList.count()>0)
+    if(I_WidgetList.count()>0)
     {
         foreach (PluginWidgetInfo* pwi, instance->I_WidgetList) {
             if(pwi->_widget->objectName() == "wdt_SystemPluginManager")
@@ -232,9 +202,9 @@ void ShowSystemPluginManager(bool checkState)
     }
 }
 
-void ShowRouteManager(bool checkState)
+void PluginIO::Action_ShowRouteManager(bool checkState)
 {
-    if(instance->I_WidgetList.count()>0)
+    if(I_WidgetList.count()>0)
     {
         foreach (PluginWidgetInfo* pwi, instance->I_WidgetList) {
             if(pwi->_widget->objectName() == "wdt_RouteManager")
@@ -245,16 +215,16 @@ void ShowRouteManager(bool checkState)
     }
 }
 
-void CloseMainApplication(bool checkState)
+void PluginIO::Action_CloseMainApplication(bool checkState)
 {
     tagOutputInfo tInfo;
     tInfo._type = INFT_APPLICATION_CLOSE;
-    instance->sig_OutputInfo(tInfo);
+    sig_OutputInfo(tInfo);
 }
 
-void ShowAboutForm(bool checkState)
+void PluginIO::Action_ShowAboutForm(bool checkState)
 {
-    if(instance->I_WidgetList.count()>0)
+    if(I_WidgetList.count()>0)
     {
         foreach (PluginWidgetInfo* pwi, instance->I_WidgetList) {
             if(pwi->_widget->objectName() == "Dialog_About")

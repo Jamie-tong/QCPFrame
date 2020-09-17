@@ -61,48 +61,55 @@ PluginInterface* PluginIO::Clone(QString copyID, QString copyAliasName, QString 
     _clonePlugin->I_CopyComment = copyComment;
 
     _clonePlugin->I_PluginVar = this->I_PluginVar;
-    _clonePlugin->I_PluginVarList = this->I_PluginVarList;
-    _clonePlugin->I_FunctionList = this->I_FunctionList;
-    _clonePlugin->I_WidgetList = this->I_WidgetList;
+
+    foreach(QVariant v, this->I_PluginVarList)
+        _clonePlugin->I_PluginVarList.append(v);
+
+    //action没必要深拷贝，保持和原始组件一样的触发功能即可
+    _clonePlugin->I_ActionList = this->I_ActionList;
+    //function和widget需要深拷贝
+    InitFunctionList(_clonePlugin);
+    if(_core->I_RunMode == RM_APPLICATION)
+            InitWidgetList(_clonePlugin);
+
     return _clonePlugin;
 }
 
 bool PluginIO::ConnectCore(QObject* core){
 
     _core = (QCPF_Interface*)(core);
+    InitActionList(this);
+    InitFunctionList(this);
+    if(_core->I_RunMode == RM_APPLICATION)
+            InitWidgetList(this);
 
     return _core?true:false;
-}
-
-bool PluginIO::ConnectViewModel(QObject *view){
-
-    _view = (QCPF_ViewModel*)view;
-
-    InitFunctionList();
-    InitWidgetList();
-
-    return _view?true:false;
 }
 
 void PluginIO::slot_Action(bool checkState){
     QAction *action = (QAction*)sender();
     QString actionName =  action->property("ItemActionName").toString();
 
-    foreach (PluginFunctionInfo* pfi, I_FunctionList) {
-        if(pfi->_functonName == action->text() || pfi->_functonName == actionName)
+    foreach (PluginActionInfo* pai, I_ActionList) {
+        if(pai->_actionName == action->text() || pai->_actionName == actionName)
         {
-            pfi->pFunction(checkState);
+            (this->*pai->_pAction)(checkState);
             break;
         }
     }
 }
 
-void PluginIO::InitWidgetList()
+void PluginIO::InitActionList(PluginIO* plugin)
 {
 
 }
 
-void PluginIO::InitFunctionList()
+void PluginIO::InitFunctionList(PluginIO* plugin)
+{
+
+}
+
+void PluginIO::InitWidgetList(PluginIO* plugin)
 {
 
 }
@@ -129,11 +136,6 @@ return 0;
 }
 
 int PluginIO::OnCoreInitialize(){
-
-    return 0;
-}
-
-int PluginIO::OnViewModelInitialize(){
 
     return 0;
 }

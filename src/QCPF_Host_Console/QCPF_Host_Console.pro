@@ -3,6 +3,7 @@ QT -= gui
 CONFIG += c++11 console
 CONFIG -= app_bundle
 
+TARGET =  ../../bin/debug/QCPF_HostConsole
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -15,9 +16,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        QCPF_Controllor.cpp \
         main.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+
+HEADERS += \
+    QCPF_Controllor.h \
+    cmdline.h
+
+
+unix:!macx|win32: LIBS += -L$$PWD/../bin/debug/ -lQCPF_Model
+
+INCLUDEPATH += $$PWD/../QCPF_Model
+DEPENDPATH += $$PWD/../QCPF_Model

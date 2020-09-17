@@ -25,11 +25,11 @@ public:
     {
         if (wdt_ParamPanel->objectName().isEmpty())
             wdt_ParamPanel->setObjectName(QString::fromUtf8("wdt_ParamPanel"));
-        wdt_ParamPanel->resize(437, 768);
+        wdt_ParamPanel->resize(437, 539);
         wdt_ParamPanel->setStyleSheet(QString::fromUtf8(""));
         frame = new QFrame(wdt_ParamPanel);
         frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(0, 0, 441, 771));
+        frame->setGeometry(QRect(0, 0, 452, 771));
         frame->setStyleSheet(QString::fromUtf8("background-image: url(:/bin/debug/Images/status.png);"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);

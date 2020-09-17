@@ -6,7 +6,7 @@ TARGET =  ../../../bin/debug/Plugins/QPlugin3
 TEMPLATE = lib
 DEFINES += QPLUGIN3_LIBRARY
 
-CONFIG += c++11
+CONFIG += plugin c++11
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -21,13 +21,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     PluginIO.cpp \
-    qplugin3.cpp
+    StepUp.cpp \
+    stepdown.cpp
 
 HEADERS += \
     ../../../interface/hostinterface.h \
     ../../../interface/plugininterface.h \
     PluginIO.h \
-    qplugin3.h
+    StepUp.h \
+    stepdown.h
 
 # Default rules for deployment.
 unix {

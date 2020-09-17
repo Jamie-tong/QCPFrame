@@ -67,67 +67,69 @@ PluginInterface* PluginIO::Clone(QString copyID, QString copyAliasName, QString 
     _clonePlugin->I_CopyComment = copyComment;
 
     _clonePlugin->I_PluginVar = this->I_PluginVar;
-    _clonePlugin->I_PluginVarList = this->I_PluginVarList;
-    _clonePlugin->I_FunctionList = this->I_FunctionList;
-    _clonePlugin->I_WidgetList = this->I_WidgetList;
+
+    foreach(QVariant v, this->I_PluginVarList)
+        _clonePlugin->I_PluginVarList.append(v);
+
+    //action没必要深拷贝，保持和原始组件一样的触发功能即可
+    _clonePlugin->I_ActionList = this->I_ActionList;
+    //function和widget需要深拷贝
+    InitFunctionList(_clonePlugin);
+    if(_core->I_RunMode == RM_APPLICATION)
+            InitWidgetList(_clonePlugin);
     return _clonePlugin;
 }
 
 bool PluginIO::ConnectCore(QObject* core){
 
     _core = (QCPF_Interface*)(core);
+    InitActionList(this);
+    InitFunctionList(this);
+    if(_core->I_RunMode == RM_APPLICATION)
+            InitWidgetList(this);
 
     return _core?true:false;
-}
-
-bool PluginIO::ConnectViewModel(QObject *view){
-
-    _view = (QCPF_ViewModel*)view;
-
-    InitFunctionList();
-    InitWidgetList();
-
-    return _view?true:false;
 }
 
 void PluginIO::slot_Action(bool checkState){
     QAction *action = (QAction*)sender();
     QString actionName =  action->property("ItemActionName").toString();
 
-    foreach (PluginFunctionInfo* pfi, I_FunctionList) {
-        if(pfi->_functonName == action->text() || pfi->_functonName == actionName)
+    foreach (PluginActionInfo* pai, I_ActionList) {
+        if(pai->_actionName == action->text() || pai->_actionName == actionName)
         {
-            pfi->pFunction(checkState);
+            (this->*pai->_pAction)(checkState);
             break;
         }
     }
 }
 
-void PluginIO::InitFunctionList()
+void PluginIO::InitActionList(PluginIO* plugin)
 {
 
 }
 
-void PluginIO::InitWidgetList()
+void PluginIO::InitFunctionList(PluginIO* plugin)
 {
-    PluginWidgetInfo *nFormInfo = new PluginWidgetInfo();
-    nFormInfo->_widget = new pluginform2();
 
-    PluginIO::I_WidgetList.append(nFormInfo);
+}
+
+void PluginIO::InitWidgetList(PluginIO* plugin)
+{
     //-----------------
-    PluginWidgetInfo *nFormHud = new PluginWidgetInfo();
-    nFormHud->_widget = new wdt_Hud();
-    nFormHud->_origWidth = nFormHud->_widget->width();
-    nFormHud->_origHeight = nFormHud->_widget->height();
-    nFormHud->_widgetDetail = tr("hud control.");
-    PluginIO::I_WidgetList.append(nFormHud);
+    PluginWidgetInfo *nWdtHud = new PluginWidgetInfo();
+    nWdtHud->_widget = new wdt_Hud();
+    nWdtHud->_origWidth = nWdtHud->_widget->width();
+    nWdtHud->_origHeight = nWdtHud->_widget->height();
+    nWdtHud->_widgetDetail = tr("hud control.");
+    plugin->I_WidgetList.append(nWdtHud);
     //-----------------
-    PluginWidgetInfo *nFormParamPanel = new PluginWidgetInfo();
-    nFormParamPanel->_widget = new wdt_ParamPanel();
-    nFormParamPanel->_origWidth = nFormParamPanel->_widget->width();
-    nFormParamPanel->_origHeight = nFormParamPanel->_widget->height();
-    nFormParamPanel->_widgetDetail = tr("paramPanel.");
-    PluginIO::I_WidgetList.append(nFormParamPanel);
+    PluginWidgetInfo *nWdtParamPanel = new PluginWidgetInfo();
+    nWdtParamPanel->_widget = new wdt_ParamPanel();
+    nWdtParamPanel->_origWidth = nWdtParamPanel->_widget->width();
+    nWdtParamPanel->_origHeight = nWdtParamPanel->_widget->height();
+    nWdtParamPanel->_widgetDetail = tr("paramPanel.");
+    plugin->I_WidgetList.append(nWdtParamPanel);
 }
 
 
@@ -153,11 +155,6 @@ return 0;
 }
 
 int PluginIO::OnCoreInitialize(){
-
-    return 0;
-}
-
-int PluginIO::OnViewModelInitialize(){
 
     return 0;
 }

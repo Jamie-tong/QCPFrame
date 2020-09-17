@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ViewEditor_t {
-    QByteArrayData data[50];
-    char stringdata0[999];
+    QByteArrayData data[52];
+    char stringdata0[1051];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,40 +48,42 @@ QT_MOC_LITERAL(12, 183, 16), // "on_btnUp_clicked"
 QT_MOC_LITERAL(13, 200, 18), // "on_btnDown_clicked"
 QT_MOC_LITERAL(14, 219, 18), // "on_btnLeft_clicked"
 QT_MOC_LITERAL(15, 238, 19), // "on_btnRight_clicked"
-QT_MOC_LITERAL(16, 258, 23), // "on_btnAddAction_clicked"
-QT_MOC_LITERAL(17, 282, 26), // "on_btnAddSeperator_clicked"
-QT_MOC_LITERAL(18, 309, 34), // "on_treeMenuEdit_currentItemCh..."
-QT_MOC_LITERAL(19, 344, 16), // "QTreeWidgetItem*"
-QT_MOC_LITERAL(20, 361, 7), // "current"
-QT_MOC_LITERAL(21, 369, 8), // "previous"
-QT_MOC_LITERAL(22, 378, 25), // "on_btnClearAction_clicked"
-QT_MOC_LITERAL(23, 404, 24), // "on_btnIconFinder_clicked"
-QT_MOC_LITERAL(24, 429, 31), // "on_btnAddAction_Toolbar_clicked"
-QT_MOC_LITERAL(25, 461, 34), // "on_btnAddSeperator_Toolbar_cl..."
-QT_MOC_LITERAL(26, 496, 31), // "on_btnAddWidget_Toolbar_clicked"
-QT_MOC_LITERAL(27, 528, 32), // "on_btnDeleteItem_Toolbar_clicked"
-QT_MOC_LITERAL(28, 561, 28), // "on_btnMoveUp_Toolbar_clicked"
-QT_MOC_LITERAL(29, 590, 30), // "on_btnMoveDown_Toolbar_clicked"
-QT_MOC_LITERAL(30, 621, 33), // "on_btnAddWidget_Statusbar_cli..."
-QT_MOC_LITERAL(31, 655, 34), // "on_btnDeleteItem_Statusbar_cl..."
-QT_MOC_LITERAL(32, 690, 30), // "on_btnMoveUp_Statusbar_clicked"
-QT_MOC_LITERAL(33, 721, 32), // "on_btnMoveDown_Statusbar_clicked"
-QT_MOC_LITERAL(34, 754, 24), // "on_btnAddToolbar_clicked"
-QT_MOC_LITERAL(35, 779, 27), // "on_btnDeleteToolbar_clicked"
-QT_MOC_LITERAL(36, 807, 15), // "TableItemMoveUp"
-QT_MOC_LITERAL(37, 823, 13), // "QTableWidget*"
-QT_MOC_LITERAL(38, 837, 5), // "table"
-QT_MOC_LITERAL(39, 843, 17), // "TableItemMoveDown"
-QT_MOC_LITERAL(40, 861, 14), // "TreeItemMoveUp"
-QT_MOC_LITERAL(41, 876, 12), // "QTreeWidget*"
-QT_MOC_LITERAL(42, 889, 10), // "treeWidget"
-QT_MOC_LITERAL(43, 900, 16), // "TreeItemMoveDown"
-QT_MOC_LITERAL(44, 917, 16), // "TreeItemMoveLeft"
-QT_MOC_LITERAL(45, 934, 17), // "TreeItemMoveRight"
-QT_MOC_LITERAL(46, 952, 20), // "treeWidgetOpenEditor"
-QT_MOC_LITERAL(47, 973, 4), // "item"
-QT_MOC_LITERAL(48, 978, 3), // "col"
-QT_MOC_LITERAL(49, 982, 16) // "slot_SelAllOrNot"
+QT_MOC_LITERAL(16, 258, 26), // "on_btnAddSeperator_clicked"
+QT_MOC_LITERAL(17, 285, 34), // "on_treeMenuEdit_currentItemCh..."
+QT_MOC_LITERAL(18, 320, 16), // "QTreeWidgetItem*"
+QT_MOC_LITERAL(19, 337, 7), // "current"
+QT_MOC_LITERAL(20, 345, 8), // "previous"
+QT_MOC_LITERAL(21, 354, 25), // "on_btnClearAction_clicked"
+QT_MOC_LITERAL(22, 380, 24), // "on_btnIconFinder_clicked"
+QT_MOC_LITERAL(23, 405, 31), // "on_btnAddAction_Toolbar_clicked"
+QT_MOC_LITERAL(24, 437, 34), // "on_btnAddSeperator_Toolbar_cl..."
+QT_MOC_LITERAL(25, 472, 31), // "on_btnAddWidget_Toolbar_clicked"
+QT_MOC_LITERAL(26, 504, 32), // "on_btnDeleteItem_Toolbar_clicked"
+QT_MOC_LITERAL(27, 537, 28), // "on_btnMoveUp_Toolbar_clicked"
+QT_MOC_LITERAL(28, 566, 30), // "on_btnMoveDown_Toolbar_clicked"
+QT_MOC_LITERAL(29, 597, 33), // "on_btnAddWidget_Statusbar_cli..."
+QT_MOC_LITERAL(30, 631, 34), // "on_btnDeleteItem_Statusbar_cl..."
+QT_MOC_LITERAL(31, 666, 30), // "on_btnMoveUp_Statusbar_clicked"
+QT_MOC_LITERAL(32, 697, 32), // "on_btnMoveDown_Statusbar_clicked"
+QT_MOC_LITERAL(33, 730, 24), // "on_btnAddToolbar_clicked"
+QT_MOC_LITERAL(34, 755, 27), // "on_btnDeleteToolbar_clicked"
+QT_MOC_LITERAL(35, 783, 15), // "TableItemMoveUp"
+QT_MOC_LITERAL(36, 799, 13), // "QTableWidget*"
+QT_MOC_LITERAL(37, 813, 5), // "table"
+QT_MOC_LITERAL(38, 819, 17), // "TableItemMoveDown"
+QT_MOC_LITERAL(39, 837, 14), // "TreeItemMoveUp"
+QT_MOC_LITERAL(40, 852, 12), // "QTreeWidget*"
+QT_MOC_LITERAL(41, 865, 10), // "treeWidget"
+QT_MOC_LITERAL(42, 876, 16), // "TreeItemMoveDown"
+QT_MOC_LITERAL(43, 893, 16), // "TreeItemMoveLeft"
+QT_MOC_LITERAL(44, 910, 17), // "TreeItemMoveRight"
+QT_MOC_LITERAL(45, 928, 24), // "on_btnLoadAction_clicked"
+QT_MOC_LITERAL(46, 953, 32), // "on_tablePluginWidget_itemClicked"
+QT_MOC_LITERAL(47, 986, 17), // "QTableWidgetItem*"
+QT_MOC_LITERAL(48, 1004, 4), // "item"
+QT_MOC_LITERAL(49, 1009, 20), // "treeWidgetOpenEditor"
+QT_MOC_LITERAL(50, 1030, 3), // "col"
+QT_MOC_LITERAL(51, 1034, 16) // "slot_SelAllOrNot"
 
     },
     "ViewEditor\0sig_SelAllOrNot\0\0flag\0"
@@ -91,7 +93,6 @@ QT_MOC_LITERAL(49, 982, 16) // "slot_SelAllOrNot"
     "on_btnAddNode_clicked\0on_btnDeleteNode_clicked\0"
     "on_btnUp_clicked\0on_btnDown_clicked\0"
     "on_btnLeft_clicked\0on_btnRight_clicked\0"
-    "on_btnAddAction_clicked\0"
     "on_btnAddSeperator_clicked\0"
     "on_treeMenuEdit_currentItemChanged\0"
     "QTreeWidgetItem*\0current\0previous\0"
@@ -112,8 +113,10 @@ QT_MOC_LITERAL(49, 982, 16) // "slot_SelAllOrNot"
     "QTableWidget*\0table\0TableItemMoveDown\0"
     "TreeItemMoveUp\0QTreeWidget*\0treeWidget\0"
     "TreeItemMoveDown\0TreeItemMoveLeft\0"
-    "TreeItemMoveRight\0treeWidgetOpenEditor\0"
-    "item\0col\0slot_SelAllOrNot"
+    "TreeItemMoveRight\0on_btnLoadAction_clicked\0"
+    "on_tablePluginWidget_itemClicked\0"
+    "QTableWidgetItem*\0item\0treeWidgetOpenEditor\0"
+    "col\0slot_SelAllOrNot"
 };
 #undef QT_MOC_LITERAL
 
@@ -123,7 +126,7 @@ static const uint qt_meta_data_ViewEditor[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      38,   14, // methods
+      39,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -131,46 +134,47 @@ static const uint qt_meta_data_ViewEditor[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  204,    2, 0x06 /* Public */,
+       1,    1,  209,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,  207,    2, 0x08 /* Private */,
-       5,    0,  208,    2, 0x08 /* Private */,
-       6,    0,  209,    2, 0x08 /* Private */,
-       7,    0,  210,    2, 0x08 /* Private */,
-       8,    0,  211,    2, 0x08 /* Private */,
-       9,    0,  212,    2, 0x08 /* Private */,
-      10,    0,  213,    2, 0x08 /* Private */,
-      11,    0,  214,    2, 0x08 /* Private */,
-      12,    0,  215,    2, 0x08 /* Private */,
-      13,    0,  216,    2, 0x08 /* Private */,
-      14,    0,  217,    2, 0x08 /* Private */,
-      15,    0,  218,    2, 0x08 /* Private */,
-      16,    0,  219,    2, 0x08 /* Private */,
-      17,    0,  220,    2, 0x08 /* Private */,
-      18,    2,  221,    2, 0x08 /* Private */,
-      22,    0,  226,    2, 0x08 /* Private */,
-      23,    0,  227,    2, 0x08 /* Private */,
-      24,    0,  228,    2, 0x08 /* Private */,
-      25,    0,  229,    2, 0x08 /* Private */,
-      26,    0,  230,    2, 0x08 /* Private */,
-      27,    0,  231,    2, 0x08 /* Private */,
-      28,    0,  232,    2, 0x08 /* Private */,
-      29,    0,  233,    2, 0x08 /* Private */,
-      30,    0,  234,    2, 0x08 /* Private */,
-      31,    0,  235,    2, 0x08 /* Private */,
-      32,    0,  236,    2, 0x08 /* Private */,
-      33,    0,  237,    2, 0x08 /* Private */,
-      34,    0,  238,    2, 0x08 /* Private */,
-      35,    0,  239,    2, 0x08 /* Private */,
-      36,    1,  240,    2, 0x08 /* Private */,
-      39,    1,  243,    2, 0x08 /* Private */,
-      40,    1,  246,    2, 0x08 /* Private */,
-      43,    1,  249,    2, 0x08 /* Private */,
-      44,    1,  252,    2, 0x08 /* Private */,
-      45,    1,  255,    2, 0x08 /* Private */,
-      46,    2,  258,    2, 0x0a /* Public */,
-      49,    1,  263,    2, 0x0a /* Public */,
+       4,    0,  212,    2, 0x08 /* Private */,
+       5,    0,  213,    2, 0x08 /* Private */,
+       6,    0,  214,    2, 0x08 /* Private */,
+       7,    0,  215,    2, 0x08 /* Private */,
+       8,    0,  216,    2, 0x08 /* Private */,
+       9,    0,  217,    2, 0x08 /* Private */,
+      10,    0,  218,    2, 0x08 /* Private */,
+      11,    0,  219,    2, 0x08 /* Private */,
+      12,    0,  220,    2, 0x08 /* Private */,
+      13,    0,  221,    2, 0x08 /* Private */,
+      14,    0,  222,    2, 0x08 /* Private */,
+      15,    0,  223,    2, 0x08 /* Private */,
+      16,    0,  224,    2, 0x08 /* Private */,
+      17,    2,  225,    2, 0x08 /* Private */,
+      21,    0,  230,    2, 0x08 /* Private */,
+      22,    0,  231,    2, 0x08 /* Private */,
+      23,    0,  232,    2, 0x08 /* Private */,
+      24,    0,  233,    2, 0x08 /* Private */,
+      25,    0,  234,    2, 0x08 /* Private */,
+      26,    0,  235,    2, 0x08 /* Private */,
+      27,    0,  236,    2, 0x08 /* Private */,
+      28,    0,  237,    2, 0x08 /* Private */,
+      29,    0,  238,    2, 0x08 /* Private */,
+      30,    0,  239,    2, 0x08 /* Private */,
+      31,    0,  240,    2, 0x08 /* Private */,
+      32,    0,  241,    2, 0x08 /* Private */,
+      33,    0,  242,    2, 0x08 /* Private */,
+      34,    0,  243,    2, 0x08 /* Private */,
+      35,    1,  244,    2, 0x08 /* Private */,
+      38,    1,  247,    2, 0x08 /* Private */,
+      39,    1,  250,    2, 0x08 /* Private */,
+      42,    1,  253,    2, 0x08 /* Private */,
+      43,    1,  256,    2, 0x08 /* Private */,
+      44,    1,  259,    2, 0x08 /* Private */,
+      45,    0,  262,    2, 0x08 /* Private */,
+      46,    1,  263,    2, 0x08 /* Private */,
+      49,    2,  266,    2, 0x0a /* Public */,
+      51,    1,  271,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Bool,    3,
@@ -189,9 +193,7 @@ static const uint qt_meta_data_ViewEditor[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 19, 0x80000000 | 19,   20,   21,
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 18, 0x80000000 | 18,   19,   20,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -205,13 +207,16 @@ static const uint qt_meta_data_ViewEditor[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 37,   38,
-    QMetaType::Void, 0x80000000 | 37,   38,
-    QMetaType::Void, 0x80000000 | 41,   42,
-    QMetaType::Void, 0x80000000 | 41,   42,
-    QMetaType::Void, 0x80000000 | 41,   42,
-    QMetaType::Void, 0x80000000 | 41,   42,
-    QMetaType::Void, 0x80000000 | 19, QMetaType::Int,   47,   48,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 36,   37,
+    QMetaType::Void, 0x80000000 | 36,   37,
+    QMetaType::Void, 0x80000000 | 40,   41,
+    QMetaType::Void, 0x80000000 | 40,   41,
+    QMetaType::Void, 0x80000000 | 40,   41,
+    QMetaType::Void, 0x80000000 | 40,   41,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 47,   48,
+    QMetaType::Void, 0x80000000 | 18, QMetaType::Int,   48,   50,
     QMetaType::Void, QMetaType::Bool,    3,
 
        0        // eod
@@ -238,36 +243,44 @@ void ViewEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 10: _t->on_btnDown_clicked(); break;
         case 11: _t->on_btnLeft_clicked(); break;
         case 12: _t->on_btnRight_clicked(); break;
-        case 13: _t->on_btnAddAction_clicked(); break;
-        case 14: _t->on_btnAddSeperator_clicked(); break;
-        case 15: _t->on_treeMenuEdit_currentItemChanged((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< QTreeWidgetItem*(*)>(_a[2]))); break;
-        case 16: _t->on_btnClearAction_clicked(); break;
-        case 17: _t->on_btnIconFinder_clicked(); break;
-        case 18: _t->on_btnAddAction_Toolbar_clicked(); break;
-        case 19: _t->on_btnAddSeperator_Toolbar_clicked(); break;
-        case 20: _t->on_btnAddWidget_Toolbar_clicked(); break;
-        case 21: _t->on_btnDeleteItem_Toolbar_clicked(); break;
-        case 22: _t->on_btnMoveUp_Toolbar_clicked(); break;
-        case 23: _t->on_btnMoveDown_Toolbar_clicked(); break;
-        case 24: _t->on_btnAddWidget_Statusbar_clicked(); break;
-        case 25: _t->on_btnDeleteItem_Statusbar_clicked(); break;
-        case 26: _t->on_btnMoveUp_Statusbar_clicked(); break;
-        case 27: _t->on_btnMoveDown_Statusbar_clicked(); break;
-        case 28: _t->on_btnAddToolbar_clicked(); break;
-        case 29: _t->on_btnDeleteToolbar_clicked(); break;
-        case 30: _t->TableItemMoveUp((*reinterpret_cast< QTableWidget*(*)>(_a[1]))); break;
-        case 31: _t->TableItemMoveDown((*reinterpret_cast< QTableWidget*(*)>(_a[1]))); break;
-        case 32: _t->TreeItemMoveUp((*reinterpret_cast< QTreeWidget*(*)>(_a[1]))); break;
-        case 33: _t->TreeItemMoveDown((*reinterpret_cast< QTreeWidget*(*)>(_a[1]))); break;
-        case 34: _t->TreeItemMoveLeft((*reinterpret_cast< QTreeWidget*(*)>(_a[1]))); break;
-        case 35: _t->TreeItemMoveRight((*reinterpret_cast< QTreeWidget*(*)>(_a[1]))); break;
-        case 36: _t->treeWidgetOpenEditor((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 37: _t->slot_SelAllOrNot((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 13: _t->on_btnAddSeperator_clicked(); break;
+        case 14: _t->on_treeMenuEdit_currentItemChanged((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< QTreeWidgetItem*(*)>(_a[2]))); break;
+        case 15: _t->on_btnClearAction_clicked(); break;
+        case 16: _t->on_btnIconFinder_clicked(); break;
+        case 17: _t->on_btnAddAction_Toolbar_clicked(); break;
+        case 18: _t->on_btnAddSeperator_Toolbar_clicked(); break;
+        case 19: _t->on_btnAddWidget_Toolbar_clicked(); break;
+        case 20: _t->on_btnDeleteItem_Toolbar_clicked(); break;
+        case 21: _t->on_btnMoveUp_Toolbar_clicked(); break;
+        case 22: _t->on_btnMoveDown_Toolbar_clicked(); break;
+        case 23: _t->on_btnAddWidget_Statusbar_clicked(); break;
+        case 24: _t->on_btnDeleteItem_Statusbar_clicked(); break;
+        case 25: _t->on_btnMoveUp_Statusbar_clicked(); break;
+        case 26: _t->on_btnMoveDown_Statusbar_clicked(); break;
+        case 27: _t->on_btnAddToolbar_clicked(); break;
+        case 28: _t->on_btnDeleteToolbar_clicked(); break;
+        case 29: _t->TableItemMoveUp((*reinterpret_cast< QTableWidget*(*)>(_a[1]))); break;
+        case 30: _t->TableItemMoveDown((*reinterpret_cast< QTableWidget*(*)>(_a[1]))); break;
+        case 31: _t->TreeItemMoveUp((*reinterpret_cast< QTreeWidget*(*)>(_a[1]))); break;
+        case 32: _t->TreeItemMoveDown((*reinterpret_cast< QTreeWidget*(*)>(_a[1]))); break;
+        case 33: _t->TreeItemMoveLeft((*reinterpret_cast< QTreeWidget*(*)>(_a[1]))); break;
+        case 34: _t->TreeItemMoveRight((*reinterpret_cast< QTreeWidget*(*)>(_a[1]))); break;
+        case 35: _t->on_btnLoadAction_clicked(); break;
+        case 36: _t->on_tablePluginWidget_itemClicked((*reinterpret_cast< QTableWidgetItem*(*)>(_a[1]))); break;
+        case 37: _t->treeWidgetOpenEditor((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 38: _t->slot_SelAllOrNot((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 29:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QTableWidget* >(); break;
+            }
+            break;
         case 30:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
@@ -279,7 +292,7 @@ void ViewEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
-                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QTableWidget* >(); break;
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QTreeWidget* >(); break;
             }
             break;
         case 32:
@@ -297,13 +310,6 @@ void ViewEditor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             }
             break;
         case 34:
-            switch (*reinterpret_cast<int*>(_a[1])) {
-            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-            case 0:
-                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QTreeWidget* >(); break;
-            }
-            break;
-        case 35:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -352,13 +358,13 @@ int ViewEditor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 38)
+        if (_id < 39)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 38;
+        _id -= 39;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 38)
+        if (_id < 39)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 38;
+        _id -= 39;
     }
     return _id;
 }

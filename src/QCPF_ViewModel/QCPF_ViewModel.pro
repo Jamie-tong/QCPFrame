@@ -2,7 +2,7 @@ QT -= gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET =  ../../bin/debug/Bin/QCPF_ViewModel
+TARGET =  ../../bin/debug/QCPF_ViewModel
 
 TEMPLATE = lib
 DEFINES += QCPF_VIEWMODEL_LIBRARY

@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QCPF_Model_t {
-    QByteArrayData data[29];
-    char stringdata0[350];
+    QByteArrayData data[30];
+    char stringdata0[366];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -55,12 +55,13 @@ QT_MOC_LITERAL(19, 222, 15), // "slot_Initialize"
 QT_MOC_LITERAL(20, 238, 4), // "user"
 QT_MOC_LITERAL(21, 243, 3), // "pwd"
 QT_MOC_LITERAL(22, 247, 7), // "extInfo"
-QT_MOC_LITERAL(23, 255, 19), // "slot_LoadConfigFile"
-QT_MOC_LITERAL(24, 275, 12), // "ConfigModel&"
-QT_MOC_LITERAL(25, 288, 6), // "config"
-QT_MOC_LITERAL(26, 295, 19), // "slot_SaveConfigFile"
-QT_MOC_LITERAL(27, 315, 16), // "slot_ApplyConfig"
-QT_MOC_LITERAL(28, 332, 17) // "slot_CancelConfig"
+QT_MOC_LITERAL(23, 255, 15), // "slot_OutputInfo"
+QT_MOC_LITERAL(24, 271, 19), // "slot_LoadConfigFile"
+QT_MOC_LITERAL(25, 291, 12), // "ConfigModel&"
+QT_MOC_LITERAL(26, 304, 6), // "config"
+QT_MOC_LITERAL(27, 311, 19), // "slot_SaveConfigFile"
+QT_MOC_LITERAL(28, 331, 16), // "slot_ApplyConfig"
+QT_MOC_LITERAL(29, 348, 17) // "slot_CancelConfig"
 
     },
     "QCPF_Model\0sig_Core\0\0arg_in\0QVariant&\0"
@@ -70,9 +71,9 @@ QT_MOC_LITERAL(28, 332, 17) // "slot_CancelConfig"
     "isExist\0copyID\0copyAlisaName\0copyComment\0"
     "sig_DestroyCloneFinished\0slot_Core\0"
     "slot_Initialize\0user\0pwd\0extInfo\0"
-    "slot_LoadConfigFile\0ConfigModel&\0"
-    "config\0slot_SaveConfigFile\0slot_ApplyConfig\0"
-    "slot_CancelConfig"
+    "slot_OutputInfo\0slot_LoadConfigFile\0"
+    "ConfigModel&\0config\0slot_SaveConfigFile\0"
+    "slot_ApplyConfig\0slot_CancelConfig"
 };
 #undef QT_MOC_LITERAL
 
@@ -82,7 +83,7 @@ static const uint qt_meta_data_QCPF_Model[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -90,19 +91,20 @@ static const uint qt_meta_data_QCPF_Model[] = {
        5,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   69,    2, 0x06 /* Public */,
-       6,    1,   74,    2, 0x06 /* Public */,
-       9,    2,   77,    2, 0x06 /* Public */,
-      12,    5,   82,    2, 0x06 /* Public */,
-      17,    2,   93,    2, 0x06 /* Public */,
+       1,    2,   74,    2, 0x06 /* Public */,
+       6,    1,   79,    2, 0x06 /* Public */,
+       9,    2,   82,    2, 0x06 /* Public */,
+      12,    5,   87,    2, 0x06 /* Public */,
+      17,    2,   98,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      18,    2,   98,    2, 0x0a /* Public */,
-      19,    3,  103,    2, 0x0a /* Public */,
-      23,    1,  110,    2, 0x0a /* Public */,
-      26,    0,  113,    2, 0x0a /* Public */,
-      27,    0,  114,    2, 0x0a /* Public */,
-      28,    0,  115,    2, 0x0a /* Public */,
+      18,    2,  103,    2, 0x0a /* Public */,
+      19,    3,  108,    2, 0x0a /* Public */,
+      23,    1,  115,    2, 0x0a /* Public */,
+      24,    1,  118,    2, 0x0a /* Public */,
+      27,    0,  121,    2, 0x0a /* Public */,
+      28,    0,  122,    2, 0x0a /* Public */,
+      29,    0,  123,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Int, QMetaType::QVariant, 0x80000000 | 4,    3,    5,
@@ -114,7 +116,8 @@ static const uint qt_meta_data_QCPF_Model[] = {
  // slots: parameters
     QMetaType::Int, QMetaType::QVariant, 0x80000000 | 4,    3,    5,
     QMetaType::Int, QMetaType::QString, QMetaType::QString, QMetaType::QString,   20,   21,   22,
-    QMetaType::Int, 0x80000000 | 24,   25,
+    QMetaType::Int, 0x80000000 | 7,    8,
+    QMetaType::Int, 0x80000000 | 25,   26,
     QMetaType::Int,
     QMetaType::Int,
     QMetaType::Int,
@@ -139,13 +142,15 @@ void QCPF_Model::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         case 6: { int _r = _t->slot_Initialize((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 7: { int _r = _t->slot_LoadConfigFile((*reinterpret_cast< ConfigModel(*)>(_a[1])));
+        case 7: { int _r = _t->slot_OutputInfo((*reinterpret_cast< tagOutputInfo(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 8: { int _r = _t->slot_SaveConfigFile();
+        case 8: { int _r = _t->slot_LoadConfigFile((*reinterpret_cast< ConfigModel(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 9: { int _r = _t->slot_ApplyConfig();
+        case 9: { int _r = _t->slot_SaveConfigFile();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 10: { int _r = _t->slot_CancelConfig();
+        case 10: { int _r = _t->slot_ApplyConfig();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
+        case 11: { int _r = _t->slot_CancelConfig();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
@@ -218,13 +223,13 @@ int QCPF_Model::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 12)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 11;
+        _id -= 12;
     }
     return _id;
 }

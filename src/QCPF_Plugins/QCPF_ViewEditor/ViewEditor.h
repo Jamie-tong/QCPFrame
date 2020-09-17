@@ -25,7 +25,7 @@ class ViewEditor : public QDialog
     Q_OBJECT
 
 public:
-    ViewEditor(QCPF_ViewModel* view, QWidget *parent = nullptr);
+    ViewEditor(QWidget *parent = nullptr);
     ~ViewEditor();
     static ViewEditor* getInstance();//静态获取实例
 
@@ -52,7 +52,6 @@ private slots:
      void on_btnLeft_clicked();
      void on_btnRight_clicked();
 
-     void on_btnAddAction_clicked();
      void on_btnAddSeperator_clicked();
 
 
@@ -94,11 +93,16 @@ private slots:
      void TreeItemMoveLeft(QTreeWidget* treeWidget);
      void TreeItemMoveRight(QTreeWidget* treeWidget);
 
+     void on_btnLoadAction_clicked();
+
+     void on_tablePluginWidget_itemClicked(QTableWidgetItem *item);
+
 public slots:
     void treeWidgetOpenEditor(QTreeWidgetItem *item,int col);
     void slot_SelAllOrNot(bool flag);
 
 public:
+     PluginIO* pluginInst;
      QCPF_ViewModel *_view;
 
 private:
@@ -108,6 +112,7 @@ private:
     int previousColNo = -1;
     tagOutputInfo tOutInfo;
     void setTableStyle(QTableWidget *table);
+    QString getPluginWidgetTag(int rowIndex);
 };
 
 #endif // FORMCONFIG_H

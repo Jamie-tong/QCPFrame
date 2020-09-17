@@ -99,8 +99,8 @@ void PluginActionViewer::on_cbPluginID_currentIndexChanged(int index)
         if(index >=_core->I_SysPlugins.count())
             return;
 
-        foreach (PluginFunctionInfo* pai, _core->I_SysPlugins_Sel[index]->I_FunctionList) {
-            ui->cbPluginAction->addItem(pai->_functonName);
+        foreach (PluginActionInfo* pai, _core->I_SysPlugins_Sel[index]->I_ActionList) {
+            ui->cbPluginAction->addItem(pai->_actionName);
         }
     }
     else//非系统组件
@@ -108,8 +108,8 @@ void PluginActionViewer::on_cbPluginID_currentIndexChanged(int index)
         if(index >=_core->I_NSysOrigPlugins_Sel.count())
             return;
 
-        foreach (PluginFunctionInfo* pai, _core->I_NSysOrigPlugins_Sel[index]->I_FunctionList) {
-            ui->cbPluginAction->addItem(pai->_functonName);
+        foreach (PluginActionInfo* pai, _core->I_NSysOrigPlugins_Sel[index]->I_ActionList) {
+            ui->cbPluginAction->addItem(pai->_actionName);
         }
         foreach (PluginInterface* pai, _core->I_NSysClonePlugins) {
             if(pai->I_PluginID==ui->cbPluginID->currentText())
@@ -130,19 +130,19 @@ void PluginActionViewer::on_cbPluginAction_currentIndexChanged(int index)
     int plugIndex = ui->cbPluginID->currentIndex();
     if(tabIndex==0)//系统组件
     {
-        if(plugIndex >=_core->I_SysPlugins_Sel.count() || index >= _core->I_SysPlugins_Sel[plugIndex]->I_FunctionList.count())
+        if(plugIndex >=_core->I_SysPlugins_Sel.count() || index >= _core->I_SysPlugins_Sel[plugIndex]->I_ActionList.count())
             return;
 
-        ui->txtActionName->setText(_core->I_SysPlugins_Sel[plugIndex]->I_FunctionList[index]->_functonName);
-        ui->txtActionDetail->setText(_core->I_SysPlugins_Sel[plugIndex]->I_FunctionList[index]->_functionDetail);
+        ui->txtActionName->setText(_core->I_SysPlugins_Sel[plugIndex]->I_ActionList[index]->_actionName);
+        ui->txtActionDetail->setText(_core->I_SysPlugins_Sel[plugIndex]->I_ActionList[index]->_actionDetail);
     }
     else//非系统组件
     {
-        if(plugIndex >=_core->I_NSysOrigPlugins_Sel.count() || index >= _core->I_NSysOrigPlugins_Sel[plugIndex]->I_FunctionList.count())
+        if(plugIndex >=_core->I_NSysOrigPlugins_Sel.count() || index >= _core->I_NSysOrigPlugins_Sel[plugIndex]->I_ActionList.count())
             return;
 
-        ui->txtActionName->setText(_core->I_NSysOrigPlugins_Sel[plugIndex]->I_FunctionList[index]->_functonName);
-        ui->txtActionDetail->setText(_core->I_NSysOrigPlugins_Sel[plugIndex]->I_FunctionList[index]->_functionDetail);
+        ui->txtActionName->setText(_core->I_NSysOrigPlugins_Sel[plugIndex]->I_ActionList[index]->_actionName);
+        ui->txtActionDetail->setText(_core->I_NSysOrigPlugins_Sel[plugIndex]->I_ActionList[index]->_actionDetail);
     }
 }
 

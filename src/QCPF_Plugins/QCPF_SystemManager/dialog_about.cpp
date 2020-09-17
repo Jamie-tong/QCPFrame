@@ -8,11 +8,16 @@ License: GPL v3.0
 #include "dialog_about.h"
 #include "ui_dialog_about.h"
 
+#include "PluginIO.h"
+#include "../../QCPF_ViewModel/qcpf_viewmodel.h"
+
 Dialog_About::Dialog_About(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog_About)
 {
     ui->setupUi(this);
+
+    PluginIO* pluginInst = PluginIO::getInstance();
 
     //去掉问号按钮
     setWindowFlags(Qt::Dialog
@@ -28,6 +33,9 @@ Dialog_About::Dialog_About(QWidget *parent) :
     setMaximumSize(QSize(560, 300));
     setSizeGripEnabled(false);
 
+    ui->labCoreVersion->setText(QString(tr("Core Version:%1")).arg(pluginInst->_core->I_SystemVersion));
+    QCPF_ViewModel* _view = (QCPF_ViewModel*)pluginInst->_core->_view;
+    ui->labViewVersion->setText(QString(tr("View Version:%1")).arg(_view->_version));
 }
 
 Dialog_About::~Dialog_About()

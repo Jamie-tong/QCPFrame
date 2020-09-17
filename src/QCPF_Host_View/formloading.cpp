@@ -19,12 +19,13 @@ License: GPL v3.0
 
 #include "mainwindow.h"
 
-formLoading::formLoading(QCPF_Model* model, QDialog *parent) :
+formLoading::formLoading(QCPF_ViewModel* view, QDialog *parent) :
     QDialog(parent),
     ui(new Ui::formLoading)
 {
     ui->setupUi(this);
-    _core = model;
+    _view = view;
+    _core = view->_core;
 
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint|Qt::Tool|Qt::X11BypassWindowManagerHint);
 
@@ -38,6 +39,8 @@ formLoading::formLoading(QCPF_Model* model, QDialog *parent) :
      //------------set ui from config model
     QString tSysName = _core->_config._systemName;
     ui->laSystemName->setText(tSysName);
+    ui->labCoreVersion->setText(QString(tr("Core Version : %1")).arg(_core->I_SystemVersion));
+    ui->labViewVersion->setText(QString(tr("View Version : %1")).arg(_view->_version));
 }
 
 formLoading::~formLoading()
@@ -51,8 +54,14 @@ void formLoading::timerUpdate()
     QString tPwd = ui->txtPwd->text();
     QString tExtInfo = "";
     //先初始化core，再初始化viewmodel
-    emit sig_DoCoreInitialize(tUser, tPwd, tExtInfo);
-    emit sig_DoViewModelInitialize(tUser, tPwd, tExtInfo);
+    if(0!=_core->slot_Initialize(tUser, tPwd, tExtInfo))
+    {
+        timer->stop();
+        timer->deleteLater();
+        return;
+    }
+
+    _view->slot_Initialize();
 
     timer->stop();
     timer->deleteLater();

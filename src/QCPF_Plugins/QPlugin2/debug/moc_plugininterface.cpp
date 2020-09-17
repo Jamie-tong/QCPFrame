@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_PluginInterface_t {
-    QByteArrayData data[17];
-    char stringdata0[203];
+    QByteArrayData data[16];
+    char stringdata0[181];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -45,18 +45,16 @@ QT_MOC_LITERAL(9, 88, 11), // "slot_Plugin"
 QT_MOC_LITERAL(10, 100, 11), // "slot_Action"
 QT_MOC_LITERAL(11, 112, 10), // "checkState"
 QT_MOC_LITERAL(12, 123, 16), // "OnCoreInitialize"
-QT_MOC_LITERAL(13, 140, 21), // "OnViewModelInitialize"
-QT_MOC_LITERAL(14, 162, 13), // "OnViewCreated"
-QT_MOC_LITERAL(15, 176, 12), // "OnViewLoaded"
-QT_MOC_LITERAL(16, 189, 13) // "OnViewClosing"
+QT_MOC_LITERAL(13, 140, 13), // "OnViewCreated"
+QT_MOC_LITERAL(14, 154, 12), // "OnViewLoaded"
+QT_MOC_LITERAL(15, 167, 13) // "OnViewClosing"
 
     },
     "PluginInterface\0sig_Plugin\0\0arg_in\0"
     "QVariant&\0arg_out\0sig_OutputInfo\0"
     "tagOutputInfo&\0info\0slot_Plugin\0"
     "slot_Action\0checkState\0OnCoreInitialize\0"
-    "OnViewModelInitialize\0OnViewCreated\0"
-    "OnViewLoaded\0OnViewClosing"
+    "OnViewCreated\0OnViewLoaded\0OnViewClosing"
 };
 #undef QT_MOC_LITERAL
 
@@ -66,7 +64,7 @@ static const uint qt_meta_data_PluginInterface[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -74,17 +72,16 @@ static const uint qt_meta_data_PluginInterface[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   59,    2, 0x06 /* Public */,
-       6,    1,   64,    2, 0x06 /* Public */,
+       1,    2,   54,    2, 0x06 /* Public */,
+       6,    1,   59,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       9,    2,   67,    2, 0x0a /* Public */,
-      10,    1,   72,    2, 0x0a /* Public */,
-      12,    0,   75,    2, 0x0a /* Public */,
-      13,    0,   76,    2, 0x0a /* Public */,
-      14,    0,   77,    2, 0x0a /* Public */,
-      15,    0,   78,    2, 0x0a /* Public */,
-      16,    0,   79,    2, 0x0a /* Public */,
+       9,    2,   62,    2, 0x0a /* Public */,
+      10,    1,   67,    2, 0x0a /* Public */,
+      12,    0,   70,    2, 0x0a /* Public */,
+      13,    0,   71,    2, 0x0a /* Public */,
+      14,    0,   72,    2, 0x0a /* Public */,
+      15,    0,   73,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Int, QMetaType::QVariant, 0x80000000 | 4,    3,    5,
@@ -93,7 +90,6 @@ static const uint qt_meta_data_PluginInterface[] = {
  // slots: parameters
     QMetaType::Int, QMetaType::QVariant, 0x80000000 | 4,    3,    5,
     QMetaType::Void, QMetaType::Bool,   11,
-    QMetaType::Int,
     QMetaType::Int,
     QMetaType::Int,
     QMetaType::Int,
@@ -117,13 +113,11 @@ void PluginInterface::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 3: _t->slot_Action((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 4: { int _r = _t->OnCoreInitialize();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 5: { int _r = _t->OnViewModelInitialize();
+        case 5: { int _r = _t->OnViewCreated();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 6: { int _r = _t->OnViewCreated();
+        case 6: { int _r = _t->OnViewLoaded();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 7: { int _r = _t->OnViewLoaded();
-            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 8: { int _r = _t->OnViewClosing();
+        case 7: { int _r = _t->OnViewClosing();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
@@ -175,13 +169,13 @@ int PluginInterface::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 8)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 9;
+        _id -= 8;
     }
     return _id;
 }

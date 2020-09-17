@@ -55,12 +55,12 @@ DISTFILES += \
 RESOURCES += \
     comresource.qrc
 
-unix:!macx|win32: LIBS += -L$$PWD/../bin/debug/Bin/ -lQCPF_Model
+unix:!macx|win32: LIBS += -L$$PWD/../bin/debug/ -lQCPF_Model
 
 INCLUDEPATH += $$PWD/../QCPF_Model
 DEPENDPATH += $$PWD/../QCPF_Model
 
-unix:!macx|win32: LIBS += -L$$PWD/../bin/debug/Bin/ -lQCPF_ViewModel
+unix:!macx|win32: LIBS += -L$$PWD/../bin/debug/ -lQCPF_ViewModel
 
 INCLUDEPATH += $$PWD/../QCPF_ViewModel
 DEPENDPATH += $$PWD/../QCPF_ViewModel

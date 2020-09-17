@@ -62,7 +62,7 @@ enum WidgetShowType
 {
         ST_NONE,
         ST_POPUP,
-        ST_DOCK
+        ST_DOCK,
 };
 
 struct tagOutputInfo
@@ -75,19 +75,31 @@ public:
     tagOutputInfo(InfoType type, QString title, QString content){ _type=type;_title=title;_content=content;}
 };
 
+typedef int (*FPTR_FUNC_NCLS)(QVariant arg_in, QVariant &arg_out);
+typedef int (PluginInterface::*FPTR_FUNC_CLS)(QVariant arg_in, QVariant &arg_out);
+typedef void (PluginInterface::*FPTR_ACTION)(bool);
+struct PluginActionInfo
+{
+    public:
+        QString _actionName;
+        QString _actionDetail;
+
+        FPTR_ACTION _pAction;//函数指针指向组件函数
+};
+
 struct PluginFunctionInfo
 {
     public:
-        QString _functonName;
+        QString _functionName;
         QString _functionDetail;
 
-        void (*pFunction)(bool);//函数指针指向组件函数
+        FPTR_FUNC_CLS _pFunction;//函数指针指向组件函数
 };
 
 struct PluginWidgetInfo
 {
     public:
-            WidgetShowType _showType;
+            WidgetShowType _showType = ST_DOCK;
             int _origWidth;
             int _origHeight;
             QWidget *_widget;
@@ -115,25 +127,25 @@ public:
     QString I_CopyComment;//副本功能说明
 
     QVariant I_PluginVar;//通用组件变量
-    QVector<QVariant> I_PluginVarList;//通用组件变量集合
+    QList<QVariant> I_PluginVarList;//通用组件变量集合
+    QList<PluginActionInfo*> I_ActionList;//通用组件Action集合
     QList<PluginFunctionInfo*> I_FunctionList;//通用组件Function集合
     QVector<PluginWidgetInfo*> I_WidgetList;//通用组件部件集合
 
 public:
     virtual PluginInterface* Clone(QString copyID, QString copyAliasName, QString copyComment) {return nullptr;}
     virtual bool ConnectCore(QObject* core) { return true; }
-    virtual bool ConnectViewModel(QObject* view) { return true; }
     virtual int PluginFunction(QVariant arg_in, QVariant &arg_out) { return 0; }
+
 signals:
     int sig_Plugin(QVariant arg_in, QVariant &arg_out);
     int sig_OutputInfo(tagOutputInfo& info);
+
 public slots:
     virtual int slot_Plugin(QVariant arg_in, QVariant &arg_out) { return 0; }
     virtual void slot_Action(bool checkState) { }
     //当core初始化时要执行的过程
     virtual int OnCoreInitialize() { return 0; }
-    //当viewModel初始化时要执行的过程
-    virtual int OnViewModelInitialize() { return 0; }
     //当view视图构造完成后，Load前要执行的过程
     virtual int OnViewCreated() { return 0; }
     //当view视图Load时要执行的过程

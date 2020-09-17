@@ -10,11 +10,8 @@
 #include "sumwidgetfortoolbar.h"
 #include "wdt_map.h"
 
-PluginIO* instance;
-
 PluginIO::PluginIO()
 {
-    instance = this;
     PluginIO::I_PluginID = QStringLiteral("QPlugin1");
     PluginIO::I_PluginType = PT_NON_SYS;
     PluginIO::I_PluginAliasName = QStringLiteral("QPlugin1");
@@ -29,15 +26,11 @@ PluginIO::PluginIO()
 
 PluginIO::~PluginIO(){}
 
-PluginIO* PluginIO::getInstance()
-{
-    return instance;
-}
-
 //接口方法实现
 /***************************************************
 *                       方法接口                                       *
 ***************************************************/
+
 PluginInterface* PluginIO::Clone(QString copyID, QString copyAliasName, QString copyComment)
 {
     PluginIO *_clonePlugin = new PluginIO();
@@ -59,80 +52,85 @@ PluginInterface* PluginIO::Clone(QString copyID, QString copyAliasName, QString 
     _clonePlugin->I_CopyComment = copyComment;
 
     _clonePlugin->I_PluginVar = this->I_PluginVar;
-    _clonePlugin->I_PluginVarList = this->I_PluginVarList;
-    _clonePlugin->I_FunctionList = this->I_FunctionList;
-    _clonePlugin->I_WidgetList = this->I_WidgetList;
+
+    foreach(QVariant v, this->I_PluginVarList)
+        _clonePlugin->I_PluginVarList.append(v);
+
+    //action没必要深拷贝，保持和原始组件一样的触发功能即可
+    _clonePlugin->I_ActionList = this->I_ActionList;
+    //function和widget需要深拷贝
+    InitFunctionList(_clonePlugin);
+    if(_core->I_RunMode == RM_APPLICATION)
+            InitWidgetList(_clonePlugin);
+
     return _clonePlugin;
 }
 
 bool PluginIO::ConnectCore(QObject* core){
 
     _core = (QCPF_Interface*)(core);
+    InitActionList(this);
+    InitFunctionList(this);
+    if(_core->I_RunMode == RM_APPLICATION)
+            InitWidgetList(this);
 
     return _core?true:false;
-}
-
-bool PluginIO::ConnectViewModel(QObject *view){
-
-    _view = (QCPF_ViewModel*)view;
-
-    InitFunctionList();
-    InitWidgetList();
-
-    return _view?true:false;
 }
 
 void PluginIO::slot_Action(bool checkState){
     QAction *action = (QAction*)sender();
     QString actionName =  action->property("ItemActionName").toString();
 
-    foreach (PluginFunctionInfo* pfi, I_FunctionList) {
-        if(pfi->_functonName == action->text() || pfi->_functonName == actionName)
+    foreach (PluginActionInfo* pai, I_ActionList) {
+        if(pai->_actionName == action->text() || pai->_actionName == actionName)
         {
-            pfi->pFunction(checkState);
+            (this->*pai->_pAction)(checkState);
             break;
         }
     }
 }
 
-void SumWidget(bool checkState);
-void PluginIO::InitFunctionList()
+void PluginIO::InitActionList(PluginIO* plugin)
 {
     //--------------------------------------------
-    PluginFunctionInfo* pai1 = new PluginFunctionInfo();
-    pai1->_functonName = tr("Sum");
-    pai1->_functionDetail = tr("Sum two data at backgroud.");
-    pai1->pFunction = &SumWidget;
+    PluginActionInfo* pai1 = new PluginActionInfo();
+    pai1->_actionName = tr("Sum");
+    pai1->_actionDetail = tr("Sum two data at backgroud.");
+    pai1->_pAction = (FPTR_ACTION)(&PluginIO::Action_SumWidget);
 
-    I_FunctionList.append(pai1);
+    plugin->I_ActionList.append(pai1);
 }
 
-void PluginIO::InitWidgetList()
+void PluginIO::InitFunctionList(PluginIO* plugin)
 {
-    PluginWidgetInfo *nFormInfo = new PluginWidgetInfo();
 
-    nFormInfo->_showType = ST_DOCK;
-    nFormInfo->_widget = new SumWidgetForToolbar();
-    nFormInfo->_origWidth = nFormInfo->_widget->width();
-    nFormInfo->_origHeight = nFormInfo->_widget->height();
-    nFormInfo->_widgetDetail = tr("sum function.");
-    PluginIO::I_WidgetList.append(nFormInfo);
+}
+
+void PluginIO::InitWidgetList(PluginIO* plugin)
+{
+    PluginWidgetInfo *nWdtSum = new PluginWidgetInfo();
+
+    nWdtSum->_showType = ST_DOCK;
+    nWdtSum->_widget = new SumWidgetForToolbar();
+    nWdtSum->_origWidth = nWdtSum->_widget->width();
+    nWdtSum->_origHeight = nWdtSum->_widget->height();
+    nWdtSum->_widgetDetail = tr("sum function.");
+    plugin->PluginIO::I_WidgetList.append(nWdtSum);
 
     //----------------------------
-    PluginWidgetInfo *nFormMap = new PluginWidgetInfo();
+    PluginWidgetInfo *nWdtMap = new PluginWidgetInfo();
 
-    nFormMap->_showType = ST_DOCK;
-    nFormMap->_widget = new wdt_Map();
-    nFormMap->_origWidth = nFormMap->_widget->width();
-    nFormMap->_origHeight = nFormMap->_widget->height();
-    nFormMap->_widgetDetail = tr("map control.");
-    PluginIO::I_WidgetList.append(nFormMap);
+    nWdtMap->_showType = ST_DOCK;
+    nWdtMap->_widget = new wdt_Map(_core);
+    nWdtMap->_origWidth = nWdtMap->_widget->width();
+    nWdtMap->_origHeight = nWdtMap->_widget->height();
+    nWdtMap->_widgetDetail = tr("map control.");
+    plugin->PluginIO::I_WidgetList.append(nWdtMap);
 }
 
 //通用方法
 int PluginIO::PluginFunction(QVariant arg_in, QVariant &arg_out){
 
-//    QVariant tt("12315");
     MyClass ms;
     ms.Var1 = 1;
     ms.Var2 = "123";
@@ -155,11 +153,6 @@ int PluginIO::OnCoreInitialize(){
     return 0;
 }
 
-int PluginIO::OnViewModelInitialize(){
-
-    return 0;
-}
-
 int PluginIO::OnViewCreated(){
 
     return 0;
@@ -178,12 +171,12 @@ int PluginIO::OnViewClosing(){
 /***********************************************************************
  *  action 函数指针所对应的回调函数
  * *********************************************************************/
-void SumWidget(bool checkState)
+void PluginIO::Action_SumWidget(bool checkState)
 {
     int i = 3+4;
 
-    instance->tinfo._type = INFT_MSG_INFO;
-    instance->tinfo._title = QStringLiteral("sum");
-    instance->tinfo._content = QStringLiteral("the end = 7");
-    emit instance->sig_OutputInfo(instance->tinfo);
+    tInfo._type = INFT_MSG_INFO;
+    tInfo._title = QStringLiteral("sum");
+    tInfo._content = QStringLiteral("the end = 7");
+    emit sig_OutputInfo(tInfo);
 }

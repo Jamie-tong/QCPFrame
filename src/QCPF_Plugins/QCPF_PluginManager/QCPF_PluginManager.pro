@@ -5,7 +5,7 @@ DEFINES += QCFMANAGER_LIBRARY
 
 TARGET =  ../../../bin/debug/Bin/Plugins/QCPF_PluginManager
 TEMPLATE = lib
-CONFIG += plugin
+CONFIG += plugin c++11
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -41,8 +41,3 @@ DISTFILES += \
 FORMS += \
     PluginManager.ui
 
-
-unix:!macx|win32: LIBS += -L$$PWD/../../bin/debug/Bin/ -lQCPF_Model
-
-INCLUDEPATH += $$PWD/../../QCPF_Model
-DEPENDPATH += $$PWD/../../QCPF_Model

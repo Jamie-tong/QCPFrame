@@ -10,7 +10,9 @@ License: GPL v3.0
 
 #include <QDialog>
 #include <QMouseEvent>
+
 #include "../QCPF_Model/qcpf_model.h"
+#include "../QCPF_ViewModel/qcpf_viewmodel.h"
 
 class QPushButton;
 class QLineEdit;
@@ -23,7 +25,7 @@ class formLoading : public QDialog
 {
     Q_OBJECT
 public:
-    explicit formLoading(QCPF_Model* model, QDialog *parent = nullptr);
+    explicit formLoading(QCPF_ViewModel* view, QDialog *parent = nullptr);
     ~formLoading();
 
 protected:
@@ -53,7 +55,9 @@ private slots:
 
 private:
     Ui::formLoading *ui;
-    QCPF_Model *_core;
+    QCPF_Model* _core;
+    QCPF_ViewModel* _view;
+
     bool        m_bDrag;
     QPoint      mouseStartPoint;
     QPoint      windowTopLeftPoint;

@@ -9,11 +9,13 @@ License: GPL v3.0
 #define QCPF_VIEWMODEL_H
 
 #include <QObject>
-#include "viewConfigModel.h"
 #include <QMenuBar>
 #include <QToolBar>
 #include <QStatusBar>
 #include <QAction>
+
+#include "viewConfigModel.h"
+#include "../QCPF_Model/qcpf_model.h"
 
 #if defined(QCPF_VIEWMODEL_LIBRARY)
 #  define QCPF_VIEWMODEL_EXPORT Q_DECL_EXPORT
@@ -25,22 +27,24 @@ class QCPF_VIEWMODEL_EXPORT QCPF_ViewModel : QObject
 {
     Q_OBJECT
     public:
-        QCPF_ViewModel(QObject* parent);
-        QCPF_ViewModel(QObject* parent, QString configDirPath, QString configFileName);
+        QCPF_ViewModel(QCPF_Model* Model, QObject* parent);
+        QCPF_ViewModel(QCPF_Model* Model, QObject* parent, QString configDirPath, QString configFileName);
 
+        QCPF_Model *_core;
         QString _configDirPath;
         QString _configFileName;
         QString _configFullFilePath;
 
-        QObject *_core;
         tagOutputInfo _outputInfo;
         viewConfigModel _config;
         QList<QAction*> _actionList;
+        QString _version;
+        QString _organization;
 
     signals:
         int sig_OutputInfo(tagOutputInfo& info);//向槽函数发送初始化信息
     public slots:
-        int slot_Initialize(QString user, QString pwd, QString extInfo);
+        int slot_Initialize();
         int slot_LoadConfigFile(viewConfigModel &config);
         int slot_SaveConfigFile();
         int slot_ApplyConfig();

@@ -16,7 +16,6 @@ License: GPL v3.0
 #include <QSettings>
 
 #include "../../interface/plugininterface.h"
-#include "../QCPF_Model/qcpf_model.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -41,42 +40,38 @@ MainWindow::MainWindow(QWidget *parent) :
     QString _viewConfigFileName = "ViewConfig.dat";
 
     //create core object
-    _view = new QCPF_ViewModel(this, _viewConfigFileDirPath, _viewConfigFileName);
-    _core = new QCPF_Model(this, appDirPath, sysPluginDirPath, nSyspluginDirPath, _coreConfigFileDirPath, _coreConfigFileName);
+    _core = new QCPF_Model(RM_APPLICATION, this, appDirPath, sysPluginDirPath, nSyspluginDirPath, _coreConfigFileDirPath, _coreConfigFileName);
+    _view = new QCPF_ViewModel(_core, this, _viewConfigFileDirPath, _viewConfigFileName);
 
-    _view->_core = this->_core;
+    _core->_view = (QObject*)_view;//view editor需要view
     //------------set ui from config model
     setWindowTitle(_core->_config._systemName);
 
     //------------load view
-    formLoading *view_load = new formLoading(_core);
+    formLoading *view_load = new formLoading(_view);
 
     connect(view_load, SIGNAL(sig_DoCoreInitialize(QString, QString, QString)), _core, SLOT(slot_Initialize(QString, QString, QString)));
     connect(view_load, SIGNAL(sig_DoViewModelInitialize(QString, QString, QString)), (QObject*)_view, SLOT(slot_Initialize(QString, QString, QString)));
+
     connect(_core, SIGNAL(sig_OutputInfo(tagOutputInfo&)), view_load, SLOT(slot_CoreInitializeInfo(tagOutputInfo&)));
-    connect((QObject*)_view, SIGNAL(sig_OutputInfo(tagOutputInfo&)), view_load, SLOT(slot_CoreInitializeInfo(tagOutputInfo&)));
     connect(_core, SIGNAL(sig_OutputInfo(tagOutputInfo&)), this, SLOT(slot_CoreInfo(tagOutputInfo&)));
+
+    connect((QObject*)_view, SIGNAL(sig_OutputInfo(tagOutputInfo&)), view_load, SLOT(slot_CoreInitializeInfo(tagOutputInfo&)));
     connect((QObject*)_view, SIGNAL(sig_OutputInfo(tagOutputInfo&)), this, SLOT(slot_CoreInfo(tagOutputInfo&)));
 
     view_load->exec();
 
-    foreach (PluginInterface* pi, _core->I_SysPlugins_Sel) {
-        connect(pi, SIGNAL(sig_OutputInfo(tagOutputInfo&)), this, SLOT(slot_CoreInfo(tagOutputInfo&)));
-    }
-    foreach (PluginInterface* npi, _core->I_NSysOrigPlugins_Sel) {
-        connect(npi, SIGNAL(sig_OutputInfo(tagOutputInfo&)), this, SLOT(slot_CoreInfo(tagOutputInfo&)));
-    }
-
+//Test Menu for 1 and release for 0
 #if 0
     QMenuBar* tempMenuBar = new QMenuBar(this);
     QMenu* testMenu = new QMenu();
     testMenu->setTitle(tr("Test"));
     testMenu->setObjectName("menuTest");
     foreach (PluginInterface* pi, _core->I_SysPlugins) {
-            foreach (PluginFunctionInfo* pfi, pi->I_FunctionList) {
+            foreach (PluginActionInfo* pfi, pi->I_ActionList) {
                 QAction* tSysAction = new QAction(testMenu);
-                tSysAction->setObjectName(pfi->_functonName);
-                tSysAction->setText(pfi->_functonName);
+                tSysAction->setObjectName(pfi->_actionName);
+                tSysAction->setText(pfi->_actionName);
                 connect(tSysAction, &QAction::triggered, pi, &PluginInterface::slot_Action);
                 testMenu->addAction(tSysAction);
             }

@@ -24,13 +24,13 @@ License: GPL v3.0
 class QCPF_MODEL_EXPORT QCPF_Model :  public QCPF_Interface
 {
         Q_OBJECT
-        QThread workerThread;
         public:
-            QCPF_Model(QObject* parent);
-            QCPF_Model(QObject* parent, QString applicationDirPath, QString sysPluginDirPath, QString nSysPluginDirPath, QString configDirPath, QString configFileName, bool isEnableHotPlug = true);
+            QCPF_Model(RunMode runMode, QObject* parent);
+            QCPF_Model(RunMode runMode, QObject* parent, QString applicationDirPath, QString sysPluginDirPath, QString nSysPluginDirPath, QString configDirPath, QString configFileName, bool isEnableHotPlug = true);
             ~QCPF_Model();
 
             ConfigModel _config;
+            QObject* _view;
         signals:
             int sig_Core(QVariant arg_in, QVariant &arg_out);//通过该信号与所有组件进行连接
             int sig_OutputInfo(tagOutputInfo& info);//向槽函数发送初始化信息
@@ -50,6 +50,7 @@ class QCPF_MODEL_EXPORT QCPF_Model :  public QCPF_Interface
         public slots:
             int slot_Core(QVariant arg_in, QVariant &arg_out);//用于连接所有组件的槽
             int slot_Initialize(QString user, QString pwd, QString extInfo);
+            int slot_OutputInfo(tagOutputInfo& info);//接收来自组件的输出信息
 
             int slot_LoadConfigFile(ConfigModel &config);
             int slot_SaveConfigFile();

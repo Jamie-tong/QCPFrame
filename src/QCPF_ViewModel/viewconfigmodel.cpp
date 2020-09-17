@@ -378,5 +378,7 @@ void viewConfigModel::resetData()
     _toolBarLst.clear();
     _count_StatusBarItemLst=0;
     _statusBarItemLst.clear();
+    _count_WorkSpaceWidgetLst = 0;
+    _workspaceWidgetLst.clear();
 }
 

@@ -20,14 +20,8 @@ public:
     PluginInterface* Clone(QString copyID, QString copyAliasName, QString copyComment) Q_DECL_OVERRIDE;
     //连接Core，使Plugin获得Core对象实例
     bool ConnectCore(QObject* core) Q_DECL_OVERRIDE;
-    //连接ViewModel，使Plugin获得ViewModel对象实例
-    bool ConnectViewModel(QObject* view) Q_DECL_OVERRIDE;
 
     int PluginFunction(QVariant arg_in, QVariant &arg_out) Q_DECL_OVERRIDE;
-
-signals:
-    int sig_Plugin(QVariant arg_in, QVariant &arg_out);
-    int sig_OutputInfo(tagOutputInfo& info);
 
 public slots:
     int slot_Plugin(QVariant arg_in, QVariant &arg_out) Q_DECL_OVERRIDE;
@@ -35,8 +29,6 @@ public slots:
 
     //当core初始化时要执行的过程
     int OnCoreInitialize() Q_DECL_OVERRIDE;
-    //当viewModel初始化时要执行的过程
-    int OnViewModelInitialize() Q_DECL_OVERRIDE;
     //当view视图构造完成后，Load前要执行的过程
     int OnViewCreated() Q_DECL_OVERRIDE;
     //当view视图Load时要执行的过程
@@ -49,8 +41,9 @@ public:
     QCPF_ViewModel *_view;
 
 private:
-    void InitFunctionList();
-    void InitWidgetList();
+    void InitActionList(PluginIO* plugin);
+    void InitFunctionList(PluginIO* plugin);
+    void InitWidgetList(PluginIO* plugin);
 };
 
 #endif // QPLUGIN2_H
