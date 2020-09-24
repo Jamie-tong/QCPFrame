@@ -23,7 +23,7 @@
 2. git pull https://github.com/Jamie-tong/QCPFrame.git 或者 git pull https://gitee.com/JamieT/QCPFrame.git，后者为码云地址，速度快一点。
 3. 打开 src/QCPF_HostView.pro
 4. 项目设置->Shadow build去掉勾选
-5. 编译运行(先编译QCPF_Model和QCPF_ViewModel)。
+5. 编译运行(先编译QCPF_Model,QCPF_ViewModel和QCPF_PluginModel)。
 6. 愉快的玩积木吧。
 
 作者：Jamie.T
