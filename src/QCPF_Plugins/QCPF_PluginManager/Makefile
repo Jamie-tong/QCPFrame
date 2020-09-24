@@ -446,13 +446,13 @@ qmake_all: FORCE
 make_first: debug-make_first release-make_first  FORCE
 all: debug-all release-all  FORCE
 clean: debug-clean release-clean  FORCE
-	-$(DEL_FILE) ..\..\..\bin\debug\Bin\Plugins\QCPF_PluginManager.exp
+	-$(DEL_FILE) ..\..\..\..\bin\Bin\Plugins\QCPF_PluginManager.exp
 	-$(DEL_FILE) QCPF_PluginManager.vc.pdb
-	-$(DEL_FILE) ..\..\..\bin\debug\Bin\Plugins\QCPF_PluginManager.ilk
-	-$(DEL_FILE) ..\..\..\bin\debug\Bin\Plugins\QCPF_PluginManager.idb
+	-$(DEL_FILE) ..\..\..\..\bin\Bin\Plugins\QCPF_PluginManager.ilk
+	-$(DEL_FILE) ..\..\..\..\bin\Bin\Plugins\QCPF_PluginManager.idb
 distclean: debug-distclean release-distclean  FORCE
 	-$(DEL_FILE) Makefile
-	-$(DEL_FILE) .qmake.stash ..\..\..\bin\debug\Bin\Plugins\QCPF_PluginManager.lib ..\..\..\bin\debug\Bin\Plugins\QCPF_PluginManager.pdb
+	-$(DEL_FILE) .qmake.stash ..\..\..\..\bin\Bin\Plugins\QCPF_PluginManager.lib ..\..\..\..\bin\Bin\Plugins\QCPF_PluginManager.pdb
 
 debug-mocclean:
 	@set MAKEFLAGS=$(MAKEFLAGS)

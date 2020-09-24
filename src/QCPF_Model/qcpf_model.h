@@ -10,7 +10,7 @@ License: GPL v3.0
 
 #include <QThread>
 #include <QDir>
-#include "../../interface/hostinterface.h"
+#include "../../interface/coreinterface.h"
 #include "../../interface/plugininterface.h"
 
 #include "configModel.h"
@@ -32,11 +32,10 @@ class QCPF_MODEL_EXPORT QCPF_Model :  public QCPF_Interface
             ConfigModel _config;
             QObject* _view;
         signals:
-            int sig_Core(QVariant arg_in, QVariant &arg_out);//通过该信号与所有组件进行连接
             int sig_OutputInfo(tagOutputInfo& info);//向槽函数发送初始化信息
+            int sig_Core(QVariant arg_in, QVariant &arg_out);
 
             void sig_PluginSelOrNSelFinished(QString origPluginID, bool isSel);
-
             void sig_CloneFinished(bool isExist, QString origPluginID, QString copyID, QString copyAlisaName, QString copyComment);//向槽函数发送克隆组件完成信号
             void sig_DestroyCloneFinished(QString origPluginID, QString copyID);
         private:
@@ -46,12 +45,15 @@ class QCPF_MODEL_EXPORT QCPF_Model :  public QCPF_Interface
             int installConfig(ConfigModel &config);
             int compareFiles(QString filePath1, QString filePath2);
             int saveConfigFile(QString filePath);
+            int collectPlutins();
 
         public slots:
-            int slot_Core(QVariant arg_in, QVariant &arg_out);//用于连接所有组件的槽
-            int slot_Initialize(QString user, QString pwd, QString extInfo);
-            int slot_OutputInfo(tagOutputInfo& info);//接收来自组件的输出信息
+            int slot_InputInfo(tagOutputInfo& info)  Q_DECL_OVERRIDE;
+            int slot_Core(QVariant arg_in, QVariant &arg_out)  Q_DECL_OVERRIDE;
+            int Invoke_PluginFunction(PluginType pType, QString pluginID, QString pluginFunctionName, QVariant arg_in, QVariant& arg_out)  Q_DECL_OVERRIDE;
+            int Invoke_PluginFunction(PluginType pType, QString pluginID, QString copyID, QString pluginFunctionName, QVariant arg_in, QVariant& arg_out)  Q_DECL_OVERRIDE;
 
+            int slot_Initialize();
             int slot_LoadConfigFile(ConfigModel &config);
             int slot_SaveConfigFile();
             int slot_ApplyConfig();

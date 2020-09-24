@@ -17,22 +17,22 @@ License: GPL v3.0
 
 #include "wdt_currentdatatime.h"
 #include "dialog_about.h"
+#include "wdt_coreversion.h"
+#include "wdt_viewversion.h"
 
 PluginIO* instance;
 
 PluginIO::PluginIO()
 {
     instance = this;
-    PluginIO::I_PluginID = tr("QCPF_SystemManager");
-    PluginIO::I_PluginType = PT_SYS;
-    PluginIO::I_PluginAliasName = tr("System Manager");
-    PluginIO::I_PluginAuther = tr("Jamie.T");
-    PluginIO::I_PluginVersion = tr("1.0.0.1");
-    PluginIO::I_PluginComment = tr("Manage the system params.");
-    PluginIO::I_PluginTag = tr("SINGLETON\\SYSTEM\\SYS_PLUGIN_MANAGER");
-    PluginIO::I_PluginAuthority = AT_MANAGER1;
 
-    PluginIO::I_IsCopy = false;
+    I_PluginID = tr("QCPF_SystemManager");
+    I_PluginAliasName = tr("System Manager");
+    I_PluginAuther = tr("Jamie.T");
+    I_PluginVersion = tr("1.0.0.2");
+    I_PluginComment = tr("Manage the system params.");
+    I_PluginTag = tr("SINGLETON\\SYSTEM\\SYS_PLUGIN_MANAGER");
+    I_PluginAuthority = AT_MANAGER1;
 }
 
 PluginIO::~PluginIO(){}
@@ -46,72 +46,31 @@ PluginIO* PluginIO::getInstance()
 /***************************************************
 *                       方法接口                                       *
 ***************************************************/
-PluginInterface* PluginIO::Clone(QString copyID, QString copyAliasName, QString copyComment)
+void PluginIO::InitActionList(Plugin_Interface* plugin)
 {
-    return nullptr;
+    PluginActionInfo* paiSysMgr = new PluginActionInfo();
+    paiSysMgr->_actionName = tr("System Manager");
+    paiSysMgr->_actionDetail = tr("Manage the system module and params.");
+    paiSysMgr->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowSystemPluginManager);
+
+    plugin->I_ActionList.append(paiSysMgr);
+
+    PluginActionInfo* paiExit = new PluginActionInfo();
+    paiExit->_actionName = tr("Exit");
+    paiExit->_actionDetail = tr("Exit and close the main application.");
+    paiExit->_pAction = (FPTR_ACTION)(&PluginIO::Action_CloseMainApplication);
+
+    plugin->I_ActionList.append(paiExit);
+
+    PluginActionInfo* paiAbout = new PluginActionInfo();
+    paiAbout->_actionName = tr("About");
+    paiAbout->_actionDetail = tr("show about form.");
+    paiAbout->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowAboutForm);
+
+    plugin->I_ActionList.append(paiAbout);
 }
 
-bool PluginIO::ConnectCore(QObject* core){
-
-    _core = (QCPF_Model*)(core);
-    InitActionList(this);
-    InitFunctionList(this);
-    if(_core->I_RunMode == RM_APPLICATION)
-            InitWidgetList(this);
-
-    return _core?true:false;
-}
-
-void PluginIO::slot_Action(bool checkState){
-    QAction *action = (QAction*)sender();
-    QString actionName =  action->property("ItemActionName").toString();
-
-    foreach (PluginActionInfo* pai, I_ActionList) {
-        if(pai->_actionName == action->text() || pai->_actionName == actionName)
-        {
-            (this->*pai->_pAction)(checkState);
-            break;
-        }
-    }
-}
-
-void PluginIO::InitActionList(PluginIO* plugin)
-{
-    PluginActionInfo* pai = new PluginActionInfo();
-    pai->_actionName = tr("System Manager");
-    pai->_actionDetail = tr("Manage the system module and params.");
-    pai->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowSystemPluginManager);
-
-    plugin->I_ActionList.append(pai);
-
-    PluginActionInfo* pai2 = new PluginActionInfo();
-    pai2->_actionName = tr("Plugin Route Editer.");
-    pai2->_actionDetail = tr("config the connect route in plugin functions");
-    pai2->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowRouteManager);
-
-    plugin->I_ActionList.append(pai2);
-
-    PluginActionInfo* pai3 = new PluginActionInfo();
-    pai3->_actionName = tr("Exit");
-    pai3->_actionDetail = tr("Exit and close the main application.");
-    pai3->_pAction = (FPTR_ACTION)(&PluginIO::Action_CloseMainApplication);
-
-    plugin->I_ActionList.append(pai3);
-
-    PluginActionInfo* pai4 = new PluginActionInfo();
-    pai4->_actionName = tr("About");
-    pai4->_actionDetail = tr("show about form.");
-    pai4->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowAboutForm);
-
-    plugin->I_ActionList.append(pai4);
-}
-
-void PluginIO::InitFunctionList(PluginIO* plugin)
-{
-
-}
-
-void PluginIO::InitWidgetList(PluginIO* plugin)
+void PluginIO::InitWidgetList(Plugin_Interface* plugin)
 {
     QCPF_Model* core = (QCPF_Model*)_core;
     PluginWidgetInfo *nWdtPluginManager = new PluginWidgetInfo();
@@ -140,48 +99,39 @@ void PluginIO::InitWidgetList(PluginIO* plugin)
     nWdtAbout->_widget = new Dialog_About();
     nWdtAbout->_origWidth = nWdtAbout->_widget->width();
     nWdtAbout->_origHeight = nWdtAbout->_widget->height();
-    nWdtAbout->_widgetDetail = tr("It's used for introducing QCommonFrame.");
+    nWdtAbout->_widgetDetail = tr("It's used for introducing QCPFrame.");
 
     plugin->I_WidgetList.append(nWdtAbout);
+
+    //-------------------
+    PluginWidgetInfo *nWdt_CoreVer = new PluginWidgetInfo();
+
+    nWdt_CoreVer->_showType = ST_DOCK;
+    nWdt_CoreVer->_widget = new wdt_CoreVersion();
+    nWdt_CoreVer->_origWidth = nWdt_CoreVer->_widget->width();
+    nWdt_CoreVer->_origHeight = nWdt_CoreVer->_widget->height();
+    nWdt_CoreVer->_widgetDetail = tr("Show core version.");
+
+    plugin->I_WidgetList.append(nWdt_CoreVer);
+
+    //-------------------
+    PluginWidgetInfo *nWdt_ViewVer = new PluginWidgetInfo();
+
+    nWdt_ViewVer->_showType = ST_DOCK;
+    nWdt_ViewVer->_widget = new wdt_ViewVersion();
+    nWdt_ViewVer->_origWidth = nWdt_ViewVer->_widget->width();
+    nWdt_ViewVer->_origHeight = nWdt_ViewVer->_widget->height();
+    nWdt_ViewVer->_widgetDetail = tr("Show view model version.");
+
+    connect(this, SIGNAL(StartShowViewVersion(void)), nWdt_ViewVer->_widget , SLOT(ShowViewVersion(void)));
+    bool ret = disconnect(this, SIGNAL(StartShowViewVersion(void)), nWdt_ViewVer->_widget , SLOT(ShowViewVersion(void)));
+    plugin->I_WidgetList.append(nWdt_ViewVer);
 }
 
-//通用方法
-int PluginIO::PluginFunction(QVariant arg_in, QVariant &arg_out){
-
-//    QVariant tt("12315");
-    MyClass ms;
-    ms.Var1 = 1;
-    ms.Var2 = "123";
-    ms.Var3 = 3.4;
-    QVariant vms;
-    vms.setValue(ms);
-    arg_out = vms;
-    return 111;
-}
-
-//-----------------------------------
-//通用槽函数
-int PluginIO::slot_Plugin(QVariant arg_in, QVariant &arg_out) {
-
-return 0;
-}
-
-int PluginIO::OnCoreInitialize(){
-
-    return 0;
-}
-
-int PluginIO::OnViewCreated(){
-
-    return 0;
-}
-
-int PluginIO::OnViewLoaded(){
-
-    return 0;
-}
-
-int PluginIO::OnViewClosing(){
+int PluginIO::slot_InputInfo(tagOutputInfo& info)
+{
+    if(info._type == INFT_PLUGIN_UPDATE_FINISHED)
+        SystemManager::getInstance()->setConfigToUI();
 
     return 0;
 }
@@ -191,24 +141,13 @@ int PluginIO::OnViewClosing(){
  * *********************************************************************/
 void PluginIO::Action_ShowSystemPluginManager(bool checkState)
 {
+    QAction* actSender = (QAction*)sender();
     if(I_WidgetList.count()>0)
     {
         foreach (PluginWidgetInfo* pwi, instance->I_WidgetList) {
             if(pwi->_widget->objectName() == "wdt_SystemPluginManager")
             {
-                ((QDialog*)pwi->_widget)->exec();
-            }
-        }
-    }
-}
-
-void PluginIO::Action_ShowRouteManager(bool checkState)
-{
-    if(I_WidgetList.count()>0)
-    {
-        foreach (PluginWidgetInfo* pwi, instance->I_WidgetList) {
-            if(pwi->_widget->objectName() == "wdt_RouteManager")
-            {
+                pwi->_widget->setWindowIcon(actSender->icon());
                 ((QDialog*)pwi->_widget)->exec();
             }
         }
@@ -224,11 +163,13 @@ void PluginIO::Action_CloseMainApplication(bool checkState)
 
 void PluginIO::Action_ShowAboutForm(bool checkState)
 {
+    QAction* actSender = (QAction*)sender();
     if(I_WidgetList.count()>0)
     {
         foreach (PluginWidgetInfo* pwi, instance->I_WidgetList) {
             if(pwi->_widget->objectName() == "Dialog_About")
             {
+                pwi->_widget->setWindowIcon(actSender->icon());
                 ((QDialog*)pwi->_widget)->exec();
             }
         }

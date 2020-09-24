@@ -19,7 +19,7 @@ CXXFLAGS      = -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStri
 INCPATH       = -I. -I..\QCPF_Model -IC:\Qt\Qt5.13.1\5.13.1\msvc2017\include -IC:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore -Irelease -IC:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\win32-msvc 
 LINKER        = link
 LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /INCREMENTAL:NO /SUBSYSTEM:CONSOLE "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
-LIBS          = /LIBPATH:G:\QCPFrame\GitHub\src\bin\debug G:\QCPFrame\GitHub\src\bin\debug\QCPF_Model.lib C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Core.lib   
+LIBS          = /LIBPATH:G:\GitHub\bin G:\GitHub\bin\QCPF_Model.lib C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Core.lib   
 QMAKE         = C:\Qt\Qt5.13.1\5.13.1\msvc2017\bin\qmake.exe
 IDC           = idc
 IDL           = midl
@@ -57,9 +57,9 @@ DIST          =  QCPF_Controllor.h \
 		cmdline.h QCPF_Controllor.cpp \
 		main.cpp
 QMAKE_TARGET  = QCPF_HostConsole
-DESTDIR        = ..\bin\debug\ #avoid trailing-slash linebreak
+DESTDIR        = ..\..\bin\ #avoid trailing-slash linebreak
 TARGET         = QCPF_HostConsole.exe
-DESTDIR_TARGET = ..\bin\debug\QCPF_HostConsole.exe
+DESTDIR_TARGET = ..\..\bin\QCPF_HostConsole.exe
 
 ####### Implicit rules
 
@@ -108,9 +108,9 @@ DESTDIR_TARGET = ..\bin\debug\QCPF_HostConsole.exe
 ####### Build rules
 
 first: all
-all: Makefile.Release  ..\bin\debug\QCPF_HostConsole.exe
+all: Makefile.Release  ..\..\bin\QCPF_HostConsole.exe
 
-..\bin\debug\QCPF_HostConsole.exe: C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Core.lib $(OBJECTS) 
+..\..\bin\QCPF_HostConsole.exe: C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Core.lib $(OBJECTS) 
 	$(LINKER) $(LFLAGS) /MANIFEST:embed /OUT:$(DESTDIR_TARGET) @<<
 release\QCPF_Controllor.obj release\main.obj release\moc_QCPF_Controllor.obj
 $(LIBS)
@@ -216,7 +216,7 @@ release\moc_QCPF_Controllor.cpp: QCPF_Controllor.h \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\qiodevice.h \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\qshareddata.h \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\qhash.h \
-		..\..\interface\hostinterface.h \
+		..\..\interface\coreinterface.h \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\QList \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\QVector \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\QQueue \
@@ -246,7 +246,7 @@ release\moc_QCPF_Controllor.cpp: QCPF_Controllor.h \
 		..\QCPF_Model\configModel.h \
 		release\moc_predefs.h \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\bin\moc.exe
-	C:\Qt\Qt5.13.1\5.13.1\msvc2017\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include G:/QCPFrame/GitHub/src/QCPF_Host_Console/release/moc_predefs.h -IC:/Qt/Qt5.13.1/5.13.1/msvc2017/mkspecs/win32-msvc -IG:/QCPFrame/GitHub/src/QCPF_Host_Console -IG:/QCPFrame/GitHub/src/QCPF_Model -IC:/Qt/Qt5.13.1/5.13.1/msvc2017/include -IC:/Qt/Qt5.13.1/5.13.1/msvc2017/include/QtCore -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include" -I"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt" QCPF_Controllor.h -o release\moc_QCPF_Controllor.cpp
+	C:\Qt\Qt5.13.1\5.13.1\msvc2017\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include G:/GitHub/src/QCPF_Host_Console/release/moc_predefs.h -IC:/Qt/Qt5.13.1/5.13.1/msvc2017/mkspecs/win32-msvc -IG:/GitHub/src/QCPF_Host_Console -IG:/GitHub/src/QCPF_Model -IC:/Qt/Qt5.13.1/5.13.1/msvc2017/include -IC:/Qt/Qt5.13.1/5.13.1/msvc2017/include/QtCore -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include" -I"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt" QCPF_Controllor.h -o release\moc_QCPF_Controllor.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -328,7 +328,7 @@ release\QCPF_Controllor.obj: QCPF_Controllor.cpp QCPF_Controllor.h \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\qiodevice.h \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\qshareddata.h \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\qhash.h \
-		..\..\interface\hostinterface.h \
+		..\..\interface\coreinterface.h \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\QList \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\QVector \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\QQueue \
@@ -431,7 +431,7 @@ release\main.obj: main.cpp C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\QCoreAp
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\qfile.h \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\qfiledevice.h \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\qiodevice.h \
-		..\..\interface\hostinterface.h \
+		..\..\interface\coreinterface.h \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\QList \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\QVector \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\include\QtCore\QQueue \

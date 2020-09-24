@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>360</width>
-    <height>456</height>
+    <height>446</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
    <property name="geometry">
     <rect>
      <x>-10</x>
-     <y>420</y>
+     <y>410</y>
      <width>362</width>
      <height>32</height>
     </rect>
@@ -37,9 +37,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>190</y>
+     <y>200</y>
      <width>341</width>
-     <height>221</height>
+     <height>201</height>
     </rect>
    </property>
    <property name="title">
@@ -50,7 +50,7 @@
      <rect>
       <x>16</x>
       <y>20</y>
-      <width>61</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
@@ -64,9 +64,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>90</x>
       <y>20</y>
-      <width>251</width>
+      <width>241</width>
       <height>20</height>
      </rect>
     </property>
@@ -80,10 +80,10 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>90</x>
       <y>80</y>
-      <width>251</width>
-      <height>131</height>
+      <width>241</width>
+      <height>111</height>
      </rect>
     </property>
    </widget>
@@ -92,7 +92,7 @@
      <rect>
       <x>16</x>
       <y>80</y>
-      <width>61</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
@@ -106,9 +106,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>90</x>
       <y>50</y>
-      <width>251</width>
+      <width>241</width>
       <height>20</height>
      </rect>
     </property>
@@ -121,7 +121,7 @@
      <rect>
       <x>16</x>
       <y>50</y>
-      <width>61</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
@@ -159,7 +159,7 @@
      <x>10</x>
      <y>30</y>
      <width>341</width>
-     <height>151</height>
+     <height>161</height>
     </rect>
    </property>
    <property name="title">
@@ -168,9 +168,9 @@
    <widget class="QComboBox" name="cbPluginWidget">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>70</y>
-      <width>251</width>
+      <x>90</x>
+      <y>60</y>
+      <width>241</width>
       <height>22</height>
      </rect>
     </property>
@@ -179,8 +179,8 @@
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>30</y>
-      <width>81</width>
+      <y>33</y>
+      <width>71</width>
       <height>16</height>
      </rect>
     </property>
@@ -191,9 +191,9 @@
    <widget class="QComboBox" name="cbPluginID">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>90</x>
       <y>30</y>
-      <width>251</width>
+      <width>241</width>
       <height>22</height>
      </rect>
     </property>
@@ -202,8 +202,8 @@
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>72</y>
-      <width>91</width>
+      <y>63</y>
+      <width>71</width>
       <height>16</height>
      </rect>
     </property>
@@ -215,8 +215,8 @@
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>110</y>
-      <width>81</width>
+      <y>93</y>
+      <width>71</width>
       <height>16</height>
      </rect>
     </property>
@@ -227,12 +227,48 @@
    <widget class="QComboBox" name="cbCopyID">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>110</y>
-      <width>251</width>
+      <x>90</x>
+      <y>90</y>
+      <width>241</width>
       <height>22</height>
      </rect>
     </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>16</x>
+      <y>123</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Type:</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="cbStatusbarItemType">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>120</y>
+      <width>241</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="currentText">
+     <string>Common</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>Common</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Permanent</string>
+     </property>
+    </item>
    </widget>
    <zorder>label_2</zorder>
    <zorder>cbPluginWidget</zorder>
@@ -240,6 +276,8 @@
    <zorder>cbPluginID</zorder>
    <zorder>label_3</zorder>
    <zorder>cbCopyID</zorder>
+   <zorder>label_4</zorder>
+   <zorder>cbStatusbarItemType</zorder>
   </widget>
  </widget>
  <resources/>

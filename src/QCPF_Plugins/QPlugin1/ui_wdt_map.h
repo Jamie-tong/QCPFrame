@@ -30,7 +30,7 @@ public:
         frame = new QFrame(wdt_Map);
         frame->setObjectName(QString::fromUtf8("frame"));
         frame->setGeometry(QRect(0, 0, 1651, 1081));
-        frame->setStyleSheet(QString::fromUtf8("background-image: url(:/bin/debug/Images/map.png);"));
+        frame->setStyleSheet(QString::fromUtf8("border-image: url(:/bin/Images/map.png);"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
 

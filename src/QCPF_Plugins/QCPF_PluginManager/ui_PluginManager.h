@@ -63,7 +63,7 @@ public:
     QTableWidget *tableAllValidPluginsSort;
     QPushButton *btnOk;
     QPushButton *btnCancel;
-    QPushButton *btnApply;
+    QPushButton *btnRefreshPlugins;
     QGroupBox *groupBox_3;
 
     void setupUi(QDialog *PluginManager)
@@ -269,16 +269,16 @@ public:
         tabPlugin_Sort->addTab(tab_2, QString());
         btnOk = new QPushButton(PluginManager);
         btnOk->setObjectName(QString::fromUtf8("btnOk"));
-        btnOk->setGeometry(QRect(591, 624, 100, 35));
+        btnOk->setGeometry(QRect(730, 624, 100, 35));
         btnOk->setMinimumSize(QSize(0, 35));
         btnCancel = new QPushButton(PluginManager);
         btnCancel->setObjectName(QString::fromUtf8("btnCancel"));
         btnCancel->setGeometry(QRect(832, 624, 100, 35));
         btnCancel->setMinimumSize(QSize(0, 35));
-        btnApply = new QPushButton(PluginManager);
-        btnApply->setObjectName(QString::fromUtf8("btnApply"));
-        btnApply->setGeometry(QRect(691, 624, 100, 35));
-        btnApply->setMinimumSize(QSize(0, 35));
+        btnRefreshPlugins = new QPushButton(PluginManager);
+        btnRefreshPlugins->setObjectName(QString::fromUtf8("btnRefreshPlugins"));
+        btnRefreshPlugins->setGeometry(QRect(8, 624, 100, 35));
+        btnRefreshPlugins->setMinimumSize(QSize(0, 35));
         groupBox_3 = new QGroupBox(PluginManager);
         groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
         groupBox_3->setGeometry(QRect(-10, 616, 1000, 2));
@@ -312,7 +312,7 @@ public:
         tabPlugin_Sort->setTabText(tabPlugin_Sort->indexOf(tab_2), QCoreApplication::translate("PluginManager", "Plugin ordering", nullptr));
         btnOk->setText(QCoreApplication::translate("PluginManager", "Ok(&O)", nullptr));
         btnCancel->setText(QCoreApplication::translate("PluginManager", "Cancel(&C)", nullptr));
-        btnApply->setText(QCoreApplication::translate("PluginManager", "Apply(&A)", nullptr));
+        btnRefreshPlugins->setText(QCoreApplication::translate("PluginManager", "Update(&U)", nullptr));
         groupBox_3->setTitle(QString());
     } // retranslateUi
 

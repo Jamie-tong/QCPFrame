@@ -10,14 +10,28 @@ License: GPL v3.0
 
 #include <QObject>
 #include <QString>
-#include "../../interface/hostinterface.h"
+#include "../../interface/coreinterface.h"
 #include "../../interface/plugininterface.h"
 
 enum BarItemType
 {
-  TP_SEPERATOR,
-  TP_WIDGET,
-  TP_ACTION,
+  BT_ACTION,
+  BT_WIDGET,
+  BT_SEPARATOR,//分隔符
+  BT_SPACER,//弹簧
+};
+
+enum BarItemSytle
+{
+  BS_NO_TEXT,
+  BS_TEXT_BESIDE_ICON,
+  BS_TEXT_UNDER_ICON
+};
+
+enum StatusbarItemType
+{
+    SBT_COMMON,
+    SBT_PERMANENT,
 };
 
 class ActionItem
@@ -46,10 +60,16 @@ public:
     int _widgetOrigHeight;
 };
 
+class StatusbarItem : public WidgetItem
+{
+public:
+    int _statusbarItemType;//StatusbarItemType
+};
+
 class BarItem
 {
 public:
-    int _type;//0:Seperator; 1:Widget; 2:Action
+    int _type;//BarItemType
     ActionItem* _actionItem;
     WidgetItem* _widgetItem;
     int _width;
@@ -74,9 +94,9 @@ public:
     QString _pluginID;
     QString _copyID;
 
-    //组件Function
-    QString _functionName;
-    QString _functionDetail;
+    //组件Action
+    QString _actionName;
+    QString _actionDetail;
 
     //菜单父子关系
     QString _parentMenuTitle;
@@ -88,6 +108,9 @@ class JToolBar
 {
 public:
     int _toolBarNo;
+    QString _toolBarTitle;
+    QSize _IconSize;
+    int _textStyle;//BarItemSytle
     int _count_ToolBarItemLst;
     QList<BarItem*> _toolBarItemList;
 };
@@ -113,6 +136,9 @@ public://UI相关数据成员
     bool _isEnable_ShowMenu = true;
     bool _isEnable_ShowToolbar = true;
     bool _isEnable_ShowStatusbar = true;
+    bool _dock_Floatable = false;
+    bool _dock_Moveable = false;
+    bool _dock_Closeable = false;
 
     int _count_MenuTopItemLst=0;
     QList<JMenuNode*> _menuTopItemLst;
@@ -121,7 +147,7 @@ public://UI相关数据成员
     QList<JToolBar*> _toolBarLst;
 
     int _count_StatusBarItemLst = 0;
-    QList<WidgetItem*> _statusBarItemLst;
+    QList<StatusbarItem*> _statusBarItemLst;
 
     int _count_WorkSpaceWidgetLst = 0;
     QList<WidgetItem*> _workspaceWidgetLst;

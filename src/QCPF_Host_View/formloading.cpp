@@ -13,11 +13,25 @@ License: GPL v3.0
 #include <QTimer>
 #include <QString>
 
-#include <windows.h>//在Linux和Mac下要换成 unistd.h 头文件
+
+#ifdef Q_OS_LINUX
+    #include <unistd.h>
+#endif
+ 
+#ifdef Q_OS_WIN32
+    #include <windows.h>
+#endif
+
 #include <QProcess>
 #include <QStringLiteral>
 
 #include "mainwindow.h"
+
+struct tagUserInfo{
+    QString userName;
+    QString password;
+};
+Q_DECLARE_METATYPE(tagUserInfo)
 
 formLoading::formLoading(QCPF_ViewModel* view, QDialog *parent) :
     QDialog(parent),
@@ -41,6 +55,11 @@ formLoading::formLoading(QCPF_ViewModel* view, QDialog *parent) :
     ui->laSystemName->setText(tSysName);
     ui->labCoreVersion->setText(QString(tr("Core Version : %1")).arg(_core->I_SystemVersion));
     ui->labViewVersion->setText(QString(tr("View Version : %1")).arg(_view->_version));
+
+    //注册面板显示后的信号槽
+    _timer = new QTimer(this);
+    _timer->setSingleShot(true);
+    connect(_timer, SIGNAL(timeout()), this, SLOT(slot_OnULoaded()));
 }
 
 formLoading::~formLoading()
@@ -48,23 +67,22 @@ formLoading::~formLoading()
     delete ui;
 }
 
-void formLoading::timerUpdate()
+void formLoading::slot_OnULoaded()
 {
-    QString tUser = ui->txtUser->text();
-    QString tPwd = ui->txtPwd->text();
-    QString tExtInfo = "";
-    //先初始化core，再初始化viewmodel
-    if(0!=_core->slot_Initialize(tUser, tPwd, tExtInfo))
-    {
-        timer->stop();
-        timer->deleteLater();
-        return;
-    }
+    QRect rct_frame = ui->frameLoad->geometry();
+    QRect rct_lbSystemName = ui->laSystemName->geometry();
 
-    _view->slot_Initialize();
+    ui->laSystemName->setGeometry(0, (rct_frame.height()-rct_lbSystemName.height())/2, rct_lbSystemName.width(), rct_lbSystemName.height());
+    QCoreApplication::processEvents();
+    ui->frameLogin->setVisible(false);
+    ui->lb_LoadingInfo->setVisible(true);
+    _core->slot_Initialize();
 
-    timer->stop();
-    timer->deleteLater();
+    ui->lb_LoadingInfo->setVisible(false);
+    ui->laSystemName->setGeometry(0, 0, rct_lbSystemName.width(), rct_lbSystemName.height());
+    ui->lb_LoadingInfo->clear();
+    ui->frameLogin->setVisible(true);
+    _timer->deleteLater();
 }
 
 void formLoading::on_btnCancel_clicked()
@@ -137,7 +155,7 @@ void formLoading::mouseReleaseEvent(QMouseEvent *event)
     }
 }
 
-int formLoading::slot_CoreInitializeInfo(tagOutputInfo& info)
+int formLoading::slot_InputInfo(tagOutputInfo& info)
 {
     switch (info._type) {
 
@@ -159,10 +177,50 @@ int formLoading::slot_CoreInitializeInfo(tagOutputInfo& info)
    return 0;
 }
 
+void formLoading::showEvent(QShowEvent *event)
+{
+    _timer->start(1);
+}
+
 void formLoading::on_btnOk_clicked()
 {
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
+    if(ui->txtUser->text()=="" || ui->txtPwd->text()=="")
+    {
+        QMessageBox::information(this, "info", "User Name or Password can not be null!");
+        return;
+    }
 
-    timer->start(100);
+    //通过函数指针调用用户管理组件的验证功能，旨在将用户管理与框架解耦，即有一天用户管理的密码验证要升级为加密形式，只需要更新用户管理模块。
+    bool isVerifyLoginInfoExisted = false;
+    bool isLegal = false;
+
+    QVariant var_In;
+    QVariant var_Out;
+    tagUserInfo uInfo;
+    uInfo.userName = ui->txtUser->text();
+    uInfo.password = ui->txtPwd->text();
+    var_In = QVariant::fromValue(uInfo);
+
+    int ret =_core->Invoke_PluginFunction(PT_SYS,  "QCPF_UserManager", "VerifyLoginInfo", var_In, var_Out);
+
+    //-1表示没找到组件, -2表示没找到函数指针对象
+    if(ret==-1 || ret ==-2)
+    {
+        this->close();
+    }
+    bool verityEnd = var_Out.value<bool>();
+    if(!verityEnd)
+        ui->lb_LoadingInfo->setText("They are not a valid pair of user and password!");
+    else
+        this->close();
+}
+
+void formLoading::on_txtUser_textChanged(const QString &arg1)
+{
+    ui->lb_LoadingInfo->setText("");
+}
+
+void formLoading::on_txtPwd_textChanged(const QString &arg1)
+{
+    ui->lb_LoadingInfo->setText("");
 }

@@ -18,8 +18,9 @@ License: GPL v3.0
 #include <QStringLiteral>
 #include <QTreeWidgetItem>
 #include <QCheckBox>
+#include "PluginIO.h"
 
-SystemManager* instance;
+SystemManager* sysMgrInstance;
 
 SystemManager::SystemManager(QCPF_Model* model, QWidget *parent) :
     QDialog(parent),
@@ -30,7 +31,7 @@ SystemManager::SystemManager(QCPF_Model* model, QWidget *parent) :
 
     _core = model;
 
-    instance = this;
+    sysMgrInstance = this;
     connect(this,SIGNAL(sig_SelAllOrNot(bool)),this,SLOT(slot_SelAllOrNot(bool)));//for 全选/不选复选框
 
     //去掉问号按钮
@@ -153,14 +154,14 @@ int SystemManager::setConfigToUI()
         QWidget *widget = new QWidget(this);
         QHBoxLayout *layout = new QHBoxLayout(this);
         QCheckBox *box = new QCheckBox(this);
-        box->setObjectName(((PluginInterface *)_core->I_SysPlugins[i])->I_PluginID);
+        box->setObjectName(((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginID);
 
         layout->addWidget(box);
         layout->setMargin(0);
         layout->setAlignment(box,Qt::AlignCenter);
         widget->setLayout(layout);
 
-        QString tOrigPluginID = ((PluginInterface *)_core->I_SysPlugins[i])->I_PluginID;
+        QString tOrigPluginID = ((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginID;
 
         //查找已选组件集合中是否已经有该项，如果有则设置选中状态，否则不选中
         int tIndex = -1;
@@ -185,15 +186,15 @@ int SystemManager::setConfigToUI()
 
         ui->tablePluginLst->setCellWidget(tRowCount, 0, widget);//插入复选框
         ui->tablePluginLst->setItem(tRowCount, 1, new QTableWidgetItem(QString::number(i+1)));
-        ui->tablePluginLst->setItem(tRowCount, 2, new QTableWidgetItem(((PluginInterface *)_core->I_SysPlugins[i])->I_PluginID));
-        ui->tablePluginLst->setItem(tRowCount, 3, new QTableWidgetItem(((PluginInterface *)_core->I_SysPlugins[i])->I_PluginAliasName));
-        ui->tablePluginLst->setItem(tRowCount, 4, new QTableWidgetItem(((PluginInterface *)_core->I_SysPlugins[i])->I_PluginTag.toString()));
-        ui->tablePluginLst->setItem(tRowCount, 5, new QTableWidgetItem(((PluginInterface *)_core->I_SysPlugins[i])->I_PluginAuther));
-        ui->tablePluginLst->setItem(tRowCount, 6, new QTableWidgetItem(((PluginInterface *)_core->I_SysPlugins[i])->I_PluginVersion));
-        ui->tablePluginLst->setItem(tRowCount, 7, new QTableWidgetItem(((PluginInterface *)_core->I_SysPlugins[i])->I_PluginComment));
+        ui->tablePluginLst->setItem(tRowCount, 2, new QTableWidgetItem(((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginID));
+        ui->tablePluginLst->setItem(tRowCount, 3, new QTableWidgetItem(((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginAliasName));
+        ui->tablePluginLst->setItem(tRowCount, 4, new QTableWidgetItem(((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginTag.toString()));
+        ui->tablePluginLst->setItem(tRowCount, 5, new QTableWidgetItem(((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginAuther));
+        ui->tablePluginLst->setItem(tRowCount, 6, new QTableWidgetItem(((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginVersion));
+        ui->tablePluginLst->setItem(tRowCount, 7, new QTableWidgetItem(((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginComment));
 
-        box->setProperty("OrigPluginID",((PluginInterface *)_core->I_SysPlugins[i])->I_PluginID);
-        box->setProperty("OrigPluginFilePath", ((PluginInterface *)_core->I_SysPlugins[i])->I_PluginFilePath);
+        box->setProperty("OrigPluginID",((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginID);
+        box->setProperty("OrigPluginFilePath", ((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginFilePath);
     }
 
     //------------------------------
@@ -270,7 +271,7 @@ void SystemManager::setTableStyle(QTableWidget *table)
 
 SystemManager *SystemManager::getInstance()
 {
-    return instance;
+    return sysMgrInstance;
 }
 
 void SystemManager::slot_SelAllOrNot(bool flag)
@@ -312,7 +313,7 @@ void SystemManager::slot_SelAllOrNot(bool flag)
      {
          QString tOriginPluginID = ui->tableOrigPluginsSort->item(i, 1)->text();
          QString tFullFilePath;
-         foreach (PluginInterface* pi, _core->I_SysPlugins) {
+         foreach (Plugin_Interface* pi, _core->I_SysPlugins) {
              if(pi->I_PluginID == tOriginPluginID)
              {
                 tFullFilePath = pi->I_PluginFilePath;
@@ -344,13 +345,6 @@ void SystemManager::on_btnCancel_clicked()
 {
     emit sig_Cancel();
     this->close();
-}
-
-void SystemManager::on_btnApply_clicked()
-{
-    getConfigFromUI();
-
-    emit sig_Apply();
 }
 
 void SystemManager::on_pluginCheckbox_selChanged(int state)
@@ -460,4 +454,11 @@ void SystemManager::on_btnOrigPluginMoveUp_clicked()
 void SystemManager::on_btnOrigPluginMoveDown_clicked()
 {
     TableItemMoveDown(ui->tableOrigPluginsSort);
+}
+
+void SystemManager::on_btnUpdate_clicked()
+{
+    tagOutputInfo info;
+    info._type = INFT_PLUGIN_UPDATE;
+    emit PluginIO::getInstance()->sig_OutputInfo(info);
 }

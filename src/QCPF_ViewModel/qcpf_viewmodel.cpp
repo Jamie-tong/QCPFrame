@@ -10,9 +10,11 @@ License: GPL v3.0
 #include <QDir>
 #include <QtWidgets/QMainWindow>
 #include <QDockWidget>
+#include <QMessageBox>
+
 
 #define MASK_END_STR "_tp"
-#define SYSTEM_VERSION "1.0.0.3"
+#define SYSTEM_VERSION "1.0.0.5"
 #define ORGANIZATION_NAME "Jamie.T"
 
 QCPF_ViewModel::QCPF_ViewModel(QCPF_Model* model, QObject* parent):_config(this)
@@ -145,8 +147,8 @@ int QCPF_ViewModel::slot_LoadConfigFile(viewConfigModel &config)
 
     if(!QFile::exists(_configFullFilePath))
     {
-        _outputInfo._type = InfoType::INFT_MSG_ERROR;
-        _outputInfo._content = tr("view config file lost!");
+        _outputInfo._type = InfoType::INFT_STATUS_INFO;
+        _outputInfo._content = tr("The View config file lost!");
         emit sig_OutputInfo(_outputInfo);
         return -1;
     }
@@ -164,6 +166,22 @@ int QCPF_ViewModel::slot_SaveConfigFile()
     _outputInfo._type = InfoType::INFT_STATUS_INFO;
     _outputInfo._content = tr("trying to save config file.");
     emit sig_OutputInfo(_outputInfo);
+
+    QFileInfo tFi(_configFullFilePath);
+    if(!tFi.exists())
+        return -1;
+
+    QString tempConfigFullFilePath = _configDirPath + QStringLiteral("temp_") + _configFileName;
+    if(0!=saveConfigFile(tempConfigFullFilePath))
+            return -1;
+
+    if(0!=compareFiles(tempConfigFullFilePath, _configFullFilePath))
+    {
+        _outputInfo._type = InfoType::INFT_MSG_INFO;
+        _outputInfo._title = "infomation";
+        _outputInfo._content = tr("View configuration is changed, please restart application!");
+        emit sig_OutputInfo(_outputInfo);
+    }
 
     return saveConfigFile(_configFullFilePath);
 }
@@ -229,6 +247,38 @@ int QCPF_ViewModel::slot_Initialize()
     return 0;
 }
 
+int QCPF_ViewModel::slot_InputInfo(tagOutputInfo& info)
+{
+    switch (info._type) {
+        case InfoType::INFT_MSG_INFO:
+                QMessageBox::information(_viewHost, info._title, info._content);
+                break;
+        case InfoType::INFT_MSG_WARN:
+                QMessageBox::warning(_viewHost, info._title, info._content);
+                break;
+        case InfoType::INFT_MSG_ERROR:
+                QMessageBox::critical(_viewHost, info._title, info._content);
+                break;
+        case InfoType::INFT_MSG_QUESTION:
+                QMessageBox::question(_viewHost, info._title, info._content);
+                break;
+        case InfoType::INFT_APPLICATION_CLOSE:
+                _viewHost->close();
+                break;
+        case InfoType::INFT_PLUGIN_UPDATE:
+                _core->slot_Initialize();
+            break;
+        case InfoType::INFT_UI_UPDATE:
+                initUIFromConfig(_viewHost);
+            break;
+        case InfoType::INFT_STATUSBAR_TEMP:
+                _mainStatusbar->showMessage(info._content, info._timeout);
+            break;
+    }
+
+    return 0;
+}
+
 void QCPF_ViewModel::parseMenu(QMenu* nMenu, JMenuNode* nNode)
 {
     if(nNode->_children.count()==0)
@@ -240,46 +290,7 @@ void QCPF_ViewModel::parseMenu(QMenu* nMenu, JMenuNode* nNode)
         else
         {
             QAction* tChildAction = new QAction();
-            tChildAction->setObjectName(nNode->_functionName);
-
-            tChildAction->setText(nNode->_menuTitle);
-            tChildAction->setProperty("ItemActionName", nNode->_functionName);
-
-            QKeySequence key(nNode->_menuShortCut);
-            tChildAction->setShortcut(key);
-
-            if(_core->I_CurrentUserInfo._authority <= nNode->_menuAuthority)
-                tChildAction->setEnabled(true);
-            else
-                tChildAction->setEnabled(false);
-
-            tChildAction->setCheckable(nNode->_menuCheckable);
-            tChildAction->setIcon(QIcon(nNode->_menuIconPath));
-
-            if(nNode->_pluginType == PT_SYS)//系统组件
-            {
-                foreach (PluginInterface* pi, _core->I_SysPlugins_Sel)
-                {
-                    if(pi->I_PluginID == nNode->_pluginID)
-                    {
-                        connect(tChildAction, &QAction::triggered, pi, &PluginInterface::slot_Action);
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                foreach (PluginInterface* pi, _core->I_NSysOrigPlugins_Sel)
-                {
-                    if(pi->I_PluginID == nNode->_pluginID)
-                    {
-                        connect(tChildAction, &QAction::triggered, pi, &PluginInterface::slot_Action);
-                        break;
-                    }
-                }
-            }
-
-            _actionList.append(tChildAction);
+            addActionToViewActionList(tChildAction, nNode->_actionName, nNode->_actionName, nNode->_menuShortCut, (AuthorityType)nNode->_menuAuthority, nNode->_menuCheckable, nNode->_menuIconPath, (PluginType)nNode->_pluginType, nNode->_pluginID);
             nMenu->addAction(tChildAction);
         }
     }
@@ -304,8 +315,53 @@ void QCPF_ViewModel::parseMenu(QMenu* nMenu, JMenuNode* nNode)
     }
 }
 
-void QCPF_ViewModel::InitUIFromConfig(QMainWindow* viewHost)
+void QCPF_ViewModel::addActionToViewActionList(QAction* action, QString actionObjectName, QString actionText, QString shortcut, AuthorityType aType, bool isCheckable, QString iconPath, PluginType pType, QString pluginID)
 {
+    action->setObjectName(actionObjectName);
+
+    action->setText(actionText);
+    action->setProperty("ItemActionName", actionObjectName);
+
+    QKeySequence key(shortcut);
+    action->setShortcut(key);
+
+    if(_core->I_CurrentUserInfo._authority <= aType)
+        action->setEnabled(true);
+    else
+        action->setEnabled(false);
+
+    action->setCheckable(isCheckable);
+    action->setIcon(QIcon(iconPath));
+
+    if(pType == PT_SYS)//系统组件
+    {
+        foreach (Plugin_Interface* pi, _core->I_SysPlugins_Sel)
+        {
+            if(pi->I_PluginID == pluginID)
+            {
+                connect(action, &QAction::triggered, pi, &Plugin_Interface::slot_Action);
+                break;
+            }
+        }
+    }
+    else
+    {
+        foreach (Plugin_Interface* pi, _core->I_NSysOrigPlugins_Sel)
+        {
+            if(pi->I_PluginID == pluginID)
+            {
+                connect(action, &QAction::triggered, pi, &Plugin_Interface::slot_Action);
+                break;
+            }
+        }
+    }
+
+    _actionList.append(action);
+}
+
+void QCPF_ViewModel::initUIFromConfig(QMainWindow* viewHost)
+{
+    _viewHost = viewHost;
     _mainMenubar = new QMenuBar(viewHost);
     _mainMenubar->setObjectName(QString::fromUtf8("menuMain"));
     _mainMenubar->setGeometry(QRect(0, 0, 1024, 23));
@@ -315,8 +371,14 @@ void QCPF_ViewModel::InitUIFromConfig(QMainWindow* viewHost)
     {
         QToolBar* _tToolbar = new QToolBar((QWidget*)viewHost);
         _tToolbar->setObjectName(QString(tr("Bar%1")).arg(i+1));
-        _tToolbar->setMinimumSize(QSize(0, 0));
-        _tToolbar->setIconSize(QSize(32, 32));
+        _tToolbar->setWindowTitle(_config._toolBarLst[i]->_toolBarTitle);
+        _tToolbar->setMinimumSize(_config._toolBarLst[i]->_IconSize);
+        _tToolbar->setIconSize(_config._toolBarLst[i]->_IconSize);
+
+        if(_config._toolBarLst[i]->_textStyle == BarItemSytle::BS_TEXT_BESIDE_ICON)
+            _tToolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        else if(_config._toolBarLst[i]->_textStyle == BarItemSytle::BS_TEXT_UNDER_ICON)
+            _tToolbar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
         _mainToolbarLst.append(_tToolbar);
         viewHost->addToolBar(Qt::TopToolBarArea, _tToolbar);
@@ -336,6 +398,26 @@ void QCPF_ViewModel::InitUIFromConfig(QMainWindow* viewHost)
     drawToolBarFromConfig(_mainToolbarLst);
     drawStatusBarFromConfig(_mainStatusbar);
     drawDockWidgetFromConfig(viewHost);
+
+    //设置docker分割线样式
+    viewHost->setStyleSheet("QMainWindow::separator{background:gray; width:1px; height:1px;}");
+
+    //从Layout.ini恢复界面布局
+    QString _layoutIniFilePath = _core->I_ApplicationDirPath + "/Config/View/.Layout.ini";
+    QFile file(_layoutIniFilePath);
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QByteArray ba;
+        QDataStream in(&file);
+        in >> ba;
+        file.close();
+        viewHost->restoreState(ba);
+    }
+
+    _mainMenubar->setVisible(_config._isEnable_ShowMenu);
+    for(int i=0; i<_mainToolbarLst.count(); i++)
+        _mainToolbarLst[i]->setVisible(_config._isEnable_ShowToolbar);
+    _mainStatusbar->setVisible(_config._isEnable_ShowStatusbar);
 }
 
 void QCPF_ViewModel::drawMenuFromConfig(QMenuBar* mainMenu)
@@ -374,24 +456,30 @@ void QCPF_ViewModel::drawToolBarFromConfig(QList<QToolBar*> mainToolbarLst)
 
         for(int j=0; j<_config._toolBarLst[i]->_toolBarItemList.count(); j++)
         {
-            if(_config._toolBarLst[i]->_toolBarItemList[j]->_type == TP_SEPERATOR)//Seperator
+            if(_config._toolBarLst[i]->_toolBarItemList[j]->_type == BT_ACTION)//"Action"
             {
-                mainToolbarLst[i]->addSeparator();
+                foreach (QAction* act, _actionList) {
+                    if(act->objectName() ==_config._toolBarLst[i]->_toolBarItemList[j]->_actionItem->_actionObjectName)
+                    {
+                        mainToolbarLst[i]->addAction(act);
+                        break;
+                    }
+                }
             }
-            else if(_config._toolBarLst[i]->_toolBarItemList[j]->_type == TP_WIDGET)//"Widget"
+            else if(_config._toolBarLst[i]->_toolBarItemList[j]->_type == BT_WIDGET)//"Widget"
             {
                 QString pluginType = _config._toolBarLst[i]->_toolBarItemList[j]->_widgetItem->_pluginType==0?tr("System"):tr("NonSystem");
                 QString pluginID = _config._toolBarLst[i]->_toolBarItemList[j]->_widgetItem->_pluginID;
                 QString copyID = _config._toolBarLst[i]->_toolBarItemList[j]->_widgetItem->_copyID;
                 QString widgetObjectName = _config._toolBarLst[i]->_toolBarItemList[j]->_widgetItem->_widgetObjectName;
 
-                QList<PluginInterface*> tPluginLst;
+                QList<Plugin_Interface*> tPluginLst;
                 if(pluginType == "System")
                     tPluginLst = _core->I_SysPlugins_Sel;
                 else
                     tPluginLst = _core->I_NSysAllValidPlugins;
 
-                foreach (PluginInterface* pi, tPluginLst) {
+                foreach (Plugin_Interface* pi, tPluginLst) {
                     if(pi->I_PluginID == pluginID && pi->I_CopyID == copyID)
                     {
                         foreach (PluginWidgetInfo* pwi, pi->I_WidgetList) {
@@ -407,15 +495,15 @@ void QCPF_ViewModel::drawToolBarFromConfig(QList<QToolBar*> mainToolbarLst)
                     }
                 }
             }
-            else if(_config._toolBarLst[i]->_toolBarItemList[j]->_type == TP_ACTION)//"Action"
+            else if(_config._toolBarLst[i]->_toolBarItemList[j]->_type == BT_SEPARATOR)//Separator
             {
-                foreach (QAction* act, _actionList) {
-                    if(act->objectName() ==_config._toolBarLst[i]->_toolBarItemList[j]->_actionItem->_actionObjectName)
-                    {
-                        mainToolbarLst[i]->addAction(act);
-                        break;
-                    }
-                }
+                mainToolbarLst[i]->addSeparator();
+            }
+            else if(_config._toolBarLst[i]->_toolBarItemList[j]->_type == BT_SPACER)//Spacer
+            {
+                QWidget* spacer = new QWidget(_viewHost);
+                spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+                mainToolbarLst[i]->addWidget(spacer);
             }
         }
     }
@@ -430,20 +518,25 @@ void QCPF_ViewModel::drawStatusBarFromConfig(QStatusBar* mainStatusbar)
             QString copyID = _config._statusBarItemLst[i]->_copyID;
             QString widgetObjectName = _config._statusBarItemLst[i]->_widgetObjectName;
 
-            QList<PluginInterface*> tPluginLst;
+            QList<Plugin_Interface*> tPluginLst;
             if(pluginType == "System")
                 tPluginLst = _core->I_SysPlugins_Sel;
             else
                 tPluginLst = _core->I_NSysAllValidPlugins;
 
-            foreach (PluginInterface* pi, tPluginLst) {
+            foreach (Plugin_Interface* pi, tPluginLst) {
                 if(pi->I_PluginID == pluginID && pi->I_CopyID == copyID)
                 {
                     foreach (PluginWidgetInfo* pwi, pi->I_WidgetList) {
                         if(pwi->_widget->objectName() == widgetObjectName)
                         {
                             pwi->_widget->setFixedSize(QSize(pwi->_origWidth,pwi->_origHeight));
-                            mainStatusbar->addWidget(pwi->_widget);
+
+                            if(_config._statusBarItemLst[i]->_statusbarItemType == SBT_COMMON)
+                                mainStatusbar->addWidget(pwi->_widget);
+                            else if(_config._statusBarItemLst[i]->_statusbarItemType == SBT_PERMANENT)
+                                mainStatusbar->addPermanentWidget(pwi->_widget);
+
                             _widgetLst_Statusbar.append(pwi->_widget);
                             mainStatusbar->repaint();
                             break;
@@ -470,13 +563,13 @@ void QCPF_ViewModel::drawDockWidgetFromConfig(QMainWindow* viewHost)
         if(!wi->_isVisible)
             continue;
 
-        QList<PluginInterface*> tPluginLst;
+        QList<Plugin_Interface*> tPluginLst;
         if(wi->_pluginType == PT_SYS)
             tPluginLst = _core->I_SysPlugins;
         else
             tPluginLst = _core->I_NSysAllValidPlugins;
 
-        foreach (PluginInterface* pi, tPluginLst) {
+        foreach (Plugin_Interface* pi, tPluginLst) {
             if(pi->I_PluginType == wi->_pluginType &&
                pi->I_PluginID == wi->_pluginID &&
                pi->I_CopyID == wi->_copyID)
@@ -487,8 +580,17 @@ void QCPF_ViewModel::drawDockWidgetFromConfig(QMainWindow* viewHost)
                         QDockWidget *tDw = new QDockWidget(pwi->_widget->windowTitle());
 
                         tDw->setObjectName(tDockWidgetObjectName);//要想存储布局，每个dock必须有唯一的objectName
-                        tDw->setFeatures(QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetClosable); //具有全部特性
-                        tDw->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+
+                        QDockWidget::DockWidgetFeatures tFeatures = QDockWidget::NoDockWidgetFeatures;
+                        if(_config._dock_Floatable)
+                            tFeatures |= QDockWidget::DockWidgetFloatable;
+                        if(_config._dock_Moveable)
+                            tFeatures |= QDockWidget::DockWidgetMovable;
+                        if(_config._dock_Closeable)
+                            tFeatures |= QDockWidget::DockWidgetClosable;
+
+                        tDw->setFeatures(tFeatures);
+                        tDw->setAllowedAreas(Qt::AllDockWidgetAreas);
                         tDw->setStyleSheet("border:1px solid #ccc;");
 
                         tDw->setWidget(pwi->_widget);

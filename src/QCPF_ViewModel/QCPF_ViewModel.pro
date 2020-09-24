@@ -1,8 +1,6 @@
-QT -= gui
+QT += widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-TARGET =  ../../bin/debug/QCPF_ViewModel
+TARGET =  ../../../bin/QCPF_ViewModel
 
 TEMPLATE = lib
 DEFINES += QCPF_VIEWMODEL_LIBRARY
@@ -25,7 +23,7 @@ SOURCES += \
     viewconfigmodel.cpp
 
 HEADERS += \
-    ../../interface/hostinterface.h \
+    ../../interface/coreinterface.h \
     ../../interface/plugininterface.h \
     qcpf_viewmodel.h \
     viewconfigmodel.h
@@ -35,3 +33,8 @@ unix {
     target.path = /usr/lib
 }
 !isEmpty(target.path): INSTALLS += target
+
+unix|win32: LIBS += -L$$PWD/../../bin/ -lQCPF_Model
+
+INCLUDEPATH += $$PWD/../QCPF_Model
+DEPENDPATH += $$PWD/../QCPF_Model

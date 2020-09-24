@@ -3,7 +3,7 @@ QT -= gui
 CONFIG += c++11 console
 CONFIG -= app_bundle
 
-TARGET =  ../../bin/debug/QCPF_HostConsole
+TARGET =  ../../../bin/QCPF_HostConsole
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -30,7 +30,8 @@ HEADERS += \
     cmdline.h
 
 
-unix:!macx|win32: LIBS += -L$$PWD/../bin/debug/ -lQCPF_Model
+
+unix|win32: LIBS += -L$$PWD/../../bin/ -lQCPF_Model
 
 INCLUDEPATH += $$PWD/../QCPF_Model
 DEPENDPATH += $$PWD/../QCPF_Model

@@ -42,24 +42,28 @@ void QCPF_Controllor::GetCoreInfo(QString& systemName, QString& systemID, QStrin
     systemID = _core->I_SystemID;
     systemVersion = _core->I_SystemVersion;
     organizetionName = _core->I_OrganizationName;
+
+    qDebug() <<tr("[Core infomation]");
 }
 
 void QCPF_Controllor::PluginCollect()
 {
-    _core->slot_Initialize("tt", "1", "");
+    _core->slot_Initialize();
 }
 
 void QCPF_Controllor::GetPluginIDList()
 {
     PluginCollect();
 
-    qDebug() <<tr("======================System Plugins======================");
-    foreach (PluginInterface* pi, _core->I_SysPlugins) {
+    qDebug() << "";
+    qDebug() <<tr("[-----System Plugins-----]:");
+    foreach (Plugin_Interface* pi, _core->I_SysPlugins) {
         qDebug() << pi->I_PluginID;
     }
 
-    qDebug() <<tr("=====================Non-System Plugins======================");
-    foreach (PluginInterface* pi, _core->I_NSysOrigPlugins) {
+    qDebug() <<"";
+    qDebug() <<tr("[-----Non-System Plugins-----]:");
+    foreach (Plugin_Interface* pi, _core->I_NSysOrigPlugins) {
         qDebug() << pi->I_PluginID;
     }
 }
@@ -69,7 +73,7 @@ void QCPF_Controllor::GetFunctionListFromPlugin(QString pluginID)
     PluginCollect();
 
     qDebug() <<"";
-    foreach (PluginInterface* pi, _core->I_NSysOrigPlugins) {
+    foreach (Plugin_Interface* pi, _core->I_NSysOrigPlugins) {
         if(pluginID == pi->I_PluginID)
         {
             foreach(PluginFunctionInfo* pfi, pi->I_FunctionList)
@@ -85,22 +89,8 @@ void QCPF_Controllor::PerformFunction(QString pluginID, QString copyID, QString 
 {
     PluginCollect();
 
+    QVariant var_in;
+    QVariant var_out;
     qDebug() <<"";
-    foreach (PluginInterface* pi, _core->I_NSysAllValidPlugins) {
-
-        if(0==pluginID.compare(pi->I_PluginID) && 0==copyID.compare(pi->I_CopyID))
-        {
-            foreach(PluginFunctionInfo* pfi, pi->I_FunctionList)
-            {
-                if(functionName == pfi->_functionName)
-                {
-                    QVariant v1;
-                    QVariant v2 = false;
-                    int ret = (pi->*pfi->_pFunction)(v1, v2);
-                    break;
-                }
-            }
-            break;
-        }
-    }
+    _core->Invoke_PluginFunction(PT_NON_SYS, pluginID, copyID, functionName, var_in, var_out);
 }

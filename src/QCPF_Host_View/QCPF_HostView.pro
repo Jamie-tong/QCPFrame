@@ -5,10 +5,9 @@
 #-------------------------------------------------
 
 QT       += core gui sql network xml
+QT += widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-TARGET =  ../../bin/debug/QCPF_HostView
+TARGET =  ../../../bin/QCPF_HostView
 
 TEMPLATE = app
 
@@ -30,13 +29,15 @@ CONFIG += c++11
 
 SOURCES += \
         formloading.cpp \
+    initthread.cpp \
         main.cpp \
         mainwindow.cpp \
 
 HEADERS += \
-        ../../interface/hostinterface.h \
-        ../../interface/plugininterface.h \
+    ../../interface/coreinterface.h \
+    ../../interface/plugininterface.h \
         formloading.h \
+    initthread.h \
         mainframeinterface.h \
         mainwindow.h \
 
@@ -50,17 +51,19 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    ../../bin/Images/docker.png \
     Core.json
 
 RESOURCES += \
-    comresource.qrc
+    HostViewRes.qrc
 
-unix:!macx|win32: LIBS += -L$$PWD/../bin/debug/ -lQCPF_Model
+
+unix|win32: LIBS += -L$$PWD/../../bin/ -lQCPF_Model
 
 INCLUDEPATH += $$PWD/../QCPF_Model
 DEPENDPATH += $$PWD/../QCPF_Model
 
-unix:!macx|win32: LIBS += -L$$PWD/../bin/debug/ -lQCPF_ViewModel
+unix|win32: LIBS += -L$$PWD/../../bin/ -lQCPF_ViewModel
 
 INCLUDEPATH += $$PWD/../QCPF_ViewModel
 DEPENDPATH += $$PWD/../QCPF_ViewModel

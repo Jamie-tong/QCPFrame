@@ -12,8 +12,9 @@ License: GPL v3.0
 #include <QObject>
 #include <QVector>
 #include <QVariant>
+#include <QIcon>
 
-class PluginInterface;
+class Plugin_Interface;
 
 enum InfoType
 {
@@ -29,10 +30,15 @@ enum InfoType
 
     INFT_WRITE_LOG,
 
+    INFT_PLUGIN_UPDATE,
+    INFT_PLUGIN_UPDATE_FINISHED,
     INFT_UI_UPDATE,
+    INFT_PLUGIN_UI_FINISHED,
 
     INFT_PLUGIN_BROADCAST,//表示组件发起了事件广播，广播内容见参数
     INFT_PLUGIN_SPECIAL,//表示组件向另一个指定组件发送消息，消息内容见参数
+
+    INFT_STATUSBAR_TEMP,
 };
 
 enum AuthorityType
@@ -71,19 +77,21 @@ public:
     InfoType _type;
     QString _title;
     QString _content;
+    int _timeout;
     tagOutputInfo(){}
     tagOutputInfo(InfoType type, QString title, QString content){ _type=type;_title=title;_content=content;}
+    tagOutputInfo(InfoType type, QString title, QString content, int timeout){ _type=type;_title=title;_content=content; _timeout=timeout;}
 };
 
 typedef int (*FPTR_FUNC_NCLS)(QVariant arg_in, QVariant &arg_out);
-typedef int (PluginInterface::*FPTR_FUNC_CLS)(QVariant arg_in, QVariant &arg_out);
-typedef void (PluginInterface::*FPTR_ACTION)(bool);
+typedef int (Plugin_Interface::*FPTR_FUNC_CLS)(QVariant arg_in, QVariant &arg_out);
+typedef void (Plugin_Interface::*FPTR_ACTION)(bool);
 struct PluginActionInfo
 {
     public:
         QString _actionName;
         QString _actionDetail;
-
+        QIcon _actionIcon;
         FPTR_ACTION _pAction;//函数指针指向组件函数
 };
 
@@ -107,7 +115,7 @@ struct PluginWidgetInfo
             PluginWidgetInfo(){}
 };
 
-class PluginInterface:public QObject
+class Plugin_Interface:public QObject
 {
         Q_OBJECT
 public:
@@ -133,15 +141,19 @@ public:
     QVector<PluginWidgetInfo*> I_WidgetList;//通用组件部件集合
 
 public:
-    virtual PluginInterface* Clone(QString copyID, QString copyAliasName, QString copyComment) {return nullptr;}
+    virtual Plugin_Interface* Clone(QString copyID, QString copyAliasName, QString copyComment) {return nullptr;}
     virtual bool ConnectCore(QObject* core) { return true; }
     virtual int PluginFunction(QVariant arg_in, QVariant &arg_out) { return 0; }
+    virtual void InitActionList(Plugin_Interface* plugin){};
+    virtual void InitFunctionList(Plugin_Interface* plugin){};
+    virtual void InitWidgetList(Plugin_Interface* plugin){};
 
 signals:
-    int sig_Plugin(QVariant arg_in, QVariant &arg_out);
     int sig_OutputInfo(tagOutputInfo& info);
+    int sig_Plugin(QVariant arg_in, QVariant &arg_out);
 
 public slots:
+    virtual int slot_InputInfo(tagOutputInfo& info) { return 0; }
     virtual int slot_Plugin(QVariant arg_in, QVariant &arg_out) { return 0; }
     virtual void slot_Action(bool checkState) { }
     //当core初始化时要执行的过程
@@ -155,7 +167,7 @@ public slots:
 };
 
 //这个宏将一个给定的字符串标识符和ClassName所表示的接口相关联，其中Identifier必须唯一。
-#define PluginInterface_iid "io.qt.interface.pluginInterface"
-Q_DECLARE_INTERFACE(PluginInterface, PluginInterface_iid)
+#define Plugin_Interface_iid "io.qt.interface.plugin_interface"
+Q_DECLARE_INTERFACE(Plugin_Interface, Plugin_Interface_iid)
 
 #endif // PLUGININTERFACE_H

@@ -53,11 +53,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(view_load, SIGNAL(sig_DoCoreInitialize(QString, QString, QString)), _core, SLOT(slot_Initialize(QString, QString, QString)));
     connect(view_load, SIGNAL(sig_DoViewModelInitialize(QString, QString, QString)), (QObject*)_view, SLOT(slot_Initialize(QString, QString, QString)));
 
-    connect(_core, SIGNAL(sig_OutputInfo(tagOutputInfo&)), view_load, SLOT(slot_CoreInitializeInfo(tagOutputInfo&)));
-    connect(_core, SIGNAL(sig_OutputInfo(tagOutputInfo&)), this, SLOT(slot_CoreInfo(tagOutputInfo&)));
+    connect(_core, SIGNAL(sig_OutputInfo(tagOutputInfo&)), view_load, SLOT(slot_InputInfo(tagOutputInfo&)));
+    connect((QObject*)_view, SIGNAL(sig_OutputInfo(tagOutputInfo&)), view_load, SLOT(slot_InputInfo(tagOutputInfo&)));
 
-    connect((QObject*)_view, SIGNAL(sig_OutputInfo(tagOutputInfo&)), view_load, SLOT(slot_CoreInitializeInfo(tagOutputInfo&)));
-    connect((QObject*)_view, SIGNAL(sig_OutputInfo(tagOutputInfo&)), this, SLOT(slot_CoreInfo(tagOutputInfo&)));
+    connect(_core, SIGNAL(sig_OutputInfo(tagOutputInfo&)), (QObject*)_view, SLOT(slot_InputInfo(tagOutputInfo&)));
 
     view_load->exec();
 
@@ -67,12 +66,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QMenu* testMenu = new QMenu();
     testMenu->setTitle(tr("Test"));
     testMenu->setObjectName("menuTest");
-    foreach (PluginInterface* pi, _core->I_SysPlugins) {
+    foreach (Plugin_Interface* pi, _core->I_SysPlugins) {
             foreach (PluginActionInfo* pfi, pi->I_ActionList) {
                 QAction* tSysAction = new QAction(testMenu);
                 tSysAction->setObjectName(pfi->_actionName);
                 tSysAction->setText(pfi->_actionName);
-                connect(tSysAction, &QAction::triggered, pi, &PluginInterface::slot_Action);
+                connect(tSysAction, &QAction::triggered, pi, &Plugin_Interface::slot_Action);
                 testMenu->addAction(tSysAction);
             }
         }
@@ -81,28 +80,15 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setMenuBar(tempMenuBar);
 #else
     //从视图配置文件导入UI配置
-    _view->InitUIFromConfig(this);
-#endif
+    _view->initUIFromConfig(this);
 
     //invoke plugin functions one by one
-    foreach (PluginInterface* pi, _core->I_NSysAllValidPlugins) {
+    foreach (Plugin_Interface* pi, _core->I_NSysAllValidPlugins) {
         pi->OnViewCreated();
     }
+#endif
 
-    //设置docker分割线样式
-    setStyleSheet("QMainWindow::separator{background:gray; width:1px; height:1px;}");
 
-    //从Layout.ini恢复界面布局
-    _layoutIniFilePath = appDirPath + "/Config/View/.Layout.ini";
-    QFile file(_layoutIniFilePath);
-    if (file.open(QIODevice::ReadOnly))
-    {
-        QByteArray ba;
-        QDataStream in(&file);
-        in >> ba;
-        file.close();
-        this->restoreState(ba);
-    }
 }
 
 void MainWindow::writeSettings()
@@ -126,7 +112,7 @@ settings.endGroup();
 MainWindow::~MainWindow()
 {
     //invoke plugin functions one by one
-    foreach (PluginInterface* pi, _core->I_NSysAllValidPlugins) {
+    foreach (Plugin_Interface* pi, _core->I_NSysAllValidPlugins) {
         pi->OnViewClosing();
     }
 
@@ -153,7 +139,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         _isFirstResize = false;
 
     //invoke plugin functions one by one
-    foreach (PluginInterface* pi, _core->I_NSysAllValidPlugins) {
+    foreach (Plugin_Interface* pi, _core->I_NSysAllValidPlugins) {
         pi->OnViewLoaded();
     }
 
@@ -185,31 +171,6 @@ void MainWindow::closeEvent ( QCloseEvent * e )
     }
     else
       e->ignore();
-}
-
-int MainWindow::slot_CoreInfo(tagOutputInfo& info)
-{
-    switch (info._type) {
-        case InfoType::INFT_MSG_INFO:
-                QMessageBox::information(this, info._title, info._content);
-                break;
-        case InfoType::INFT_MSG_WARN:
-                QMessageBox::warning(this, info._title, info._content);
-                break;
-        case InfoType::INFT_MSG_ERROR:
-                QMessageBox::critical(this, info._title, info._content);
-                break;
-        case InfoType::INFT_MSG_QUESTION:
-                QMessageBox::question(this, info._title, info._content);
-                break;
-        case InfoType::INFT_APPLICATION_CLOSE:
-                this->close();
-                break;
-        case InfoType::INFT_UI_UPDATE:
-                _view->InitUIFromConfig(this);
-            break;
-    }
-    return 0;
 }
 
 void MainWindow::on_MainWindow_destroyed()

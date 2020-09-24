@@ -5,12 +5,15 @@
   <property name="windowModality">
    <enum>Qt::WindowModal</enum>
   </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>614</width>
-    <height>456</height>
+    <width>610</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,19 +25,25 @@
   <property name="windowTitle">
    <string>登录</string>
   </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">#formLoading {border-image: url(:/Images/BackgroundImage6.jpg);}</string>
+   <string notr="true"/>
   </property>
-  <widget class="QFrame" name="frame">
+  <property name="locale">
+   <locale language="Chinese" country="China"/>
+  </property>
+  <widget class="QFrame" name="frameLoad">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>50</y>
-     <width>351</width>
-     <height>301</height>
+     <x>174</x>
+     <y>99</y>
+     <width>430</width>
+     <height>271</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -46,122 +55,27 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QLabel" name="labUsr">
-    <property name="geometry">
-     <rect>
-      <x>13</x>
-      <y>136</y>
-      <width>61</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
-    </property>
-    <property name="text">
-     <string>User:</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="txtUser">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>130</y>
-      <width>211</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
-    </property>
-    <property name="text">
-     <string>tt</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labPwd">
-    <property name="geometry">
-     <rect>
-      <x>13</x>
-      <y>197</y>
-      <width>61</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Password:</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="txtPwd">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>190</y>
-      <width>211</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
-    </property>
-    <property name="text">
-     <string>1</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnOk">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>250</y>
-      <width>91</width>
-      <height>34</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Load</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnCancel">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>250</y>
-      <width>91</width>
-      <height>34</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Cancel</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="laSystemName">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>30</y>
-      <width>351</width>
+      <y>0</y>
+      <width>431</width>
       <height>81</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Microsoft YaHei UI</family>
-      <pointsize>20</pointsize>
+      <family>微软雅黑</family>
+      <pointsize>28</pointsize>
       <weight>9</weight>
       <italic>false</italic>
       <bold>false</bold>
+      <strikeout>false</strikeout>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 75 20pt &quot;Microsoft YaHei UI&quot;;</string>
+     <string notr="true">font: 75 28pt &quot;微软雅黑&quot;;</string>
     </property>
     <property name="text">
      <string>QCPF Framework</string>
@@ -176,22 +90,137 @@
      <number>5</number>
     </property>
    </widget>
-  </widget>
-  <widget class="QLabel" name="lb_LoadingInfo">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>360</y>
-     <width>351</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="wordWrap">
-    <bool>true</bool>
-   </property>
+   <widget class="QFrame" name="frameLogin">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>110</y>
+      <width>421</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="btnCancel">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>110</y>
+       <width>110</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labPwd">
+     <property name="geometry">
+      <rect>
+       <x>21</x>
+       <y>70</y>
+       <width>61</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Password:</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnOk">
+     <property name="geometry">
+      <rect>
+       <x>87</x>
+       <y>110</y>
+       <width>110</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Load</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtUser">
+     <property name="geometry">
+      <rect>
+       <x>88</x>
+       <y>14</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtPwd">
+     <property name="geometry">
+      <rect>
+       <x>88</x>
+       <y>63</y>
+       <width>231</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labUsr">
+     <property name="geometry">
+      <rect>
+       <x>21</x>
+       <y>20</y>
+       <width>61</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
+     </property>
+     <property name="text">
+      <string>User:</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="lb_LoadingInfo">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>190</y>
+      <width>430</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QLabel" name="labInfoPrefix_2">
    <property name="enabled">
@@ -199,8 +228,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>430</y>
+     <x>80</x>
+     <y>425</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -219,8 +248,8 @@ color: rgb(104, 104, 104);</string>
    </property>
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>430</y>
+     <x>470</x>
+     <y>10</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -240,7 +269,7 @@ color: rgb(104, 104, 104);</string>
    <property name="geometry">
     <rect>
      <x>470</x>
-     <y>430</y>
+     <y>425</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -253,6 +282,27 @@ color: rgb(104, 104, 104);</string>
     <string>View Verson:</string>
    </property>
   </widget>
+  <widget class="QLabel" name="labelBackgroud">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>611</width>
+     <height>451</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/bin/Images/gbLoad.jpg);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>labelBackgroud</zorder>
+  <zorder>frameLoad</zorder>
+  <zorder>labInfoPrefix_2</zorder>
+  <zorder>labCoreVersion</zorder>
+  <zorder>labViewVersion</zorder>
  </widget>
  <resources/>
  <connections/>

@@ -29,7 +29,6 @@ public:
     QCPF_ViewModel* _view;
 
 private slots:
-    int slot_CoreInfo(tagOutputInfo&);
     void on_loading_cancel();
     void on_MainWindow_destroyed();
 
@@ -43,6 +42,7 @@ private:
     QString _layoutIniFilePath;
     void writeSettings();
     void readSettings();
+    InitThread* initTd;
 };
 
 #endif // MAINWINDOW_H

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>362</width>
-    <height>440</height>
+    <height>413</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>390</y>
+     <y>370</y>
      <width>341</width>
      <height>41</height>
     </rect>
@@ -60,9 +60,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>190</y>
+     <y>170</y>
      <width>341</width>
-     <height>191</height>
+     <height>201</height>
     </rect>
    </property>
    <property name="title">
@@ -73,7 +73,7 @@
      <rect>
       <x>16</x>
       <y>20</y>
-      <width>61</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
@@ -87,9 +87,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>90</x>
       <y>20</y>
-      <width>251</width>
+      <width>241</width>
       <height>20</height>
      </rect>
     </property>
@@ -103,19 +103,19 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>90</x>
       <y>50</y>
-      <width>251</width>
-      <height>131</height>
+      <width>241</width>
+      <height>141</height>
      </rect>
     </property>
    </widget>
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>16</x>
+      <x>17</x>
       <y>50</y>
-      <width>61</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
@@ -130,7 +130,7 @@
      <x>10</x>
      <y>30</y>
      <width>341</width>
-     <height>151</height>
+     <height>131</height>
     </rect>
    </property>
    <property name="title">
@@ -139,9 +139,9 @@
    <widget class="QComboBox" name="cbPluginAction">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>70</y>
-      <width>251</width>
+      <x>90</x>
+      <y>60</y>
+      <width>241</width>
       <height>22</height>
      </rect>
     </property>
@@ -151,7 +151,7 @@
      <rect>
       <x>16</x>
       <y>30</y>
-      <width>81</width>
+      <width>71</width>
       <height>16</height>
      </rect>
     </property>
@@ -162,9 +162,9 @@
    <widget class="QComboBox" name="cbPluginID">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>90</x>
       <y>30</y>
-      <width>251</width>
+      <width>241</width>
       <height>22</height>
      </rect>
     </property>
@@ -173,8 +173,8 @@
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>72</y>
-      <width>91</width>
+      <y>62</y>
+      <width>71</width>
       <height>16</height>
      </rect>
     </property>
@@ -186,8 +186,8 @@
     <property name="geometry">
      <rect>
       <x>16</x>
-      <y>110</y>
-      <width>81</width>
+      <y>90</y>
+      <width>71</width>
       <height>16</height>
      </rect>
     </property>
@@ -198,9 +198,9 @@
    <widget class="QComboBox" name="cbCopyID">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>110</y>
-      <width>251</width>
+      <x>90</x>
+      <y>90</y>
+      <width>241</width>
       <height>22</height>
      </rect>
     </property>

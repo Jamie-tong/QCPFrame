@@ -27,8 +27,8 @@ private slots:
 protected:
     void showEvent(QShowEvent *event);
 private:
-    Ui::wdt_CurrentDataTime *ui;
     QTimer* _timer;
+    Ui::wdt_CurrentDataTime *ui;
 };
 
 #endif // STATUS_CURRENTDATATIME_H

@@ -361,7 +361,7 @@
   <widget class="QPushButton" name="btnOk">
    <property name="geometry">
     <rect>
-     <x>608</x>
+     <x>735</x>
      <y>624</y>
      <width>100</width>
      <height>35</height>
@@ -396,10 +396,10 @@
     <string>Cancel(&amp;C)</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnApply">
+  <widget class="QPushButton" name="btnUpdate">
    <property name="geometry">
     <rect>
-     <x>708</x>
+     <x>9</x>
      <y>624</y>
      <width>100</width>
      <height>35</height>
@@ -412,7 +412,7 @@
     </size>
    </property>
    <property name="text">
-    <string>Apply(&amp;A)</string>
+    <string>Update(&amp;U)</string>
    </property>
   </widget>
   <widget class="QGroupBox" name="groupBox">

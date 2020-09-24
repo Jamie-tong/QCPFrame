@@ -446,13 +446,13 @@ qmake_all: FORCE
 make_first: debug-make_first release-make_first  FORCE
 all: debug-all release-all  FORCE
 clean: debug-clean release-clean  FORCE
-	-$(DEL_FILE) ..\..\..\bin\debug\Plugins\QPlugin3.exp
+	-$(DEL_FILE) ..\..\..\..\bin\Plugins\QPlugin3.exp
 	-$(DEL_FILE) QPlugin3.vc.pdb
-	-$(DEL_FILE) ..\..\..\bin\debug\Plugins\QPlugin3.ilk
-	-$(DEL_FILE) ..\..\..\bin\debug\Plugins\QPlugin3.idb
+	-$(DEL_FILE) ..\..\..\..\bin\Plugins\QPlugin3.ilk
+	-$(DEL_FILE) ..\..\..\..\bin\Plugins\QPlugin3.idb
 distclean: debug-distclean release-distclean  FORCE
 	-$(DEL_FILE) Makefile
-	-$(DEL_FILE) .qmake.stash ..\..\..\bin\debug\Plugins\QPlugin3.lib ..\..\..\bin\debug\Plugins\QPlugin3.pdb
+	-$(DEL_FILE) .qmake.stash ..\..\..\..\bin\Plugins\QPlugin3.lib ..\..\..\..\bin\Plugins\QPlugin3.pdb
 
 debug-mocclean:
 	@set MAKEFLAGS=$(MAKEFLAGS)

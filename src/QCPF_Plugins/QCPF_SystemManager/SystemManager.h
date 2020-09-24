@@ -33,6 +33,7 @@ protected:
 private:
     int getConfigFromUI();
     void setTableStyle(QTableWidget *table);
+public:
     int setConfigToUI();
 signals:
     int sig_Save();
@@ -47,13 +48,14 @@ private slots:
 
     void on_btnOk_clicked();
     void on_btnCancel_clicked();
-    void on_btnApply_clicked();
 
     void on_pluginCheckbox_selChanged(int state);
 
     void on_btnOrigPluginMoveUp_clicked();
 
     void on_btnOrigPluginMoveDown_clicked();
+
+    void on_btnUpdate_clicked();
 
 private:
     Ui::SystemManager *ui;

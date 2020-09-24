@@ -10,7 +10,7 @@ License: GPL v3.0
 
 #include <QObject>
 #include <QString>
-#include "../../interface/hostinterface.h"
+#include "../../interface/coreinterface.h"
 #include "../../interface/plugininterface.h"
 
 class PluginInfo:public QObject

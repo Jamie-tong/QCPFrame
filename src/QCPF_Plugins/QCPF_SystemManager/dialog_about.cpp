@@ -29,13 +29,15 @@ Dialog_About::Dialog_About(QWidget *parent) :
     sizePolicy.setVerticalStretch(0);
     sizePolicy.setHeightForWidth(hasHeightForWidth());
     setSizePolicy(sizePolicy);
-    setMinimumSize(QSize(560, 300));
-    setMaximumSize(QSize(560, 300));
+    setMinimumSize(QSize(560, 356));
+    setMaximumSize(QSize(560, 356));
     setSizeGripEnabled(false);
 
-    ui->labCoreVersion->setText(QString(tr("Core Version:%1")).arg(pluginInst->_core->I_SystemVersion));
+     ui->labCoreVersion->setText(QString(tr("Core Version   : %1")).arg(pluginInst->_core->I_SystemVersion));
     QCPF_ViewModel* _view = (QCPF_ViewModel*)pluginInst->_core->_view;
-    ui->labViewVersion->setText(QString(tr("View Version:%1")).arg(_view->_version));
+     ui->labViewVersion->setText(QString(tr("View Version   : %1")).arg(_view->_version));
+    ui->labSystemName->setText(QString(tr("System Name : %1")).arg(pluginInst->_core->I_SystemName));
+          ui->labSystemID->setText(QString(tr("System ID        : %1")).arg(pluginInst->_core->I_SystemID));
 }
 
 Dialog_About::~Dialog_About()

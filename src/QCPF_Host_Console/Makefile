@@ -439,11 +439,11 @@ make_first: debug-make_first release-make_first  FORCE
 all: debug-all release-all  FORCE
 clean: debug-clean release-clean  FORCE
 	-$(DEL_FILE) QCPF_HostConsole.vc.pdb
-	-$(DEL_FILE) ..\..\bin\debug\QCPF_HostConsole.ilk
-	-$(DEL_FILE) ..\..\bin\debug\QCPF_HostConsole.idb
+	-$(DEL_FILE) ..\..\..\bin\QCPF_HostConsole.ilk
+	-$(DEL_FILE) ..\..\..\bin\QCPF_HostConsole.idb
 distclean: debug-distclean release-distclean  FORCE
 	-$(DEL_FILE) Makefile
-	-$(DEL_FILE) ..\..\bin\debug\QCPF_HostConsole.pdb
+	-$(DEL_FILE) ..\..\..\bin\QCPF_HostConsole.pdb
 
 debug-mocclean:
 	@set MAKEFLAGS=$(MAKEFLAGS)

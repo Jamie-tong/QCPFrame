@@ -446,13 +446,13 @@ qmake_all: FORCE
 make_first: debug-make_first release-make_first  FORCE
 all: debug-all release-all  FORCE
 clean: debug-clean release-clean  FORCE
-	-$(DEL_FILE) ..\..\bin\debug\QCPF_ViewModel.exp
+	-$(DEL_FILE) ..\..\..\bin\QCPF_ViewModel.exp
 	-$(DEL_FILE) QCPF_ViewModel.vc.pdb
-	-$(DEL_FILE) ..\..\bin\debug\QCPF_ViewModel.ilk
-	-$(DEL_FILE) ..\..\bin\debug\QCPF_ViewModel.idb
+	-$(DEL_FILE) ..\..\..\bin\QCPF_ViewModel.ilk
+	-$(DEL_FILE) ..\..\..\bin\QCPF_ViewModel.idb
 distclean: debug-distclean release-distclean  FORCE
 	-$(DEL_FILE) Makefile
-	-$(DEL_FILE) .qmake.stash ..\..\bin\debug\QCPF_ViewModel.lib ..\..\bin\debug\QCPF_ViewModel.pdb
+	-$(DEL_FILE) .qmake.stash ..\..\..\bin\QCPF_ViewModel.lib ..\..\..\bin\QCPF_ViewModel.pdb
 
 debug-mocclean:
 	@set MAKEFLAGS=$(MAKEFLAGS)

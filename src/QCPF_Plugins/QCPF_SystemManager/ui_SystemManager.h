@@ -41,7 +41,7 @@ public:
     QLineEdit *txtSystemName;
     QPushButton *btnOk;
     QPushButton *btnCancel;
-    QPushButton *btnApply;
+    QPushButton *btnUpdate;
     QGroupBox *groupBox;
 
     void setupUi(QDialog *SystemManager)
@@ -151,16 +151,16 @@ public:
         tabPlugin_Sort->addTab(tab, QString());
         btnOk = new QPushButton(SystemManager);
         btnOk->setObjectName(QString::fromUtf8("btnOk"));
-        btnOk->setGeometry(QRect(608, 624, 100, 35));
+        btnOk->setGeometry(QRect(735, 624, 100, 35));
         btnOk->setMinimumSize(QSize(0, 35));
         btnCancel = new QPushButton(SystemManager);
         btnCancel->setObjectName(QString::fromUtf8("btnCancel"));
         btnCancel->setGeometry(QRect(840, 624, 100, 35));
         btnCancel->setMinimumSize(QSize(0, 35));
-        btnApply = new QPushButton(SystemManager);
-        btnApply->setObjectName(QString::fromUtf8("btnApply"));
-        btnApply->setGeometry(QRect(708, 624, 100, 35));
-        btnApply->setMinimumSize(QSize(0, 35));
+        btnUpdate = new QPushButton(SystemManager);
+        btnUpdate->setObjectName(QString::fromUtf8("btnUpdate"));
+        btnUpdate->setGeometry(QRect(9, 624, 100, 35));
+        btnUpdate->setMinimumSize(QSize(0, 35));
         groupBox = new QGroupBox(SystemManager);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         groupBox->setGeometry(QRect(-30, 615, 1000, 2));
@@ -186,7 +186,7 @@ public:
         tabPlugin_Sort->setTabText(tabPlugin_Sort->indexOf(tab), QCoreApplication::translate("SystemManager", "Utility", nullptr));
         btnOk->setText(QCoreApplication::translate("SystemManager", "Ok(&O)", nullptr));
         btnCancel->setText(QCoreApplication::translate("SystemManager", "Cancel(&C)", nullptr));
-        btnApply->setText(QCoreApplication::translate("SystemManager", "Apply(&A)", nullptr));
+        btnUpdate->setText(QCoreApplication::translate("SystemManager", "Update(&U)", nullptr));
         groupBox->setTitle(QString());
     } // retranslateUi
 

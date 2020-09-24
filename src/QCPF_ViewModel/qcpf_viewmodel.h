@@ -45,14 +45,15 @@ class QCPF_VIEWMODEL_EXPORT QCPF_ViewModel : QObject
         int sig_OutputInfo(tagOutputInfo& info);//向槽函数发送初始化信息
     public slots:
         int slot_Initialize();
+        int slot_InputInfo(tagOutputInfo& info);
         int slot_LoadConfigFile(viewConfigModel &config);
         int slot_SaveConfigFile();
         int slot_ApplyConfig();
         int slot_CancelConfig();
 
     public:
-        void InitUIFromConfig(QMainWindow* viewHost);
-
+        void initUIFromConfig(QMainWindow* viewHost);
+        void addActionToViewActionList(QAction* action, QString actionObjectName, QString actionText, QString shortcut, AuthorityType aType, bool isCheckable, QString iconPath, PluginType pType, QString pluginID);
     private:
         int compareFiles(QString filePath1, QString filePath2);
         int saveConfigFile(QString filePath);
@@ -69,6 +70,7 @@ class QCPF_VIEWMODEL_EXPORT QCPF_ViewModel : QObject
         QMenuBar* _mainMenubar;
         QList<QToolBar*> _mainToolbarLst;
         QStatusBar* _mainStatusbar;
+        QMainWindow* _viewHost;
 };
 
 #endif // QCPF_VIEWMODEL_H

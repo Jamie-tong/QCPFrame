@@ -245,7 +245,6 @@ Makefile: QCPF_Model.pro C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\win32-msvc\qmake
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\resources.prf \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\moc.prf \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\win32\opengl.prf \
-		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\uic.prf \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\qmake_use.prf \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\file_copies.prf \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\win32\windows.prf \
@@ -254,7 +253,6 @@ Makefile: QCPF_Model.pro C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\win32-msvc\qmake
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\yacc.prf \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\lex.prf \
 		QCPF_Model.pro \
-		C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Widgets.prl \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Gui.prl \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Core.prl
 	$(QMAKE) -o Makefile QCPF_Model.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -426,7 +424,6 @@ C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\qt.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\resources.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\moc.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\win32\opengl.prf:
-C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\uic.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\qmake_use.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\file_copies.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\win32\windows.prf:
@@ -435,7 +432,6 @@ C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\exceptions.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\yacc.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\lex.prf:
 QCPF_Model.pro:
-C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Widgets.prl:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Gui.prl:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Core.prl:
 qmake: FORCE
@@ -446,13 +442,13 @@ qmake_all: FORCE
 make_first: debug-make_first release-make_first  FORCE
 all: debug-all release-all  FORCE
 clean: debug-clean release-clean  FORCE
-	-$(DEL_FILE) ..\..\bin\debug\QCPF_Model.exp
+	-$(DEL_FILE) ..\..\..\bin\QCPF_Model.exp
 	-$(DEL_FILE) QCPF_Model.vc.pdb
-	-$(DEL_FILE) ..\..\bin\debug\QCPF_Model.ilk
-	-$(DEL_FILE) ..\..\bin\debug\QCPF_Model.idb
+	-$(DEL_FILE) ..\..\..\bin\QCPF_Model.ilk
+	-$(DEL_FILE) ..\..\..\bin\QCPF_Model.idb
 distclean: debug-distclean release-distclean  FORCE
 	-$(DEL_FILE) Makefile
-	-$(DEL_FILE) .qmake.stash ..\..\bin\debug\QCPF_Model.lib ..\..\bin\debug\QCPF_Model.pdb
+	-$(DEL_FILE) .qmake.stash ..\..\..\bin\QCPF_Model.lib ..\..\..\bin\QCPF_Model.pdb
 
 debug-mocclean:
 	@set MAKEFLAGS=$(MAKEFLAGS)

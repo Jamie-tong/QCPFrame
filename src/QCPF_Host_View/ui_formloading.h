@@ -9,6 +9,7 @@
 #ifndef UI_FORMLOADING_H
 #define UI_FORMLOADING_H
 
+#include <QtCore/QLocale>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
@@ -22,98 +23,119 @@ QT_BEGIN_NAMESPACE
 class Ui_formLoading
 {
 public:
-    QFrame *frame;
-    QLabel *labUsr;
-    QLineEdit *txtUser;
-    QLabel *labPwd;
-    QLineEdit *txtPwd;
-    QPushButton *btnOk;
-    QPushButton *btnCancel;
+    QFrame *frameLoad;
     QLabel *laSystemName;
+    QFrame *frameLogin;
+    QPushButton *btnCancel;
+    QLabel *labPwd;
+    QPushButton *btnOk;
+    QLineEdit *txtUser;
+    QLineEdit *txtPwd;
+    QLabel *labUsr;
     QLabel *lb_LoadingInfo;
     QLabel *labInfoPrefix_2;
     QLabel *labCoreVersion;
     QLabel *labViewVersion;
+    QLabel *labelBackgroud;
 
     void setupUi(QDialog *formLoading)
     {
         if (formLoading->objectName().isEmpty())
             formLoading->setObjectName(QString::fromUtf8("formLoading"));
         formLoading->setWindowModality(Qt::WindowModal);
-        formLoading->resize(614, 456);
+        formLoading->setEnabled(true);
+        formLoading->resize(610, 450);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(formLoading->sizePolicy().hasHeightForWidth());
         formLoading->setSizePolicy(sizePolicy);
+        formLoading->setLayoutDirection(Qt::LeftToRight);
         formLoading->setAutoFillBackground(false);
-        formLoading->setStyleSheet(QString::fromUtf8("#formLoading {border-image: url(:/Images/BackgroundImage6.jpg);}"));
-        frame = new QFrame(formLoading);
-        frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(210, 50, 351, 301));
-        frame->setStyleSheet(QString::fromUtf8("#frame { background-color: rgb(231, 231, 231);}"));
-        frame->setFrameShape(QFrame::StyledPanel);
-        frame->setFrameShadow(QFrame::Raised);
-        labUsr = new QLabel(frame);
-        labUsr->setObjectName(QString::fromUtf8("labUsr"));
-        labUsr->setGeometry(QRect(13, 136, 61, 16));
-        labUsr->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";"));
-        txtUser = new QLineEdit(frame);
-        txtUser->setObjectName(QString::fromUtf8("txtUser"));
-        txtUser->setGeometry(QRect(80, 130, 211, 31));
-        txtUser->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";"));
-        labPwd = new QLabel(frame);
-        labPwd->setObjectName(QString::fromUtf8("labPwd"));
-        labPwd->setGeometry(QRect(13, 197, 61, 16));
-        labPwd->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";"));
-        txtPwd = new QLineEdit(frame);
-        txtPwd->setObjectName(QString::fromUtf8("txtPwd"));
-        txtPwd->setGeometry(QRect(80, 190, 211, 31));
-        txtPwd->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";"));
-        btnOk = new QPushButton(frame);
-        btnOk->setObjectName(QString::fromUtf8("btnOk"));
-        btnOk->setGeometry(QRect(80, 250, 91, 34));
-        btnOk->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";"));
-        btnCancel = new QPushButton(frame);
-        btnCancel->setObjectName(QString::fromUtf8("btnCancel"));
-        btnCancel->setGeometry(QRect(200, 250, 91, 34));
-        btnCancel->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";"));
-        laSystemName = new QLabel(frame);
+        formLoading->setStyleSheet(QString::fromUtf8(""));
+        formLoading->setLocale(QLocale(QLocale::Chinese, QLocale::China));
+        frameLoad = new QFrame(formLoading);
+        frameLoad->setObjectName(QString::fromUtf8("frameLoad"));
+        frameLoad->setGeometry(QRect(174, 99, 430, 271));
+        frameLoad->setStyleSheet(QString::fromUtf8("#frame { background-color: rgb(231, 231, 231);}"));
+        frameLoad->setFrameShape(QFrame::StyledPanel);
+        frameLoad->setFrameShadow(QFrame::Raised);
+        laSystemName = new QLabel(frameLoad);
         laSystemName->setObjectName(QString::fromUtf8("laSystemName"));
-        laSystemName->setGeometry(QRect(0, 30, 351, 81));
+        laSystemName->setGeometry(QRect(0, 0, 431, 81));
         QFont font;
-        font.setFamily(QString::fromUtf8("Microsoft YaHei UI"));
-        font.setPointSize(20);
+        font.setFamily(QString::fromUtf8("\345\276\256\350\275\257\351\233\205\351\273\221"));
+        font.setPointSize(28);
         font.setBold(false);
         font.setItalic(false);
         font.setWeight(9);
+        font.setStrikeOut(false);
         laSystemName->setFont(font);
-        laSystemName->setStyleSheet(QString::fromUtf8("font: 75 20pt \"Microsoft YaHei UI\";"));
+        laSystemName->setStyleSheet(QString::fromUtf8("font: 75 28pt \"\345\276\256\350\275\257\351\233\205\351\273\221\";"));
         laSystemName->setAlignment(Qt::AlignCenter);
         laSystemName->setWordWrap(true);
         laSystemName->setMargin(5);
-        lb_LoadingInfo = new QLabel(formLoading);
+        frameLogin = new QFrame(frameLoad);
+        frameLogin->setObjectName(QString::fromUtf8("frameLogin"));
+        frameLogin->setGeometry(QRect(5, 110, 421, 161));
+        frameLogin->setFrameShape(QFrame::StyledPanel);
+        frameLogin->setFrameShadow(QFrame::Raised);
+        btnCancel = new QPushButton(frameLogin);
+        btnCancel->setObjectName(QString::fromUtf8("btnCancel"));
+        btnCancel->setGeometry(QRect(210, 110, 110, 34));
+        btnCancel->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";"));
+        labPwd = new QLabel(frameLogin);
+        labPwd->setObjectName(QString::fromUtf8("labPwd"));
+        labPwd->setGeometry(QRect(21, 70, 61, 16));
+        labPwd->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";"));
+        btnOk = new QPushButton(frameLogin);
+        btnOk->setObjectName(QString::fromUtf8("btnOk"));
+        btnOk->setGeometry(QRect(87, 110, 110, 34));
+        btnOk->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";"));
+        txtUser = new QLineEdit(frameLogin);
+        txtUser->setObjectName(QString::fromUtf8("txtUser"));
+        txtUser->setGeometry(QRect(88, 14, 231, 31));
+        txtUser->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";"));
+        txtPwd = new QLineEdit(frameLogin);
+        txtPwd->setObjectName(QString::fromUtf8("txtPwd"));
+        txtPwd->setGeometry(QRect(88, 63, 231, 31));
+        txtPwd->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";"));
+        labUsr = new QLabel(frameLogin);
+        labUsr->setObjectName(QString::fromUtf8("labUsr"));
+        labUsr->setGeometry(QRect(21, 20, 61, 16));
+        labUsr->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";"));
+        lb_LoadingInfo = new QLabel(frameLoad);
         lb_LoadingInfo->setObjectName(QString::fromUtf8("lb_LoadingInfo"));
-        lb_LoadingInfo->setGeometry(QRect(210, 360, 351, 61));
+        lb_LoadingInfo->setGeometry(QRect(0, 190, 430, 51));
+        lb_LoadingInfo->setAlignment(Qt::AlignCenter);
         lb_LoadingInfo->setWordWrap(true);
         labInfoPrefix_2 = new QLabel(formLoading);
         labInfoPrefix_2->setObjectName(QString::fromUtf8("labInfoPrefix_2"));
         labInfoPrefix_2->setEnabled(true);
-        labInfoPrefix_2->setGeometry(QRect(30, 430, 131, 20));
+        labInfoPrefix_2->setGeometry(QRect(80, 425, 131, 20));
         labInfoPrefix_2->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";\n"
 "color: rgb(104, 104, 104);"));
         labCoreVersion = new QLabel(formLoading);
         labCoreVersion->setObjectName(QString::fromUtf8("labCoreVersion"));
         labCoreVersion->setEnabled(true);
-        labCoreVersion->setGeometry(QRect(210, 430, 131, 20));
+        labCoreVersion->setGeometry(QRect(470, 10, 131, 20));
         labCoreVersion->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";\n"
 "color: rgb(104, 104, 104);"));
         labViewVersion = new QLabel(formLoading);
         labViewVersion->setObjectName(QString::fromUtf8("labViewVersion"));
         labViewVersion->setEnabled(true);
-        labViewVersion->setGeometry(QRect(470, 430, 131, 20));
+        labViewVersion->setGeometry(QRect(470, 425, 131, 20));
         labViewVersion->setStyleSheet(QString::fromUtf8("font: 9pt \"Microsoft YaHei UI\";\n"
 "color: rgb(104, 104, 104);"));
+        labelBackgroud = new QLabel(formLoading);
+        labelBackgroud->setObjectName(QString::fromUtf8("labelBackgroud"));
+        labelBackgroud->setGeometry(QRect(0, 0, 611, 451));
+        labelBackgroud->setStyleSheet(QString::fromUtf8("border-image: url(:/bin/Images/gbLoad.jpg);"));
+        labelBackgroud->raise();
+        frameLoad->raise();
+        labInfoPrefix_2->raise();
+        labCoreVersion->raise();
+        labViewVersion->raise();
 
         retranslateUi(formLoading);
 
@@ -123,17 +145,18 @@ public:
     void retranslateUi(QDialog *formLoading)
     {
         formLoading->setWindowTitle(QCoreApplication::translate("formLoading", "\347\231\273\345\275\225", nullptr));
-        labUsr->setText(QCoreApplication::translate("formLoading", "User:", nullptr));
-        txtUser->setText(QCoreApplication::translate("formLoading", "tt", nullptr));
-        labPwd->setText(QCoreApplication::translate("formLoading", "Password:", nullptr));
-        txtPwd->setText(QCoreApplication::translate("formLoading", "1", nullptr));
-        btnOk->setText(QCoreApplication::translate("formLoading", "Load", nullptr));
-        btnCancel->setText(QCoreApplication::translate("formLoading", "Cancel", nullptr));
         laSystemName->setText(QCoreApplication::translate("formLoading", "QCPF Framework", nullptr));
+        btnCancel->setText(QCoreApplication::translate("formLoading", "Cancel", nullptr));
+        labPwd->setText(QCoreApplication::translate("formLoading", "Password:", nullptr));
+        btnOk->setText(QCoreApplication::translate("formLoading", "Load", nullptr));
+        txtUser->setText(QString());
+        txtPwd->setText(QString());
+        labUsr->setText(QCoreApplication::translate("formLoading", "User:", nullptr));
         lb_LoadingInfo->setText(QString());
         labInfoPrefix_2->setText(QCoreApplication::translate("formLoading", "Copyright \302\251 Jamie.T", nullptr));
         labCoreVersion->setText(QCoreApplication::translate("formLoading", "Core Verson:", nullptr));
         labViewVersion->setText(QCoreApplication::translate("formLoading", "View Verson:", nullptr));
+        labelBackgroud->setText(QString());
     } // retranslateUi
 
 };

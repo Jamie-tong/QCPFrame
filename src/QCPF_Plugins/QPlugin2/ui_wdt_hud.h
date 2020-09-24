@@ -25,12 +25,12 @@ public:
     {
         if (wdt_Hud->objectName().isEmpty())
             wdt_Hud->setObjectName(QString::fromUtf8("wdt_Hud"));
-        wdt_Hud->resize(452, 333);
+        wdt_Hud->resize(450, 330);
         wdt_Hud->setStyleSheet(QString::fromUtf8(""));
         frame = new QFrame(wdt_Hud);
         frame->setObjectName(QString::fromUtf8("frame"));
         frame->setGeometry(QRect(0, 0, 451, 331));
-        frame->setStyleSheet(QString::fromUtf8("background-image: url(:/bin/debug/Images/hud.png);"));
+        frame->setStyleSheet(QString::fromUtf8("border-image: url(:/bin/Images/hud.png);"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
 

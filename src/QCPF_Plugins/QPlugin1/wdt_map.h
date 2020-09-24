@@ -2,7 +2,7 @@
 #define WDT_MAP_H
 
 #include <QWidget>
-#include "../../../interface/hostinterface.h"
+#include "../../../interface/coreinterface.h"
 
 namespace Ui {
 class wdt_Map;

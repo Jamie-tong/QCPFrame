@@ -455,11 +455,11 @@ make_first: debug-make_first release-make_first  FORCE
 all: debug-all release-all  FORCE
 clean: debug-clean release-clean  FORCE
 	-$(DEL_FILE) QCPF_HostView.vc.pdb
-	-$(DEL_FILE) ..\..\bin\debug\QCPF_HostView.ilk
-	-$(DEL_FILE) ..\..\bin\debug\QCPF_HostView.idb
+	-$(DEL_FILE) ..\..\..\bin\QCPF_HostView.ilk
+	-$(DEL_FILE) ..\..\..\bin\QCPF_HostView.idb
 distclean: debug-distclean release-distclean  FORCE
 	-$(DEL_FILE) Makefile.QCPF_HostView
-	-$(DEL_FILE) .qmake.stash ..\..\bin\debug\QCPF_HostView.pdb
+	-$(DEL_FILE) .qmake.stash ..\..\..\bin\QCPF_HostView.pdb
 
 debug-mocclean:
 	@set MAKEFLAGS=$(MAKEFLAGS)

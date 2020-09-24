@@ -13,6 +13,7 @@ License: GPL v3.0
 
 #include "../QCPF_Model/qcpf_model.h"
 #include "../QCPF_ViewModel/qcpf_viewmodel.h"
+#include "initthread.h"
 
 class QPushButton;
 class QLineEdit;
@@ -33,6 +34,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+    void showEvent(QShowEvent *);
 
 signals:
     int sig_DoCoreInitialize(QString user, QString pwd, QString extInfo);
@@ -40,7 +42,7 @@ signals:
     void  sig_Cancel();
 
 private slots:
-    void timerUpdate();
+    void slot_OnULoaded();
     void on_btnOk_clicked();
     void on_btnCancel_clicked();
 
@@ -50,8 +52,12 @@ private slots:
                    QString pressedColor, QString pressedTextColor);
     void setTxtQss(QLineEdit *txt, QString normalColor, QString focusColor);
 
-    int slot_CoreInitializeInfo(tagOutputInfo& info);
+    int slot_InputInfo(tagOutputInfo& info);
 
+
+    void on_txtUser_textChanged(const QString &arg1);
+
+    void on_txtPwd_textChanged(const QString &arg1);
 
 private:
     Ui::formLoading *ui;
@@ -61,7 +67,7 @@ private:
     bool        m_bDrag;
     QPoint      mouseStartPoint;
     QPoint      windowTopLeftPoint;
-    QTimer *timer;
+    QTimer *_timer;
 };
 
 #endif // FORMLOADING_H

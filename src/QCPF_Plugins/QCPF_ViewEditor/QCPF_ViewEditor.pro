@@ -1,11 +1,10 @@
-QT -= gui
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += widgets
 
 DEFINES += QCFMANAGER_LIBRARY
 
-TARGET =  ../../../bin/debug/Bin/Plugins/QCPF_ViewEditor
+TARGET =  ../../../../bin/Bin/Plugins/QCPF_ViewEditor
 TEMPLATE = lib
-CONFIG += plugin c++11
+CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -25,7 +24,7 @@ SOURCES += \
     pluginwidgetviewer.cpp
 
 HEADERS += \
-    ../../../interface/hostinterface.h \
+    ../../../interface/coreinterface.h \
     ../../../interface/plugininterface.h \
     PluginActionViewer.h \
     PluginIO.h \
@@ -49,7 +48,12 @@ FORMS += \
     pluginwidgetviewer.ui
 
 
-unix:!macx|win32: LIBS += -L$$PWD/../../bin/debug/ -lQCPF_ViewModel
+unix|win32: LIBS += -L$$PWD/../../bin/ -lQCPF_ViewModel
 
-INCLUDEPATH += $$PWD/../../QCPF_ViewModel
-DEPENDPATH += $$PWD/../../QCPF_ViewModel
+INCLUDEPATH += $$PWD/../QCPF_ViewModel
+DEPENDPATH += $$PWD/../QCPF_ViewModel
+
+unix|win32: LIBS += -L$$PWD/../../../bin/ -lQCPF_PluginModel
+
+INCLUDEPATH += $$PWD/../../QCPF_PluginModel
+DEPENDPATH += $$PWD/../../QCPF_PluginModel

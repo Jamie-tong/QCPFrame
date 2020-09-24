@@ -12,7 +12,6 @@
     <qresource prefix="/utility/icons">
         <file>Images/Plugin1.png</file>
         <file>Images/Plugin2.png</file>
-        <file>Images/WatchSystemDoc.ico</file>
     </qresource>
     <qresource prefix="/">
         <file>Images/BackgroundImage2.jpg</file>

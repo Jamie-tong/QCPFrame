@@ -18,8 +18,9 @@ License: GPL v3.0
 #include <QStringLiteral>
 #include <QTreeWidgetItem>
 #include <QCheckBox>
+#include "PluginIO.h"
 
-PluginManager* instance;
+PluginManager* pMgrInstance;
 
 PluginManager::PluginManager(QCPF_Model* model, QWidget *parent) :
     QDialog(parent),
@@ -30,7 +31,7 @@ PluginManager::PluginManager(QCPF_Model* model, QWidget *parent) :
 
     _core = model;
 
-    instance = this;
+    pMgrInstance = this;
     connect(this,SIGNAL(sig_SelAllOrNot(bool)),this,SLOT(slot_SelAllOrNot(bool)));//for 全选/不选复选框
 
     //去掉问号按钮
@@ -119,11 +120,11 @@ int PluginManager::setConfigToUI()
     ui->tablePluginLst->setColumnWidth(1, 40);
     ui->tablePluginLst->setColumnWidth(2, 100);
     ui->tablePluginLst->setColumnWidth(3, 100);
-    ui->tablePluginLst->setColumnWidth(4, 260);
-    ui->tablePluginLst->setColumnWidth(5, 80);
-    ui->tablePluginLst->setColumnWidth(6, 80);
-    ui->tablePluginLst->setColumnWidth(7, 150);
-    ui->tablePluginLst->setColumnWidth(8, 200);
+    ui->tablePluginLst->setColumnWidth(4, 250);
+    ui->tablePluginLst->setColumnWidth(5, 70);
+    ui->tablePluginLst->setColumnWidth(6, 70);
+    ui->tablePluginLst->setColumnWidth(7, 120);
+    ui->tablePluginLst->setColumnWidth(8, 120);
 
     setTableStyle(ui->tablePluginLst);
 
@@ -181,14 +182,14 @@ int PluginManager::setConfigToUI()
         QWidget *widget = new QWidget(this);
         QHBoxLayout *layout = new QHBoxLayout(this);
         QCheckBox *box = new QCheckBox(this);
-        box->setObjectName(((PluginInterface *)_core->I_NSysOrigPlugins[i])->I_PluginID);
+        box->setObjectName(((Plugin_Interface *)_core->I_NSysOrigPlugins[i])->I_PluginID);
 
         layout->addWidget(box);
         layout->setMargin(0);
         layout->setAlignment(box,Qt::AlignCenter);
         widget->setLayout(layout);
 
-        QString tOrigPluginID = ((PluginInterface *)_core->I_NSysOrigPlugins[i])->I_PluginID;
+        QString tOrigPluginID = ((Plugin_Interface *)_core->I_NSysOrigPlugins[i])->I_PluginID;
 
         //查找已选组件集合中是否已经有该项，如果有则设置选中状态，否则不选中
         int tIndex = -1;
@@ -213,16 +214,16 @@ int PluginManager::setConfigToUI()
 
         ui->tablePluginLst->setCellWidget(tRowCount, 0, widget);//插入复选框
         ui->tablePluginLst->setItem(tRowCount, 1, new QTableWidgetItem(QString::number(i+1)));
-        ui->tablePluginLst->setItem(tRowCount, 2, new QTableWidgetItem(((PluginInterface *)_core->I_NSysOrigPlugins[i])->I_PluginID));
-        ui->tablePluginLst->setItem(tRowCount, 3, new QTableWidgetItem(((PluginInterface *)_core->I_NSysOrigPlugins[i])->I_PluginAliasName));
-        ui->tablePluginLst->setItem(tRowCount, 4, new QTableWidgetItem(((PluginInterface *)_core->I_NSysOrigPlugins[i])->I_PluginTag.toString()));
-        ui->tablePluginLst->setItem(tRowCount, 5, new QTableWidgetItem(((PluginInterface *)_core->I_NSysOrigPlugins[i])->I_PluginAuther));
-        ui->tablePluginLst->setItem(tRowCount, 6, new QTableWidgetItem(((PluginInterface *)_core->I_NSysOrigPlugins[i])->I_PluginVersion));
-        ui->tablePluginLst->setItem(tRowCount, 7, new QTableWidgetItem(((PluginInterface *)_core->I_NSysOrigPlugins[i])->I_PluginComment));
-        ui->tablePluginLst->setItem(tRowCount, 8, new QTableWidgetItem(((PluginInterface *)_core->I_NSysOrigPlugins[i])->I_PluginFilePath));
+        ui->tablePluginLst->setItem(tRowCount, 2, new QTableWidgetItem(((Plugin_Interface *)_core->I_NSysOrigPlugins[i])->I_PluginID));
+        ui->tablePluginLst->setItem(tRowCount, 3, new QTableWidgetItem(((Plugin_Interface *)_core->I_NSysOrigPlugins[i])->I_PluginAliasName));
+        ui->tablePluginLst->setItem(tRowCount, 4, new QTableWidgetItem(((Plugin_Interface *)_core->I_NSysOrigPlugins[i])->I_PluginTag.toString()));
+        ui->tablePluginLst->setItem(tRowCount, 5, new QTableWidgetItem(((Plugin_Interface *)_core->I_NSysOrigPlugins[i])->I_PluginAuther));
+        ui->tablePluginLst->setItem(tRowCount, 6, new QTableWidgetItem(((Plugin_Interface *)_core->I_NSysOrigPlugins[i])->I_PluginVersion));
+        ui->tablePluginLst->setItem(tRowCount, 7, new QTableWidgetItem(((Plugin_Interface *)_core->I_NSysOrigPlugins[i])->I_PluginComment));
+        ui->tablePluginLst->setItem(tRowCount, 8, new QTableWidgetItem(((Plugin_Interface *)_core->I_NSysOrigPlugins[i])->I_PluginFilePath));
 
-        box->setProperty("OrigPluginID",((PluginInterface *)_core->I_NSysOrigPlugins[i])->I_PluginID);
-        box->setProperty("OrigPluginFilePath", ((PluginInterface *)_core->I_NSysOrigPlugins[i])->I_PluginFilePath);
+        box->setProperty("OrigPluginID",((Plugin_Interface *)_core->I_NSysOrigPlugins[i])->I_PluginID);
+        box->setProperty("OrigPluginFilePath", ((Plugin_Interface *)_core->I_NSysOrigPlugins[i])->I_PluginFilePath);
     }
 
     //=============================================
@@ -445,7 +446,7 @@ void PluginManager::setTableStyle(QTableWidget *table)
 
 PluginManager *PluginManager::getInstance()
 {
-    return instance;
+    return pMgrInstance;
 }
 
 void PluginManager::slot_SelAllOrNot(bool flag)
@@ -553,13 +554,6 @@ void PluginManager::on_btnCancel_clicked()
     this->close();
 }
 
-void PluginManager::on_btnApply_clicked()
-{
-    getConfigFromUI();
-
-    emit sig_Apply();
-}
-
 void PluginManager::on_btnClone_clicked()
 {
     if(ui->cbOriginPluginLst->children().count()==0)
@@ -574,7 +568,7 @@ void PluginManager::on_btnClone_clicked()
         return;
     }
 
-    foreach(PluginInterface* pi, _core->I_NSysOrigPlugins_Sel){
+    foreach(Plugin_Interface* pi, _core->I_NSysOrigPlugins_Sel){
         QString tTagStr = pi->I_PluginTag.value<QString>();
         if(tTagStr==nullptr)
         {
@@ -696,7 +690,7 @@ void PluginManager::on_btnDeleteClone_clicked()
        QString tItemCloneID = ui->tableAllValidPluginsSort->item(i, 2)->text();
        if(tItemCloneID!="")
        {
-           QList<QTreeWidgetItem*> itemLst = ui->treePluginClone->findItems(tItemCloneID, Qt::MatchFlag::MatchRecursive, 1);
+           QList<QTreeWidgetItem*> itemLst = ui->treePluginClone->findItems(tItemCloneID, Qt::MatchFlag::MatchRecursive | Qt::MatchFlag::MatchExactly, 1);
 
            //成立说明在克隆树上没找到这个克隆体
            if(itemLst.count()==0)
@@ -895,4 +889,11 @@ void PluginManager::on_btnValidPluginMoveUp_clicked()
 void PluginManager::on_btnValidPluginMoveDown_clicked()
 {
     TableItemMoveDown(ui->tableAllValidPluginsSort);
+}
+
+void PluginManager::on_btnRefreshPlugins_clicked()
+{
+    tagOutputInfo info;
+    info._type = INFT_PLUGIN_UPDATE;
+    emit PluginIO::getInstance()->sig_OutputInfo(info);
 }

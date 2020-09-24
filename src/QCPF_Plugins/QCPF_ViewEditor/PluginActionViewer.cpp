@@ -67,14 +67,14 @@ void PluginActionViewer::on_tabWidget_currentChanged(int index)
     ui->cbCopyID->clear();
     if(index==0)//系统组件
     {
-        foreach(PluginInterface* pi,  _core->I_SysPlugins_Sel)
+        foreach(Plugin_Interface* pi,  _core->I_SysPlugins_Sel)
         {
             ui->cbPluginID->addItem(pi->I_PluginID);
         }
     }
     else//非系统组件
     {
-        foreach(PluginInterface* pi,  _core->I_NSysOrigPlugins_Sel)
+        foreach(Plugin_Interface* pi,  _core->I_NSysOrigPlugins_Sel)
         {
             ui->cbPluginID->addItem(pi->I_PluginID);
         }
@@ -111,7 +111,7 @@ void PluginActionViewer::on_cbPluginID_currentIndexChanged(int index)
         foreach (PluginActionInfo* pai, _core->I_NSysOrigPlugins_Sel[index]->I_ActionList) {
             ui->cbPluginAction->addItem(pai->_actionName);
         }
-        foreach (PluginInterface* pai, _core->I_NSysClonePlugins) {
+        foreach (Plugin_Interface* pai, _core->I_NSysClonePlugins) {
             if(pai->I_PluginID==ui->cbPluginID->currentText())
                 ui->cbCopyID->addItem(pai->I_CopyID);
         }

@@ -42,8 +42,6 @@ private slots:
      int setConfigToUI();
      void on_btnCancel_clicked();
 
-     void on_btnApply_clicked();
-
      void on_btnAddNode_clicked();
      void on_btnDeleteNode_clicked();
 
@@ -51,8 +49,6 @@ private slots:
      void on_btnDown_clicked();
      void on_btnLeft_clicked();
      void on_btnRight_clicked();
-
-     void on_btnAddSeperator_clicked();
 
 
      void on_treeMenuEdit_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
@@ -62,8 +58,6 @@ private slots:
      void on_btnIconFinder_clicked();
 
      void on_btnAddAction_Toolbar_clicked();
-
-     void on_btnAddSeperator_Toolbar_clicked();
 
      void on_btnAddWidget_Toolbar_clicked();
 
@@ -97,9 +91,32 @@ private slots:
 
      void on_tablePluginWidget_itemClicked(QTableWidgetItem *item);
 
+     void on_btnAddSpacer_Toolbar_clicked();
+
+     void on_btnAddSeparator_Toolbar_clicked();
+
+     void on_btnAddSeparator_clicked();
+
+
+     void on_treeMenuEdit_itemDoubleClicked(QTreeWidgetItem *item, int column);
+
+     void on_treeToolbarEdit_itemDoubleClicked(QTreeWidgetItem *item, int column);
+
+     void on_tableStatusbarEditer_itemDoubleClicked(QTableWidgetItem *item);
+
+     void on_treeToolbarEdit_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+
+     void on_tableStatusbarEditer_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous);
+
 public slots:
-    void treeWidgetOpenEditor(QTreeWidgetItem *item,int col);
-    void slot_SelAllOrNot(bool flag);
+     void slot_SelAllOrNot(bool flag);
+     void OnLineEdit_EditingFinished_Tree(void);
+     void OnKeyEdit_EditingFinished_Tree(void);
+     void OnComboBox_Activated_Index_Tree(int);
+     void OnComboBox_Activated_Text_Tree(int);
+     void OnSpinBox_ValueChanged_Tree(int);
+
+     void OnComboBox_Activated_Text_Table(int);
 
 public:
      PluginIO* pluginInst;
@@ -113,6 +130,13 @@ private:
     tagOutputInfo tOutInfo;
     void setTableStyle(QTableWidget *table);
     QString getPluginWidgetTag(int rowIndex);
+
+    QTreeWidget* _currentTree;
+    QTreeWidgetItem* _currentItem_TreeMenuEdit;
+    int _currentCol_TreeMenuEdit;
+
+    QTableWidget* _currentTable;
+    QTableWidgetItem* _currentItem_tableStatusbarEditer;
 };
 
 #endif // FORMCONFIG_H

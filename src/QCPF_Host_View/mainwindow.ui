@@ -20,8 +20,8 @@
    <string>QCommonFrame</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="comresource.qrc">
-    <normaloff>:/Images/docker.png</normaloff>:/Images/docker.png</iconset>
+   <iconset resource="HostViewRes.qrc">
+    <normaloff>:/bin/Images/docker.png</normaloff>:/bin/Images/docker.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -30,7 +30,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="comresource.qrc"/>
+  <include location="HostViewRes.qrc"/>
  </resources>
  <connections/>
 </ui>

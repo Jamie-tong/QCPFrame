@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1207</width>
+    <width>1260</width>
     <height>780</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
   <widget class="QPushButton" name="btnOk">
    <property name="geometry">
     <rect>
-     <x>843</x>
+     <x>1040</x>
      <y>730</y>
      <width>100</width>
      <height>35</height>
@@ -42,7 +42,7 @@
   <widget class="QPushButton" name="btnCancel">
    <property name="geometry">
     <rect>
-     <x>1100</x>
+     <x>1148</x>
      <y>730</y>
      <width>100</width>
      <height>35</height>
@@ -58,31 +58,12 @@
     <string>Cancel(&amp;C)</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnApply">
-   <property name="geometry">
-    <rect>
-     <x>946</x>
-     <y>730</y>
-     <width>100</width>
-     <height>35</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>35</height>
-    </size>
-   </property>
-   <property name="text">
-    <string>Apply(&amp;A)</string>
-   </property>
-  </widget>
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
      <x>8</x>
      <y>0</y>
-     <width>1200</width>
+     <width>1261</width>
      <height>720</height>
     </rect>
    </property>
@@ -105,7 +86,7 @@
     <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>1030</x>
+       <x>1087</x>
        <y>10</y>
        <width>163</width>
        <height>679</height>
@@ -205,7 +186,7 @@ border-color: rgb(159, 159, 159);</string>
           <string>Delete Node</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="btnAddSeperator">
+        <widget class="QPushButton" name="btnAddSeparator">
          <property name="geometry">
           <rect>
            <x>10</x>
@@ -450,7 +431,7 @@ border-color: rgb(159, 159, 159);</string>
       <rect>
        <x>0</x>
        <y>10</y>
-       <width>1021</width>
+       <width>1081</width>
        <height>679</height>
       </rect>
      </property>
@@ -510,20 +491,20 @@ border-color: rgb(159, 159, 159);</string>
       <rect>
        <x>0</x>
        <y>4</y>
-       <width>591</width>
-       <height>688</height>
+       <width>691</width>
+       <height>691</height>
       </rect>
      </property>
      <property name="title">
       <string>ToolBar Editor</string>
      </property>
-     <widget class="QFrame" name="frame_8">
+     <widget class="QFrame" name="frame_7">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>82</y>
+        <x>526</x>
+        <y>264</y>
         <width>161</width>
-        <height>61</height>
+        <height>241</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -532,11 +513,50 @@ border-color: rgb(159, 159, 159);</string>
       <property name="frameShadow">
        <enum>QFrame::Sunken</enum>
       </property>
+      <widget class="QPushButton" name="btnAddSeparator_Toolbar">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>158</y>
+         <width>141</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Add Separator</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnAddWidget_Toolbar">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>110</y>
+         <width>141</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Add Widget</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnAddAction_Toolbar">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>59</y>
+         <width>141</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Add Action</string>
+       </property>
+      </widget>
       <widget class="QComboBox" name="cbActionFromMenu_Toolbar">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>30</y>
+         <y>24</y>
          <width>141</width>
          <height>22</height>
         </rect>
@@ -546,7 +566,7 @@ border-color: rgb(159, 159, 159);</string>
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
+         <y>4</y>
          <width>111</width>
          <height>16</height>
         </rect>
@@ -555,210 +575,53 @@ border-color: rgb(159, 159, 159);</string>
         <string>Action From Menu:</string>
        </property>
       </widget>
-     </widget>
-     <widget class="QFrame" name="frame_7">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>266</y>
-        <width>161</width>
-        <height>221</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Sunken</enum>
-      </property>
-      <widget class="QPushButton" name="btnAddAction_Toolbar">
+      <widget class="QPushButton" name="btnAddSpacer_Toolbar">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>9</y>
+         <y>195</y>
          <width>141</width>
-         <height>41</height>
+         <height>31</height>
         </rect>
        </property>
        <property name="text">
-        <string>Add Action</string>
+        <string>Add Spacer</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="btnAddSeperator_Toolbar">
+      <widget class="QGroupBox" name="groupBox_5">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>55</y>
-         <width>141</width>
-         <height>41</height>
+         <x>0</x>
+         <y>100</y>
+         <width>180</width>
+         <height>3</height>
         </rect>
        </property>
-       <property name="text">
-        <string>Add Seperator</string>
+       <property name="title">
+        <string/>
        </property>
       </widget>
-      <widget class="QPushButton" name="btnDeleteItem_Toolbar">
+      <widget class="QGroupBox" name="groupBox_6">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>170</y>
-         <width>141</width>
-         <height>41</height>
+         <x>0</x>
+         <y>149</y>
+         <width>180</width>
+         <height>3</height>
         </rect>
        </property>
-       <property name="text">
-        <string>Delete Item</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btnAddWidget_Toolbar">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>101</y>
-         <width>141</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Add Widget</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QFrame" name="frame_9">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>616</y>
-        <width>161</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Sunken</enum>
-      </property>
-      <widget class="QSpinBox" name="spanToolbarHight">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>141</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="minimum">
-        <number>16</number>
-       </property>
-       <property name="maximum">
-        <number>128</number>
-       </property>
-       <property name="value">
-        <number>32</number>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_4">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>101</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Toolbar height:</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QFrame" name="frame_10">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>149</y>
-        <width>161</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Sunken</enum>
-      </property>
-      <widget class="QSpinBox" name="spanItemHeight_Toolbar">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>75</y>
-         <width>141</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="minimum">
-        <number>16</number>
-       </property>
-       <property name="maximum">
-        <number>128</number>
-       </property>
-       <property name="value">
-        <number>32</number>
-       </property>
-      </widget>
-      <widget class="QSpinBox" name="spanItemWidth_Toolbar">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>25</y>
-         <width>141</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="minimum">
-        <number>16</number>
-       </property>
-       <property name="maximum">
-        <number>128</number>
-       </property>
-       <property name="value">
-        <number>32</number>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_5">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>5</y>
-         <width>101</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Item Width:</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_6">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>55</y>
-         <width>101</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Item Height:</string>
+       <property name="title">
+        <string/>
        </property>
       </widget>
      </widget>
      <widget class="QFrame" name="frame_15">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>493</y>
+        <x>526</x>
+        <y>599</y>
         <width>161</width>
-        <height>111</height>
+        <height>88</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -771,9 +634,9 @@ border-color: rgb(159, 159, 159);</string>
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>60</y>
+         <y>46</y>
          <width>141</width>
-         <height>41</height>
+         <height>31</height>
         </rect>
        </property>
        <property name="text">
@@ -784,9 +647,9 @@ border-color: rgb(159, 159, 159);</string>
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
+         <y>9</y>
          <width>141</width>
-         <height>41</height>
+         <height>31</height>
         </rect>
        </property>
        <property name="text">
@@ -799,8 +662,8 @@ border-color: rgb(159, 159, 159);</string>
        <rect>
         <x>10</x>
         <y>15</y>
-        <width>401</width>
-        <height>661</height>
+        <width>511</width>
+        <height>671</height>
        </rect>
       </property>
       <property name="midLineWidth">
@@ -827,10 +690,10 @@ border-color: rgb(159, 159, 159);</string>
      <widget class="QFrame" name="frame_11">
       <property name="geometry">
        <rect>
-        <x>420</x>
+        <x>526</x>
         <y>15</y>
         <width>161</width>
-        <height>61</height>
+        <height>241</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -843,7 +706,7 @@ border-color: rgb(159, 159, 159);</string>
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
+         <y>190</y>
          <width>141</width>
          <height>41</height>
         </rect>
@@ -852,15 +715,169 @@ border-color: rgb(159, 159, 159);</string>
         <string>Add Bar</string>
        </property>
       </widget>
+      <widget class="QLineEdit" name="txtBarTitle">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>141</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_7">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>4</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Bar Title:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>46</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Icon Width:</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spanIconWidth_Toolbar">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>62</y>
+         <width>141</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>16</number>
+       </property>
+       <property name="maximum">
+        <number>128</number>
+       </property>
+       <property name="value">
+        <number>32</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spanIconHeight_Toolbar">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>107</y>
+         <width>141</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>16</number>
+       </property>
+       <property name="maximum">
+        <number>128</number>
+       </property>
+       <property name="value">
+        <number>32</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>91</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Icon Height:</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="cbToolStritItemTextAlignment">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>156</y>
+         <width>141</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>No Text</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Text Beside Icon</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Text Under Icon</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="label_12">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>136</y>
+         <width>111</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Text Alignment:</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QFrame" name="frame_17">
+      <property name="geometry">
+       <rect>
+        <x>526</x>
+        <y>521</y>
+        <width>161</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <widget class="QPushButton" name="btnDeleteItem_Toolbar">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>15</y>
+         <width>141</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Delete Item</string>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QGroupBox" name="groupBox_4">
      <property name="geometry">
       <rect>
-       <x>600</x>
+       <x>695</x>
        <y>4</y>
-       <width>591</width>
-       <height>688</height>
+       <width>551</width>
+       <height>691</height>
       </rect>
      </property>
      <property name="title">
@@ -869,10 +886,10 @@ border-color: rgb(159, 159, 159);</string>
      <widget class="QFrame" name="frame_12">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>147</y>
+        <x>384</x>
+        <y>144</y>
         <width>161</width>
-        <height>131</height>
+        <height>111</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -885,7 +902,7 @@ border-color: rgb(159, 159, 159);</string>
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>80</y>
+         <y>60</y>
          <width>141</width>
          <height>41</height>
         </rect>
@@ -908,49 +925,10 @@ border-color: rgb(159, 159, 159);</string>
        </property>
       </widget>
      </widget>
-     <widget class="QFrame" name="frame_13">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>606</y>
-        <width>161</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Sunken</enum>
-      </property>
-      <widget class="QSpinBox" name="spanStatusbarHeight">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>141</width>
-         <height>22</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_9">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>101</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Statusbar height:</string>
-       </property>
-      </widget>
-     </widget>
      <widget class="QFrame" name="frame_14">
       <property name="geometry">
        <rect>
-        <x>420</x>
+        <x>384</x>
         <y>16</y>
         <width>161</width>
         <height>121</height>
@@ -1030,10 +1008,10 @@ border-color: rgb(159, 159, 159);</string>
      <widget class="QTableWidget" name="tableStatusbarEditer">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>5</x>
         <y>16</y>
-        <width>400</width>
-        <height>660</height>
+        <width>371</width>
+        <height>671</height>
        </rect>
       </property>
       <property name="mouseTracking">
@@ -1162,8 +1140,8 @@ border-color: rgb(159, 159, 159);</string>
      <widget class="QFrame" name="frame_16">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>286</y>
+        <x>384</x>
+        <y>264</y>
         <width>161</width>
         <height>111</height>
        </rect>
@@ -1212,7 +1190,7 @@ border-color: rgb(159, 159, 159);</string>
       <rect>
        <x>0</x>
        <y>10</y>
-       <width>1191</width>
+       <width>1241</width>
        <height>681</height>
       </rect>
      </property>
@@ -1349,12 +1327,12 @@ border-color: rgb(159, 159, 159);</string>
       <rect>
        <x>30</x>
        <y>90</y>
-       <width>111</width>
+       <width>231</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>Show status-bar</string>
+      <string>Show Statusbar</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="chb_IsShowMenu">
@@ -1362,12 +1340,12 @@ border-color: rgb(159, 159, 159);</string>
       <rect>
        <x>30</x>
        <y>30</y>
-       <width>111</width>
+       <width>231</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>Show menu-bar</string>
+      <string>Show Menubar</string>
      </property>
     </widget>
     <widget class="QCheckBox" name="chb_IsShowToolBar">
@@ -1375,12 +1353,51 @@ border-color: rgb(159, 159, 159);</string>
       <rect>
        <x>30</x>
        <y>60</y>
-       <width>111</width>
+       <width>231</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>Show tool-bar</string>
+      <string>Show Toolbar</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="chb_DockMoveable">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>150</y>
+       <width>231</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Dock Moveable</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="chb_DockCloseable">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>180</y>
+       <width>231</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Dock Closeable</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="chb_DockFloatable">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>120</y>
+       <width>231</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Dock Floatable</string>
      </property>
     </widget>
    </widget>

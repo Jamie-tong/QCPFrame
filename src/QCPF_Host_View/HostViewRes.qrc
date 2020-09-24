@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../../bin/Images/gbLoad.jpg</file>
+        <file>../../bin/Images/docker.png</file>
+    </qresource>
+</RCC>

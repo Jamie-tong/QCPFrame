@@ -1,11 +1,10 @@
-QT -= gui
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += widgets
 
 DEFINES += QCFMANAGER_LIBRARY
 
-TARGET =  ../../../bin/debug/Bin/Plugins/QCPF_PluginManager
+TARGET =  ../../../../bin/Bin/Plugins/QCPF_PluginManager
 TEMPLATE = lib
-CONFIG += plugin c++11
+CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -23,7 +22,7 @@ SOURCES += \
     PluginManager.cpp
 
 HEADERS += \
-    ../../../interface/hostinterface.h \
+    ../../../interface/coreinterface.h \
     ../../../interface/plugininterface.h \
     PluginIO.h \
     PluginManager.h \
@@ -41,3 +40,7 @@ DISTFILES += \
 FORMS += \
     PluginManager.ui
 
+unix|win32: LIBS += -L$$PWD/../../../bin/ -lQCPF_PluginModel
+
+INCLUDEPATH += $$PWD/../../QCPF_PluginModel
+DEPENDPATH += $$PWD/../../QCPF_PluginModel

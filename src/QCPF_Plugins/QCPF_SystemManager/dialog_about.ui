@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>560</width>
-    <height>300</height>
+    <height>356</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,8 +36,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>393</x>
-     <y>220</y>
+     <x>400</x>
+     <y>270</y>
      <width>141</width>
      <height>31</height>
     </rect>
@@ -53,7 +53,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>250</y>
+     <y>240</y>
      <width>151</width>
      <height>21</height>
     </rect>
@@ -93,8 +93,8 @@
   <widget class="QPushButton" name="btnClose">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>250</y>
+     <x>397</x>
+     <y>300</y>
      <width>141</width>
      <height>41</height>
     </rect>
@@ -107,7 +107,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>270</y>
+     <y>260</y>
      <width>141</width>
      <height>21</height>
     </rect>
@@ -119,12 +119,46 @@
     <string>View Version:</string>
    </property>
   </widget>
+  <widget class="QLabel" name="labSystemName">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>300</y>
+     <width>331</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+   </property>
+   <property name="text">
+    <string>System Name:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labSystemID">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>320</y>
+     <width>331</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+   </property>
+   <property name="text">
+    <string>System ID:</string>
+   </property>
+  </widget>
   <zorder>label</zorder>
   <zorder>labCoreVersion</zorder>
   <zorder>label_4</zorder>
   <zorder>btnClose</zorder>
   <zorder>label_2</zorder>
   <zorder>labViewVersion</zorder>
+  <zorder>labSystemName</zorder>
+  <zorder>labSystemID</zorder>
  </widget>
  <resources/>
  <connections/>

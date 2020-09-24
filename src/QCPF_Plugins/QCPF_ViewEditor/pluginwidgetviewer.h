@@ -21,7 +21,7 @@ class PluginWidgetViewer : public QDialog
     Q_OBJECT
 
 public:
-    explicit PluginWidgetViewer(QCPF_Interface* model, QWidget *parent = nullptr);
+    explicit PluginWidgetViewer(QCPF_Interface* model, bool isShowStatusBarItemType, QWidget *parent = nullptr);
     ~PluginWidgetViewer();
 
 protected:
@@ -45,6 +45,7 @@ public:
     QString _pluginID;
     QString _copyID;
     QString _widgetObjectName;
+    int _statusbarItemType;//StatusbarItemType
 
     QString _itemTag;
     QString _itemDetail;
@@ -55,6 +56,7 @@ private:
     Ui::PluginWidgetViewer *ui;
     QTimer* _timer;
     QCPF_Interface* _core;
+    bool _isShowAlignment;
 };
 
 #endif // PLUGINWIDGETVIEWER_H

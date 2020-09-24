@@ -18,7 +18,26 @@ License: GPL v3.0
 #include "utility/ccheckboxheaderview.h"
 #include "PluginIO.h"
 
-ViewEditor* instance;
+#define CONST_STR_SYSTEM  "System"
+#define CONST_STR_NONSYSTEM        "NonSystem"
+#define CONST_STR_SEPARATOR  "[-----------------]"
+#define CONST_STR_SPACER        "<--------------->"
+
+#define CONST_STR_NO_TEXT      "No Text"
+#define CONST_STR_TEXT_BESIDE_ICON      "Text Beside Icon"
+#define CONST_STR_TEXT_UNDER_ICON      "Text Under Icon"
+
+#define CONST_STR_STATUSITEM_COMMON      "Common"
+#define CONST_STR_STATUSITEM_PERMANENT      "Permanent"
+
+#define CONST_STR_ITEMTYPE_ACTION      "Action"
+#define CONST_STR_ITEMTYPE_SEPARATOR      "Separator"
+#define CONST_STR_ITEMTYPE_WIDGET      "Widget"
+#define CONST_STR_ITEMTYPE_SPACER      "Spacer"
+
+
+
+ViewEditor* pViewEdInstance;
 
 ViewEditor::ViewEditor(QWidget *parent) :
     QDialog(parent),ui(new Ui::ViewEditor)
@@ -27,7 +46,7 @@ ViewEditor::ViewEditor(QWidget *parent) :
 
     this->setParent(parent);
 
-    instance = this;
+    pViewEdInstance = this;
     pluginInst = PluginIO::getInstance();
     _view = (QCPF_ViewModel*)pluginInst->_core->_view;
     connect(this,SIGNAL(sig_SelAllOrNot(bool)),this,SLOT(slot_SelAllOrNot(bool)));//for 全选/不选复选框
@@ -42,12 +61,9 @@ ViewEditor::ViewEditor(QWidget *parent) :
     sizePolicy.setVerticalStretch(0);
     sizePolicy.setHeightForWidth(hasHeightForWidth());
     setSizePolicy(sizePolicy);
-    setMinimumSize(QSize(1207, 780));
-    setMaximumSize(QSize(1207, 780));
+    setMinimumSize(QSize(1260, 780));
+    setMaximumSize(QSize(1260, 780));
     setSizeGripEnabled(false);
-
-    connect(ui->treeMenuEdit,SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),this,SLOT(treeWidgetOpenEditor(QTreeWidgetItem*,int)));
-    connect(ui->treeMenuEdit,SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(treeWidgetCloseEditor()));
 
     //注册面板显示后的信号槽
     _timer = new QTimer(this);
@@ -93,18 +109,18 @@ int getTreeElement(QTreeWidgetItem* root)
 int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParentNode)
 {
     configParentNode->_menuTitle = treeTopNode->text(0);
-    configParentNode->_menuIsSeprator = treeTopNode->text(0).contains("----------")?true:false;
+    configParentNode->_menuIsSeprator = treeTopNode->text(0)==CONST_STR_SEPARATOR?true:false;
     configParentNode->_menuShortCut = treeTopNode->text(1);
     configParentNode->_menuIconPath = treeTopNode->text(2);
     configParentNode->_menuAuthority = treeTopNode->text(3).toInt();
     configParentNode->_menuCheckable = treeTopNode->text(4)=="True"?true:false;
 
     QString tt = treeTopNode->text(5);
-    configParentNode->_pluginType = treeTopNode->text(5)=="System"?0:1;
+    configParentNode->_pluginType = treeTopNode->text(5)==CONST_STR_SYSTEM?0:1;
     configParentNode->_pluginID = treeTopNode->text(6);
     configParentNode->_copyID = treeTopNode->text(7);
-    configParentNode->_functionName = treeTopNode->text(8);
-    configParentNode->_functionDetail = treeTopNode->text(9);
+    configParentNode->_actionName = treeTopNode->text(8);
+    configParentNode->_actionDetail = treeTopNode->text(9);
 
     configParentNode->_count_children = treeTopNode->childCount();
     for(int i=0; i<configParentNode->_count_children; i++)
@@ -125,6 +141,9 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
     _view->_config._isEnable_ShowMenu = ui->chb_IsShowMenu->isChecked();
     _view->_config._isEnable_ShowToolbar = ui->chb_IsShowToolBar->isChecked();
     _view->_config._isEnable_ShowStatusbar = ui->chb_IsShowStatusBar->isChecked();
+    _view->_config._dock_Floatable = ui->chb_DockFloatable->isChecked();
+    _view->_config._dock_Moveable = ui->chb_DockMoveable->isChecked();
+    _view->_config._dock_Closeable = ui->chb_DockCloseable->isChecked();
 
     _view->_config._count_MenuTopItemLst = ui->treeMenuEdit->topLevelItemCount();
     _view->_config._menuTopItemLst.clear();
@@ -144,6 +163,16 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
         _view->_config._toolBarLst.append(tToolbar);
 
         tToolbar->_toolBarNo = i;
+        tToolbar->_toolBarTitle = ui->treeToolbarEdit->topLevelItem(i)->text(0);
+        tToolbar->_IconSize = QSize(ui->treeToolbarEdit->topLevelItem(i)->text(3).toInt(), ui->treeToolbarEdit->topLevelItem(i)->text(4).toInt());
+
+        if(ui->treeToolbarEdit->topLevelItem(i)->text(2) == CONST_STR_NO_TEXT)
+            tToolbar->_textStyle = BarItemSytle::BS_NO_TEXT;
+        else if(ui->treeToolbarEdit->topLevelItem(i)->text(2) == CONST_STR_TEXT_BESIDE_ICON)
+            tToolbar->_textStyle = BarItemSytle::BS_TEXT_BESIDE_ICON;
+        else if(ui->treeToolbarEdit->topLevelItem(i)->text(2) == CONST_STR_TEXT_UNDER_ICON)
+            tToolbar->_textStyle = BarItemSytle::BS_TEXT_UNDER_ICON;
+
         tToolbar->_count_ToolBarItemLst = ui->treeToolbarEdit->topLevelItem(i)->childCount();
         tToolbar->_toolBarItemList.clear();
         for(int j=0; j<tToolbar->_count_ToolBarItemLst; j++)
@@ -151,16 +180,29 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
             BarItem* tItem = new BarItem();
             tToolbar->_toolBarItemList.append(tItem);
 
-            //_type---------------0:Seperator; 1:Widget; 2:Action
+            //_type---------------0:Separator; 1:Widget; 2:Action
             QString tTypeStr = ui->treeToolbarEdit->topLevelItem(i)->child(j)->text(1);
-            if(tTypeStr.compare("Seperator")==0)
-                tItem->_type = TP_SEPERATOR;
-            else if(tTypeStr.compare("Widget")==0)
-                tItem->_type = TP_WIDGET;
-            else if(tTypeStr.compare("Action")==0)
-                tItem->_type = TP_ACTION;
 
-            if(tItem->_type==TP_WIDGET)//Widget
+            if(tTypeStr.compare(CONST_STR_ITEMTYPE_ACTION)==0)
+                tItem->_type = BT_ACTION;
+            else if(tTypeStr.compare(CONST_STR_ITEMTYPE_WIDGET)==0)
+                tItem->_type = BT_WIDGET;
+            else if(tTypeStr.compare(CONST_STR_ITEMTYPE_SEPARATOR)==0)
+                tItem->_type = BT_SEPARATOR;
+            else if(tTypeStr.compare(CONST_STR_ITEMTYPE_SPACER)==0)
+                tItem->_type = BT_SPACER;
+
+            if(tItem->_type==BT_ACTION)//Action
+            {
+                ActionItem* tActionItem = new ActionItem();
+                tItem->_actionItem = tActionItem;
+
+                tActionItem->_actionObjectName = ui->treeToolbarEdit->topLevelItem(i)->child(j)->text(0);
+
+                tItem->_width = ui->treeToolbarEdit->topLevelItem(i)->text(3).toInt();
+                tItem->_height = ui->treeToolbarEdit->topLevelItem(i)->text(4).toInt();
+            }
+            else if(tItem->_type==BT_WIDGET)//Widget
             {
                 WidgetItem* tWidgetItem = new WidgetItem();
                 tItem->_widgetItem = tWidgetItem;
@@ -170,31 +212,22 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
                     return -1;
 
                 tWidgetItem->_widgetObjectName = splitStrLst[0];
-                if(splitStrLst[1] == tr("System"))
+                if(splitStrLst[1] == tr(CONST_STR_SYSTEM))
                     tWidgetItem->_pluginType = 0;
-                else if(splitStrLst[1] == tr("NonSystem"))
+                else if(splitStrLst[1] == tr(CONST_STR_NONSYSTEM))
                     tWidgetItem->_pluginType = 1;
 
                 tWidgetItem->_pluginID = splitStrLst[2];
                 tWidgetItem->_copyID = splitStrLst[3];
 
 
-                tWidgetItem->_widgetOrigWidth = ui->treeToolbarEdit->topLevelItem(i)->child(j)->text(2).toInt();
-                tWidgetItem->_widgetOrigHeight = ui->treeToolbarEdit->topLevelItem(i)->child(j)->text(3).toInt();
+                tWidgetItem->_widgetOrigWidth = ui->treeToolbarEdit->topLevelItem(i)->child(j)->text(3).toInt();
+                tWidgetItem->_widgetOrigHeight = ui->treeToolbarEdit->topLevelItem(i)->child(j)->text(4).toInt();
 
                 tItem->_width = tWidgetItem->_widgetOrigWidth;
                 tItem->_height = tWidgetItem->_widgetOrigHeight;
             }
-            else if(tItem->_type==TP_ACTION)//Action
-            {
-                ActionItem* tActionItem = new ActionItem();
-                tItem->_actionItem = tActionItem;
 
-                tActionItem->_actionObjectName = ui->treeToolbarEdit->topLevelItem(i)->child(j)->text(0);
-
-                tItem->_width = ui->treeToolbarEdit->topLevelItem(i)->child(j)->text(2).toInt();
-                tItem->_height = ui->treeToolbarEdit->topLevelItem(i)->child(j)->text(3).toInt();
-            }
         }
     }
 
@@ -202,25 +235,25 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
     _view->_config._statusBarItemLst.clear();
     for(int i=0; i<_view->_config._count_StatusBarItemLst; i++)
     {
-        WidgetItem* tWidgetItem = new WidgetItem();
-        _view->_config._statusBarItemLst.append(tWidgetItem);
+        StatusbarItem* tStatusbarItem = new StatusbarItem();
+        _view->_config._statusBarItemLst.append(tStatusbarItem);
 
         QStringList splitStrLst =  ui->tableStatusbarEditer->item(i, 1)->text().split(tr(";"));
         if(splitStrLst.count()!=4)
             return -1;
 
-        tWidgetItem->_widgetObjectName = splitStrLst[0];
-        if(splitStrLst[1] == "System")
-            tWidgetItem->_pluginType = PT_SYS;
-        else if(splitStrLst[1] == "NonSystem")
-            tWidgetItem->_pluginType = PT_NON_SYS;
+        tStatusbarItem->_widgetObjectName = splitStrLst[0];
+        if(splitStrLst[1] == CONST_STR_SYSTEM)
+            tStatusbarItem->_pluginType = PT_SYS;
+        else if(splitStrLst[1] == CONST_STR_NONSYSTEM)
+            tStatusbarItem->_pluginType = PT_NON_SYS;
 
-        tWidgetItem->_pluginID = splitStrLst[2];
-        tWidgetItem->_copyID = splitStrLst[3];
+        tStatusbarItem->_pluginID = splitStrLst[2];
+        tStatusbarItem->_copyID = splitStrLst[3];
 
-
-        tWidgetItem->_widgetOrigWidth = ui->tableStatusbarEditer->item(i, 2)->text().toInt();
-        tWidgetItem->_widgetOrigHeight = ui->tableStatusbarEditer->item(i, 3)->text().toInt();
+        tStatusbarItem->_statusbarItemType = ui->tableStatusbarEditer->item(i, 2)->text()==CONST_STR_STATUSITEM_COMMON?SBT_COMMON:SBT_PERMANENT;
+        tStatusbarItem->_widgetOrigWidth = ui->tableStatusbarEditer->item(i, 3)->text().toInt();
+        tStatusbarItem->_widgetOrigHeight = ui->tableStatusbarEditer->item(i, 4)->text().toInt();
     }
 
     _view->_config._count_WorkSpaceWidgetLst = ui->tablePluginWidget->rowCount();
@@ -238,9 +271,9 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
 
         tWidgetItem->_widgetObjectName = ui->tablePluginWidget->item(i, 2)->text();
 
-        if(ui->tablePluginWidget->item(i, 3)->text()=="System")
+        if(ui->tablePluginWidget->item(i, 3)->text()==CONST_STR_SYSTEM)
             tWidgetItem->_pluginType = PT_SYS;
-        else if(ui->tablePluginWidget->item(i, 3)->text()=="NonSystem")
+        else if(ui->tablePluginWidget->item(i, 3)->text()==CONST_STR_NONSYSTEM)
             tWidgetItem->_pluginType = PT_NON_SYS;
 
         tWidgetItem->_pluginID = ui->tablePluginWidget->item(i, 4)->text();
@@ -256,22 +289,25 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
         QTreeWidgetItem* treeChildNode = new QTreeWidgetItem();
 
         treeChildNode->setText(0, configNode->_menuTitle);
-        treeChildNode->setIcon(0, QIcon(configNode->_menuIconPath));
         treeChildNode->setText(1, configNode->_menuShortCut);
         treeChildNode->setText(2, configNode->_menuIconPath);
-        treeChildNode->setText(3, QString::number(configNode->_menuAuthority));
-        treeChildNode->setText(4, configNode->_menuCheckable?QStringLiteral("True"):QStringLiteral("False"));
-
-        if(!configNode->_menuTitle.contains("----------"))
-            treeChildNode->setText(5, configNode->_pluginType?QStringLiteral("Non-System"):QStringLiteral("System"));
+         if(configNode->_menuTitle != CONST_STR_SEPARATOR)
+         {
+            treeChildNode->setIcon(0, QIcon(configNode->_menuIconPath));
+            treeChildNode->setText(3, QString::number(configNode->_menuAuthority));
+            treeChildNode->setText(4, configNode->_menuCheckable?QStringLiteral("True"):QStringLiteral("False"));
+            treeChildNode->setText(5, configNode->_pluginType?CONST_STR_NONSYSTEM:CONST_STR_SYSTEM);
+         }
         treeChildNode->setText(6, configNode->_pluginID);
         treeChildNode->setText(7, configNode->_copyID);
-        treeChildNode->setText(8, configNode->_functionName);
-        treeChildNode->setText(9, configNode->_functionDetail);
+        treeChildNode->setText(8, configNode->_actionName);
+        treeChildNode->setText(9, configNode->_actionDetail);
         treeNode->addChild(treeChildNode);
 
-        if(configNode->_functionName!="" && cbToolbarAction->findText(configNode->_functionName)<0)
-            cbToolbarAction->addItem(configNode->_functionName);
+        if(configNode->_actionName!="" && cbToolbarAction->findText(configNode->_actionName)<0)
+        {
+            cbToolbarAction->addItem(QIcon(configNode->_menuIconPath), configNode->_actionName);
+        }
     }
     else
     {
@@ -305,6 +341,9 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
      ui->chb_IsShowToolBar->setChecked(_view->_config._isEnable_ShowToolbar);
      ui->chb_IsShowStatusBar->setChecked(_view->_config._isEnable_ShowStatusbar);
 
+     ui->chb_DockFloatable->setChecked(_view->_config._dock_Floatable);
+     ui->chb_DockMoveable->setChecked(_view->_config._dock_Moveable);
+     ui->chb_DockCloseable->setChecked(_view->_config._dock_Closeable);
      //--------------------------
      //设置菜单编辑器树样式
      //--------------------------
@@ -336,7 +375,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
       );
      //为菜单树加载数据
     ui->treeMenuEdit->clear();
-
+    ui->cbActionFromMenu_Toolbar->clear();
     for(int i=0; i<_view->_config._menuTopItemLst.count(); i++)
     {
         JMenuNode* tTopConfigNode = _view->_config._menuTopItemLst[i];
@@ -346,7 +385,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
         tTopTreeItem->setText(1, tTopConfigNode->_menuShortCut);
         tTopTreeItem->setText(2, tTopConfigNode->_menuIconPath);
         tTopTreeItem->setText(3, QString::number(tTopConfigNode->_menuAuthority));
-        tTopTreeItem->setText(4, tTopConfigNode->_menuCheckable?QStringLiteral("True"):QStringLiteral("False"));
+        tTopTreeItem->setText(4, tTopConfigNode->_menuCheckable?tr("True"):tr("False"));
         //一级菜单不能为有Action
         //一级菜单不挂接插件，因为没有组件类型
         ui->treeMenuEdit->addTopLevelItem(tTopTreeItem);
@@ -358,17 +397,18 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
     //--------------------------
     //设置工具栏编辑器样式
     //--------------------------
-    ui->treeToolbarEdit->setColumnCount(4);
+    ui->treeToolbarEdit->setColumnCount(5);
 
     nHeadLst.clear();
-    nHeadLst<<tr("Item")<<tr("Type")<<tr("Width")<<tr("Height");
+    nHeadLst<<tr("Item")<<tr("Type")<<tr("Alignment")<<tr("Width")<<tr("Height");
     ui->treeToolbarEdit->setHeaderLabels(nHeadLst);
     ui->treeToolbarEdit->header()->setVisible(true);
 
-    ui->treeToolbarEdit->setColumnWidth(0, 210);
-    ui->treeToolbarEdit->setColumnWidth(1, 80);
-    ui->treeToolbarEdit->setColumnWidth(2, 50);
+    ui->treeToolbarEdit->setColumnWidth(0, 200);
+    ui->treeToolbarEdit->setColumnWidth(1, 70);
+    ui->treeToolbarEdit->setColumnWidth(2, 110);
     ui->treeToolbarEdit->setColumnWidth(3, 50);
+    ui->treeToolbarEdit->setColumnWidth(4, 50);
 
     //设置控件样式
     ui->treeToolbarEdit->header()->setStyleSheet("QHeaderView::section{color:black; border:1px gray;background-color:lightgray;font:9pt '微软雅黑';padding:5px;min-height:1em;}");
@@ -385,28 +425,29 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
 
     foreach (JToolBar* bar, _view->_config._toolBarLst) {
         QTreeWidgetItem* tTopTreeNode = new QTreeWidgetItem();
-        tTopTreeNode->setText(0, QString(tr("Bar%1")).arg(bar->_toolBarNo + 1));
+        tTopTreeNode->setText(0, bar->_toolBarTitle);
+        switch(bar->_textStyle)
+        {
+            case BarItemSytle::BS_NO_TEXT:
+                tTopTreeNode->setText(2, tr(CONST_STR_NO_TEXT));
+                break;
+            case BarItemSytle::BS_TEXT_BESIDE_ICON:
+                tTopTreeNode->setText(2, tr(CONST_STR_TEXT_BESIDE_ICON));
+                break;
+            case BarItemSytle::BS_TEXT_UNDER_ICON:
+                tTopTreeNode->setText(2, tr(CONST_STR_TEXT_UNDER_ICON));
+                break;
+        }
+        tTopTreeNode->setText(3, QString::number(bar->_IconSize.width()));
+        tTopTreeNode->setText(4, QString::number(bar->_IconSize.height()));
+
         ui->treeToolbarEdit->addTopLevelItem(tTopTreeNode);
 
         foreach (BarItem* item, bar->_toolBarItemList) {
             QTreeWidgetItem* tItemTreeNode = new QTreeWidgetItem();
             tTopTreeNode->addChild(tItemTreeNode);
 
-            if(item->_type == TP_SEPERATOR)//Seperator
-            {
-                tItemTreeNode->setText(0, tr("--------------------"));
-                tItemTreeNode->setText(1, tr("Seperator"));
-            }
-            else if(item->_type == TP_WIDGET)//Widget
-            {
-                QString pluginType = item->_widgetItem->_pluginType==PT_SYS?tr("System"):tr("NonSystem");
-                QString _itemTag = item->_widgetItem->_widgetObjectName + ";" +  pluginType + ";" + item->_widgetItem->_pluginID + ";" + item->_widgetItem->_copyID;
-                tItemTreeNode->setText(0,_itemTag);
-                tItemTreeNode->setText(1, tr("Widget"));
-                tItemTreeNode->setText(2, QString::number(item->_widgetItem->_widgetOrigWidth));
-                tItemTreeNode->setText(3, QString::number(item->_widgetItem->_widgetOrigHeight));
-            }
-            else if(item->_type == TP_ACTION)//Action
+            if(item->_type == BT_ACTION)//Action
             {
                 QIcon tIcon;
                 foreach(QAction* act, _view->_actionList)
@@ -420,9 +461,27 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
                 tItemTreeNode->setIcon(0, tIcon);
 
                 tItemTreeNode->setText(0, item->_actionItem->_actionObjectName);
-                tItemTreeNode->setText(1, tr("Action"));
-                tItemTreeNode->setText(2, QString::number(item->_width));
-                tItemTreeNode->setText(3, QString::number(item->_height));
+                tItemTreeNode->setText(1, tr(CONST_STR_ITEMTYPE_ACTION));
+
+            }
+            else if(item->_type == BT_WIDGET)//Widget
+            {
+                QString pluginType = item->_widgetItem->_pluginType==PT_SYS?tr(CONST_STR_SYSTEM):tr(CONST_STR_NONSYSTEM);
+                QString _itemTag = item->_widgetItem->_widgetObjectName + ";" +  pluginType + ";" + item->_widgetItem->_pluginID + ";" + item->_widgetItem->_copyID;
+                tItemTreeNode->setText(0,_itemTag);
+                tItemTreeNode->setText(1, tr(CONST_STR_ITEMTYPE_WIDGET));
+                tItemTreeNode->setText(3, QString::number(item->_widgetItem->_widgetOrigWidth));
+                tItemTreeNode->setText(4, QString::number(item->_widgetItem->_widgetOrigHeight));
+            }
+            else if(item->_type == BT_SEPARATOR)//Separator
+            {
+                tItemTreeNode->setText(0, tr(CONST_STR_SEPARATOR));
+                tItemTreeNode->setText(1, tr(CONST_STR_ITEMTYPE_SEPARATOR));
+            }
+            else if(item->_type == BT_SPACER)//Spacer
+            {
+                tItemTreeNode->setText(0, tr(CONST_STR_SPACER));
+                tItemTreeNode->setText(1, tr(CONST_STR_ITEMTYPE_SPACER));
             }
         }
     }
@@ -430,36 +489,44 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
     //--------------------------
     //设置状态栏编辑器样式
     //--------------------------
-    ui->tableStatusbarEditer->setColumnCount(4);
+    ui->tableStatusbarEditer->setColumnCount(5);
     ui->tableStatusbarEditer->setRowCount(0);
 
     //为状态栏加载数据
     ui->tableStatusbarEditer->clear();
 
     nHeadLst.clear();
-    nHeadLst<<tr("No.")<<tr("Item")<<tr("Width")<<tr("Height");
+    nHeadLst<<tr("No.")<<tr("Item")<<tr("Type")<<tr("Width")<<tr("Height");
 
     ui->tableStatusbarEditer->setHorizontalHeaderLabels(nHeadLst);
 
-    ui->tableStatusbarEditer->setColumnWidth(0, 40);
-    ui->tableStatusbarEditer->setColumnWidth(1, 230);
-    ui->tableStatusbarEditer->setColumnWidth(2, 50);
+    ui->tableStatusbarEditer->setColumnWidth(0, 35);
+    ui->tableStatusbarEditer->setColumnWidth(1, 150);
+    ui->tableStatusbarEditer->setColumnWidth(2, 80);
     ui->tableStatusbarEditer->setColumnWidth(3, 50);
+    ui->tableStatusbarEditer->setColumnWidth(4, 50);
 
     setTableStyle(ui->tableStatusbarEditer);
 
     int count = 0;
-    foreach (WidgetItem* item, _view->_config._statusBarItemLst) {
+    foreach (StatusbarItem* item, _view->_config._statusBarItemLst) {
         int tRowCount = ui->tableStatusbarEditer->rowCount();
         ui->tableStatusbarEditer->insertRow(tRowCount);
 
         ui->tableStatusbarEditer->setItem(tRowCount, 0, new QTableWidgetItem(QString::number(++count)));
 
-        QString pluginType = item->_pluginType==PT_SYS?tr("System"):tr("NonSystem");
+        QString pluginType = item->_pluginType==PT_SYS?tr(CONST_STR_SYSTEM):tr(CONST_STR_NONSYSTEM);
         QString _itemTag = item->_widgetObjectName + ";" +  pluginType + ";" + item->_pluginID + ";" + item->_copyID;
         ui->tableStatusbarEditer->setItem(tRowCount, 1, new QTableWidgetItem(_itemTag));
-        ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(QString::number(item->_widgetOrigWidth)));
-        ui->tableStatusbarEditer->setItem(tRowCount, 3, new QTableWidgetItem(QString::number(item->_widgetOrigHeight)));
+
+        if(item->_statusbarItemType == StatusbarItemType::SBT_COMMON)
+            ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(tr(CONST_STR_STATUSITEM_COMMON)));
+        else if(item->_statusbarItemType == StatusbarItemType::SBT_PERMANENT)
+            ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(tr(CONST_STR_STATUSITEM_PERMANENT)));
+
+        ui->tableStatusbarEditer->setItem(tRowCount, 1, new QTableWidgetItem(_itemTag));
+        ui->tableStatusbarEditer->setItem(tRowCount, 3, new QTableWidgetItem(QString::number(item->_widgetOrigWidth)));
+        ui->tableStatusbarEditer->setItem(tRowCount, 4, new QTableWidgetItem(QString::number(item->_widgetOrigHeight)));
     }
 
     //--------------------------
@@ -492,7 +559,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
 
     count = 0;
     //把每个系统组件的ShowType为ST_DOCK的widget信息都加载到table中
-    foreach (PluginInterface* pi, ((QCPF_Interface*)_view->_core)->I_SysPlugins) {
+    foreach (Plugin_Interface* pi, ((QCPF_Interface*)_view->_core)->I_SysPlugins) {
         foreach (PluginWidgetInfo* pwi, pi->I_WidgetList) {
 
             bool isExist = false;
@@ -523,7 +590,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
 
             ui->tablePluginWidget->setItem(tRowCount, 1, new QTableWidgetItem(QString::number(++count)));
             ui->tablePluginWidget->setItem(tRowCount, 2, new QTableWidgetItem(pwi->_widget->objectName()));
-            ui->tablePluginWidget->setItem(tRowCount, 3, new QTableWidgetItem(tr("System")));
+            ui->tablePluginWidget->setItem(tRowCount, 3, new QTableWidgetItem(tr(CONST_STR_SYSTEM)));
             ui->tablePluginWidget->setItem(tRowCount, 4, new QTableWidgetItem(pi->I_PluginID));
             ui->tablePluginWidget->setItem(tRowCount, 5, new QTableWidgetItem(pi->I_CopyID));
             ui->tablePluginWidget->setItem(tRowCount, 6, new QTableWidgetItem(tr("No")));
@@ -531,9 +598,9 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
         }
     }
 
-    QList<PluginInterface*> tvec = ((QCPF_Interface*)_view->_core)->I_NSysAllValidPlugins;
+    QList<Plugin_Interface*> tvec = ((QCPF_Interface*)_view->_core)->I_NSysAllValidPlugins;
     //把每个非系统组件的widget信息都加载到table中
-    foreach (PluginInterface* pi, ((QCPF_Interface*)_view->_core)->I_NSysAllValidPlugins) {
+    foreach (Plugin_Interface* pi, ((QCPF_Interface*)_view->_core)->I_NSysAllValidPlugins) {
         foreach (PluginWidgetInfo* pwi, pi->I_WidgetList) {
 
             bool isExist = false;
@@ -563,7 +630,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
 
             ui->tablePluginWidget->setItem(tRowCount, 1, new QTableWidgetItem(QString::number(++count)));
             ui->tablePluginWidget->setItem(tRowCount, 2, new QTableWidgetItem(pwi->_widget->objectName()));
-            ui->tablePluginWidget->setItem(tRowCount, 3, new QTableWidgetItem(tr("NonSystem")));
+            ui->tablePluginWidget->setItem(tRowCount, 3, new QTableWidgetItem(tr(CONST_STR_NONSYSTEM)));
             ui->tablePluginWidget->setItem(tRowCount, 4, new QTableWidgetItem(pi->I_PluginID));
             ui->tablePluginWidget->setItem(tRowCount, 5, new QTableWidgetItem(pi->I_CopyID));
             ui->tablePluginWidget->setItem(tRowCount, 6, new QTableWidgetItem(pi->I_CopyID==""?tr("No"):tr("Yes")));
@@ -596,31 +663,48 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
 
      table->setSortingEnabled(false);
  }
- void ViewEditor::treeWidgetOpenEditor(QTreeWidgetItem *item, int col)
- {
-     if(col>1)
-         return;
+// void ViewEditor::treeWidgetOpenEditor(QTreeWidgetItem *item, int col)
+// {
+//     if(col>1)
+//         return;
 
-     if(item->text(0).contains("----------"))
-         return;
+//     if(item->text(0)== CONST_STR_SEPARATOR)
+//         return;
 
-     previousColNo = col;
-     ui->treeMenuEdit->openPersistentEditor(item,col);
- }
+//     previousColNo = col;
+//     ui->treeMenuEdit->openPersistentEditor(item,col);
+// }
 
  void ViewEditor::on_treeMenuEdit_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
  {
-     if(previous!=nullptr){
-        ui->treeMenuEdit->closePersistentEditor(previous,previousColNo);
-        //设置控件样式
-        ui->treeMenuEdit->header()->setStyleSheet("QHeaderView::section{color:black; border:1px gray;background-color:lightgray;font:9pt '微软雅黑';padding:5px;min-height:1em;}");
-        ui->treeMenuEdit->header()->setDefaultAlignment (Qt::AlignLeft | Qt::AlignVCenter); //居中
-        ui->treeMenuEdit->header()->setStretchLastSection(true);
+     if(previous!=nullptr && _currentCol_TreeMenuEdit>=0){
+        ui->treeMenuEdit->removeItemWidget(previous, _currentCol_TreeMenuEdit);
+
         ui->treeMenuEdit->setStyleSheet( "QTreeView::item:hover{background-color:rgb(110,178,233); color:white}"
         "QTreeView::item:selected{background-color:rgb(0,120,215)}"
         "QTreeView::item:selected{color: white}"
         "QTreeWidget::item{border-right: 1px solid silver; font:9pt '微软雅黑';}"
          );
+     }
+ }
+
+ void ViewEditor::on_treeToolbarEdit_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+ {
+     if(previous!=nullptr && _currentCol_TreeMenuEdit>=0){
+        ui->treeToolbarEdit->removeItemWidget(previous, _currentCol_TreeMenuEdit);
+
+        ui->treeMenuEdit->setStyleSheet( "QTreeView::item:hover{background-color:rgb(110,178,233); color:white}"
+        "QTreeView::item:selected{background-color:rgb(0,120,215)}"
+        "QTreeView::item:selected{color: white}"
+        "QTreeWidget::item{border-right: 1px solid silver; font:9pt '微软雅黑';}"
+         );
+     }
+ }
+
+ void ViewEditor::on_tableStatusbarEditer_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
+ {
+     if(previous!=nullptr && _currentItem_tableStatusbarEditer!=nullptr){
+        ui->tableStatusbarEditer->removeCellWidget(_currentItem_tableStatusbarEditer->row(), _currentItem_tableStatusbarEditer->column());
      }
  }
 
@@ -639,13 +723,6 @@ void ViewEditor::on_btnCancel_clicked()
 {
     _view->slot_CancelConfig();
     this->close();
-}
-
-void ViewEditor::on_btnApply_clicked()
-{
-    getConfigFromUI();
-
-    _view->slot_ApplyConfig();
 }
 
 void del(QTreeWidgetItem* node)
@@ -721,7 +798,11 @@ void ViewEditor::on_btnAddNode_clicked()
     if(curSelItem==nullptr)//如果没有选中任何项，或者所选项为根节点，那就给这个根节点添加topLevelItem
         ui->treeMenuEdit->addTopLevelItem(item);
     else
+    {
         curSelItem->addChild(item);
+        curSelItem->setExpanded(true);
+    }
+
 }
 
 void ViewEditor::on_btnUp_clicked()
@@ -744,16 +825,16 @@ void ViewEditor::on_btnRight_clicked()
     TreeItemMoveRight(ui->treeMenuEdit);
 }
 
-void ViewEditor::on_btnAddSeperator_clicked()
+void ViewEditor::on_btnAddSeparator_clicked()
 {
     QTreeWidgetItem* curSelItem= ui->treeMenuEdit->currentItem();
     if(curSelItem==nullptr || curSelItem->parent()==nullptr)//如果没有选中任何项，或者所选项为根节点，就不添加分隔符
         return;
     else
     {
-        QTreeWidgetItem* seperator = new QTreeWidgetItem();
-        seperator->setText(0, QStringLiteral("--------------------"));
-        curSelItem->parent()->addChild(seperator);
+        QTreeWidgetItem* Separator = new QTreeWidgetItem();
+        Separator->setText(0, tr(CONST_STR_SEPARATOR));
+        curSelItem->parent()->addChild(Separator);
     }
 }
 
@@ -762,7 +843,7 @@ void ViewEditor::on_btnLoadAction_clicked()
     if(ui->treeMenuEdit->selectedItems().count()==0)
         return;
 
-    if(ui->treeMenuEdit->currentItem()->text(0).contains("----------"))
+    if(ui->treeMenuEdit->currentItem()->text(0)== CONST_STR_SEPARATOR)
         return;
 
     if(ui->treeMenuEdit->currentItem()->childCount()>0)
@@ -784,7 +865,10 @@ void ViewEditor::on_btnLoadAction_clicked()
         if(tActionIndex>=0)
             return;
         else
-            ui->cbActionFromMenu_Toolbar->addItem(ce->_actionName);
+        {
+            ui->cbActionFromMenu_Toolbar->addItem(ui->treeMenuEdit->currentItem()->icon(0), ce->_actionName);
+            _view->_actionList.append(new QAction(ui->treeMenuEdit->currentItem()->icon(0), ce->_actionName));
+        }
     }
     delete  ce;
 }
@@ -812,6 +896,9 @@ void ViewEditor::on_btnIconFinder_clicked()
     if(ui->treeMenuEdit->currentItem()==nullptr)
         return;
 
+    if(ui->treeMenuEdit->currentItem()->text(0)== CONST_STR_SEPARATOR)
+        return;
+
     QString file_name = QFileDialog::getOpenFileName(this,
             tr("Open Icon File"),
             PluginIO::getInstance()->_core->I_ApplicationDirPath,
@@ -819,13 +906,33 @@ void ViewEditor::on_btnIconFinder_clicked()
             0);
         if (!file_name.isNull())
         {
+            QIcon tIcon =QIcon(file_name);
             //fileName是文件名
             ui->treeMenuEdit->currentItem()->setText(2, file_name);
-            ui->treeMenuEdit->currentItem()->setIcon(0, QIcon(file_name));
+            ui->treeMenuEdit->currentItem()->setIcon(0, tIcon);
+
+            QString actionName = ui->treeMenuEdit->currentItem()->text(8);
+            foreach(QAction* act, _view->_actionList)
+            {
+                if(act->text()==actionName)
+                {
+                    act->setIcon(tIcon);
+                    break;
+                }
+            }
+
+            int tCbIndex = ui->cbActionFromMenu_Toolbar->findText(actionName, Qt::MatchFlag::MatchExactly);
+            ui->cbActionFromMenu_Toolbar->setItemIcon(tCbIndex, tIcon);
+
+            QList<QTreeWidgetItem*> destItemsLst = ui->treeToolbarEdit->findItems(actionName, Qt::MatchFlag::MatchRecursive | Qt::MatchFlag::MatchExactly);
+            foreach (QTreeWidgetItem* qwi, destItemsLst) {
+                qwi->setIcon(0, tIcon);
+            }
         }
         else{
             //点的是取消
             ui->treeMenuEdit->currentItem()->setIcon(0, QIcon());
+            ui->treeMenuEdit->currentItem()->setText(2, "");
         }
 }
 
@@ -844,34 +951,36 @@ void ViewEditor::on_btnAddAction_Toolbar_clicked()
         return;
     }
 
+    //==========================================
+    QTreeWidgetItem* rootItem;
     if(tItem->parent() == nullptr)//说明是toplevelnode
-    {
-        QTreeWidgetItem* tChildItem = new QTreeWidgetItem();
-
-        QIcon tIcon;
-        foreach(QAction* act, _view->_actionList)
-        {
-            if(act->text()==ui->cbActionFromMenu_Toolbar->currentText())
-            {
-                tIcon = act->icon();
-                break;
-            }
-        }
-        tChildItem->setIcon(0, tIcon);
-        tChildItem->setText(0, ui->cbActionFromMenu_Toolbar->currentText());
-        tChildItem->setText(1, tr("Action"));
-        tChildItem->setText(2, QString::number(ui->spanItemWidth_Toolbar->value()));
-        tChildItem->setText(3, QString::number(ui->spanItemHeight_Toolbar->value()));
-        tItem->addChild(tChildItem);
-    }
+        rootItem = tItem;
     else
+        rootItem = tItem->parent();
+
+    QTreeWidgetItem* tChildItem = new QTreeWidgetItem();
+
+    QIcon tIcon;
+    foreach(QAction* act, _view->_actionList)
     {
-        QMessageBox::information(this, tr("Infomation"), tr("Please select the toolbar node!"));
-        return;
+        QString tStr = act->text();
+        if(act->text()==ui->cbActionFromMenu_Toolbar->currentText())
+        {
+            tIcon = act->icon();
+            break;
+        }
     }
+    tChildItem->setIcon(0, tIcon);
+    tChildItem->setText(0, ui->cbActionFromMenu_Toolbar->currentText());
+    tChildItem->setText(1, tr(CONST_STR_ITEMTYPE_ACTION));
+    rootItem->addChild(tChildItem);
+    tChildItem->setText(3, rootItem->text(3));
+    tChildItem->setText(4, rootItem->text(4));
+
+    rootItem->setExpanded(true);
 }
 
-void ViewEditor::on_btnAddSeperator_Toolbar_clicked()
+void ViewEditor::on_btnAddSeparator_Toolbar_clicked()
 {
     if(ui->treeToolbarEdit->topLevelItemCount()==0)
     {
@@ -886,20 +995,19 @@ void ViewEditor::on_btnAddSeperator_Toolbar_clicked()
         return;
     }
 
+    //==========================================
+    QTreeWidgetItem* rootItem;
     if(tItem->parent() == nullptr)//说明是toplevelnode
-    {
-        QTreeWidgetItem* tChildItem = new QTreeWidgetItem();
-        tChildItem->setText(0, tr("--------------------"));
-        tChildItem->setText(1, tr("Seperator"));
-        tChildItem->setText(2, "");
-        tChildItem->setText(3, "");
-        tItem->addChild(tChildItem);
-    }
+        rootItem = tItem;
     else
-    {
-        QMessageBox::information(this, tr("Infomation"), tr("Please select the toolbar node!"));
-        return;
-    }
+        rootItem = tItem->parent();
+
+    QTreeWidgetItem* tChildItem = new QTreeWidgetItem();
+    tChildItem->setText(0, tr(CONST_STR_SEPARATOR));
+    tChildItem->setText(1, tr(CONST_STR_ITEMTYPE_SEPARATOR));
+    rootItem->addChild(tChildItem);
+
+    rootItem->setExpanded(true);
 }
 
 void ViewEditor::on_btnAddWidget_Toolbar_clicked()
@@ -918,7 +1026,7 @@ void ViewEditor::on_btnAddWidget_Toolbar_clicked()
     }
 
     PluginIO* plugInst = PluginIO::getInstance();
-    PluginWidgetViewer* ce = new PluginWidgetViewer(plugInst->_core, this);
+    PluginWidgetViewer* ce = new PluginWidgetViewer(plugInst->_core, false, this);
     ce->exec();
 
     //从Toolbar editor, workspace editor, statusbar editor中查找是否有重复的项
@@ -932,7 +1040,7 @@ void ViewEditor::on_btnAddWidget_Toolbar_clicked()
     for(int i=0; i<ui->tablePluginWidget->rowCount(); i++)
     {
         QString tableTtemTag = getPluginWidgetTag(i);
-        if(ce->_itemTag == tableTtemTag)
+        if(ce->_itemTag == tableTtemTag && ui->tablePluginWidget->item(i, 0)->checkState() == Qt::CheckState::Checked)
         {
             isExitInPluginWidgetTable = true;
             break;
@@ -940,35 +1048,35 @@ void ViewEditor::on_btnAddWidget_Toolbar_clicked()
     }
     if(isExitInPluginWidgetTable)
     {
-        QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in workspace editor!"));
+        QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item be selected in workspace editor!"));
         return;
     }
 
     //MatchExactly遍历根节点，MatchRecursive遍历整个树节点
-    if(ui->treeToolbarEdit->findItems(ce->_itemTag, Qt::MatchFlag::MatchRecursive).count()>0)
+    if(ui->treeToolbarEdit->findItems(ce->_itemTag, Qt::MatchFlag::MatchRecursive | Qt::MatchFlag::MatchExactly).count()>0)
     {
         QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in toolbar editor!"));
         return;
     }
 
     //=============================================
+    QTreeWidgetItem* rootItem;
     if(tItem->parent() == nullptr)//说明是toplevelnode
-    {
-        if(ce->_isOk)
-        {
-            QTreeWidgetItem* tChildItem = new QTreeWidgetItem();
-            tChildItem->setText(0, ce->_itemTag);
-            tChildItem->setText(1, tr("Widget"));
-            tChildItem->setText(2, QString::number(ce->_widgetOrigWidth));
-            tChildItem->setText(3, QString::number(ce->_widgetOrigHeight));
-            tItem->addChild(tChildItem);
-        }
-    }
+        rootItem = tItem;
     else
+        rootItem = tItem->parent();
+
+    if(ce->_isOk)
     {
-        QMessageBox::information(this, tr("Infomation"), tr("Please select the toolbar node!"));
-        return;
+        QTreeWidgetItem* tChildItem = new QTreeWidgetItem();
+        tChildItem->setText(0, ce->_itemTag);
+        tChildItem->setText(1, tr(CONST_STR_ITEMTYPE_WIDGET));
+        tChildItem->setText(3, QString::number(ce->_widgetOrigWidth));
+        tChildItem->setText(4, QString::number(ce->_widgetOrigHeight));
+        rootItem->addChild(tChildItem);
     }
+
+    rootItem->setExpanded(true);
 }
 
 void ViewEditor::on_btnDeleteItem_Toolbar_clicked()
@@ -993,11 +1101,6 @@ void ViewEditor::on_btnDeleteItem_Toolbar_clicked()
             }
         }
         delete tItem;
-
-        for(int i=0; i<ui->treeToolbarEdit->topLevelItemCount(); i++)
-        {
-            ui->treeToolbarEdit->topLevelItem(i)->setText(0, QString(tr("Bar%1")).arg(i+1));
-        }
     }
     else//说明是ToolbarItem
     {
@@ -1202,7 +1305,7 @@ void ViewEditor::TreeItemMoveRight(QTreeWidget* treeWidget)
 
                 if(preParent->text(0).contains("----------"))
                 {
-                    QMessageBox::information(this, tr("Infomation"), tr("Cannot be at the next level of a Seperator!"));
+                    QMessageBox::information(this, tr("Infomation"), tr("Cannot be at the next level of a Separator!"));
                     return;
                 }
 
@@ -1227,12 +1330,12 @@ void ViewEditor::on_btnMoveDown_Toolbar_clicked()
 void ViewEditor::on_btnAddWidget_Statusbar_clicked()
 {
     PluginIO* plugInst = PluginIO::getInstance();
-    PluginWidgetViewer* ce = new PluginWidgetViewer(plugInst->_core, this);
+    PluginWidgetViewer* ce = new PluginWidgetViewer(plugInst->_core, true, this);
     ce->exec();
 
     //从Toolbar editor, workspace editor, statusbar editor中查找是否有重复的项
     //MatchExactly遍历根节点，MatchRecursive遍历整个树节点
-    if(ui->treeToolbarEdit->findItems(ce->_itemTag, Qt::MatchFlag::MatchRecursive).count()>0, 1)
+    if(ui->treeToolbarEdit->findItems(ce->_itemTag, Qt::MatchFlag::MatchRecursive | Qt::MatchFlag::MatchExactly).count()>0)
     {
         QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in toolbar editor!"));
         return;
@@ -1242,7 +1345,7 @@ void ViewEditor::on_btnAddWidget_Statusbar_clicked()
     for(int i=0; i<ui->tablePluginWidget->rowCount(); i++)
     {
         QString tableTtemTag = getPluginWidgetTag(i);
-        if(ce->_itemTag == tableTtemTag)
+        if(ce->_itemTag == tableTtemTag && ui->tablePluginWidget->item(i, 0)->checkState() == Qt::CheckState::Checked)
         {
             isExitInPluginWidgetTable = true;
             break;
@@ -1250,7 +1353,7 @@ void ViewEditor::on_btnAddWidget_Statusbar_clicked()
     }
     if(isExitInPluginWidgetTable)
     {
-        QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in workspace editor!"));
+        QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item be selected in workspace editor!"));
         return;
     }
 
@@ -1268,8 +1371,14 @@ void ViewEditor::on_btnAddWidget_Statusbar_clicked()
 
         ui->tableStatusbarEditer->setItem(tRowCount, 0, new QTableWidgetItem(QString::number(tRowCount+1)));
         ui->tableStatusbarEditer->setItem(tRowCount, 1, new QTableWidgetItem(ce->_itemTag));
-        ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(QString::number(ce->_widgetOrigWidth)));
-        ui->tableStatusbarEditer->setItem(tRowCount, 3, new QTableWidgetItem(QString::number(ce->_widgetOrigHeight)));
+
+        if(ce->_statusbarItemType == StatusbarItemType::SBT_COMMON)
+            ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(tr(CONST_STR_STATUSITEM_COMMON)));
+        else if(ce->_statusbarItemType == StatusbarItemType::SBT_PERMANENT)
+            ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(tr(CONST_STR_STATUSITEM_PERMANENT)));
+
+        ui->tableStatusbarEditer->setItem(tRowCount, 3, new QTableWidgetItem(QString::number(ce->_widgetOrigWidth)));
+        ui->tableStatusbarEditer->setItem(tRowCount, 4, new QTableWidgetItem(QString::number(ce->_widgetOrigHeight)));
     }
 }
 
@@ -1296,7 +1405,15 @@ void ViewEditor::on_btnAddToolbar_clicked()
 {
     int tCurrTopNodeCount = ui->treeToolbarEdit->topLevelItemCount();
     QTreeWidgetItem* tTopNode = new QTreeWidgetItem();
-    tTopNode->setText(0, QString(tr("Bar%1")).arg(tCurrTopNodeCount+1));
+    if(ui->txtBarTitle->text()=="")
+        tTopNode->setText(0, QString(tr("Bar%1")).arg(tCurrTopNodeCount+1));
+    else
+        tTopNode->setText(0, ui->txtBarTitle->text());
+
+    tTopNode->setText(2, ui->cbToolStritItemTextAlignment->currentText());
+    tTopNode->setText(3, QString::number(ui->spanIconWidth_Toolbar->value()));
+    tTopNode->setText(4, QString::number(ui->spanIconHeight_Toolbar->value()));
+
     ui->treeToolbarEdit->addTopLevelItem(tTopNode);
 }
 
@@ -1326,7 +1443,7 @@ void ViewEditor::on_btnDeleteToolbar_clicked()
 
 ViewEditor *ViewEditor::getInstance()
 {
-    return instance;
+    return pViewEdInstance;
 }
 
 void ViewEditor::slot_SelAllOrNot(bool flag)
@@ -1334,14 +1451,14 @@ void ViewEditor::slot_SelAllOrNot(bool flag)
     int row=0,col=0;
     int i=0,j=0;
     //row=ui->tablePluginLst->rowCount();
-    foreach(PluginInterface* pi, ((QCPF_Interface*)_view->_core)->I_SysPlugins)
+    foreach(Plugin_Interface* pi, ((QCPF_Interface*)_view->_core)->I_SysPlugins)
     {
         foreach (PluginWidgetInfo* pwi, pi->I_WidgetList) {
             row+=1;
         }
     }
 
-    foreach(PluginInterface* pi, ((QCPF_Interface*)_view->_core)->I_NSysAllValidPlugins)
+    foreach(Plugin_Interface* pi, ((QCPF_Interface*)_view->_core)->I_NSysAllValidPlugins)
     {
         foreach (PluginWidgetInfo* pwi, pi->I_WidgetList) {
             row+=1;
@@ -1378,7 +1495,7 @@ void ViewEditor::on_tablePluginWidget_itemClicked(QTableWidgetItem *item)
             return;
         }
         //MatchExactly遍历根节点，MatchRecursive遍历整个树节点
-        if(ui->treeToolbarEdit->findItems(itemTag, Qt::MatchFlag::MatchRecursive).count()>0)
+        if(ui->treeToolbarEdit->findItems(itemTag, Qt::MatchFlag::MatchRecursive | Qt::MatchFlag::MatchExactly).count()>0)
         {
             QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in toolbar editor!"));
             item->setCheckState(Qt::CheckState::Unchecked);
@@ -1393,3 +1510,240 @@ QString ViewEditor::getPluginWidgetTag(int rowIndex)
 {
     return QString(tr("%1;%2;%3;%4")).arg(ui->tablePluginWidget->item(rowIndex, 2)->text()).arg(ui->tablePluginWidget->item(rowIndex, 3)->text()).arg(ui->tablePluginWidget->item(rowIndex, 4)->text()).arg(ui->tablePluginWidget->item(rowIndex, 5)->text());
 }
+
+void ViewEditor::on_btnAddSpacer_Toolbar_clicked()
+{
+    if(ui->treeToolbarEdit->topLevelItemCount()==0)
+    {
+        QMessageBox::information(this, tr("Infomation"), tr("There is no toolbar node, Please add a bar first!"));
+        return;
+    }
+
+    QTreeWidgetItem* tItem = ui->treeToolbarEdit->currentItem();
+    if(tItem==nullptr)
+    {
+        QMessageBox::information(this, tr("Infomation"), tr("Please select the toolbar node!"));
+        return;
+    }
+
+    //=============================================
+    QTreeWidgetItem* rootItem;
+    if(tItem->parent() == nullptr)//说明是toplevelnode
+        rootItem = tItem;
+    else
+        rootItem = tItem->parent();
+
+    QTreeWidgetItem* tChildItem = new QTreeWidgetItem();
+    tChildItem->setText(0, tr(CONST_STR_SPACER));
+    tChildItem->setText(1, tr(CONST_STR_ITEMTYPE_SPACER));
+    rootItem->addChild(tChildItem);
+
+    rootItem->setExpanded(true);
+}
+
+
+void ViewEditor::on_treeMenuEdit_itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
+    _currentTree = nullptr;
+    _currentItem_TreeMenuEdit = nullptr;
+    _currentCol_TreeMenuEdit = 0;
+
+    if(item->text(0)==CONST_STR_SEPARATOR)
+        return;
+
+    _currentTree = ui->treeMenuEdit;
+    _currentItem_TreeMenuEdit = item;
+    _currentCol_TreeMenuEdit = column;
+    if(column==0)
+    {
+        QLineEdit* lineEdit = new QLineEdit(this);
+        lineEdit->setText(item->text(column));
+        connect(lineEdit, SIGNAL(editingFinished()), this, SLOT(OnLineEdit_EditingFinished_Tree()));
+        ui->treeMenuEdit->setItemWidget(item, column, lineEdit);
+    }
+    else if(column==1)
+    {
+        QKeySequenceEdit* keyEdit = new QKeySequenceEdit(this);
+        connect(keyEdit, SIGNAL(editingFinished()), this, SLOT(OnKeyEdit_EditingFinished_Tree()));
+        ui->treeMenuEdit->setItemWidget(item, column, keyEdit);
+    }
+    else if(column==2)
+    {
+        on_btnIconFinder_clicked();
+    }
+    else if(column==3)
+    {
+        QComboBox* cbBox = new QComboBox(this);
+
+        for(int i=0; i<ui->cbMenuAuthority->count(); i++)
+            cbBox->insertItem(i, ui->cbMenuAuthority->itemText(i));
+
+        connect(cbBox, SIGNAL(activated(int)), this, SLOT(OnComboBox_Activated_Index_Tree(int)));
+        ui->treeMenuEdit->setItemWidget(item, column, cbBox);
+    }
+    else if(column==4)
+    {
+        QComboBox* cbBox = new QComboBox(this);
+
+        cbBox->insertItem(0, tr("True"));
+        cbBox->insertItem(1, tr("False"));
+
+        connect(cbBox, SIGNAL(activated(int)), this, SLOT(OnComboBox_Activated_Text_Tree(int)));
+        ui->treeMenuEdit->setItemWidget(item, column, cbBox);
+    }
+    else if(column>4)
+    {
+        on_btnLoadAction_clicked();
+    }
+}
+
+void ViewEditor::on_treeToolbarEdit_itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
+    _currentTree = nullptr;
+    _currentItem_TreeMenuEdit = nullptr;
+    _currentCol_TreeMenuEdit = 0;
+
+
+    //只对一级节点进行编辑
+    if(item->parent()==nullptr)
+    {
+        _currentTree = ui->treeToolbarEdit;
+        _currentItem_TreeMenuEdit = item;
+        _currentCol_TreeMenuEdit = column;
+        if(column==0)
+        {
+            QLineEdit* lineEdit = new QLineEdit(this);
+            lineEdit->setText(item->text(column));
+            connect(lineEdit, SIGNAL(editingFinished()), this, SLOT(OnLineEdit_EditingFinished_Tree()));
+            ui->treeToolbarEdit->setItemWidget(item, column, lineEdit);
+        }
+        else if(column==2)
+        {
+            QComboBox* cbBox = new QComboBox(this);
+
+            for(int i=0; i<ui->cbToolStritItemTextAlignment->count(); i++)
+                cbBox->insertItem(i, ui->cbToolStritItemTextAlignment->itemText(i));
+
+            connect(cbBox, SIGNAL(activated(int)), this, SLOT(OnComboBox_Activated_Text_Tree(int)));
+            ui->treeToolbarEdit->setItemWidget(item, column, cbBox);
+        }
+        else if(column==3 || column==4)
+        {
+            QLineEdit* lineEdit = new QLineEdit(this);
+            lineEdit->setText(item->text(column));
+            connect(lineEdit, SIGNAL(editingFinished()), this, SLOT(OnLineEdit_EditingFinished_Tree()));
+            ui->treeToolbarEdit->setItemWidget(item, column, lineEdit);
+        }
+    }
+}
+
+
+void ViewEditor::OnLineEdit_EditingFinished_Tree(void)
+{
+    if(_currentItem_TreeMenuEdit!=nullptr && _currentTree!=nullptr)
+    {
+        QLineEdit *edit = qobject_cast<QLineEdit*>(_currentTree->itemWidget(_currentItem_TreeMenuEdit, _currentCol_TreeMenuEdit));
+                if (!edit) {
+                    return;
+                }
+                QString text = edit->text();
+                _currentTree->removeItemWidget(_currentItem_TreeMenuEdit, _currentCol_TreeMenuEdit);
+                _currentItem_TreeMenuEdit->setText(_currentCol_TreeMenuEdit, text);
+    }
+}
+
+void ViewEditor::OnKeyEdit_EditingFinished_Tree(void)
+{
+    if(_currentItem_TreeMenuEdit!=nullptr && _currentTree!=nullptr)
+    {
+        QKeySequenceEdit *keyEdit = qobject_cast<QKeySequenceEdit*>(_currentTree->itemWidget(_currentItem_TreeMenuEdit, _currentCol_TreeMenuEdit));
+                if (!keyEdit) {
+                    return;
+                }
+                QString text = keyEdit->keySequence().toString();
+                _currentTree->removeItemWidget(_currentItem_TreeMenuEdit, _currentCol_TreeMenuEdit);
+                _currentItem_TreeMenuEdit->setText(_currentCol_TreeMenuEdit, text);
+    }
+}
+
+void ViewEditor::OnComboBox_Activated_Index_Tree(int)
+{
+    if(_currentItem_TreeMenuEdit!=nullptr && _currentTree!=nullptr)
+    {
+        QComboBox *cbox = qobject_cast<QComboBox*>(_currentTree->itemWidget(_currentItem_TreeMenuEdit, _currentCol_TreeMenuEdit));
+                if (!cbox) {
+                    return;
+                }
+
+                QString text = QString::number(cbox->currentIndex());
+                _currentTree->removeItemWidget(_currentItem_TreeMenuEdit, _currentCol_TreeMenuEdit);
+                _currentItem_TreeMenuEdit->setText(_currentCol_TreeMenuEdit, text);
+    }
+}
+
+void ViewEditor::OnComboBox_Activated_Text_Tree(int)
+{
+    if(_currentItem_TreeMenuEdit!=nullptr && _currentTree!=nullptr)
+    {
+        QComboBox *cbox = qobject_cast<QComboBox*>(_currentTree->itemWidget(_currentItem_TreeMenuEdit, _currentCol_TreeMenuEdit));
+                if (!cbox) {
+                    return;
+                }
+
+                QString text = cbox->currentText();
+                _currentTree->removeItemWidget(_currentItem_TreeMenuEdit, _currentCol_TreeMenuEdit);
+                _currentItem_TreeMenuEdit->setText(_currentCol_TreeMenuEdit, text);
+    }
+}
+
+void ViewEditor::OnSpinBox_ValueChanged_Tree(int)
+{
+    if(_currentItem_TreeMenuEdit!=nullptr && _currentTree!=nullptr)
+    {
+        QSpinBox *spinBox = qobject_cast<QSpinBox*>(_currentTree->itemWidget(_currentItem_TreeMenuEdit, _currentCol_TreeMenuEdit));
+                if (!spinBox) {
+                    return;
+                }
+
+                QString text = QString::number(spinBox->value());
+                _currentTree->removeItemWidget(_currentItem_TreeMenuEdit, _currentCol_TreeMenuEdit);
+                _currentItem_TreeMenuEdit->setText(_currentCol_TreeMenuEdit, text);
+    }
+}
+
+void ViewEditor::OnComboBox_Activated_Text_Table(int)
+{
+    if(_currentItem_tableStatusbarEditer!=nullptr && _currentTable!=nullptr)
+    {
+        QComboBox *cbox = qobject_cast<QComboBox*>(_currentTable->cellWidget(_currentItem_tableStatusbarEditer->row(), _currentItem_tableStatusbarEditer->column()));
+                if (!cbox) {
+                    return;
+                }
+
+                QString text = cbox->currentText();
+                _currentTable->removeCellWidget(_currentItem_tableStatusbarEditer->row(), _currentItem_tableStatusbarEditer->column());
+                _currentItem_tableStatusbarEditer->setText(text);
+    }
+}
+
+void ViewEditor::on_tableStatusbarEditer_itemDoubleClicked(QTableWidgetItem *item)
+{
+    _currentTable = nullptr;
+    _currentItem_tableStatusbarEditer = nullptr;
+
+    if(item->column() == 2)
+    {
+        _currentTable = ui->tableStatusbarEditer;
+        _currentItem_tableStatusbarEditer = item;
+
+        QComboBox* cbBox = new QComboBox(this);
+
+        cbBox->insertItem(0, tr(CONST_STR_STATUSITEM_COMMON));
+        cbBox->insertItem(1, tr(CONST_STR_STATUSITEM_PERMANENT));
+
+        connect(cbBox, SIGNAL(activated(int)), this, SLOT(OnComboBox_Activated_Text_Table(int)));
+        ui->tableStatusbarEditer->setCellWidget(item->row(), item->column(), cbBox);
+    }
+}
+
+

@@ -1,8 +1,4 @@
-QT -= gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-TARGET =  ../../bin/debug/QCPF_Model
+TARGET =  ../../../bin/QCPF_Model
 
 TEMPLATE = lib
 DEFINES += QCPF_MODEL_LIBRARY
@@ -25,7 +21,7 @@ SOURCES += \
     qcpf_model.cpp
 
 HEADERS += \
-    ../../interface/hostinterface.h \
+    ../../interface/coreinterface.h \
     ../../interface/plugininterface.h \
     configmodel.h \
     qcpf_model.h

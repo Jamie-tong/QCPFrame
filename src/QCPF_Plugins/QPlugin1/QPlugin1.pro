@@ -3,14 +3,11 @@
 # Project created by QtCreator 2019-06-21T15:11:10
 #
 #-------------------------------------------------
+QT += widgets
 
-QT  += gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-TARGET =  ../../../bin/debug/Plugins/QPlugin1
+TARGET =  ../../../../bin/Plugins/QPlugin1
 TEMPLATE = lib
-CONFIG += plugin c++11
+CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -29,7 +26,7 @@ SOURCES += \
         wdt_map.cpp
 
 HEADERS += \
-        ../../../interface/hostinterface.h \
+        ../../../interface/coreinterface.h \
         ../../../interface/plugininterface.h \
         PluginIO.h \
         sumwidgetfortoolbar.h \
@@ -44,4 +41,9 @@ FORMS += \
     wdt_map.ui
 
 RESOURCES += \
-    res.qrc
+    PluginRes.qrc
+
+unix|win32: LIBS += -L$$PWD/../../../bin/ -lQCPF_PluginModel
+
+INCLUDEPATH += $$PWD/../../QCPF_PluginModel
+DEPENDPATH += $$PWD/../../QCPF_PluginModel

@@ -28,6 +28,9 @@ viewConfigModel& viewConfigModel::operator =(const viewConfigModel& other)
     _isEnable_ShowMenu = other._isEnable_ShowMenu;
     _isEnable_ShowToolbar = other._isEnable_ShowToolbar;
     _isEnable_ShowStatusbar = other._isEnable_ShowStatusbar;
+    _dock_Floatable = other._dock_Floatable;
+    _dock_Moveable = other._dock_Moveable;
+    _dock_Closeable = other._dock_Closeable;
 
     _count_MenuTopItemLst = other._count_MenuTopItemLst;
     for(int i=0; i<_count_MenuTopItemLst; i++)
@@ -37,12 +40,15 @@ viewConfigModel& viewConfigModel::operator =(const viewConfigModel& other)
     for(int i=0; i<_count_ToolBarLst; i++)
     {
         _toolBarLst[i]->_toolBarNo = other. _toolBarLst[i]->_toolBarNo;
+        _toolBarLst[i]->_toolBarTitle = other. _toolBarLst[i]->_toolBarTitle;
+        _toolBarLst[i]->_IconSize = other. _toolBarLst[i]->_IconSize;
+        _toolBarLst[i]->_textStyle = other. _toolBarLst[i]->_textStyle;
         _toolBarLst[i]->_count_ToolBarItemLst = other. _toolBarLst[i]->_count_ToolBarItemLst;
         for(int j=0; j<_toolBarLst[i]->_count_ToolBarItemLst; j++)
         {
             _toolBarLst[i]->_toolBarItemList[j]->_type = other._toolBarLst[i]->_toolBarItemList[j]->_type;
 
-            if(_toolBarLst[i]->_toolBarItemList[j]->_type==TP_ACTION)
+            if(_toolBarLst[i]->_toolBarItemList[j]->_type==BT_ACTION)
             {
                 _toolBarLst[i]->_toolBarItemList[j]->_actionItem->_actionObjectName = other._toolBarLst[i]->_toolBarItemList[j]->_actionItem->_actionObjectName;
                 _toolBarLst[i]->_toolBarItemList[j]->_actionItem->_actionDetail = other._toolBarLst[i]->_toolBarItemList[j]->_actionItem->_actionDetail;
@@ -53,7 +59,7 @@ viewConfigModel& viewConfigModel::operator =(const viewConfigModel& other)
                 _toolBarLst[i]->_toolBarItemList[j]->_width = other._toolBarLst[i]->_toolBarItemList[j]->_width;
                 _toolBarLst[i]->_toolBarItemList[j]->_height = other._toolBarLst[i]->_toolBarItemList[j]->_height;
             }
-            else if(_toolBarLst[i]->_toolBarItemList[j]->_type==TP_WIDGET)
+            else if(_toolBarLst[i]->_toolBarItemList[j]->_type==BT_WIDGET)
             {
                 _toolBarLst[i]->_toolBarItemList[j]->_widgetItem->_pluginType = other._toolBarLst[i]->_toolBarItemList[j]->_widgetItem->_pluginType;
                 _toolBarLst[i]->_toolBarItemList[j]->_widgetItem->_pluginID = other._toolBarLst[i]->_toolBarItemList[j]->_widgetItem->_pluginID;
@@ -85,6 +91,7 @@ viewConfigModel& viewConfigModel::operator =(const viewConfigModel& other)
         _statusBarItemLst[i]->_isVisible = other._statusBarItemLst[i]->_isEnable;
         _statusBarItemLst[i]->_widgetOrigWidth = other._statusBarItemLst[i]->_widgetOrigWidth;
         _statusBarItemLst[i]->_widgetOrigHeight = other._statusBarItemLst[i]->_widgetOrigHeight;
+        _statusBarItemLst[i]->_statusbarItemType = other._statusBarItemLst[i]->_statusbarItemType;
     }
 
     _count_WorkSpaceWidgetLst = other._count_WorkSpaceWidgetLst;
@@ -114,6 +121,9 @@ QDataStream& operator>>(QDataStream& src, viewConfigModel& data)
     src >> data._isEnable_ShowMenu;
     src >> data._isEnable_ShowToolbar;
     src >> data._isEnable_ShowStatusbar;
+    src >> data._dock_Floatable;
+    src >> data._dock_Moveable;
+    src >> data._dock_Closeable;
 
     src >> data._count_MenuTopItemLst;
 
@@ -131,6 +141,9 @@ QDataStream& operator>>(QDataStream& src, viewConfigModel& data)
         data._toolBarLst.append(tToolbar);
 
         src >> tToolbar->_toolBarNo;
+        src >> tToolbar->_toolBarTitle;
+        src >> tToolbar->_IconSize;
+        src >> tToolbar->_textStyle;
         src >> tToolbar->_count_ToolBarItemLst;
         for(int j=0; j<tToolbar->_count_ToolBarItemLst; j++)
         {
@@ -139,7 +152,7 @@ QDataStream& operator>>(QDataStream& src, viewConfigModel& data)
 
             src >> tItem->_type;
 
-            if(tItem->_type == TP_ACTION)
+            if(tItem->_type == BT_ACTION)
             {
                 ActionItem* tActionItem = new ActionItem();
                 tItem->_actionItem = tActionItem;
@@ -153,7 +166,7 @@ QDataStream& operator>>(QDataStream& src, viewConfigModel& data)
                 src >> tItem->_height;
             }
 
-            if(tItem->_type == TP_WIDGET)
+            if(tItem->_type == BT_WIDGET)
             {
                 WidgetItem* tWidgetItem = new WidgetItem();
                 tItem->_widgetItem = tWidgetItem;
@@ -178,7 +191,7 @@ QDataStream& operator>>(QDataStream& src, viewConfigModel& data)
     src >> data._count_StatusBarItemLst;
     for(int i=0; i<data._count_StatusBarItemLst; i++)
     {
-        WidgetItem* tItem = new WidgetItem();
+        StatusbarItem* tItem = new StatusbarItem();
         data._statusBarItemLst.append(tItem);
 
         src >> tItem->_pluginType;
@@ -191,6 +204,7 @@ QDataStream& operator>>(QDataStream& src, viewConfigModel& data)
         src >> tItem->_isVisible;
         src >> tItem->_widgetOrigWidth;
         src >> tItem->_widgetOrigHeight;
+        src >> tItem->_statusbarItemType;
     }
 
     src >> data._count_WorkSpaceWidgetLst;
@@ -218,6 +232,9 @@ QDataStream& operator<<(QDataStream& out, viewConfigModel& data)
     out << data._isEnable_ShowMenu;
     out << data._isEnable_ShowToolbar;
     out << data._isEnable_ShowStatusbar;
+    out << data._dock_Floatable;
+    out << data._dock_Moveable;
+    out << data._dock_Closeable;
 
     out << data._count_MenuTopItemLst;
     for(int i=0; i<data._count_MenuTopItemLst; i++)
@@ -227,13 +244,16 @@ QDataStream& operator<<(QDataStream& out, viewConfigModel& data)
     for(int i=0; i<data._count_ToolBarLst; i++)
     {
         out << data._toolBarLst[i]->_toolBarNo;
+        out << data._toolBarLst[i]->_toolBarTitle;
+        out << data._toolBarLst[i]->_IconSize;
+        out << data._toolBarLst[i]->_textStyle;
         out << data._toolBarLst[i]->_count_ToolBarItemLst;
 
         for(int j=0; j<data._toolBarLst[i]->_count_ToolBarItemLst; j++)
         {
             out << data._toolBarLst[i]->_toolBarItemList[j]->_type;
 
-            if(data._toolBarLst[i]->_toolBarItemList[j]->_type==TP_ACTION)
+            if(data._toolBarLst[i]->_toolBarItemList[j]->_type==BT_ACTION)
             {
                 out << data._toolBarLst[i]->_toolBarItemList[j]->_actionItem->_actionObjectName;
                 out << data._toolBarLst[i]->_toolBarItemList[j]->_actionItem->_actionDetail;
@@ -245,7 +265,7 @@ QDataStream& operator<<(QDataStream& out, viewConfigModel& data)
                 out << data._toolBarLst[i]->_toolBarItemList[j]->_height;
             }
 
-            if(data._toolBarLst[i]->_toolBarItemList[j]->_type==TP_WIDGET)
+            if(data._toolBarLst[i]->_toolBarItemList[j]->_type==BT_WIDGET)
             {
                 out << data._toolBarLst[i]->_toolBarItemList[j]->_widgetItem->_pluginType;
                 out << data._toolBarLst[i]->_toolBarItemList[j]->_widgetItem->_pluginID;
@@ -277,6 +297,7 @@ QDataStream& operator<<(QDataStream& out, viewConfigModel& data)
         out << data._statusBarItemLst[i]->_isVisible;
         out << data._statusBarItemLst[i]->_widgetOrigWidth;
         out << data._statusBarItemLst[i]->_widgetOrigHeight;
+        out << data._statusBarItemLst[i]->_statusbarItemType;
     }
 
     out << data._count_WorkSpaceWidgetLst;
@@ -325,8 +346,8 @@ QDataStream& JTreeFromBnr(QDataStream& src, JMenuNode* tn)
     src >> tn->_pluginID;
     src >> tn->_copyID;
 
-    src >> tn->_functionName;
-    src >> tn->_functionDetail;
+    src >> tn->_actionName;
+    src >> tn->_actionDetail;
 
     src >> tn->_parentMenuTitle;
 
@@ -355,8 +376,8 @@ QDataStream& JTreeToBnr(QDataStream& out, JMenuNode* tn)
     out << tn->_pluginID;
     out <<  tn->_copyID;
 
-    out << tn->_functionName;
-    out << tn->_functionDetail;
+    out << tn->_actionName;
+    out << tn->_actionDetail;
 
     out << tn->_parentMenuTitle;
 
@@ -372,6 +393,9 @@ void viewConfigModel::resetData()
     _isEnable_ShowMenu = false;
     _isEnable_ShowToolbar = false;
     _isEnable_ShowStatusbar = false;
+    _dock_Floatable = false;
+    _dock_Moveable = false;
+    _dock_Closeable = false;
     _count_MenuTopItemLst = 0;
     _menuTopItemLst.clear();
     _count_ToolBarLst = 0;
