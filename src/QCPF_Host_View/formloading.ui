@@ -40,9 +40,9 @@
   <widget class="QFrame" name="frameLoad">
    <property name="geometry">
     <rect>
-     <x>174</x>
+     <x>190</x>
      <y>99</y>
-     <width>430</width>
+     <width>411</width>
      <height>271</height>
     </rect>
    </property>
@@ -95,7 +95,7 @@
      <rect>
       <x>5</x>
       <y>110</y>
-      <width>421</width>
+      <width>401</width>
       <height>161</height>
      </rect>
     </property>
@@ -108,11 +108,20 @@
     <widget class="QPushButton" name="btnCancel">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>215</x>
        <y>110</y>
        <width>110</width>
        <height>34</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>9</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
@@ -124,14 +133,21 @@
     <widget class="QLabel" name="labPwd">
      <property name="geometry">
       <rect>
-       <x>21</x>
+       <x>26</x>
        <y>70</y>
        <width>61</width>
        <height>16</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="styleSheet">
-      <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Password:</string>
@@ -140,11 +156,20 @@
     <widget class="QPushButton" name="btnOk">
      <property name="geometry">
       <rect>
-       <x>87</x>
+       <x>92</x>
        <y>110</y>
        <width>110</width>
        <height>34</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>9</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
@@ -156,11 +181,20 @@
     <widget class="QLineEdit" name="txtUser">
      <property name="geometry">
       <rect>
-       <x>88</x>
+       <x>93</x>
        <y>14</y>
        <width>231</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>9</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
@@ -172,11 +206,20 @@
     <widget class="QLineEdit" name="txtPwd">
      <property name="geometry">
       <rect>
-       <x>88</x>
+       <x>93</x>
        <y>63</y>
        <width>231</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei UI</family>
+       <pointsize>9</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
      </property>
      <property name="styleSheet">
       <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
@@ -188,38 +231,26 @@
     <widget class="QLabel" name="labUsr">
      <property name="geometry">
       <rect>
-       <x>21</x>
+       <x>26</x>
        <y>20</y>
        <width>61</width>
        <height>16</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="styleSheet">
-      <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>User:</string>
      </property>
     </widget>
-   </widget>
-   <widget class="QLabel" name="lb_LoadingInfo">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>190</y>
-      <width>430</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <property name="wordWrap">
-     <bool>true</bool>
-    </property>
    </widget>
   </widget>
   <widget class="QLabel" name="labInfoPrefix_2">
@@ -228,9 +259,9 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>425</y>
-     <width>131</width>
+     <x>50</x>
+     <y>424</y>
+     <width>201</width>
      <height>20</height>
     </rect>
    </property>
@@ -248,9 +279,9 @@ color: rgb(104, 104, 104);</string>
    </property>
    <property name="geometry">
     <rect>
-     <x>470</x>
-     <y>10</y>
-     <width>131</width>
+     <x>50</x>
+     <y>4</y>
+     <width>150</width>
      <height>20</height>
     </rect>
    </property>
@@ -268,9 +299,9 @@ color: rgb(104, 104, 104);</string>
    </property>
    <property name="geometry">
     <rect>
-     <x>470</x>
+     <x>450</x>
      <y>425</y>
-     <width>131</width>
+     <width>150</width>
      <height>20</height>
     </rect>
    </property>
@@ -298,11 +329,31 @@ color: rgb(104, 104, 104);</string>
     <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="lb_LoadingInfo">
+   <property name="geometry">
+    <rect>
+     <x>173</x>
+     <y>375</y>
+     <width>430</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
   <zorder>labelBackgroud</zorder>
   <zorder>frameLoad</zorder>
   <zorder>labInfoPrefix_2</zorder>
   <zorder>labCoreVersion</zorder>
   <zorder>labViewVersion</zorder>
+  <zorder>lb_LoadingInfo</zorder>
  </widget>
  <resources/>
  <connections/>

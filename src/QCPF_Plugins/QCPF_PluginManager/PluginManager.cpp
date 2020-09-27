@@ -56,6 +56,9 @@ PluginManager::PluginManager(QCPF_Model* model, QWidget *parent) :
     _timer = new QTimer(this);
     _timer->setSingleShot(true);
     connect(_timer, SIGNAL(timeout()), this, SLOT(slot_OnULoaded()));
+
+    ui->btnOk->setFocus();
+    ui->btnOk->setDefault(true);
 }
 
 PluginManager::~PluginManager()
@@ -485,9 +488,6 @@ void PluginManager::slot_SelAllOrNot(bool flag)
      //====================================================================
      //内核配置项赋值
      //====================================================================
-//     _core->_config._systemName = ui->txtSystemName->text();
-//     _core->_config._systemID = ui->txtSystemID->text();
-//     _core->_config._isEnable_UserLoad = ui->chk_isEnable_UserLoad->isChecked();
 
      //已选的原始组件，时序配置
      _core->_config._nSysPlugins_Sel.clear();
@@ -526,7 +526,7 @@ void PluginManager::slot_SelAllOrNot(bool flag)
          bool tIsCopy = tCopyID==""?false:true;
          _core->_config._nSysAllValidPlugins.append(new ValidPluginInfo(_core->_config._this, tOrigPluginID, tCopyID, tIsCopy));
      }
-     _core->_config._count_nSysAllValidPlugins = _core->_config._nSysAllValidPlugins.count();//这个值若不给，序列化和反序列化时，将内存将无法对齐
+     _core->_config._count_nSysAllValidPlugins = _core->_config._nSysAllValidPlugins.count();//这个值若不给，序列化和反序列化时，内存将无法对齐
 
      //------------
 
@@ -543,9 +543,9 @@ void PluginManager::on_btnOk_clicked()
     //保存配置(发送保存信号, 让_core自己进行存储自己的config信息)
     //====================================================================
     getConfigFromUI();
-
     emit sig_Save();
     this->close();
+
 }
 
 void PluginManager::on_btnCancel_clicked()
@@ -894,6 +894,6 @@ void PluginManager::on_btnValidPluginMoveDown_clicked()
 void PluginManager::on_btnRefreshPlugins_clicked()
 {
     tagOutputInfo info;
-    info._type = INFT_PLUGIN_UPDATE;
+    info._type = INFT_PLUGIN_COLLECT;
     emit PluginIO::getInstance()->sig_OutputInfo(info);
 }

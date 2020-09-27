@@ -36,6 +36,7 @@ private:
 
 public:
      int setConfigToUI();
+
 signals:
     int sig_Save();
     int sig_Cancel();

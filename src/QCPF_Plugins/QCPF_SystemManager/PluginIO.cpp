@@ -19,6 +19,7 @@ License: GPL v3.0
 #include "dialog_about.h"
 #include "wdt_coreversion.h"
 #include "wdt_viewversion.h"
+#include <QMessageBox>
 
 PluginIO* instance;
 
@@ -130,8 +131,16 @@ void PluginIO::InitWidgetList(Plugin_Interface* plugin)
 
 int PluginIO::slot_InputInfo(tagOutputInfo& info)
 {
-    if(info._type == INFT_PLUGIN_UPDATE_FINISHED)
+    if(info._type == INFT_PLUGIN_COLLECT_FINISHED)
         SystemManager::getInstance()->setConfigToUI();
+//    else if(info._type == INFT_CORE_CONFIG_CHANGED)
+//    {
+//        if(SystemManager::getInstance()!=nullptr)
+//        {
+//            QMessageBox::information(SystemManager::getInstance(), tr("information"), tr("System configuration has changed, please restart application for updating."));
+//            SystemManager::getInstance()->close();
+//        }
+//    }
 
     return 0;
 }

@@ -33,9 +33,9 @@
     <property name="geometry">
      <rect>
       <x>7</x>
-      <y>13</y>
+      <y>19</y>
       <width>571</width>
-      <height>461</height>
+      <height>451</height>
      </rect>
     </property>
     <property name="mouseTracking">

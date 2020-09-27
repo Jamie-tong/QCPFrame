@@ -23,7 +23,6 @@ class ViewEditor;
 class ViewEditor : public QDialog
 {
     Q_OBJECT
-
 public:
     ViewEditor(QWidget *parent = nullptr);
     ~ViewEditor();
@@ -39,7 +38,7 @@ private slots:
     void slot_OnULoaded();
     void on_btnOk_clicked();
      int getConfigFromUI();
-     int setConfigToUI();
+
      void on_btnCancel_clicked();
 
      void on_btnAddNode_clicked();
@@ -121,6 +120,7 @@ public slots:
 public:
      PluginIO* pluginInst;
      QCPF_ViewModel *_view;
+     int setConfigToUI();
 
 private:
     Ui::ViewEditor *ui;

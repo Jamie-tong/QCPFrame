@@ -26,14 +26,14 @@ public:
 public:
     tagOutputInfo tinfo;
     static PluginIO* getInstance();//静态获取实例
-
+     int GetUsersInfoFromJson();
 private:
     void Action_ShowUserManager(bool checkState);
-    int GetUsersInfoFromJson();
     int Function_VerifyLoginInfo(QVariant arg_in, QVariant& arg_out);
 public slots:
     //当core初始化时要执行的过程
     int OnCoreInitialize() Q_DECL_OVERRIDE;
+    int slot_InputInfo(tagOutputInfo& info) Q_DECL_OVERRIDE;
 };
 
 #endif // QPLUGIN1_H

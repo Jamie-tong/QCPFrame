@@ -173,17 +173,17 @@ int QCPF_ViewModel::slot_SaveConfigFile()
 
     QString tempConfigFullFilePath = _configDirPath + QStringLiteral("temp_") + _configFileName;
     if(0!=saveConfigFile(tempConfigFullFilePath))
-            return -1;
+            return -2;
 
     if(0!=compareFiles(tempConfigFullFilePath, _configFullFilePath))
     {
-        _outputInfo._type = InfoType::INFT_MSG_INFO;
-        _outputInfo._title = "infomation";
-        _outputInfo._content = tr("View configuration is changed, please restart application!");
+        saveConfigFile(_configFullFilePath);
+        _outputInfo._type = INFT_VIEW_CONFIG_CHANGED;
         emit sig_OutputInfo(_outputInfo);
-    }
 
-    return saveConfigFile(_configFullFilePath);
+        return 1;
+    }
+    return 0;
 }
 
 int QCPF_ViewModel::slot_ApplyConfig()
@@ -202,7 +202,7 @@ int QCPF_ViewModel::slot_ApplyConfig()
 
     if(0!=compareFiles(tempConfigFullFilePath, _configFullFilePath))
     {
-        _outputInfo._type = InfoType::INFT_UI_UPDATE;
+        _outputInfo._type = InfoType::INFT_VIEW_CONFIG_CHANGED;
         _outputInfo._content = tr("trying to save config file.");
         emit sig_OutputInfo(_outputInfo);
     }
@@ -265,11 +265,11 @@ int QCPF_ViewModel::slot_InputInfo(tagOutputInfo& info)
         case InfoType::INFT_APPLICATION_CLOSE:
                 _viewHost->close();
                 break;
-        case InfoType::INFT_PLUGIN_UPDATE:
+        case InfoType::INFT_PLUGIN_COLLECT:
                 _core->slot_Initialize();
             break;
-        case InfoType::INFT_UI_UPDATE:
-                initUIFromConfig(_viewHost);
+        case InfoType::INFT_VIEW_CONFIG_CHANGED:
+                //initUIFromConfig(_viewHost);
             break;
         case InfoType::INFT_STATUSBAR_TEMP:
                 _mainStatusbar->showMessage(info._content, info._timeout);
@@ -298,7 +298,20 @@ void QCPF_ViewModel::parseMenu(QMenu* nMenu, JMenuNode* nNode)
     {
         QMenu* childMenu = new QMenu(nNode->_menuShortCut, nMenu);
         childMenu->setTitle(nNode->_menuTitle);
-        childMenu->setIcon(QIcon(nNode->_menuIconPath));
+
+        //判断icon文件是否存在，如果不存在，则尝试在程序images目录下查找
+        QString finalIconPath;
+        if(QFile::exists(nNode->_menuIconPath))
+            finalIconPath = nNode->_menuIconPath;
+        else
+        {
+            QFileInfo fInfo(nNode->_menuIconPath);
+            QString tFileName = fInfo.fileName();
+            if(QFile::exists(_core->I_ApplicationDirPath + "/Images/" + tFileName))
+                finalIconPath = _core->I_ApplicationDirPath + "/Images/" + tFileName;
+        }
+        //===========
+        childMenu->setIcon(QIcon(finalIconPath));
         nMenu->addMenu(childMenu);
 
         if(_core->I_CurrentUserInfo._authority == nNode->_menuAuthority)
@@ -331,7 +344,20 @@ void QCPF_ViewModel::addActionToViewActionList(QAction* action, QString actionOb
         action->setEnabled(false);
 
     action->setCheckable(isCheckable);
-    action->setIcon(QIcon(iconPath));
+
+    //判断icon文件是否存在，如果不存在，则尝试在程序images目录下查找
+    QString finalIconPath;
+    if(QFile::exists(iconPath))
+        finalIconPath = iconPath;
+    else
+    {
+        QFileInfo fInfo(iconPath);
+        QString tFileName = fInfo.fileName();
+        if(QFile::exists(_core->I_ApplicationDirPath + "/Images/" + tFileName))
+            finalIconPath = _core->I_ApplicationDirPath + "/Images/" + tFileName;
+    }
+    //===========
+    action->setIcon(QIcon(finalIconPath));
 
     if(pType == PT_SYS)//系统组件
     {

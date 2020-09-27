@@ -34,6 +34,8 @@ public:
 public:
     static PluginIO* getInstance();//静态获取实例
 
+public slots:
+        int slot_InputInfo(tagOutputInfo& info) Q_DECL_OVERRIDE;
 private:
     void Action_ShowViewEditor(bool checkState);
 };

@@ -9,6 +9,8 @@
 #include <QDebug>
 #include <QDateTime>
 #include <QMessageBox>
+#include <QCryptographicHash>//用于md5加密
+#include "PluginIO.h"
 
 UserManager::UserManager(QCPF_Model* core, QWidget *parent) :
     QDialog(parent),
@@ -35,6 +37,9 @@ UserManager::UserManager(QCPF_Model* core, QWidget *parent) :
     _timer = new QTimer(this);
     _timer->setSingleShot(true);
     connect(_timer, SIGNAL(timeout()), this, SLOT(slot_OnULoaded()));
+
+    ui->btnOk->setFocus();
+    ui->btnOk->setDefault(true);
 }
 
 UserManager::~UserManager()
@@ -49,6 +54,7 @@ void UserManager::showEvent(QShowEvent *event)
 
 void UserManager::slot_OnULoaded()
 {
+    PluginIO::getInstance()->GetUsersInfoFromJson();
     //--------------------------
     //设置原始组件信息列表样式
     //--------------------------
@@ -64,7 +70,7 @@ void UserManager::slot_OnULoaded()
 
     ui->tableUserInfo->setHorizontalHeaderLabels(nHeadLst);
 
-    ui->tableUserInfo->setColumnWidth(0, 30);
+    ui->tableUserInfo->setColumnWidth(0, 50);
     ui->tableUserInfo->setColumnWidth(1, 100);
     ui->tableUserInfo->setColumnWidth(2, 100);
     ui->tableUserInfo->setColumnWidth(3, 100);
@@ -137,7 +143,15 @@ void UserManager::setTableStyle(QTableWidget *table)
 
 void UserManager::on_btnOk_clicked()
 {
-    QFile file(_core->I_ApplicationDirPath + "/Data/User/Users.json");
+    //清空文件
+    QFile fileModify(_core->I_ApplicationDirPath + "/Data/User/Users.dat");
+    if (!fileModify.open(QIODevice::WriteOnly | QIODevice::Text | QFile::Truncate))
+    {
+        qDebug()<<"文件清空失败";
+    }
+    fileModify.close();
+    //写文件
+    QFile file(_core->I_ApplicationDirPath + "/Data/User/Users.dat");
     if(!file.open(QIODevice::ReadWrite)) {
         qDebug() << "File open error";
     } else {
@@ -148,10 +162,13 @@ void UserManager::on_btnOk_clicked()
     for(int i = 0; i< ui->tableUserInfo->rowCount();i++)
     {
         QJsonObject jsonObject;
-        jsonObject.insert("Datetime", ui->tableUserInfo->item(i, 4)->text());
-        jsonObject.insert("Authority", ui->tableUserInfo->item(i, 3)->text());
-        jsonObject.insert("Password", ui->tableUserInfo->item(i, 2)->text());
+
         jsonObject.insert("UserName", ui->tableUserInfo->item(i, 1)->text());
+        //QString md5PwdStr = QCryptographicHash::hash(ui->tableUserInfo->item(i, 2)->text().toLatin1(),QCryptographicHash::Md5).toHex();
+        jsonObject.insert("Password", ui->tableUserInfo->item(i, 2)->text());
+        jsonObject.insert("Authority", ui->tableUserInfo->item(i, 3)->text());
+        jsonObject.insert("Datetime", ui->tableUserInfo->item(i, 4)->text());
+
         jsonArray.append(jsonObject);
     }
 
@@ -160,7 +177,7 @@ void UserManager::on_btnOk_clicked()
     jsonArray.append(jsonObject);
     QJsonDocument jsonDoc;
     jsonDoc.setObject(jsonObject);
-    file.write(jsonDoc.toJson());
+    file.write(jsonDoc.toJson().toBase64());
     file.close();
 
     this->close();

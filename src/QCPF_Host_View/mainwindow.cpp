@@ -57,8 +57,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect((QObject*)_view, SIGNAL(sig_OutputInfo(tagOutputInfo&)), view_load, SLOT(slot_InputInfo(tagOutputInfo&)));
 
     connect(_core, SIGNAL(sig_OutputInfo(tagOutputInfo&)), (QObject*)_view, SLOT(slot_InputInfo(tagOutputInfo&)));
+    connect((QObject*)_view, SIGNAL(sig_OutputInfo(tagOutputInfo&)), (QObject*)_view, SLOT(slot_InputInfo(tagOutputInfo&)));
 
     view_load->exec();
+
+    disconnect(view_load, SIGNAL(sig_DoCoreInitialize(QString, QString, QString)), _core, SLOT(slot_Initialize(QString, QString, QString)));
+    disconnect(view_load, SIGNAL(sig_DoViewModelInitialize(QString, QString, QString)), (QObject*)_view, SLOT(slot_Initialize(QString, QString, QString)));
+
+    disconnect(_core, SIGNAL(sig_OutputInfo(tagOutputInfo&)), view_load, SLOT(slot_InputInfo(tagOutputInfo&)));
+    disconnect((QObject*)_view, SIGNAL(sig_OutputInfo(tagOutputInfo&)), view_load, SLOT(slot_InputInfo(tagOutputInfo&)));
 
 //Test Menu for 1 and release for 0
 #if 0

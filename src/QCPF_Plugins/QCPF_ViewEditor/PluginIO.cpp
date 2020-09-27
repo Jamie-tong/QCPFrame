@@ -14,6 +14,7 @@ License: GPL v3.0
 #include "ViewEditor.h"
 #include <QStringLiteral>
 #include <QAction>
+#include <QMessageBox>
 
 PluginIO* instance;
 
@@ -66,6 +67,22 @@ void PluginIO::InitWidgetList(Plugin_Interface* plugin)
     plugin->I_WidgetList.append(nWdtViewEditor);
 }
 
+int PluginIO::slot_InputInfo(tagOutputInfo& info)
+{
+    if(info._type == INFT_PLUGIN_COLLECT_FINISHED)
+        ViewEditor::getInstance()->setConfigToUI();
+    else if(info._type == INFT_VIEW_CONFIG_CHANGED)
+    {
+        if(ViewEditor::getInstance()!=nullptr)
+        {
+            QMessageBox::information(ViewEditor::getInstance(), tr("information"), tr("View configuration has changed, please restart application for updating."));
+            ViewEditor::getInstance()->close();
+        }
+    }
+
+    return 0;
+}
+
 /***********************************************************************
  *  action 函数指针所对应的回调函数
  * *********************************************************************/
@@ -78,7 +95,7 @@ void PluginIO::Action_ShowViewEditor(bool checkState)
             if(pwi->_widget->objectName() == QStringLiteral("wdt_ViewEditor"))
             {
                 pwi->_widget->setWindowIcon(actSender->icon());
-                ((QDialog*)pwi->_widget)->exec();
+                ((QDialog*)pwi->_widget)->show();
             }
         }
     }

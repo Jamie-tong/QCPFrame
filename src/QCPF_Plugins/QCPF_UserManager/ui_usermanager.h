@@ -60,7 +60,7 @@ public:
         if (tableUserInfo->rowCount() < 25)
             tableUserInfo->setRowCount(25);
         tableUserInfo->setObjectName(QString::fromUtf8("tableUserInfo"));
-        tableUserInfo->setGeometry(QRect(7, 13, 571, 461));
+        tableUserInfo->setGeometry(QRect(7, 19, 571, 451));
         tableUserInfo->setMouseTracking(false);
         tableUserInfo->setAutoFillBackground(false);
         tableUserInfo->setStyleSheet(QString::fromUtf8(""));

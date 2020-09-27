@@ -14,6 +14,7 @@ License: GPL v3.0
 #include "PluginManager.h"
 #include <QStringLiteral>
 #include <QAction>
+#include <QMessageBox>
 
 PluginIO* instance;
 PluginIO::PluginIO()
@@ -68,8 +69,10 @@ void PluginIO::InitWidgetList(Plugin_Interface* plugin)
 
 int PluginIO::slot_InputInfo(tagOutputInfo& info)
 {
-    if(info._type == INFT_PLUGIN_UPDATE_FINISHED)
+    if(info._type == INFT_PLUGIN_COLLECT_FINISHED)
+    {
         PluginManager::getInstance()->setConfigToUI();
+    }
 
     return 0;
 }

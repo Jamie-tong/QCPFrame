@@ -40,6 +40,9 @@ PluginWidgetViewer::PluginWidgetViewer(QCPF_Interface* model, bool isShowStatusB
     _timer = new QTimer(this);
     _timer->setSingleShot(true);
     connect(_timer, SIGNAL(timeout()), this, SLOT(slot_OnULoaded()));
+
+    ui->buttonBox->setFocus();
+    this->setWindowIcon(parent->windowIcon());
 }
 
 PluginWidgetViewer::~PluginWidgetViewer()

@@ -13,6 +13,8 @@ License: GPL v3.0
 #include <QTimer>
 #include <QString>
 
+#include <QKeyEvent>
+
 
 #ifdef Q_OS_LINUX
     #include <unistd.h>
@@ -60,6 +62,9 @@ formLoading::formLoading(QCPF_ViewModel* view, QDialog *parent) :
     _timer = new QTimer(this);
     _timer->setSingleShot(true);
     connect(_timer, SIGNAL(timeout()), this, SLOT(slot_OnULoaded()));
+
+    ui->txtUser->installEventFilter(this);//设置完后自动调用其eventFilter函数
+    ui->txtPwd->installEventFilter(this);//设置完后自动调用其eventFilter函数
 }
 
 formLoading::~formLoading()
@@ -70,19 +75,37 @@ formLoading::~formLoading()
 void formLoading::slot_OnULoaded()
 {
     QRect rct_frame = ui->frameLoad->geometry();
-    QRect rct_lbSystemName = ui->laSystemName->geometry();
+    QRect rct_lbLoadingInfo = ui->lb_LoadingInfo->geometry();
 
-    ui->laSystemName->setGeometry(0, (rct_frame.height()-rct_lbSystemName.height())/2, rct_lbSystemName.width(), rct_lbSystemName.height());
     QCoreApplication::processEvents();
     ui->frameLogin->setVisible(false);
-    ui->lb_LoadingInfo->setVisible(true);
+    ui->lb_LoadingInfo->setGeometry(rct_frame.x(), rct_frame.y()+rct_frame.height()-rct_lbLoadingInfo.height() - 70, rct_lbLoadingInfo.width(), rct_lbLoadingInfo.height());
     _core->slot_Initialize();
 
-    ui->lb_LoadingInfo->setVisible(false);
-    ui->laSystemName->setGeometry(0, 0, rct_lbSystemName.width(), rct_lbSystemName.height());
+    ui->lb_LoadingInfo->setGeometry(rct_frame.x(), rct_frame.y()+rct_frame.height(), rct_lbLoadingInfo.width(), rct_lbLoadingInfo.height());
     ui->lb_LoadingInfo->clear();
     ui->frameLogin->setVisible(true);
+    ui->btnOk->setFocus();
+    ui->btnOk->setDefault(true);
     _timer->deleteLater();
+}
+
+bool formLoading::eventFilter(QObject *target, QEvent *event)
+{
+    if(target == ui->txtUser || target ==ui->txtPwd)
+        {
+            if(event->type() == QEvent::KeyPress)
+            {
+                 QKeyEvent *k = static_cast<QKeyEvent *>(event);
+
+                 if(k->key() == Qt::Key_Return)//回车键
+                 {
+                     on_btnOk_clicked();
+                     return true;
+                 }
+            }
+        }
+        return QWidget::eventFilter(target,event);
 }
 
 void formLoading::on_btnCancel_clicked()
@@ -210,7 +233,9 @@ void formLoading::on_btnOk_clicked()
     }
     bool verityEnd = var_Out.value<bool>();
     if(!verityEnd)
-        ui->lb_LoadingInfo->setText("They are not a valid pair of user and password!");
+    {
+        ui->lb_LoadingInfo->setText("Invalid username and password!");
+    }
     else
         this->close();
 }

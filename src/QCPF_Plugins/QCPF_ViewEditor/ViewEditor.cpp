@@ -69,6 +69,14 @@ ViewEditor::ViewEditor(QWidget *parent) :
     _timer = new QTimer(this);
     _timer->setSingleShot(true);
     connect(_timer, SIGNAL(timeout()), this, SLOT(slot_OnULoaded()));
+
+    ui->btnOk->setFocus();
+    ui->btnOk->setDefault(true);
+
+    QTreeWidget* _currentTree = nullptr;
+    QTreeWidgetItem* _currentItem_TreeMenuEdit = nullptr;
+    QTableWidget* _currentTable = nullptr;
+    QTableWidgetItem* _currentItem_tableStatusbarEditer = nullptr;
 }
 
 ViewEditor::~ViewEditor()
@@ -116,6 +124,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
     configParentNode->_menuCheckable = treeTopNode->text(4)=="True"?true:false;
 
     QString tt = treeTopNode->text(5);
+
     configParentNode->_pluginType = treeTopNode->text(5)==CONST_STR_SYSTEM?0:1;
     configParentNode->_pluginID = treeTopNode->text(6);
     configParentNode->_copyID = treeTopNode->text(7);
@@ -289,24 +298,59 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
         QTreeWidgetItem* treeChildNode = new QTreeWidgetItem();
 
         treeChildNode->setText(0, configNode->_menuTitle);
-        treeChildNode->setText(1, configNode->_menuShortCut);
-        treeChildNode->setText(2, configNode->_menuIconPath);
+
          if(configNode->_menuTitle != CONST_STR_SEPARATOR)
          {
-            treeChildNode->setIcon(0, QIcon(configNode->_menuIconPath));
+             treeChildNode->setText(1, configNode->_menuShortCut);
+             treeChildNode->setText(2, configNode->_menuIconPath);
+
+             //判断icon文件是否存在，如果不存在，则尝试在程序images目录下查找
+             QString finalIconPath;
+             if(QFile::exists(configNode->_menuIconPath))
+                 finalIconPath = configNode->_menuIconPath;
+             else
+             {
+                 QFileInfo fInfo(configNode->_menuIconPath);
+                 QString tFileName = fInfo.fileName();
+                 if(QFile::exists(PluginIO::getInstance()->_core->I_ApplicationDirPath + "/Images/" + tFileName))
+                     finalIconPath = PluginIO::getInstance()->_core->I_ApplicationDirPath + "/Images/" + tFileName;
+             }
+            treeChildNode->setIcon(0, QIcon(finalIconPath));
             treeChildNode->setText(3, QString::number(configNode->_menuAuthority));
             treeChildNode->setText(4, configNode->_menuCheckable?QStringLiteral("True"):QStringLiteral("False"));
-            treeChildNode->setText(5, configNode->_pluginType?CONST_STR_NONSYSTEM:CONST_STR_SYSTEM);
+
+
+            QList<Plugin_Interface*> tPluginLst;
+            if(configNode->_pluginType == PT_SYS)
+                tPluginLst = PluginIO::getInstance()->_core->I_SysPlugins_Sel;
+            else
+                tPluginLst = PluginIO::getInstance()->_core->I_NSysAllValidPlugins;
+            //检查该组件是否存在
+            bool isPluginExist = false;
+            foreach(Plugin_Interface* pi, tPluginLst)
+            {
+                if(pi->I_PluginID == configNode->_pluginID && pi->I_CopyID == configNode->_copyID)
+                {
+                    isPluginExist = true;
+                    break;
+                }
+            }
+
+           if(isPluginExist)
+           {
+               treeChildNode->setText(5, configNode->_pluginType?CONST_STR_NONSYSTEM:CONST_STR_SYSTEM);
+               treeChildNode->setText(6, configNode->_pluginID);
+               treeChildNode->setText(7, configNode->_copyID);
+               treeChildNode->setText(8, configNode->_actionName);
+               treeChildNode->setText(9, configNode->_actionDetail);
+           }
          }
-        treeChildNode->setText(6, configNode->_pluginID);
-        treeChildNode->setText(7, configNode->_copyID);
-        treeChildNode->setText(8, configNode->_actionName);
-        treeChildNode->setText(9, configNode->_actionDetail);
+
         treeNode->addChild(treeChildNode);
 
         if(configNode->_actionName!="" && cbToolbarAction->findText(configNode->_actionName)<0)
         {
-            cbToolbarAction->addItem(QIcon(configNode->_menuIconPath), configNode->_actionName);
+            cbToolbarAction->addItem(treeChildNode->icon(0), configNode->_actionName);
         }
     }
     else
@@ -462,7 +506,6 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
 
                 tItemTreeNode->setText(0, item->_actionItem->_actionObjectName);
                 tItemTreeNode->setText(1, tr(CONST_STR_ITEMTYPE_ACTION));
-
             }
             else if(item->_type == BT_WIDGET)//Widget
             {
@@ -703,8 +746,8 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
 
  void ViewEditor::on_tableStatusbarEditer_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous)
  {
-     if(previous!=nullptr && _currentItem_tableStatusbarEditer!=nullptr){
-        ui->tableStatusbarEditer->removeCellWidget(_currentItem_tableStatusbarEditer->row(), _currentItem_tableStatusbarEditer->column());
+     if(previous!=nullptr && current!=nullptr){
+        ui->tableStatusbarEditer->removeCellWidget(current->row(), current->column());
      }
  }
 
@@ -715,8 +758,11 @@ void ViewEditor::on_btnOk_clicked()
     //====================================================================
     getConfigFromUI();
 
-    _view->slot_SaveConfigFile();
-    this->close();
+    if(1==_view->slot_SaveConfigFile())
+    {
+        QMessageBox::information(this, tr("information"), tr("View configuration has changed, please restart application for updating."));
+        this->close();
+    }
 }
 
 void ViewEditor::on_btnCancel_clicked()
@@ -933,6 +979,15 @@ void ViewEditor::on_btnIconFinder_clicked()
             //点的是取消
             ui->treeMenuEdit->currentItem()->setIcon(0, QIcon());
             ui->treeMenuEdit->currentItem()->setText(2, "");
+
+            QString actionName = ui->treeMenuEdit->currentItem()->text(8);
+            int tCbIndex = ui->cbActionFromMenu_Toolbar->findText(actionName, Qt::MatchFlag::MatchExactly);
+            ui->cbActionFromMenu_Toolbar->setItemIcon(tCbIndex, QIcon());
+
+            QList<QTreeWidgetItem*> destItemsLst = ui->treeToolbarEdit->findItems(actionName, Qt::MatchFlag::MatchRecursive | Qt::MatchFlag::MatchExactly);
+            foreach (QTreeWidgetItem* qwi, destItemsLst) {
+                qwi->setIcon(0, QIcon());
+            }
         }
 }
 
@@ -948,6 +1003,13 @@ void ViewEditor::on_btnAddAction_Toolbar_clicked()
     if(tItem==nullptr)
     {
         QMessageBox::information(this, tr("Infomation"), tr("Please select the toolbar node!"));
+        return;
+    }
+
+    QList<QTreeWidgetItem*> destItemsLst = ui->treeToolbarEdit->findItems(ui->cbActionFromMenu_Toolbar->currentText(), Qt::MatchFlag::MatchRecursive | Qt::MatchFlag::MatchExactly);
+    if(destItemsLst.count()>0)
+    {
+        QMessageBox::information(this, tr("Infomation"), tr("There is a same action existed!"));
         return;
     }
 
@@ -1027,6 +1089,7 @@ void ViewEditor::on_btnAddWidget_Toolbar_clicked()
 
     PluginIO* plugInst = PluginIO::getInstance();
     PluginWidgetViewer* ce = new PluginWidgetViewer(plugInst->_core, false, this);
+
     ce->exec();
 
     //从Toolbar editor, workspace editor, statusbar editor中查找是否有重复的项
@@ -1578,6 +1641,7 @@ void ViewEditor::on_treeMenuEdit_itemDoubleClicked(QTreeWidgetItem *item, int co
         for(int i=0; i<ui->cbMenuAuthority->count(); i++)
             cbBox->insertItem(i, ui->cbMenuAuthority->itemText(i));
 
+        cbBox->setCurrentText(item->text(column));
         connect(cbBox, SIGNAL(activated(int)), this, SLOT(OnComboBox_Activated_Index_Tree(int)));
         ui->treeMenuEdit->setItemWidget(item, column, cbBox);
     }
@@ -1588,6 +1652,7 @@ void ViewEditor::on_treeMenuEdit_itemDoubleClicked(QTreeWidgetItem *item, int co
         cbBox->insertItem(0, tr("True"));
         cbBox->insertItem(1, tr("False"));
 
+        cbBox->setCurrentText(item->text(column));
         connect(cbBox, SIGNAL(activated(int)), this, SLOT(OnComboBox_Activated_Text_Tree(int)));
         ui->treeMenuEdit->setItemWidget(item, column, cbBox);
     }
@@ -1624,6 +1689,7 @@ void ViewEditor::on_treeToolbarEdit_itemDoubleClicked(QTreeWidgetItem *item, int
             for(int i=0; i<ui->cbToolStritItemTextAlignment->count(); i++)
                 cbBox->insertItem(i, ui->cbToolStritItemTextAlignment->itemText(i));
 
+            cbBox->setCurrentText(item->text(column));
             connect(cbBox, SIGNAL(activated(int)), this, SLOT(OnComboBox_Activated_Text_Tree(int)));
             ui->treeToolbarEdit->setItemWidget(item, column, cbBox);
         }
@@ -1741,9 +1807,8 @@ void ViewEditor::on_tableStatusbarEditer_itemDoubleClicked(QTableWidgetItem *ite
         cbBox->insertItem(0, tr(CONST_STR_STATUSITEM_COMMON));
         cbBox->insertItem(1, tr(CONST_STR_STATUSITEM_PERMANENT));
 
+        cbBox->setCurrentText(item->text());
         connect(cbBox, SIGNAL(activated(int)), this, SLOT(OnComboBox_Activated_Text_Table(int)));
         ui->tableStatusbarEditer->setCellWidget(item->row(), item->column(), cbBox);
     }
 }
-
-

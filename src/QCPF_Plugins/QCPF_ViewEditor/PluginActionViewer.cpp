@@ -39,6 +39,9 @@ PluginActionViewer::PluginActionViewer(QCPF_Interface* model, QTreeWidgetItem* i
     _timer = new QTimer(this);
     _timer->setSingleShot(true);
     connect(_timer, SIGNAL(timeout()), this, SLOT(slot_OnULoaded()));
+
+    ui->buttonBox->setFocus();
+    this->setWindowIcon(parent->windowIcon());
 }
 
 PluginActionViewer::~PluginActionViewer()

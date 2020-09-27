@@ -56,6 +56,9 @@ SystemManager::SystemManager(QCPF_Model* model, QWidget *parent) :
     _timer = new QTimer(this);
     _timer->setSingleShot(true);
     connect(_timer, SIGNAL(timeout()), this, SLOT(slot_OnULoaded()));
+
+    ui->btnOk->setFocus();
+    ui->btnOk->setDefault(true);
 }
 
 SystemManager::~SystemManager()
@@ -322,6 +325,29 @@ void SystemManager::slot_SelAllOrNot(bool flag)
          }
          QString fileName = tFullFilePath.split("/").last();
          _core->_config._sysPlugins_Sel.append(new PluginInfo(_core->_config._this, tOriginPluginID, fileName));
+
+//         //如果有新加入的组件，则将其动态加入到原始组件集合里去
+//         bool isExisted = false;
+//         foreach(Plugin_Interface* pi, _core->I_SysPlugins_Sel)
+//         {
+//            if(pi->I_PluginID == tOriginPluginID)
+//            {
+//                isExisted = true;
+//                break;
+//            }
+//         }
+//         //如果已选集合里没有当前组件，则I_SysPlugins里面有当前所有扫描出来的组件，从里面找到当前组件，并加入到Sel中
+//         if(!isExisted)
+//         {
+//             foreach(Plugin_Interface* pi, _core->I_SysPlugins)
+//             {
+//                if(pi->I_PluginID == tOriginPluginID)
+//                {
+//                    _core->I_SysPlugins_Sel.append(pi);
+//                    break;
+//                }
+//             }
+//         }
      }
      _core->_config._count_sysPlugins_Sel = _core->_config._sysPlugins_Sel.count();//这个值若不给，序列化和反序列化时，将内存将无法对齐
      //-----------------------
@@ -459,6 +485,6 @@ void SystemManager::on_btnOrigPluginMoveDown_clicked()
 void SystemManager::on_btnUpdate_clicked()
 {
     tagOutputInfo info;
-    info._type = INFT_PLUGIN_UPDATE;
+    info._type = INFT_PLUGIN_COLLECT;
     emit PluginIO::getInstance()->sig_OutputInfo(info);
 }

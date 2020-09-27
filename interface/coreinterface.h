@@ -95,7 +95,6 @@ class QCPF_Interface : public QObject
         QString I_ConfigDirPath;
         QString I_ConfigFileName;
         QString I_ConfigFullFilePath;
-        bool I_IsEnableHotPlug;
         //================================================Users
         //用户信息
         QList<UserInfo*> I_UserInfoLst;

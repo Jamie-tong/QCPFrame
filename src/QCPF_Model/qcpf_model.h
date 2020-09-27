@@ -26,7 +26,7 @@ class QCPF_MODEL_EXPORT QCPF_Model :  public QCPF_Interface
         Q_OBJECT
         public:
             QCPF_Model(RunMode runMode, QObject* parent);
-            QCPF_Model(RunMode runMode, QObject* parent, QString applicationDirPath, QString sysPluginDirPath, QString nSysPluginDirPath, QString configDirPath, QString configFileName, bool isEnableHotPlug = true);
+            QCPF_Model(RunMode runMode, QObject* parent, QString applicationDirPath, QString sysPluginDirPath, QString nSysPluginDirPath, QString configDirPath, QString configFileName);
             ~QCPF_Model();
 
             ConfigModel _config;
@@ -40,7 +40,7 @@ class QCPF_MODEL_EXPORT QCPF_Model :  public QCPF_Interface
             void sig_DestroyCloneFinished(QString origPluginID, QString copyID);
         private:
             tagOutputInfo _outputInfo;
-            int pluginsCollect(bool isCopyToTemp, QString pluginDirPath,  QList<PluginInfo*> selectedPluginInfoList, PluginType type);
+            int pluginsCollect(QString pluginDirPath,  QList<PluginInfo*> selectedPluginInfoList, PluginType type);
             int pluginInstance(QFileInfo fi, PluginType type);
             int installConfig(ConfigModel &config);
             int compareFiles(QString filePath1, QString filePath2);
