@@ -9,6 +9,7 @@
 
 QCPF_PluginModel::QCPF_PluginModel()
 {
+    I_IsEnable = false;
     I_IsCopy = false;
 }
 

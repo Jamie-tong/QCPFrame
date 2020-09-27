@@ -39,6 +39,7 @@ class QCPF_MODEL_EXPORT QCPF_Model :  public QCPF_Interface
             void sig_CloneFinished(bool isExist, QString origPluginID, QString copyID, QString copyAlisaName, QString copyComment);//向槽函数发送克隆组件完成信号
             void sig_DestroyCloneFinished(QString origPluginID, QString copyID);
         private:
+
             tagOutputInfo _outputInfo;
             int pluginsCollect(QString pluginDirPath,  QList<PluginInfo*> selectedPluginInfoList, PluginType type);
             int pluginInstance(QFileInfo fi, PluginType type);

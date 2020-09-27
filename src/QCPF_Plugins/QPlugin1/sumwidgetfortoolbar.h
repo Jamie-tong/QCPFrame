@@ -2,6 +2,7 @@
 #define SUMWIDGETFORTOOLBAR_H
 
 #include <QWidget>
+#include <QSpinBox>
 
 namespace Ui {
 class SumWidgetForToolbar;
@@ -22,6 +23,7 @@ private slots:
 
 private:
     Ui::SumWidgetForToolbar *ui;
+    void setSpinQss(QSpinBox *txt, QString normalColor, QString focusColor);
 };
 
 #endif // SUMWIDGETFORTOOLBAR_H

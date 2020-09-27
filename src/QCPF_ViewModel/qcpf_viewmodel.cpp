@@ -314,7 +314,7 @@ void QCPF_ViewModel::parseMenu(QMenu* nMenu, JMenuNode* nNode)
         childMenu->setIcon(QIcon(finalIconPath));
         nMenu->addMenu(childMenu);
 
-        if(_core->I_CurrentUserInfo._authority == nNode->_menuAuthority)
+        if(_core->I_CurrentUserInfo._authority <= nNode->_menuAuthority)
             childMenu->setEnabled(true);
         else
             childMenu->setEnabled(false);

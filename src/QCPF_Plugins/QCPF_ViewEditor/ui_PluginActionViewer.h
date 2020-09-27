@@ -103,6 +103,7 @@ public:
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(16, 90, 71, 16));
         cbCopyID = new QComboBox(groupBox);
+        cbCopyID->addItem(QString());
         cbCopyID->setObjectName(QString::fromUtf8("cbCopyID"));
         cbCopyID->setGeometry(QRect(90, 90, 241, 22));
         label_2->raise();
@@ -124,7 +125,7 @@ public:
 
     void retranslateUi(QDialog *PluginActionViewer)
     {
-        PluginActionViewer->setWindowTitle(QCoreApplication::translate("PluginActionViewer", "Function Viewer", nullptr));
+        PluginActionViewer->setWindowTitle(QCoreApplication::translate("PluginActionViewer", "Action Viewer", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("PluginActionViewer", "System Plugins", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("PluginActionViewer", "Non-System Plugins", nullptr));
         groupBox_2->setTitle(QCoreApplication::translate("PluginActionViewer", "Action info", nullptr));
@@ -134,6 +135,8 @@ public:
         label->setText(QCoreApplication::translate("PluginActionViewer", "Plugin ID:", nullptr));
         label_2->setText(QCoreApplication::translate("PluginActionViewer", "Action:", nullptr));
         label_3->setText(QCoreApplication::translate("PluginActionViewer", "Copy ID:", nullptr));
+        cbCopyID->setItemText(0, QCoreApplication::translate("PluginActionViewer", "None", nullptr));
+
     } // retranslateUi
 
 };

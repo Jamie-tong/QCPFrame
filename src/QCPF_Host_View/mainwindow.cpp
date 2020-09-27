@@ -124,6 +124,7 @@ MainWindow::~MainWindow()
     }
 
     //保存界面布局到Layout.ini
+    QString _layoutIniFilePath = _core->I_ApplicationDirPath + "/Config/View/.Layout.ini";
     QFile file(_layoutIniFilePath);
     if (file.open(QIODevice::WriteOnly))
     {
@@ -148,17 +149,6 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     //invoke plugin functions one by one
     foreach (Plugin_Interface* pi, _core->I_NSysAllValidPlugins) {
         pi->OnViewLoaded();
-    }
-
-    QFile file(_layoutIniFilePath);
-    if (file.open(QIODevice::ReadOnly))
-    {
-        QByteArray ba;
-        QDataStream in(&file);
-        in >> ba;
-        file.close();
-        this->restoreState(ba);
-
     }
 }
 

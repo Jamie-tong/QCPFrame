@@ -114,6 +114,7 @@ void PluginActionViewer::on_cbPluginID_currentIndexChanged(int index)
         foreach (PluginActionInfo* pai, _core->I_NSysOrigPlugins_Sel[index]->I_ActionList) {
             ui->cbPluginAction->addItem(pai->_actionName);
         }
+        ui->cbCopyID->addItem(tr("None"));
         foreach (Plugin_Interface* pai, _core->I_NSysClonePlugins) {
             if(pai->I_PluginID==ui->cbPluginID->currentText())
                 ui->cbCopyID->addItem(pai->I_CopyID);

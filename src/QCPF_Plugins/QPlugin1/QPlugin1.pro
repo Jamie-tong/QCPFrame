@@ -23,14 +23,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         PluginIO.cpp \
         sumwidgetfortoolbar.cpp \
-        wdt_map.cpp
+        wdt_map.cpp \
+        wdt_search.cpp
 
 HEADERS += \
         ../../../interface/coreinterface.h \
         ../../../interface/plugininterface.h \
         PluginIO.h \
         sumwidgetfortoolbar.h \
-        wdt_map.h
+        wdt_map.h \
+        wdt_search.h
 
 DISTFILES +=  \
     QPlugin.json
@@ -38,7 +40,8 @@ DISTFILES +=  \
 
 FORMS += \
     sumwidgetfortoolbar.ui \
-    wdt_map.ui
+    wdt_map.ui \
+    wdt_search.ui
 
 RESOURCES += \
     PluginRes.qrc

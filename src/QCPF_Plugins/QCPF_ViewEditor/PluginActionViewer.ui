@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Function Viewer</string>
+   <string>Action Viewer</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -204,6 +204,11 @@
       <height>22</height>
      </rect>
     </property>
+    <item>
+     <property name="text">
+      <string>None</string>
+     </property>
+    </item>
    </widget>
    <zorder>label_2</zorder>
    <zorder>cbPluginAction</zorder>

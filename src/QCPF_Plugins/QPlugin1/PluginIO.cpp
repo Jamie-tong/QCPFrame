@@ -9,6 +9,7 @@
 
 #include "sumwidgetfortoolbar.h"
 #include "wdt_map.h"
+#include "wdt_search.h"
 
 PluginIO::PluginIO()
 {
@@ -30,12 +31,68 @@ PluginIO::~PluginIO(){}
 void PluginIO::InitActionList(Plugin_Interface* plugin)
 {
     //--------------------------------------------
-    PluginActionInfo* pai1 = new PluginActionInfo();
-    pai1->_actionName = tr("Sum");
-    pai1->_actionDetail = tr("Sum two data at backgroud.");
-    pai1->_pAction = (FPTR_ACTION)(&PluginIO::Action_SumWidget);
+    PluginActionInfo* paiSum = new PluginActionInfo();
+    paiSum->_actionName = tr("Sum");
+    paiSum->_actionDetail = tr("Sum two data at backgroud.");
+    paiSum->_pAction = (FPTR_ACTION)(&PluginIO::Action_SumWidget);
 
-    plugin->I_ActionList.append(pai1);
+    plugin->I_ActionList.append(paiSum);
+
+    //--------------------------------------------
+    PluginActionInfo* paiWave = new PluginActionInfo();
+    paiWave->_actionName = tr("Wave");
+    paiWave->_actionDetail = tr("");
+    paiWave->_pAction = (FPTR_ACTION)(&PluginIO::Action_SumWidget);
+
+    plugin->I_ActionList.append(paiWave);
+
+    //--------------------------------------------
+    PluginActionInfo* paiDatabase = new PluginActionInfo();
+    paiDatabase->_actionName = tr("Database");
+    paiDatabase->_actionDetail = tr("");
+    paiDatabase->_pAction = (FPTR_ACTION)(&PluginIO::Action_SumWidget);
+
+    plugin->I_ActionList.append(paiDatabase);
+
+    //--------------------------------------------
+    PluginActionInfo* paiNet = new PluginActionInfo();
+    paiNet->_actionName = tr("Net");
+    paiNet->_actionDetail = tr("");
+    paiNet->_pAction = (FPTR_ACTION)(&PluginIO::Action_SumWidget);
+
+    plugin->I_ActionList.append(paiNet);
+
+    //--------------------------------------------
+    PluginActionInfo* paiPython = new PluginActionInfo();
+    paiPython->_actionName = tr("Python");
+    paiPython->_actionDetail = tr("");
+    paiPython->_pAction = (FPTR_ACTION)(&PluginIO::Action_SumWidget);
+
+    plugin->I_ActionList.append(paiPython);
+
+    //--------------------------------------------
+    PluginActionInfo* paiPlane = new PluginActionInfo();
+    paiPlane->_actionName = tr("Plane");
+    paiPlane->_actionDetail = tr("");
+    paiPlane->_pAction = (FPTR_ACTION)(&PluginIO::Action_SumWidget);
+
+    plugin->I_ActionList.append(paiPlane);
+
+    //--------------------------------------------
+    PluginActionInfo* paiReport = new PluginActionInfo();
+    paiReport->_actionName = tr("Report");
+    paiReport->_actionDetail = tr("");
+    paiReport->_pAction = (FPTR_ACTION)(&PluginIO::Action_SumWidget);
+
+    plugin->I_ActionList.append(paiReport);
+
+    //--------------------------------------------
+    PluginActionInfo* paiSearch = new PluginActionInfo();
+    paiSearch->_actionName = tr("Search");
+    paiSearch->_actionDetail = tr("");
+    paiSearch->_pAction = (FPTR_ACTION)(&PluginIO::Action_SumWidget);
+
+    plugin->I_ActionList.append(paiSearch);
 }
 
 void PluginIO::InitWidgetList(Plugin_Interface* plugin)
@@ -48,6 +105,16 @@ void PluginIO::InitWidgetList(Plugin_Interface* plugin)
     nWdtSum->_origHeight = nWdtSum->_widget->height();
     nWdtSum->_widgetDetail = tr("sum function.");
     plugin->I_WidgetList.append(nWdtSum);
+
+    //----------------------------
+    PluginWidgetInfo *nWdtSearch = new PluginWidgetInfo();
+
+    nWdtSearch->_showType = ST_DOCK;
+    nWdtSearch->_widget = new wdt_search();
+    nWdtSearch->_origWidth = nWdtSearch->_widget->width();
+    nWdtSearch->_origHeight = nWdtSearch->_widget->height();
+    nWdtSearch->_widgetDetail = tr("search function.");
+    plugin->I_WidgetList.append(nWdtSearch);
 
     //----------------------------
     PluginWidgetInfo *nWdtMap = new PluginWidgetInfo();

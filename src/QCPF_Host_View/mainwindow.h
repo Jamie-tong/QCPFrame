@@ -39,7 +39,6 @@ private:
     Ui::MainWindow *ui;
     QList<QDockWidget*> m_docks;
     bool _isFirstResize;
-    QString _layoutIniFilePath;
     void writeSettings();
     void readSettings();
     InitThread* initTd;

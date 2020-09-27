@@ -6,14 +6,13 @@ License: GPL v3.0
 */
 
 #include "qcpf_model.h"
-
 #include <QPluginLoader>
 #include <QDataStream>
 #include <QStringLiteral>
 #include <QMap>
 
 #define MASK_END_STR "_tp"
-#define SYSTEM_VERSION "1.0.0.4"
+#define SYSTEM_VERSION "1.0.0.5"
 #define ORGANIZATION_NAME "Jamie.T"
 
 QCPF_Model::QCPF_Model(RunMode runMode, QObject* parent):_config(this)
@@ -306,11 +305,12 @@ int QCPF_Model::pluginInstance(QFileInfo fi, PluginType type)
         QString fileName = fileInfo.baseName();//获取文件后名(不带后缀的文件名)
 
         Plugin_Interface *plugin = nullptr;
-        QPluginLoader pluginLoader(filePath);
-
         QObject *tInstance = nullptr;
+        QPluginLoader* pluginLoader = nullptr;
         try {
-                tInstance = pluginLoader.instance();
+                pluginLoader = new QPluginLoader(filePath);
+                tInstance = pluginLoader->instance();
+
         } catch(int){
             _outputInfo._type = InfoType::INFT_STATUS_INFO;
             _outputInfo._content = QString(tr("There is a Error when loading plugin \"%1\"")).arg(fileName);
@@ -500,7 +500,10 @@ int QCPF_Model::installConfig(ConfigModel &config)
                     }
                 }
                 if(!isHasOne)
+                {
+                    this->I_SysPlugins[j]->I_IsEnable = true;
                     this->I_SysPlugins_Sel.append(this->I_SysPlugins[j]);
+                }
                 isExsitInSysPlugins = true;
                 break;
             }
@@ -514,6 +517,15 @@ int QCPF_Model::installConfig(ConfigModel &config)
             emit sig_OutputInfo(_outputInfo);
         }
     }
+//    //把没选中的系统组件卸载掉
+//    foreach (Plugin_Interface* pi, this->I_SysPlugins) {
+//        if(!pi->I_IsEnable)
+//        {
+//           QPluginLoader* pluginLoader = new QPluginLoader(pi->I_PluginFilePath);
+//           if(pluginLoader!=nullptr)
+//               pluginLoader->unload();
+//        }
+//    }
     //---------------------------------------------------------------装载已选非系统组件
     _outputInfo._type = InfoType::INFT_STATUS_INFO;
     //_outputInfo._content = QStringLiteral("装载非系统组件.");
@@ -541,7 +553,10 @@ int QCPF_Model::installConfig(ConfigModel &config)
                     }
                 }
                 if(!isHasOne)
+                {
+                    this->I_NSysOrigPlugins[j]->I_IsEnable = true;
                     this->I_NSysOrigPlugins_Sel.append(this->I_NSysOrigPlugins[j]);
+                }
                 isExsitInNSysOrigPlugins = true;
                 break;
             }
@@ -555,6 +570,20 @@ int QCPF_Model::installConfig(ConfigModel &config)
             emit sig_OutputInfo(_outputInfo);
         }
     }
+
+//    //把没选中的非系统组件卸载掉
+//    foreach (Plugin_Interface* pi, this->I_NSysOrigPlugins) {
+//        if(!pi->I_IsEnable)
+//        {
+//           QPluginLoader* pluginLoader = new QPluginLoader(pi->I_PluginFilePath);
+
+//           if(pluginLoader!=nullptr)
+//           {
+//                bool ret = pluginLoader->unload();
+//                int i=0;
+//           }
+//        }
+//    }
     //---------------------------------------------------------------装/卸载克隆组件
     _outputInfo._type = InfoType::INFT_STATUS_INFO;
     //_outputInfo._content = QStringLiteral("卸载禁用的克隆组件.");

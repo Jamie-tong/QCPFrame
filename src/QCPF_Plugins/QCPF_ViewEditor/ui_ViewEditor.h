@@ -505,7 +505,7 @@ public:
 
         retranslateUi(ViewEditor);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
         cbMenuAuthority->setCurrentIndex(6);
 
 

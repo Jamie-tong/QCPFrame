@@ -132,6 +132,7 @@ public:
     QString I_PluginFilePath;//组件路径
     QVariant I_PluginTag;//组件类型,用于区别业务类型或者结构类型
     AuthorityType I_PluginAuthority;//组件的访问权限
+    bool I_IsEnable;//是否被选中
 
     bool I_IsCopy;//我是谁？我是不是一个克隆体?
     QString I_CopyID;//副本ID，该属性是副本间唯一的

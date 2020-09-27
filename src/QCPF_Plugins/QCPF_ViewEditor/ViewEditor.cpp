@@ -296,6 +296,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
     if(configNode->_children.count()==0)
     {
         QTreeWidgetItem* treeChildNode = new QTreeWidgetItem();
+        treeNode->addChild(treeChildNode);
 
         treeChildNode->setText(0, configNode->_menuTitle);
 
@@ -320,38 +321,37 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
             treeChildNode->setText(4, configNode->_menuCheckable?QStringLiteral("True"):QStringLiteral("False"));
 
 
-            QList<Plugin_Interface*> tPluginLst;
-            if(configNode->_pluginType == PT_SYS)
-                tPluginLst = PluginIO::getInstance()->_core->I_SysPlugins_Sel;
-            else
-                tPluginLst = PluginIO::getInstance()->_core->I_NSysAllValidPlugins;
-            //检查该组件是否存在
-            bool isPluginExist = false;
-            foreach(Plugin_Interface* pi, tPluginLst)
-            {
-                if(pi->I_PluginID == configNode->_pluginID && pi->I_CopyID == configNode->_copyID)
-                {
-                    isPluginExist = true;
-                    break;
-                }
-            }
+//            //检查该组件是否存在
+//            QList<Plugin_Interface*> tPluginLst;
+//            if(configNode->_pluginType == PT_SYS)
+//                tPluginLst = PluginIO::getInstance()->_core->I_SysPlugins_Sel;
+//            else
+//                tPluginLst = PluginIO::getInstance()->_core->I_NSysAllValidPlugins;
 
-           if(isPluginExist)
-           {
+//            bool isPluginExist = false;
+//            foreach(Plugin_Interface* pi, tPluginLst)
+//            {
+//                if(pi->I_PluginID == configNode->_pluginID && pi->I_CopyID == configNode->_copyID)
+//                {
+//                    isPluginExist = true;
+//                    break;
+//                }
+//            }
+
+//           if(isPluginExist)
+//           {
                treeChildNode->setText(5, configNode->_pluginType?CONST_STR_NONSYSTEM:CONST_STR_SYSTEM);
                treeChildNode->setText(6, configNode->_pluginID);
                treeChildNode->setText(7, configNode->_copyID);
                treeChildNode->setText(8, configNode->_actionName);
                treeChildNode->setText(9, configNode->_actionDetail);
-           }
+
+               if(configNode->_actionName!="" && cbToolbarAction->findText(configNode->_actionName)<0)
+               {
+                   cbToolbarAction->addItem(treeChildNode->icon(0), configNode->_actionName);
+               }
+
          }
-
-        treeNode->addChild(treeChildNode);
-
-        if(configNode->_actionName!="" && cbToolbarAction->findText(configNode->_actionName)<0)
-        {
-            cbToolbarAction->addItem(treeChildNode->icon(0), configNode->_actionName);
-        }
     }
     else
     {
@@ -366,9 +366,25 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
         else
         {
             QTreeWidgetItem* treeHasChildNode = new QTreeWidgetItem();
+            treeNode->addChild(treeHasChildNode);
 
             treeHasChildNode->setText(0, configNode->_menuTitle);
-            treeNode->addChild(treeHasChildNode);
+            treeHasChildNode->setText(1, configNode->_menuShortCut);
+            treeHasChildNode->setText(2, configNode->_menuIconPath);
+            //判断icon文件是否存在，如果不存在，则尝试在程序images目录下查找
+            QString finalIconPath;
+            if(QFile::exists(configNode->_menuIconPath))
+                finalIconPath = configNode->_menuIconPath;
+            else
+            {
+                QFileInfo fInfo(configNode->_menuIconPath);
+                QString tFileName = fInfo.fileName();
+                if(QFile::exists(PluginIO::getInstance()->_core->I_ApplicationDirPath + "/Images/" + tFileName))
+                    finalIconPath = PluginIO::getInstance()->_core->I_ApplicationDirPath + "/Images/" + tFileName;
+            }
+           treeHasChildNode->setIcon(0, QIcon(finalIconPath));
+           treeHasChildNode->setText(3, QString::number(configNode->_menuAuthority));
+           treeHasChildNode->setText(4, configNode->_menuCheckable?QStringLiteral("True"):QStringLiteral("False"));
 
             for(int i=0; i<configNode->_children.count(); i++)
             {
@@ -759,10 +775,9 @@ void ViewEditor::on_btnOk_clicked()
     getConfigFromUI();
 
     if(1==_view->slot_SaveConfigFile())
-    {
         QMessageBox::information(this, tr("information"), tr("View configuration has changed, please restart application for updating."));
-        this->close();
-    }
+
+    this->close();
 }
 
 void ViewEditor::on_btnCancel_clicked()
@@ -907,9 +922,21 @@ void ViewEditor::on_btnLoadAction_clicked()
         ui->treeMenuEdit->currentItem()->setText(8, ce->_actionName);
         ui->treeMenuEdit->currentItem()->setText(9, ce->_actionDetail);
 
+        //从combobox中把该项添加进去或替换进去
         int tActionIndex = ui->cbActionFromMenu_Toolbar->findText(ce->_actionName, Qt::MatchFlag::MatchExactly);
-        if(tActionIndex>=0)
+        if(tActionIndex>=0)//如果存在，只替换图标
+        {
+            ui->cbActionFromMenu_Toolbar->setItemIcon(tActionIndex, ui->treeMenuEdit->currentItem()->icon(0));
+            foreach(QAction* act,  _view->_actionList)
+            {
+                if(act->objectName() == ce->_actionName)
+                {
+                    act->setIcon(ui->treeMenuEdit->currentItem()->icon(0));
+                    break;
+                }
+            }
             return;
+        }
         else
         {
             ui->cbActionFromMenu_Toolbar->addItem(ui->treeMenuEdit->currentItem()->icon(0), ce->_actionName);
@@ -927,10 +954,34 @@ void ViewEditor::on_btnClearAction_clicked()
     if(curSelItem==nullptr)
         return;
 
+    QString curActionName = curSelItem->text(8);
     //remove the action from cbActionFromMenu_Toolbar
-    int tIndex = ui->cbActionFromMenu_Toolbar->findText(curSelItem->text(8));
+    int tIndex = ui->cbActionFromMenu_Toolbar->findText(curActionName);
     if(tIndex>=0)
         ui->cbActionFromMenu_Toolbar->removeItem(tIndex);
+
+    foreach(QAction* act,  _view->_actionList)
+    {
+        if(act->objectName() == curActionName)
+        {
+            _view->_actionList.removeOne(act);
+            break;
+        }
+    }
+
+    for(int i=0; i<ui->treeToolbarEdit->topLevelItemCount(); i++) {
+        bool isFinded = false;
+        for(int j=0; j<ui->treeToolbarEdit->topLevelItem(i)->childCount(); j++){
+            if(ui->treeToolbarEdit->topLevelItem(i)->child(j)->text(1) == CONST_STR_ITEMTYPE_ACTION && ui->treeToolbarEdit->topLevelItem(i)->child(j)->text(0) == curActionName)
+            {
+                isFinded = true;
+                del(ui->treeToolbarEdit->topLevelItem(i)->child(j));
+                ui->treeToolbarEdit->repaint();
+            }
+        }
+        if(isFinded)
+            break;
+    }
 
     //Clear current item action info
     for(int i=5; i<ui->treeMenuEdit->columnCount(); i++)
@@ -1268,11 +1319,11 @@ void ViewEditor::TreeItemMoveDown(QTreeWidget* treeWidget)
 
         int topIevelItemIndex = treeWidget->indexOfTopLevelItem(curSelItem);
 
-        if(topIevelItemIndex>=treeWidget->topLevelItemCount())
+        if(topIevelItemIndex>=treeWidget->topLevelItemCount() -1)
             return;
 
         treeWidget->takeTopLevelItem(topIevelItemIndex);
-        treeWidget->insertTopLevelItem(topIevelItemIndex, topItem);
+        treeWidget->insertTopLevelItem(topIevelItemIndex + 1, topItem);
         treeWidget->setCurrentItem(topItem);
     }
     else
@@ -1658,6 +1709,7 @@ void ViewEditor::on_treeMenuEdit_itemDoubleClicked(QTreeWidgetItem *item, int co
     }
     else if(column>4)
     {
+        on_btnClearAction_clicked();
         on_btnLoadAction_clicked();
     }
 }
