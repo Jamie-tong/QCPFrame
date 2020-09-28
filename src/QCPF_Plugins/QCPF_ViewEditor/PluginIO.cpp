@@ -25,7 +25,7 @@ PluginIO::PluginIO()
     I_PluginID = tr("QCPF_ViewEditor");
     I_PluginAliasName = tr("View Editor");
     I_PluginAuther = tr("Jamie.T");
-    I_PluginVersion = tr("1.0.0.2");
+    I_PluginVersion = tr("1.1.0.0");
     I_PluginComment = tr("Edit the view of main window, such as menu-bar, tool-bar, status-bar and workspace.");
     I_PluginTag = tr("SINGLETON\\SYSTEM\\VIEW_EDITER");
     I_PluginAuthority = AT_DEVELOPER1;

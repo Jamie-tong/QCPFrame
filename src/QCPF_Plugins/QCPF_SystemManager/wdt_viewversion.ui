@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>154</width>
+    <width>96</width>
     <height>24</height>
    </rect>
   </property>
@@ -16,11 +16,16 @@
   <widget class="QLabel" name="labViewVersion">
    <property name="geometry">
     <rect>
-     <x>89</x>
+     <x>40</x>
      <y>4</y>
-     <width>61</width>
-     <height>16</height>
+     <width>51</width>
+     <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Agency FB</family>
+    </font>
    </property>
    <property name="text">
     <string>1.0.0.3</string>
@@ -31,12 +36,12 @@
     <rect>
      <x>5</x>
      <y>4</y>
-     <width>81</width>
+     <width>31</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>View Version:</string>
+    <string>View:</string>
    </property>
   </widget>
  </widget>

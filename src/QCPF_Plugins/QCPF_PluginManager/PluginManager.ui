@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>950</width>
-    <height>670</height>
+    <width>1061</width>
+    <height>741</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,726 +17,822 @@
    <iconset>
     <normaloff>../../bin/debug/Images/docker.png</normaloff>../../bin/debug/Images/docker.png</iconset>
   </property>
-  <widget class="QTabWidget" name="tabPlugin_Sort">
-   <property name="geometry">
-    <rect>
-     <x>5</x>
-     <y>6</y>
-     <width>951</width>
-     <height>611</height>
-    </rect>
+  <layout class="QGridLayout" name="gridLayout_11">
+   <property name="leftMargin">
+    <number>2</number>
    </property>
-   <property name="currentIndex">
-    <number>0</number>
+   <property name="topMargin">
+    <number>2</number>
    </property>
-   <property name="documentMode">
-    <bool>true</bool>
+   <property name="rightMargin">
+    <number>2</number>
    </property>
-   <property name="tabsClosable">
-    <bool>false</bool>
+   <property name="bottomMargin">
+    <number>2</number>
    </property>
-   <widget class="QWidget" name="tabPluginLst">
-    <attribute name="title">
-     <string>Plugin info</string>
-    </attribute>
-    <widget class="QTableWidget" name="tablePluginLst">
-     <property name="geometry">
-      <rect>
-       <x>4</x>
-       <y>2</y>
-       <width>931</width>
-       <height>581</height>
-      </rect>
-     </property>
-     <property name="mouseTracking">
-      <bool>false</bool>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-     <property name="autoScroll">
-      <bool>true</bool>
-     </property>
-     <property name="showDropIndicator" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::MultiSelection</enum>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
-     </property>
-     <property name="showGrid">
-      <bool>true</bool>
-     </property>
-     <property name="gridStyle">
-      <enum>Qt::SolidLine</enum>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-     <property name="rowCount">
-      <number>26</number>
-     </property>
-     <property name="columnCount">
-      <number>9</number>
-     </property>
-     <attribute name="horizontalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="horizontalHeaderCascadingSectionResizes">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>60</number>
-     </attribute>
-     <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="horizontalHeaderStretchLastSection">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="verticalHeaderCascadingSectionResizes">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="verticalHeaderMinimumSectionSize">
-      <number>18</number>
-     </attribute>
-     <attribute name="verticalHeaderDefaultSectionSize">
-      <number>18</number>
-     </attribute>
-     <attribute name="verticalHeaderShowSortIndicator" stdset="0">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="verticalHeaderStretchLastSection">
-      <bool>false</bool>
-     </attribute>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <row/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-     <column/>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="tab">
-    <attribute name="title">
-     <string>Plugin clone</string>
-    </attribute>
-    <widget class="QWidget" name="verticalLayoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>1</x>
-       <y>1</y>
-       <width>941</width>
-       <height>581</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="16,4">
-      <item>
-       <widget class="QTreeWidget" name="treePluginClone">
-        <column>
-         <property name="text">
-          <string notr="true">1</string>
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="gridLayout_10" rowminimumheight="0,44">
+     <item row="0" column="0">
+      <widget class="QTabWidget" name="tabPlugin_Sort">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <property name="documentMode">
+        <bool>true</bool>
+       </property>
+       <property name="tabsClosable">
+        <bool>false</bool>
+       </property>
+       <widget class="QWidget" name="tabPluginLst">
+        <attribute name="title">
+         <string>Plugin info</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <property name="leftMargin">
+          <number>6</number>
          </property>
-        </column>
-       </widget>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="QFrame" name="frame">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <widget class="QComboBox" name="cbOriginPluginLst">
-           <property name="geometry">
-            <rect>
-             <x>12</x>
-             <y>21</y>
-             <width>161</width>
-             <height>20</height>
-            </rect>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_2">
-           <property name="geometry">
-            <rect>
-             <x>12</x>
-             <y>2</y>
-             <width>151</width>
-             <height>15</height>
-            </rect>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>15</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Original Plugin ID:</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_3">
-           <property name="geometry">
-            <rect>
-             <x>12</x>
-             <y>101</y>
-             <width>91</width>
-             <height>15</height>
-            </rect>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>15</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Copy Alias:</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="txtCopyID">
-           <property name="geometry">
-            <rect>
-             <x>12</x>
-             <y>70</y>
-             <width>161</width>
-             <height>20</height>
-            </rect>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_5">
-           <property name="geometry">
-            <rect>
-             <x>12</x>
-             <y>51</y>
-             <width>161</width>
-             <height>15</height>
-            </rect>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>15</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Copy ID:</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="txtCopyAliasName">
-           <property name="geometry">
-            <rect>
-             <x>12</x>
-             <y>120</y>
-             <width>161</width>
-             <height>20</height>
-            </rect>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="btnClone">
-           <property name="geometry">
-            <rect>
-             <x>12</x>
-             <y>440</y>
-             <width>161</width>
-             <height>61</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Clone(&amp;L)</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="label_6">
-           <property name="geometry">
-            <rect>
-             <x>12</x>
-             <y>150</y>
-             <width>91</width>
-             <height>15</height>
-            </rect>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>15</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Copy Detail:</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="btnDeleteClone">
-           <property name="enabled">
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>6</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QTableWidget" name="tablePluginLst">
+           <property name="mouseTracking">
             <bool>false</bool>
            </property>
-           <property name="geometry">
-            <rect>
-             <x>12</x>
-             <y>510</y>
-             <width>161</width>
-             <height>61</height>
-            </rect>
+           <property name="autoFillBackground">
+            <bool>false</bool>
            </property>
-           <property name="text">
-            <string>Destroy(&amp;D)</string>
+           <property name="styleSheet">
+            <string notr="true"/>
            </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <property name="autoScroll">
+            <bool>true</bool>
+           </property>
+           <property name="showDropIndicator" stdset="0">
+            <bool>true</bool>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionMode">
+            <enum>QAbstractItemView::MultiSelection</enum>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <property name="showGrid">
+            <bool>true</bool>
+           </property>
+           <property name="gridStyle">
+            <enum>Qt::SolidLine</enum>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="rowCount">
+            <number>26</number>
+           </property>
+           <property name="columnCount">
+            <number>9</number>
+           </property>
+           <attribute name="horizontalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderCascadingSectionResizes">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderDefaultSectionSize">
+            <number>60</number>
+           </attribute>
+           <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderStretchLastSection">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderCascadingSectionResizes">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderMinimumSectionSize">
+            <number>18</number>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>18</number>
+           </attribute>
+           <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderStretchLastSection">
+            <bool>false</bool>
+           </attribute>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <row/>
+           <column/>
+           <column/>
+           <column/>
+           <column/>
+           <column/>
+           <column/>
+           <column/>
+           <column/>
+           <column/>
           </widget>
-          <widget class="QTextEdit" name="txtCopyComment">
-           <property name="geometry">
-            <rect>
-             <x>12</x>
-             <y>170</y>
-             <width>161</width>
-             <height>261</height>
-            </rect>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tabClone">
+        <attribute name="title">
+         <string>Plugin clone</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <property name="leftMargin">
+          <number>6</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>6</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <item row="0" column="0">
+          <layout class="QGridLayout" name="gridLayout_3" columnminimumwidth="0,170">
+           <property name="spacing">
+            <number>2</number>
            </property>
-          </widget>
+           <item row="0" column="0">
+            <widget class="QTreeWidget" name="treePluginClone">
+             <column>
+              <property name="text">
+               <string notr="true">1</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QFrame" name="frame">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Plain</enum>
+             </property>
+             <widget class="QComboBox" name="cbOriginPluginLst">
+              <property name="geometry">
+               <rect>
+                <x>5</x>
+                <y>21</y>
+                <width>161</width>
+                <height>20</height>
+               </rect>
+              </property>
+             </widget>
+             <widget class="QLabel" name="label_2">
+              <property name="geometry">
+               <rect>
+                <x>5</x>
+                <y>2</y>
+                <width>151</width>
+                <height>15</height>
+               </rect>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>15</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Original Plugin ID:</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="label_3">
+              <property name="geometry">
+               <rect>
+                <x>5</x>
+                <y>101</y>
+                <width>91</width>
+                <height>15</height>
+               </rect>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>15</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Copy Alias:</string>
+              </property>
+             </widget>
+             <widget class="QLineEdit" name="txtCopyID">
+              <property name="geometry">
+               <rect>
+                <x>5</x>
+                <y>70</y>
+                <width>161</width>
+                <height>20</height>
+               </rect>
+              </property>
+             </widget>
+             <widget class="QLabel" name="label_5">
+              <property name="geometry">
+               <rect>
+                <x>5</x>
+                <y>51</y>
+                <width>161</width>
+                <height>15</height>
+               </rect>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>15</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Copy ID:</string>
+              </property>
+             </widget>
+             <widget class="QLineEdit" name="txtCopyAliasName">
+              <property name="geometry">
+               <rect>
+                <x>5</x>
+                <y>120</y>
+                <width>161</width>
+                <height>20</height>
+               </rect>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="btnClone">
+              <property name="geometry">
+               <rect>
+                <x>5</x>
+                <y>440</y>
+                <width>161</width>
+                <height>61</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Clone(&amp;L)</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="label_6">
+              <property name="geometry">
+               <rect>
+                <x>5</x>
+                <y>150</y>
+                <width>91</width>
+                <height>15</height>
+               </rect>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>15</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Copy Detail:</string>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="btnDeleteClone">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="geometry">
+               <rect>
+                <x>5</x>
+                <y>510</y>
+                <width>161</width>
+                <height>61</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Destroy(&amp;D)</string>
+              </property>
+             </widget>
+             <widget class="QTextEdit" name="txtCopyComment">
+              <property name="geometry">
+               <rect>
+                <x>5</x>
+                <y>170</y>
+                <width>161</width>
+                <height>261</height>
+               </rect>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tabOrder">
+        <attribute name="title">
+         <string>Plugin ordering</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_9">
+         <property name="leftMargin">
+          <number>4</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>4</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <item row="0" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QGroupBox" name="groupBox">
+             <property name="title">
+              <string>Original plugin order</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_6">
+              <property name="leftMargin">
+               <number>2</number>
+              </property>
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="rightMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <item row="0" column="0">
+               <layout class="QGridLayout" name="gridLayout_5" columnminimumwidth="0,60">
+                <property name="spacing">
+                 <number>2</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QTableWidget" name="tableOrigPluginsSort">
+                  <property name="mouseTracking">
+                   <bool>false</bool>
+                  </property>
+                  <property name="autoFillBackground">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
+                  </property>
+                  <property name="autoScroll">
+                   <bool>true</bool>
+                  </property>
+                  <property name="showDropIndicator" stdset="0">
+                   <bool>true</bool>
+                  </property>
+                  <property name="alternatingRowColors">
+                   <bool>true</bool>
+                  </property>
+                  <property name="selectionMode">
+                   <enum>QAbstractItemView::MultiSelection</enum>
+                  </property>
+                  <property name="selectionBehavior">
+                   <enum>QAbstractItemView::SelectRows</enum>
+                  </property>
+                  <property name="showGrid">
+                   <bool>true</bool>
+                  </property>
+                  <property name="gridStyle">
+                   <enum>Qt::SolidLine</enum>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                  <property name="rowCount">
+                   <number>26</number>
+                  </property>
+                  <property name="columnCount">
+                   <number>3</number>
+                  </property>
+                  <attribute name="horizontalHeaderCascadingSectionResizes">
+                   <bool>false</bool>
+                  </attribute>
+                  <attribute name="horizontalHeaderDefaultSectionSize">
+                   <number>60</number>
+                  </attribute>
+                  <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+                   <bool>false</bool>
+                  </attribute>
+                  <attribute name="horizontalHeaderStretchLastSection">
+                   <bool>true</bool>
+                  </attribute>
+                  <attribute name="verticalHeaderVisible">
+                   <bool>false</bool>
+                  </attribute>
+                  <attribute name="verticalHeaderCascadingSectionResizes">
+                   <bool>false</bool>
+                  </attribute>
+                  <attribute name="verticalHeaderMinimumSectionSize">
+                   <number>18</number>
+                  </attribute>
+                  <attribute name="verticalHeaderDefaultSectionSize">
+                   <number>18</number>
+                  </attribute>
+                  <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+                   <bool>false</bool>
+                  </attribute>
+                  <attribute name="verticalHeaderStretchLastSection">
+                   <bool>false</bool>
+                  </attribute>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <column/>
+                  <column/>
+                  <column/>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QWidget" name="widget_3" native="true">
+                  <widget class="QPushButton" name="btnOrigPluginMoveDown">
+                   <property name="geometry">
+                    <rect>
+                     <x>4</x>
+                     <y>130</y>
+                     <width>51</width>
+                     <height>121</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>DOWN</string>
+                   </property>
+                  </widget>
+                  <widget class="QPushButton" name="btnOrigPluginMoveUp">
+                   <property name="geometry">
+                    <rect>
+                     <x>4</x>
+                     <y>-1</y>
+                     <width>51</width>
+                     <height>121</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>UP</string>
+                   </property>
+                  </widget>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_2">
+             <property name="title">
+              <string>All valid plugin order</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_8">
+              <property name="leftMargin">
+               <number>2</number>
+              </property>
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="rightMargin">
+               <number>2</number>
+              </property>
+              <property name="bottomMargin">
+               <number>2</number>
+              </property>
+              <property name="spacing">
+               <number>2</number>
+              </property>
+              <item row="0" column="0">
+               <layout class="QGridLayout" name="gridLayout_7" columnminimumwidth="0,60">
+                <property name="spacing">
+                 <number>2</number>
+                </property>
+                <item row="0" column="1">
+                 <widget class="QWidget" name="widget_4" native="true">
+                  <widget class="QPushButton" name="btnValidPluginMoveDown">
+                   <property name="geometry">
+                    <rect>
+                     <x>4</x>
+                     <y>130</y>
+                     <width>51</width>
+                     <height>121</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>DOWN</string>
+                   </property>
+                  </widget>
+                  <widget class="QPushButton" name="btnValidPluginMoveUp">
+                   <property name="geometry">
+                    <rect>
+                     <x>4</x>
+                     <y>-1</y>
+                     <width>51</width>
+                     <height>121</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>UP</string>
+                   </property>
+                  </widget>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QTableWidget" name="tableAllValidPluginsSort">
+                  <property name="mouseTracking">
+                   <bool>false</bool>
+                  </property>
+                  <property name="autoFillBackground">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
+                  </property>
+                  <property name="autoScroll">
+                   <bool>true</bool>
+                  </property>
+                  <property name="showDropIndicator" stdset="0">
+                   <bool>true</bool>
+                  </property>
+                  <property name="alternatingRowColors">
+                   <bool>true</bool>
+                  </property>
+                  <property name="selectionMode">
+                   <enum>QAbstractItemView::MultiSelection</enum>
+                  </property>
+                  <property name="selectionBehavior">
+                   <enum>QAbstractItemView::SelectRows</enum>
+                  </property>
+                  <property name="showGrid">
+                   <bool>true</bool>
+                  </property>
+                  <property name="gridStyle">
+                   <enum>Qt::SolidLine</enum>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                  <property name="rowCount">
+                   <number>26</number>
+                  </property>
+                  <property name="columnCount">
+                   <number>4</number>
+                  </property>
+                  <attribute name="horizontalHeaderCascadingSectionResizes">
+                   <bool>false</bool>
+                  </attribute>
+                  <attribute name="horizontalHeaderDefaultSectionSize">
+                   <number>60</number>
+                  </attribute>
+                  <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+                   <bool>false</bool>
+                  </attribute>
+                  <attribute name="horizontalHeaderStretchLastSection">
+                   <bool>true</bool>
+                  </attribute>
+                  <attribute name="verticalHeaderVisible">
+                   <bool>false</bool>
+                  </attribute>
+                  <attribute name="verticalHeaderCascadingSectionResizes">
+                   <bool>false</bool>
+                  </attribute>
+                  <attribute name="verticalHeaderMinimumSectionSize">
+                   <number>18</number>
+                  </attribute>
+                  <attribute name="verticalHeaderDefaultSectionSize">
+                   <number>18</number>
+                  </attribute>
+                  <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+                   <bool>false</bool>
+                  </attribute>
+                  <attribute name="verticalHeaderStretchLastSection">
+                   <bool>false</bool>
+                  </attribute>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <column/>
+                  <column/>
+                  <column/>
+                  <column/>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <layout class="QGridLayout" name="gridLayout" columnminimumwidth="106,0,216">
+       <item row="0" column="0">
+        <widget class="QWidget" name="widget" native="true">
+         <widget class="QPushButton" name="btnRefreshPlugins">
+          <property name="geometry">
+           <rect>
+            <x>6</x>
+            <y>4</y>
+            <width>100</width>
+            <height>35</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>35</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Update(&amp;U)</string>
+          </property>
          </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="tab_2">
-    <attribute name="title">
-     <string>Plugin ordering</string>
-    </attribute>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="geometry">
-      <rect>
-       <x>3</x>
-       <y>10</y>
-       <width>931</width>
-       <height>281</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Original plugin order</string>
-     </property>
-     <widget class="QPushButton" name="btnOrigPluginMoveDown">
-      <property name="geometry">
-       <rect>
-        <x>870</x>
-        <y>150</y>
-        <width>51</width>
-        <height>121</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>DOWN</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnOrigPluginMoveUp">
-      <property name="geometry">
-       <rect>
-        <x>870</x>
-        <y>19</y>
-        <width>51</width>
-        <height>121</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>UP</string>
-      </property>
-     </widget>
-     <widget class="QTableWidget" name="tableOrigPluginsSort">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>851</width>
-        <height>251</height>
-       </rect>
-      </property>
-      <property name="mouseTracking">
-       <bool>false</bool>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="autoScroll">
-       <bool>true</bool>
-      </property>
-      <property name="showDropIndicator" stdset="0">
-       <bool>true</bool>
-      </property>
-      <property name="alternatingRowColors">
-       <bool>true</bool>
-      </property>
-      <property name="selectionMode">
-       <enum>QAbstractItemView::MultiSelection</enum>
-      </property>
-      <property name="selectionBehavior">
-       <enum>QAbstractItemView::SelectRows</enum>
-      </property>
-      <property name="showGrid">
-       <bool>true</bool>
-      </property>
-      <property name="gridStyle">
-       <enum>Qt::SolidLine</enum>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-      <property name="rowCount">
-       <number>26</number>
-      </property>
-      <property name="columnCount">
-       <number>3</number>
-      </property>
-      <attribute name="horizontalHeaderCascadingSectionResizes">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>60</number>
-      </attribute>
-      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="horizontalHeaderStretchLastSection">
-       <bool>true</bool>
-      </attribute>
-      <attribute name="verticalHeaderVisible">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="verticalHeaderCascadingSectionResizes">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="verticalHeaderMinimumSectionSize">
-       <number>18</number>
-      </attribute>
-      <attribute name="verticalHeaderDefaultSectionSize">
-       <number>18</number>
-      </attribute>
-      <attribute name="verticalHeaderShowSortIndicator" stdset="0">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="verticalHeaderStretchLastSection">
-       <bool>false</bool>
-      </attribute>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <column/>
-      <column/>
-      <column/>
-     </widget>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="geometry">
-      <rect>
-       <x>3</x>
-       <y>304</y>
-       <width>931</width>
-       <height>281</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>All valid plugin order</string>
-     </property>
-     <widget class="QPushButton" name="btnValidPluginMoveDown">
-      <property name="geometry">
-       <rect>
-        <x>870</x>
-        <y>150</y>
-        <width>51</width>
-        <height>121</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>DOWN</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnValidPluginMoveUp">
-      <property name="geometry">
-       <rect>
-        <x>870</x>
-        <y>19</y>
-        <width>51</width>
-        <height>121</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>UP</string>
-      </property>
-     </widget>
-     <widget class="QTableWidget" name="tableAllValidPluginsSort">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>851</width>
-        <height>251</height>
-       </rect>
-      </property>
-      <property name="mouseTracking">
-       <bool>false</bool>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="autoScroll">
-       <bool>true</bool>
-      </property>
-      <property name="showDropIndicator" stdset="0">
-       <bool>true</bool>
-      </property>
-      <property name="alternatingRowColors">
-       <bool>true</bool>
-      </property>
-      <property name="selectionMode">
-       <enum>QAbstractItemView::MultiSelection</enum>
-      </property>
-      <property name="selectionBehavior">
-       <enum>QAbstractItemView::SelectRows</enum>
-      </property>
-      <property name="showGrid">
-       <bool>true</bool>
-      </property>
-      <property name="gridStyle">
-       <enum>Qt::SolidLine</enum>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-      <property name="rowCount">
-       <number>26</number>
-      </property>
-      <property name="columnCount">
-       <number>4</number>
-      </property>
-      <attribute name="horizontalHeaderCascadingSectionResizes">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>60</number>
-      </attribute>
-      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="horizontalHeaderStretchLastSection">
-       <bool>true</bool>
-      </attribute>
-      <attribute name="verticalHeaderVisible">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="verticalHeaderCascadingSectionResizes">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="verticalHeaderMinimumSectionSize">
-       <number>18</number>
-      </attribute>
-      <attribute name="verticalHeaderDefaultSectionSize">
-       <number>18</number>
-      </attribute>
-      <attribute name="verticalHeaderShowSortIndicator" stdset="0">
-       <bool>false</bool>
-      </attribute>
-      <attribute name="verticalHeaderStretchLastSection">
-       <bool>false</bool>
-      </attribute>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <row/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-     </widget>
-    </widget>
-   </widget>
-  </widget>
-  <widget class="QPushButton" name="btnOk">
-   <property name="geometry">
-    <rect>
-     <x>730</x>
-     <y>624</y>
-     <width>100</width>
-     <height>35</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>35</height>
-    </size>
-   </property>
-   <property name="text">
-    <string>Ok(&amp;O)</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnCancel">
-   <property name="geometry">
-    <rect>
-     <x>832</x>
-     <y>624</y>
-     <width>100</width>
-     <height>35</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>35</height>
-    </size>
-   </property>
-   <property name="text">
-    <string>Cancel(&amp;C)</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnRefreshPlugins">
-   <property name="geometry">
-    <rect>
-     <x>8</x>
-     <y>624</y>
-     <width>100</width>
-     <height>35</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>35</height>
-    </size>
-   </property>
-   <property name="text">
-    <string>Update(&amp;U)</string>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_3">
-   <property name="geometry">
-    <rect>
-     <x>-10</x>
-     <y>616</y>
-     <width>1000</width>
-     <height>2</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string/>
-   </property>
-   <property name="flat">
-    <bool>true</bool>
-   </property>
-  </widget>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="2">
+        <widget class="QWidget" name="widget_2" native="true">
+         <widget class="QPushButton" name="btnCancel">
+          <property name="geometry">
+           <rect>
+            <x>105</x>
+            <y>4</y>
+            <width>100</width>
+            <height>35</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>35</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Cancel(&amp;C)</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btnOk">
+          <property name="geometry">
+           <rect>
+            <x>3</x>
+            <y>4</y>
+            <width>100</width>
+            <height>35</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>35</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Ok(&amp;O)</string>
+          </property>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

@@ -245,6 +245,8 @@ Makefile: QCPF_Host_Console.pro C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\win32-msv
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\qt.prf \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\resources.prf \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\moc.prf \
+		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\win32\opengl.prf \
+		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\uic.prf \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\qmake_use.prf \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\file_copies.prf \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\testcase_targets.prf \
@@ -252,6 +254,8 @@ Makefile: QCPF_Host_Console.pro C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\win32-msv
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\yacc.prf \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\lex.prf \
 		QCPF_Host_Console.pro \
+		C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Widgets.prl \
+		C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Gui.prl \
 		C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Core.prl
 	$(QMAKE) -o Makefile QCPF_Host_Console.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\spec_pre.prf:
@@ -422,6 +426,8 @@ C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\warn_on.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\qt.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\resources.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\moc.prf:
+C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\win32\opengl.prf:
+C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\uic.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\qmake_use.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\file_copies.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\testcase_targets.prf:
@@ -429,6 +435,8 @@ C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\exceptions.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\yacc.prf:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\mkspecs\features\lex.prf:
 QCPF_Host_Console.pro:
+C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Widgets.prl:
+C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Gui.prl:
 C:\Qt\Qt5.13.1\5.13.1\msvc2017\lib\Qt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile QCPF_Host_Console.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"

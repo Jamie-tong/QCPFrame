@@ -14,7 +14,7 @@ License: GPL v3.0
 
 
 #define MASK_END_STR "_tp"
-#define SYSTEM_VERSION "1.0.0.5"
+#define SYSTEM_VERSION "1.0.0.6"
 #define ORGANIZATION_NAME "Jamie.T"
 
 QCPF_ViewModel::QCPF_ViewModel(QCPF_Model* model, QObject* parent):_config(this)

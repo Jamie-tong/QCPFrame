@@ -1,3 +1,4 @@
+QT += widgets
 TARGET =  ../../../bin/QCPF_Model
 
 TEMPLATE = lib

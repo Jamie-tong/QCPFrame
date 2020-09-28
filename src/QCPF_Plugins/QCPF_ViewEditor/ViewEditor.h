@@ -107,6 +107,8 @@ private slots:
 
      void on_tableStatusbarEditer_currentItemChanged(QTableWidgetItem *current, QTableWidgetItem *previous);
 
+     void on_btnIconClear_clicked();
+
 public slots:
      void slot_SelAllOrNot(bool flag);
      void OnLineEdit_EditingFinished_Tree(void);

@@ -43,7 +43,7 @@ void QCPF_Controllor::GetCoreInfo(QString& systemName, QString& systemID, QStrin
     systemVersion = _core->I_SystemVersion;
     organizetionName = _core->I_OrganizationName;
 
-    qDebug() <<tr("[Core infomation]");
+    qDebug() <<tr("[Core infomation]:")<<systemName<<systemID<<systemVersion<<organizetionName<<endl;
 }
 
 void QCPF_Controllor::PluginCollect()

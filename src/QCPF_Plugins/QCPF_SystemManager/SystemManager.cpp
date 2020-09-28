@@ -38,15 +38,9 @@ SystemManager::SystemManager(QCPF_Model* model, QWidget *parent) :
     setWindowFlags(Qt::Dialog
                    | Qt::WindowCloseButtonHint | Qt::WindowMaximizeButtonHint);
 
-    //禁止调整大小
-    QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    sizePolicy.setHorizontalStretch(0);
-    sizePolicy.setVerticalStretch(0);
-    sizePolicy.setHeightForWidth(hasHeightForWidth());
-    setSizePolicy(sizePolicy);
-    setMinimumSize(QSize(950, 670));
-    setMaximumSize(QSize(950, 670));
-    setSizeGripEnabled(false);
+    setMinimumSize(QSize(950, 666));
+
+    setSizeGripEnabled(true);
 
     connect(this, SIGNAL(sig_Save(void)), _core, SLOT(slot_SaveConfigFile(void)));
     connect(this, SIGNAL(sig_Cancel(void)), _core, SLOT(slot_CancelConfig(void)));

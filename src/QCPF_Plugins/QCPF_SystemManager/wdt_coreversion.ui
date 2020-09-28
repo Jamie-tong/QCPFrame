@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>154</width>
+    <width>96</width>
     <height>24</height>
    </rect>
   </property>
@@ -18,20 +18,20 @@
     <rect>
      <x>6</x>
      <y>3</y>
-     <width>81</width>
+     <width>31</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Core Version:</string>
+    <string>Core:</string>
    </property>
   </widget>
   <widget class="QLabel" name="labCoreVersion">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>40</x>
      <y>3</y>
-     <width>61</width>
+     <width>51</width>
      <height>16</height>
     </rect>
    </property>

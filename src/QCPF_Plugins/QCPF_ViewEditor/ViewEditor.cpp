@@ -56,14 +56,8 @@ ViewEditor::ViewEditor(QWidget *parent) :
                    | Qt::WindowCloseButtonHint | Qt::WindowMaximizeButtonHint);
 
     //禁止调整大小
-    QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    sizePolicy.setHorizontalStretch(0);
-    sizePolicy.setVerticalStretch(0);
-    sizePolicy.setHeightForWidth(hasHeightForWidth());
-    setSizePolicy(sizePolicy);
-    setMinimumSize(QSize(1260, 780));
-    setMaximumSize(QSize(1260, 780));
-    setSizeGripEnabled(false);
+    setMinimumSize(QSize(1024, 790));
+    setSizeGripEnabled(true);
 
     //注册面板显示后的信号槽
     _timer = new QTimer(this);
@@ -1026,20 +1020,6 @@ void ViewEditor::on_btnIconFinder_clicked()
                 qwi->setIcon(0, tIcon);
             }
         }
-        else{
-            //点的是取消
-            ui->treeMenuEdit->currentItem()->setIcon(0, QIcon());
-            ui->treeMenuEdit->currentItem()->setText(2, "");
-
-            QString actionName = ui->treeMenuEdit->currentItem()->text(8);
-            int tCbIndex = ui->cbActionFromMenu_Toolbar->findText(actionName, Qt::MatchFlag::MatchExactly);
-            ui->cbActionFromMenu_Toolbar->setItemIcon(tCbIndex, QIcon());
-
-            QList<QTreeWidgetItem*> destItemsLst = ui->treeToolbarEdit->findItems(actionName, Qt::MatchFlag::MatchRecursive | Qt::MatchFlag::MatchExactly);
-            foreach (QTreeWidgetItem* qwi, destItemsLst) {
-                qwi->setIcon(0, QIcon());
-            }
-        }
 }
 
 void ViewEditor::on_btnAddAction_Toolbar_clicked()
@@ -1862,5 +1842,27 @@ void ViewEditor::on_tableStatusbarEditer_itemDoubleClicked(QTableWidgetItem *ite
         cbBox->setCurrentText(item->text());
         connect(cbBox, SIGNAL(activated(int)), this, SLOT(OnComboBox_Activated_Text_Table(int)));
         ui->tableStatusbarEditer->setCellWidget(item->row(), item->column(), cbBox);
+    }
+}
+
+void ViewEditor::on_btnIconClear_clicked()
+{
+    if(ui->treeMenuEdit->currentItem()==nullptr)
+        return;
+
+    if(ui->treeMenuEdit->currentItem()->text(0)== CONST_STR_SEPARATOR)
+        return;
+
+    //点的是取消
+    ui->treeMenuEdit->currentItem()->setIcon(0, QIcon());
+    ui->treeMenuEdit->currentItem()->setText(2, "");
+
+    QString actionName = ui->treeMenuEdit->currentItem()->text(8);
+    int tCbIndex = ui->cbActionFromMenu_Toolbar->findText(actionName, Qt::MatchFlag::MatchExactly);
+    ui->cbActionFromMenu_Toolbar->setItemIcon(tCbIndex, QIcon());
+
+    QList<QTreeWidgetItem*> destItemsLst = ui->treeToolbarEdit->findItems(actionName, Qt::MatchFlag::MatchRecursive | Qt::MatchFlag::MatchExactly);
+    foreach (QTreeWidgetItem* qwi, destItemsLst) {
+        qwi->setIcon(0, QIcon());
     }
 }

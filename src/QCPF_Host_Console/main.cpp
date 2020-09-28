@@ -27,12 +27,14 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName(organizationName);
     QCoreApplication::setApplicationVersion(sysVersion);
 
+    QCommandLineOption op_PSysInfo("PSysInfo", "get system info");// 长名称，无参数
     QCommandLineOption op_PLst("PLst", "get plugins form plugin dir");// 长名称，无参数
     QCommandLineOption op_PFuncLst("PFLst", "get the function list of plugin.", "Plugin ID");// 长名称，无参数
     QCommandLineOption op_PFunc("PFunc", "Run the function from plugin function list.", "Plugin ID, Copy ID, Function Name");// 长名称，无参数
 
     QCommandLineParser parser;
 
+    parser.addOption(op_PSysInfo);
     parser.addOption(op_PLst);
     parser.addOption(op_PFuncLst);
     parser.addOption(op_PFunc);
@@ -40,6 +42,11 @@ int main(int argc, char *argv[])
     parser.process(app);
 
     qDebug() <<  parser.helpText()<<endl;
+
+    if(parser.isSet(op_PSysInfo))
+    {
+        _controllor->GetCoreInfo(sysName, sysID, sysVersion, organizationName);
+    }
 
     if(parser.isSet(op_PLst))
     {
