@@ -24,9 +24,9 @@
 3. 打开 src/QCPF_HostView.pro
 4. 项目设置->Shadow build去掉勾选
 5. 编译运行(先编译QCPF_Model,QCPF_ViewModel和QCPF_PluginModel)。
-6. 愉快的玩积木吧，默认登录名：tt1  密码：1。。
+6. 愉快的玩积木吧，默认登录名：tt1  密码：1。
 
-作者：Jamie.T
+作者：J
 QQ : 260271262
 
 【更新日志】：
