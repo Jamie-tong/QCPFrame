@@ -1,0 +1,5 @@
+
+bin/Plugins/QPlugin1.lib
+*.lib
+bin/Bin/Plugins/QCPF_PluginManager.lib
+bin/Plugins/QPlugin1.lib

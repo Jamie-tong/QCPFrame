@@ -17,8 +17,8 @@ enum BarItemType
 {
   BT_ACTION,
   BT_WIDGET,
-  BT_SEPARATOR,//分隔符
-  BT_SPACER,//弹簧
+  BT_SEPARATOR,
+  BT_SPACER,
 };
 
 enum BarItemSytle
@@ -79,7 +79,6 @@ public:
 class JMenuNode
 {
 public:
-    //菜单项相关
     QString _menuTitle;
     QString _menuShortCut;
     QString _menuIconPath;
@@ -89,16 +88,13 @@ public:
     bool _menuCheckable;
     bool _menuIsSeprator;
 
-    //从这里可以定位到具体的组件
     int _pluginType;//PluginType
     QString _pluginID;
     QString _copyID;
 
-    //组件Action
     QString _actionName;
     QString _actionDetail;
 
-    //菜单父子关系
     QString _parentMenuTitle;
     int _count_children;
     QList<JMenuNode*> _children;
@@ -130,7 +126,7 @@ public:
     friend QDataStream& JTreeFromBnr(QDataStream& src, JMenuNode* tn);
     friend QDataStream& JTreeToBnr(QDataStream& src, JMenuNode* tn);
 
-public://UI相关数据成员
+public:
     void resetData();
     viewConfigModel* _this;
     bool _isEnable_ShowMenu = true;

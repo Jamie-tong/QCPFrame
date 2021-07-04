@@ -32,7 +32,7 @@ public:
     void InitWidgetList(Plugin_Interface* plugin) Q_DECL_OVERRIDE;
 
 public:
-    static PluginIO* getInstance();//静态获取实例
+    static PluginIO* getInstance();
 
 public slots:
         int slot_InputInfo(tagOutputInfo& info) Q_DECL_OVERRIDE;

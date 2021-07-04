@@ -114,10 +114,6 @@ viewConfigModel& viewConfigModel::operator =(const viewConfigModel& other)
 
 QDataStream& operator>>(QDataStream& src, viewConfigModel& data)
 {
-    /*
-     错误:C2679: 二进制“>>”: 没有找到接受“quint32”类型的右操作数的运算
-    解决方法：因为没有添加头文件<QDataStream>
-    */
     src >> data._isEnable_ShowMenu;
     src >> data._isEnable_ShowToolbar;
     src >> data._isEnable_ShowStatusbar;

@@ -31,10 +31,6 @@ PluginIO* PluginIO::getInstance()
     return instance;
 }
 
-//接口方法实现
-/***************************************************
-*                       方法接口                    *
-***************************************************/
 void PluginIO::InitWidgetList(Plugin_Interface* plugin)
 {
     //-----------------

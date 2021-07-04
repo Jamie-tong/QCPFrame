@@ -42,7 +42,7 @@ class QCPF_VIEWMODEL_EXPORT QCPF_ViewModel : QObject
         QString _organization;
 
     signals:
-        int sig_OutputInfo(tagOutputInfo& info);//向槽函数发送初始化信息
+        int sig_OutputInfo(tagOutputInfo& info);
     public slots:
         int slot_Initialize();
         int slot_InputInfo(tagOutputInfo& info);

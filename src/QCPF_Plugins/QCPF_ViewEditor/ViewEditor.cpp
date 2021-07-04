@@ -49,17 +49,14 @@ ViewEditor::ViewEditor(QWidget *parent) :
     pViewEdInstance = this;
     pluginInst = PluginIO::getInstance();
     _view = (QCPF_ViewModel*)pluginInst->_core->_view;
-    connect(this,SIGNAL(sig_SelAllOrNot(bool)),this,SLOT(slot_SelAllOrNot(bool)));//for 全选/不选复选框
+    connect(this,SIGNAL(sig_SelAllOrNot(bool)),this,SLOT(slot_SelAllOrNot(bool)));
 
-    //去掉问号按钮
     setWindowFlags(Qt::Dialog
                    | Qt::WindowCloseButtonHint | Qt::WindowMaximizeButtonHint);
 
-    //禁止调整大小
     setMinimumSize(QSize(1024, 790));
     setSizeGripEnabled(true);
 
-    //注册面板显示后的信号槽
     _timer = new QTimer(this);
     _timer->setSingleShot(true);
     connect(_timer, SIGNAL(timeout()), this, SLOT(slot_OnULoaded()));
@@ -80,7 +77,6 @@ ViewEditor::~ViewEditor()
 
 void ViewEditor::resizeEvent(QResizeEvent *event)
 {
-    //如果不是第一次显示
     if(!_isFirstResize)
         return;
     else
@@ -183,7 +179,6 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
             BarItem* tItem = new BarItem();
             tToolbar->_toolBarItemList.append(tItem);
 
-            //_type---------------0:Separator; 1:Widget; 2:Action
             QString tTypeStr = ui->treeToolbarEdit->topLevelItem(i)->child(j)->text(1);
 
             if(tTypeStr.compare(CONST_STR_ITEMTYPE_ACTION)==0)
@@ -195,7 +190,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
             else if(tTypeStr.compare(CONST_STR_ITEMTYPE_SPACER)==0)
                 tItem->_type = BT_SPACER;
 
-            if(tItem->_type==BT_ACTION)//Action
+            if(tItem->_type==BT_ACTION)
             {
                 ActionItem* tActionItem = new ActionItem();
                 tItem->_actionItem = tActionItem;
@@ -205,7 +200,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
                 tItem->_width = ui->treeToolbarEdit->topLevelItem(i)->text(3).toInt();
                 tItem->_height = ui->treeToolbarEdit->topLevelItem(i)->text(4).toInt();
             }
-            else if(tItem->_type==BT_WIDGET)//Widget
+            else if(tItem->_type==BT_WIDGET)
             {
                 WidgetItem* tWidgetItem = new WidgetItem();
                 tItem->_widgetItem = tWidgetItem;
@@ -299,7 +294,6 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
              treeChildNode->setText(1, configNode->_menuShortCut);
              treeChildNode->setText(2, configNode->_menuIconPath);
 
-             //判断icon文件是否存在，如果不存在，则尝试在程序images目录下查找
              QString finalIconPath;
              if(QFile::exists(configNode->_menuIconPath))
                  finalIconPath = configNode->_menuIconPath;
@@ -315,25 +309,6 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
             treeChildNode->setText(4, configNode->_menuCheckable?QStringLiteral("True"):QStringLiteral("False"));
 
 
-//            //检查该组件是否存在
-//            QList<Plugin_Interface*> tPluginLst;
-//            if(configNode->_pluginType == PT_SYS)
-//                tPluginLst = PluginIO::getInstance()->_core->I_SysPlugins_Sel;
-//            else
-//                tPluginLst = PluginIO::getInstance()->_core->I_NSysAllValidPlugins;
-
-//            bool isPluginExist = false;
-//            foreach(Plugin_Interface* pi, tPluginLst)
-//            {
-//                if(pi->I_PluginID == configNode->_pluginID && pi->I_CopyID == configNode->_copyID)
-//                {
-//                    isPluginExist = true;
-//                    break;
-//                }
-//            }
-
-//           if(isPluginExist)
-//           {
                treeChildNode->setText(5, configNode->_pluginType?CONST_STR_NONSYSTEM:CONST_STR_SYSTEM);
                treeChildNode->setText(6, configNode->_pluginID);
                treeChildNode->setText(7, configNode->_copyID);
@@ -350,7 +325,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
     else
     {
         QString tStr = configNode->_parentMenuTitle;
-        if(configNode->_parentMenuTitle =="")//说明是一级菜单
+        if(configNode->_parentMenuTitle =="")
         {
             for(int i=0; i<configNode->_children.count(); i++)
             {
@@ -365,7 +340,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
             treeHasChildNode->setText(0, configNode->_menuTitle);
             treeHasChildNode->setText(1, configNode->_menuShortCut);
             treeHasChildNode->setText(2, configNode->_menuIconPath);
-            //判断icon文件是否存在，如果不存在，则尝试在程序images目录下查找
+
             QString finalIconPath;
             if(QFile::exists(configNode->_menuIconPath))
                 finalIconPath = configNode->_menuIconPath;
@@ -398,9 +373,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
      ui->chb_DockFloatable->setChecked(_view->_config._dock_Floatable);
      ui->chb_DockMoveable->setChecked(_view->_config._dock_Moveable);
      ui->chb_DockCloseable->setChecked(_view->_config._dock_Closeable);
-     //--------------------------
-     //设置菜单编辑器树样式
-     //--------------------------
+
      ui->treeMenuEdit->setColumnCount(10);
      QStringList nHeadLst;
      nHeadLst.clear();
@@ -418,7 +391,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
      ui->treeMenuEdit->setColumnWidth(7, 120);
      ui->treeMenuEdit->setColumnWidth(8, 110);
      ui->treeMenuEdit->setColumnWidth(9, 80);
-     //设置控件样式
+
      ui->treeMenuEdit->header()->setStyleSheet("QHeaderView::section{color:black; border:1px gray;background-color:lightgray;font:9pt '微软雅黑';padding:5px;min-height:1em;}");
      ui->treeMenuEdit->header()->setDefaultAlignment (Qt::AlignLeft | Qt::AlignVCenter); //居中
      ui->treeMenuEdit->header()->setStretchLastSection(true);
@@ -427,7 +400,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
      "QTreeView::item:selected{color: white}"
      "QTreeWidget::item{border-right: 1px solid silver; font:9pt '微软雅黑';}"
       );
-     //为菜单树加载数据
+
     ui->treeMenuEdit->clear();
     ui->cbActionFromMenu_Toolbar->clear();
     for(int i=0; i<_view->_config._menuTopItemLst.count(); i++)
@@ -440,17 +413,13 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
         tTopTreeItem->setText(2, tTopConfigNode->_menuIconPath);
         tTopTreeItem->setText(3, QString::number(tTopConfigNode->_menuAuthority));
         tTopTreeItem->setText(4, tTopConfigNode->_menuCheckable?tr("True"):tr("False"));
-        //一级菜单不能为有Action
-        //一级菜单不挂接插件，因为没有组件类型
+
         ui->treeMenuEdit->addTopLevelItem(tTopTreeItem);
 
-        //递归遍历树
         parseNodeToTree(tTopConfigNode, tTopTreeItem, ui->cbActionFromMenu_Toolbar);
     }
     ui->treeMenuEdit->expandAll();
-    //--------------------------
-    //设置工具栏编辑器样式
-    //--------------------------
+
     ui->treeToolbarEdit->setColumnCount(5);
 
     nHeadLst.clear();
@@ -464,7 +433,6 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
     ui->treeToolbarEdit->setColumnWidth(3, 50);
     ui->treeToolbarEdit->setColumnWidth(4, 50);
 
-    //设置控件样式
     ui->treeToolbarEdit->header()->setStyleSheet("QHeaderView::section{color:black; border:1px gray;background-color:lightgray;font:9pt '微软雅黑';padding:5px;min-height:1em;}");
     ui->treeToolbarEdit->header()->setDefaultAlignment (Qt::AlignLeft | Qt::AlignVCenter); //居中
     ui->treeToolbarEdit->header()->setStretchLastSection(true);
@@ -474,7 +442,6 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
     "QTreeWidget::item{border-right: 1px solid silver; font:9pt '微软雅黑';}"
      );
 
-    //为工具栏加载数据
     ui->treeToolbarEdit->clear();
 
     foreach (JToolBar* bar, _view->_config._toolBarLst) {
@@ -501,7 +468,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
             QTreeWidgetItem* tItemTreeNode = new QTreeWidgetItem();
             tTopTreeNode->addChild(tItemTreeNode);
 
-            if(item->_type == BT_ACTION)//Action
+            if(item->_type == BT_ACTION)
             {
                 QIcon tIcon;
                 foreach(QAction* act, _view->_actionList)
@@ -517,7 +484,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
                 tItemTreeNode->setText(0, item->_actionItem->_actionObjectName);
                 tItemTreeNode->setText(1, tr(CONST_STR_ITEMTYPE_ACTION));
             }
-            else if(item->_type == BT_WIDGET)//Widget
+            else if(item->_type == BT_WIDGET)
             {
                 QString pluginType = item->_widgetItem->_pluginType==PT_SYS?tr(CONST_STR_SYSTEM):tr(CONST_STR_NONSYSTEM);
                 QString _itemTag = item->_widgetItem->_widgetObjectName + ";" +  pluginType + ";" + item->_widgetItem->_pluginID + ";" + item->_widgetItem->_copyID;
@@ -526,12 +493,12 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
                 tItemTreeNode->setText(3, QString::number(item->_widgetItem->_widgetOrigWidth));
                 tItemTreeNode->setText(4, QString::number(item->_widgetItem->_widgetOrigHeight));
             }
-            else if(item->_type == BT_SEPARATOR)//Separator
+            else if(item->_type == BT_SEPARATOR)
             {
                 tItemTreeNode->setText(0, tr(CONST_STR_SEPARATOR));
                 tItemTreeNode->setText(1, tr(CONST_STR_ITEMTYPE_SEPARATOR));
             }
-            else if(item->_type == BT_SPACER)//Spacer
+            else if(item->_type == BT_SPACER)
             {
                 tItemTreeNode->setText(0, tr(CONST_STR_SPACER));
                 tItemTreeNode->setText(1, tr(CONST_STR_ITEMTYPE_SPACER));
@@ -539,13 +506,10 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
         }
     }
     ui->treeToolbarEdit->expandAll();
-    //--------------------------
-    //设置状态栏编辑器样式
-    //--------------------------
+
     ui->tableStatusbarEditer->setColumnCount(5);
     ui->tableStatusbarEditer->setRowCount(0);
 
-    //为状态栏加载数据
     ui->tableStatusbarEditer->clear();
 
     nHeadLst.clear();
@@ -582,13 +546,9 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
         ui->tableStatusbarEditer->setItem(tRowCount, 4, new QTableWidgetItem(QString::number(item->_widgetOrigHeight)));
     }
 
-    //--------------------------
-    //设置组件widget选择表格样式
-    //--------------------------
     ui->tablePluginWidget->setColumnCount(8);
     ui->tablePluginWidget->setRowCount(0);
 
-    //为组件widget表格加载数据
     ui->tablePluginWidget->clear();
 
     nHeadLst.clear();
@@ -611,7 +571,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
     setTableStyle(ui->tablePluginWidget);
 
     count = 0;
-    //把每个系统组件的ShowType为ST_DOCK的widget信息都加载到table中
+
     foreach (Plugin_Interface* pi, ((QCPF_Interface*)_view->_core)->I_SysPlugins) {
         foreach (PluginWidgetInfo* pwi, pi->I_WidgetList) {
 
@@ -635,10 +595,10 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
             ui->tablePluginWidget->insertRow(tRowCount);
 
             ui->tablePluginWidget->setItem(tRowCount, 0, new QTableWidgetItem(""));
-            //如果配置中的widget项，可以在组件中找到，则按配置中是否显示，来决定复选框的状态
+
             if(isExist)
                 ui->tablePluginWidget->item(tRowCount, 0)->setCheckState(isChecked?Qt::CheckState::Checked:Qt::CheckState::Unchecked);
-            else //如果配置中的widget项，在组件中找不到，那有可能有新的组件被放进来，那么直接把新组件的widget信息加载进来
+            else
                 ui->tablePluginWidget->item(tRowCount, 0)->setCheckState(Qt::CheckState::Unchecked);
 
             ui->tablePluginWidget->setItem(tRowCount, 1, new QTableWidgetItem(QString::number(++count)));
@@ -652,7 +612,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
     }
 
     QList<Plugin_Interface*> tvec = ((QCPF_Interface*)_view->_core)->I_NSysAllValidPlugins;
-    //把每个非系统组件的widget信息都加载到table中
+
     foreach (Plugin_Interface* pi, ((QCPF_Interface*)_view->_core)->I_NSysAllValidPlugins) {
         foreach (PluginWidgetInfo* pwi, pi->I_WidgetList) {
 
@@ -675,10 +635,10 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
             ui->tablePluginWidget->insertRow(tRowCount);
 
             ui->tablePluginWidget->setItem(tRowCount, 0, new QTableWidgetItem(""));
-            //如果配置中的widget项，可以在组件中找到，则按配置中是否显示，来决定复选框的状态
+
             if(isExist)
                 ui->tablePluginWidget->item(tRowCount, 0)->setCheckState(isChecked?Qt::CheckState::Checked:Qt::CheckState::Unchecked);
-            else //如果配置中的widget项，在组件中找不到，那有可能有新的组件被放进来，那么直接把新组件的widget信息加载进来
+            else
                 ui->tablePluginWidget->item(tRowCount, 0)->setCheckState(Qt::CheckState::Unchecked);
 
             ui->tablePluginWidget->setItem(tRowCount, 1, new QTableWidgetItem(QString::number(++count)));
@@ -695,38 +655,24 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
 
  void ViewEditor::setTableStyle(QTableWidget *table)
  {
-     //设置表头颜色
      table->horizontalHeader()->setStyleSheet("QHeaderView::section{color:black; border:1px gray;background-color:lightgray;font:9pt '微软雅黑';padding:5px;min-height:1em;}");
      table->horizontalHeader()->setDefaultAlignment (Qt::AlignLeft | Qt::AlignVCenter); //居左
-    //设置相邻行颜色交替显示
      table->setAlternatingRowColors(true);
-     //垂直表头不显示
      table->verticalHeader()->setVisible(false);
-     //水平表头显示
      table->horizontalHeader()->setVisible(true);
 
      table->horizontalHeader()->setStretchLastSection(true);
 
-     table->horizontalHeader()->setHighlightSections(false);//取消表头的在选中单元格时的高亮状态。
-     table->setEditTriggers(QAbstractItemView::NoEditTriggers);//设为不可编辑
-     table->setSelectionBehavior(QAbstractItemView::SelectRows);//设置选中模式为选中行
-     table->setSelectionMode( QAbstractItemView::SingleSelection);//设置选中单个
-     table->horizontalHeader()->setStretchLastSection(true);//最后一列自动调整列宽
+     table->horizontalHeader()->setHighlightSections(false);
+     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+     table->setSelectionBehavior(QAbstractItemView::SelectRows);
+     table->setSelectionMode( QAbstractItemView::SingleSelection);
+     table->horizontalHeader()->setStretchLastSection(true);
      table->setStyleSheet("font:9pt '微软雅黑';");
 
      table->setSortingEnabled(false);
  }
-// void ViewEditor::treeWidgetOpenEditor(QTreeWidgetItem *item, int col)
-// {
-//     if(col>1)
-//         return;
 
-//     if(item->text(0)== CONST_STR_SEPARATOR)
-//         return;
-
-//     previousColNo = col;
-//     ui->treeMenuEdit->openPersistentEditor(item,col);
-// }
 
  void ViewEditor::on_treeMenuEdit_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
  {
@@ -763,9 +709,6 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
 
 void ViewEditor::on_btnOk_clicked()
 {
-    //====================================================================
-    //保存配置(发送保存信号, 让_core自己进行存储自己的config信息)
-    //====================================================================
     getConfigFromUI();
 
     if(1==_view->slot_SaveConfigFile())
@@ -801,12 +744,10 @@ void ViewEditor::on_btnDeleteNode_clicked()
     if(item==nullptr)
         return;
 
-    //remove the action from cbActionFromMenu_Toolbar
     int tIndex = ui->cbActionFromMenu_Toolbar->findText(item->text(8));
     if(tIndex>=0)
         ui->cbActionFromMenu_Toolbar->removeItem(tIndex);
 
-    //remove current menu and it's child
     if(item->childCount() > 0)
     {
         QMessageBox::StandardButton tBtn = QMessageBox::question(this, tr("Infomation"), tr("Are you sure to delete the item and it's children?"));
@@ -850,7 +791,7 @@ void ViewEditor::on_btnAddNode_clicked()
     item->setText(4, ui->chkMenuCheckable->isChecked()?"True":"False");
 
     QTreeWidgetItem* curSelItem= ui->treeMenuEdit->currentItem();
-    if(curSelItem==nullptr)//如果没有选中任何项，或者所选项为根节点，那就给这个根节点添加topLevelItem
+    if(curSelItem==nullptr)
         ui->treeMenuEdit->addTopLevelItem(item);
     else
     {
@@ -883,7 +824,7 @@ void ViewEditor::on_btnRight_clicked()
 void ViewEditor::on_btnAddSeparator_clicked()
 {
     QTreeWidgetItem* curSelItem= ui->treeMenuEdit->currentItem();
-    if(curSelItem==nullptr || curSelItem->parent()==nullptr)//如果没有选中任何项，或者所选项为根节点，就不添加分隔符
+    if(curSelItem==nullptr || curSelItem->parent()==nullptr)
         return;
     else
     {
@@ -916,9 +857,8 @@ void ViewEditor::on_btnLoadAction_clicked()
         ui->treeMenuEdit->currentItem()->setText(8, ce->_actionName);
         ui->treeMenuEdit->currentItem()->setText(9, ce->_actionDetail);
 
-        //从combobox中把该项添加进去或替换进去
         int tActionIndex = ui->cbActionFromMenu_Toolbar->findText(ce->_actionName, Qt::MatchFlag::MatchExactly);
-        if(tActionIndex>=0)//如果存在，只替换图标
+        if(tActionIndex>=0)
         {
             ui->cbActionFromMenu_Toolbar->setItemIcon(tActionIndex, ui->treeMenuEdit->currentItem()->icon(0));
             foreach(QAction* act,  _view->_actionList)
@@ -949,7 +889,7 @@ void ViewEditor::on_btnClearAction_clicked()
         return;
 
     QString curActionName = curSelItem->text(8);
-    //remove the action from cbActionFromMenu_Toolbar
+
     int tIndex = ui->cbActionFromMenu_Toolbar->findText(curActionName);
     if(tIndex>=0)
         ui->cbActionFromMenu_Toolbar->removeItem(tIndex);
@@ -977,7 +917,6 @@ void ViewEditor::on_btnClearAction_clicked()
             break;
     }
 
-    //Clear current item action info
     for(int i=5; i<ui->treeMenuEdit->columnCount(); i++)
         curSelItem->setText(i, "");
 }
@@ -998,7 +937,7 @@ void ViewEditor::on_btnIconFinder_clicked()
         if (!file_name.isNull())
         {
             QIcon tIcon =QIcon(file_name);
-            //fileName是文件名
+
             ui->treeMenuEdit->currentItem()->setText(2, file_name);
             ui->treeMenuEdit->currentItem()->setIcon(0, tIcon);
 
@@ -1046,7 +985,7 @@ void ViewEditor::on_btnAddAction_Toolbar_clicked()
 
     //==========================================
     QTreeWidgetItem* rootItem;
-    if(tItem->parent() == nullptr)//说明是toplevelnode
+    if(tItem->parent() == nullptr)
         rootItem = tItem;
     else
         rootItem = tItem->parent();
@@ -1090,7 +1029,7 @@ void ViewEditor::on_btnAddSeparator_Toolbar_clicked()
 
     //==========================================
     QTreeWidgetItem* rootItem;
-    if(tItem->parent() == nullptr)//说明是toplevelnode
+    if(tItem->parent() == nullptr)
         rootItem = tItem;
     else
         rootItem = tItem->parent();
@@ -1123,7 +1062,6 @@ void ViewEditor::on_btnAddWidget_Toolbar_clicked()
 
     ce->exec();
 
-    //从Toolbar editor, workspace editor, statusbar editor中查找是否有重复的项
     if(ui->tableStatusbarEditer->findItems(ce->_itemTag, Qt::MatchFlag::MatchExactly).count()>0)
     {
         QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in statusbar editor!"));
@@ -1146,7 +1084,6 @@ void ViewEditor::on_btnAddWidget_Toolbar_clicked()
         return;
     }
 
-    //MatchExactly遍历根节点，MatchRecursive遍历整个树节点
     if(ui->treeToolbarEdit->findItems(ce->_itemTag, Qt::MatchFlag::MatchRecursive | Qt::MatchFlag::MatchExactly).count()>0)
     {
         QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in toolbar editor!"));
@@ -1155,7 +1092,7 @@ void ViewEditor::on_btnAddWidget_Toolbar_clicked()
 
     //=============================================
     QTreeWidgetItem* rootItem;
-    if(tItem->parent() == nullptr)//说明是toplevelnode
+    if(tItem->parent() == nullptr)
         rootItem = tItem;
     else
         rootItem = tItem->parent();
@@ -1182,7 +1119,7 @@ void ViewEditor::on_btnDeleteItem_Toolbar_clicked()
     if(tItem==nullptr)
         return;
 
-    if(tItem->parent()==nullptr)//说明是topLevelItem
+    if(tItem->parent()==nullptr)
     {
         if(tItem->childCount() > 0)
         {
@@ -1196,7 +1133,7 @@ void ViewEditor::on_btnDeleteItem_Toolbar_clicked()
         }
         delete tItem;
     }
-    else//说明是ToolbarItem
+    else
     {
         del(tItem);
     }
@@ -1339,12 +1276,12 @@ void ViewEditor::TreeItemMoveLeft(QTreeWidget* treeWidget)
         QTreeWidgetItem* grandpaNode = parentNode->parent();
 
         parentNode->takeChild(parentNode->indexOfChild(curSelItem));
-        if(grandpaNode==nullptr)//说明是第二级菜单
+        if(grandpaNode==nullptr)
         {
             treeWidget->addTopLevelItem(copyItem);
             treeWidget->setCurrentItem(copyItem);
         }
-        else//说明是三级及一下菜单
+        else
         {
             grandpaNode->addChild(copyItem);
             treeWidget->setCurrentItem(copyItem);
@@ -1361,7 +1298,7 @@ void ViewEditor::TreeItemMoveRight(QTreeWidget* treeWidget)
     QTreeWidgetItem* copyItem = curSelItem;
     QTreeWidgetItem* parentNode = curSelItem->parent();
 
-    if(parentNode==nullptr)//toplevel
+    if(parentNode==nullptr)
     {
         if(treeWidget->topLevelItemCount()==1)
             return;
@@ -1390,7 +1327,7 @@ void ViewEditor::TreeItemMoveRight(QTreeWidget* treeWidget)
             else
             {
                 QTreeWidgetItem* preParent = parentNode->child(itemIndex-1);
-                //不允许位于分割符或者action得下一级
+
                 if(preParent->text(5)!="")
                 {
                     QMessageBox::information(this, tr("Infomation"), tr("Cannot be at the next level of another node that is associated with an Action!"));
@@ -1427,8 +1364,6 @@ void ViewEditor::on_btnAddWidget_Statusbar_clicked()
     PluginWidgetViewer* ce = new PluginWidgetViewer(plugInst->_core, true, this);
     ce->exec();
 
-    //从Toolbar editor, workspace editor, statusbar editor中查找是否有重复的项
-    //MatchExactly遍历根节点，MatchRecursive遍历整个树节点
     if(ui->treeToolbarEdit->findItems(ce->_itemTag, Qt::MatchFlag::MatchRecursive | Qt::MatchFlag::MatchExactly).count()>0)
     {
         QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in toolbar editor!"));
@@ -1457,7 +1392,6 @@ void ViewEditor::on_btnAddWidget_Statusbar_clicked()
         return;
     }
 
-    //==========================================
     if(ce->_isOk)
     {
         int tRowCount = ui->tableStatusbarEditer->rowCount();
@@ -1514,7 +1448,7 @@ void ViewEditor::on_btnAddToolbar_clicked()
 void ViewEditor::on_btnDeleteToolbar_clicked()
 {
     QTreeWidgetItem* item =  ui->treeToolbarEdit->currentItem();
-    if(item->parent()==nullptr)//说明是topLevelItem
+    if(item->parent()==nullptr)
     {
         if(item->childCount() > 0)
         {
@@ -1544,7 +1478,7 @@ void ViewEditor::slot_SelAllOrNot(bool flag)
 {
     int row=0,col=0;
     int i=0,j=0;
-    //row=ui->tablePluginLst->rowCount();
+
     foreach(Plugin_Interface* pi, ((QCPF_Interface*)_view->_core)->I_SysPlugins)
     {
         foreach (PluginWidgetInfo* pwi, pi->I_WidgetList) {
@@ -1576,8 +1510,6 @@ void ViewEditor::on_tablePluginWidget_itemClicked(QTableWidgetItem *item)
     if(item->column()!=0)
         return;
 
-    //从Toolbar editor, workspace editor, statusbar editor中查找是否有重复的项
-    //检查此widget是否已经在工具栏或状态栏里添加过了。
     if(item->checkState()==Qt::CheckState::Checked)
     {
         int rowIndex = item->row();
@@ -1588,7 +1520,7 @@ void ViewEditor::on_tablePluginWidget_itemClicked(QTableWidgetItem *item)
             item->setCheckState(Qt::CheckState::Unchecked);
             return;
         }
-        //MatchExactly遍历根节点，MatchRecursive遍历整个树节点
+
         if(ui->treeToolbarEdit->findItems(itemTag, Qt::MatchFlag::MatchRecursive | Qt::MatchFlag::MatchExactly).count()>0)
         {
             QMessageBox::information(this, tr("Infomation"), tr("There is a same widget item in toolbar editor!"));
@@ -1597,7 +1529,6 @@ void ViewEditor::on_tablePluginWidget_itemClicked(QTableWidgetItem *item)
         }
     }
 
-    //检查选择项是否ST_POPUP，这将意味着它有可能会被action调用而展示，有可能产生显示异常，提醒用户确认
 }
 
 QString ViewEditor::getPluginWidgetTag(int rowIndex)
@@ -1622,7 +1553,7 @@ void ViewEditor::on_btnAddSpacer_Toolbar_clicked()
 
     //=============================================
     QTreeWidgetItem* rootItem;
-    if(tItem->parent() == nullptr)//说明是toplevelnode
+    if(tItem->parent() == nullptr)
         rootItem = tItem;
     else
         rootItem = tItem->parent();
@@ -1701,7 +1632,6 @@ void ViewEditor::on_treeToolbarEdit_itemDoubleClicked(QTreeWidgetItem *item, int
     _currentCol_TreeMenuEdit = 0;
 
 
-    //只对一级节点进行编辑
     if(item->parent()==nullptr)
     {
         _currentTree = ui->treeToolbarEdit;
@@ -1853,7 +1783,6 @@ void ViewEditor::on_btnIconClear_clicked()
     if(ui->treeMenuEdit->currentItem()->text(0)== CONST_STR_SEPARATOR)
         return;
 
-    //点的是取消
     ui->treeMenuEdit->currentItem()->setIcon(0, QIcon());
     ui->treeMenuEdit->currentItem()->setText(2, "");
 

@@ -26,14 +26,14 @@ class ViewEditor : public QDialog
 public:
     ViewEditor(QWidget *parent = nullptr);
     ~ViewEditor();
-    static ViewEditor* getInstance();//静态获取实例
+    static ViewEditor* getInstance();
 
 protected:
     void resizeEvent(QResizeEvent *event);
     void showEvent(QShowEvent *event);
 
 signals:
-    void sig_SelAllOrNot(bool flag);//for 全选/不选复选框
+    void sig_SelAllOrNot(bool flag);
 private slots:
     void slot_OnULoaded();
     void on_btnOk_clicked();

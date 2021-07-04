@@ -16,7 +16,7 @@ public:
 
 public:
     QCPF_ViewModel *_view;
-    static PluginIO* getInstance();//静态获取实例
+    static PluginIO* getInstance();
 };
 
 #endif // QPLUGIN2_H

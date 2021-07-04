@@ -50,7 +50,6 @@ QCPF_ViewModel::QCPF_ViewModel(QCPF_Model* model, QObject* parent, QString confi
 //*******************************************
 int CompareMsg(char* msg1, char* msg2)
 {
-    //将2个消息各自读取到buffer中
     FILE *pOne, *pTwe;
     long lsize1, lsize2;
     char* buffer1 = NULL;
@@ -299,7 +298,6 @@ void QCPF_ViewModel::parseMenu(QMenu* nMenu, JMenuNode* nNode)
         QMenu* childMenu = new QMenu(nNode->_menuShortCut, nMenu);
         childMenu->setTitle(nNode->_menuTitle);
 
-        //判断icon文件是否存在，如果不存在，则尝试在程序images目录下查找
         QString finalIconPath;
         if(QFile::exists(nNode->_menuIconPath))
             finalIconPath = nNode->_menuIconPath;
@@ -345,7 +343,6 @@ void QCPF_ViewModel::addActionToViewActionList(QAction* action, QString actionOb
 
     action->setCheckable(isCheckable);
 
-    //判断icon文件是否存在，如果不存在，则尝试在程序images目录下查找
     QString finalIconPath;
     if(QFile::exists(iconPath))
         finalIconPath = iconPath;
@@ -359,7 +356,7 @@ void QCPF_ViewModel::addActionToViewActionList(QAction* action, QString actionOb
     //===========
     action->setIcon(QIcon(finalIconPath));
 
-    if(pType == PT_SYS)//系统组件
+    if(pType == PT_SYS)
     {
         foreach (Plugin_Interface* pi, _core->I_SysPlugins_Sel)
         {
@@ -425,10 +422,8 @@ void QCPF_ViewModel::initUIFromConfig(QMainWindow* viewHost)
     drawStatusBarFromConfig(_mainStatusbar);
     drawDockWidgetFromConfig(viewHost);
 
-    //设置docker分割线样式
     viewHost->setStyleSheet("QMainWindow::separator{background:gray; width:1px; height:1px;}");
 
-    //从Layout.ini恢复界面布局
     QString _layoutIniFilePath = _core->I_ApplicationDirPath + "/Config/View/.Layout.ini";
     QFile file(_layoutIniFilePath);
     if (file.open(QIODevice::ReadOnly))
@@ -454,7 +449,6 @@ void QCPF_ViewModel::drawMenuFromConfig(QMenuBar* mainMenu)
 
         tAction->setText(_config._menuTopItemLst[i]->_menuTitle);
 
-        //一级菜单一定是QMenu,二级菜单及以上，如果是最后一级，则直接是QAction，如果还有子菜单，则该项必须是QMenu容器，然后下面才是QAction
         QMenu* tTopMenu = new QMenu(mainMenu);
         tTopMenu->setTitle(_config._menuTopItemLst[i]->_menuTitle);
 
@@ -605,7 +599,7 @@ void QCPF_ViewModel::drawDockWidgetFromConfig(QMainWindow* viewHost)
                         QString tDockWidgetObjectName = wi->_pluginID + "_" + wi->_copyID + "_" + wi->_widgetObjectName;
                         QDockWidget *tDw = new QDockWidget(pwi->_widget->windowTitle());
 
-                        tDw->setObjectName(tDockWidgetObjectName);//要想存储布局，每个dock必须有唯一的objectName
+                        tDw->setObjectName(tDockWidgetObjectName);
 
                         QDockWidget::DockWidgetFeatures tFeatures = QDockWidget::NoDockWidgetFeatures;
                         if(_config._dock_Floatable)

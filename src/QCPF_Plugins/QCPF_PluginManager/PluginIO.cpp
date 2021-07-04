@@ -37,10 +37,6 @@ PluginIO* PluginIO::getInstance()
     return instance;
 }
 
-//接口方法实现
-/***************************************************
-*                       方法接口                                       *
-***************************************************/
 void PluginIO::InitActionList(Plugin_Interface* plugin)
 {
     PluginActionInfo* pai = new PluginActionInfo();
@@ -77,9 +73,6 @@ int PluginIO::slot_InputInfo(tagOutputInfo& info)
     return 0;
 }
 
-/***********************************************************************
- *  action 函数指针所对应的回调函数
- * *********************************************************************/
 void PluginIO::Action_ShowPluginManager(bool checkState)
 {
     QAction* actSender = (QAction*)sender();

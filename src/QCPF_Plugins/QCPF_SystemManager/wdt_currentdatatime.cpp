@@ -16,7 +16,6 @@ wdt_CurrentDataTime::wdt_CurrentDataTime(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //注册面板显示后的信号槽
     _timer = new QTimer(this);
     _timer->setInterval(1000);
     _timer->setSingleShot(false);

@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _core = new QCPF_Model(RM_APPLICATION, this, appDirPath, sysPluginDirPath, nSyspluginDirPath, _coreConfigFileDirPath, _coreConfigFileName);
     _view = new QCPF_ViewModel(_core, this, _viewConfigFileDirPath, _viewConfigFileName);
 
-    _core->_view = (QObject*)_view;//view editor需要view
+    _core->_view = (QObject*)_view;
     //------------set ui from config model
     setWindowTitle(_core->_config._systemName);
 
@@ -86,7 +86,6 @@ MainWindow::MainWindow(QWidget *parent) :
     tempMenuBar->addMenu(testMenu);
     this->setMenuBar(tempMenuBar);
 #else
-    //从视图配置文件导入UI配置
     _view->initUIFromConfig(this);
 
     //invoke plugin functions one by one

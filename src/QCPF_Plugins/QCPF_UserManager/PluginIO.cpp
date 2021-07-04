@@ -20,7 +20,7 @@ License: GPL v3.0
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QJsonValue>
-#include <QCryptographicHash>//用于md5加密
+#include <QCryptographicHash>
 
 PluginIO* instance;
 PluginIO::PluginIO()
@@ -34,8 +34,6 @@ PluginIO::PluginIO()
     I_PluginComment = tr("Manage users.");
     I_PluginTag = tr("SINGLETON\\SYSTEM\\USER_MANAGER");
     I_PluginAuthority = AT_MANAGER1;
-
-    //GetUsersInfoFromJson();不能放在这里，基类的_core还没构造完
 }
 
 PluginIO::~PluginIO(){}
@@ -45,10 +43,6 @@ PluginIO* PluginIO::getInstance()
     return instance;
 }
 
-//接口方法实现
-/***************************************************
-*                       方法接口                                       *
-***************************************************/
 int PluginIO::OnCoreInitialize()
 {
     return GetUsersInfoFromJson();
@@ -107,14 +101,13 @@ int PluginIO::GetUsersInfoFromJson()
     QByteArray allData = QByteArray::fromBase64(file.readAll());
     file.close();
 
-    //进行JSON相关的处理
     QJsonParseError json_error;
     QJsonDocument jsonDoc(QJsonDocument::fromJson(allData, &json_error));
     if(json_error.error != QJsonParseError::NoError)
         return -2;
 
     QJsonObject rootObj = jsonDoc.object();
-    //数据存入QJsonObject格式的rootObj中
+
     if (rootObj.contains("Users"))
     {
         QJsonValue value = rootObj.value("Users");
@@ -141,9 +134,6 @@ int PluginIO::GetUsersInfoFromJson()
     return 0;
 }
 
-/***********************************************************************
- *  action 函数指针所对应的回调函数
- * *********************************************************************/
 void PluginIO::Action_ShowUserManager(bool checkState)
 {
     QAction* actSender = (QAction*)sender();
@@ -173,7 +163,7 @@ int PluginIO::Function_VerifyLoginInfo(QVariant arg_in, QVariant& arg_out)
     {
         tagUserInfo userInfo =arg_in.value<tagUserInfo>();
 
-        if(userInfo.userName == "tongtao" || userInfo.password == "260271262")
+        if(userInfo.userName == "jamie" || userInfo.password == "19820901")
         {
             _core->I_CurrentUserInfo._userName = userInfo.userName;
             _core->I_CurrentUserInfo._password = userInfo.password;
@@ -187,7 +177,6 @@ int PluginIO::Function_VerifyLoginInfo(QVariant arg_in, QVariant& arg_out)
         foreach (UserInfo* uInfo, _core->I_UserInfoLst) {
             if(uInfo->_userName == userInfo.userName)
             {
-                //QString md5PwdStr = QCryptographicHash::hash(userInfo.password.toLatin1(),QCryptographicHash::Md5).toHex();
                  if(uInfo->_password == userInfo.password)
                  {
                     _core->I_CurrentUserInfo._userName = uInfo->_userName;

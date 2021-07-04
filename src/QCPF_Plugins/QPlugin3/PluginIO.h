@@ -16,8 +16,8 @@ public:
     void InitFunctionList(Plugin_Interface* plugin)  Q_DECL_OVERRIDE;
 
 public:
-    static PluginIO* getInstance();//静态获取实例
-//==============================================
+    static PluginIO* getInstance();
+
 public:
     void Action_sum(bool checkState);
 
@@ -29,7 +29,7 @@ public:
 
     int Function_StepThread(QVariant arg_in, QVariant& arg_out);
 public slots:
-    void handleTimeout(); //超时处理函数
+    void handleTimeout();
 };
 
 #endif // QPLUGIN2_H

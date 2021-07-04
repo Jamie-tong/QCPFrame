@@ -25,7 +25,7 @@ class SystemManager : public QDialog
 public:
     SystemManager(QCPF_Model* model, QWidget *parent = nullptr);
     ~SystemManager();
-    static SystemManager* getInstance();//静态获取实例
+    static SystemManager* getInstance();
 
 protected:
     void resizeEvent(QResizeEvent *event);
@@ -40,11 +40,11 @@ signals:
     int sig_Cancel();
     int sig_Apply();
 
-    void sig_SelAllOrNot(bool flag);//for 全选/不选复选框
+    void sig_SelAllOrNot(bool flag);
 
 private slots:
     void slot_OnULoaded();
-    void slot_SelAllOrNot(bool flag);//for 全选/不选复选框
+    void slot_SelAllOrNot(bool flag);
 
     void on_btnOk_clicked();
     void on_btnCancel_clicked();

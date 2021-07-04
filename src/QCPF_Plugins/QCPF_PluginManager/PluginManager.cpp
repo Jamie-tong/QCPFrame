@@ -32,9 +32,8 @@ PluginManager::PluginManager(QCPF_Model* model, QWidget *parent) :
     _core = model;
 
     pMgrInstance = this;
-    connect(this,SIGNAL(sig_SelAllOrNot(bool)),this,SLOT(slot_SelAllOrNot(bool)));//for 全选/不选复选框
+    connect(this,SIGNAL(sig_SelAllOrNot(bool)),this,SLOT(slot_SelAllOrNot(bool)));
 
-    //去掉问号按钮
     setWindowFlags(Qt::Dialog
                    | Qt::WindowCloseButtonHint | Qt::WindowMaximizeButtonHint);
 
@@ -46,7 +45,6 @@ PluginManager::PluginManager(QCPF_Model* model, QWidget *parent) :
     connect(this, SIGNAL(sig_Cancel(void)), _core, SLOT(slot_CancelConfig(void)));
     connect(this, SIGNAL(sig_Apply(void)), _core, SLOT(slot_ApplyConfig(void)));
 
-    //注册面板显示后的信号槽
     _timer = new QTimer(this);
     _timer->setSingleShot(true);
     connect(_timer, SIGNAL(timeout()), this, SLOT(slot_OnULoaded()));
@@ -62,7 +60,6 @@ PluginManager::~PluginManager()
 
 void PluginManager::resizeEvent(QResizeEvent *event)
 {
-    //如果不是第一次显示
     if(!_isFirstResize)
         return;
     else
@@ -81,31 +78,16 @@ void PluginManager::slot_OnULoaded()
 
 int PluginManager::setConfigToUI()
 {
-    //========================================================================
-    //清空数据
-    //========================================================================
     ui->cbOriginPluginLst->clear();
     ui->treePluginClone->clear();
     ui->tablePluginLst->clear();
     ui->tableOrigPluginsSort->clear();
     ui->tableAllValidPluginsSort->clear();
 
-    //读配置文件
-    //_core->slot_LoadConfigFile(_core->_config);//model已经读过配置，因此这里不需要再读
-
-    //========================================================================
-    //设置样式
-    //========================================================================
-    //--------------------------
-    //设置原始组件信息列表样式
-    //--------------------------
     QStringList nHeadLst;
     ui->tablePluginLst->setColumnCount(9);
     ui->tablePluginLst->setRowCount(0);
 
-    //如果下面出现乱码，就把环境设置为：
-    //1.工具->选项->默认编码->UTF-8;
-    //2.工具->选项->UTF-8 BOM->如果编码是UTF-8则添加
     nHeadLst<<""<<tr("No.")<<tr("Plugin ID")<<tr("Plugin Alias")<<tr("Plugin Tag")<<tr("Developer")<<tr("Version")<<tr("Detail")<<tr("Path");
 
     CCheckBoxHeaderView *myHeader = new CCheckBoxHeaderView(0, Qt::Horizontal, ui->tablePluginLst);
@@ -125,16 +107,10 @@ int PluginManager::setConfigToUI()
 
     setTableStyle(ui->tablePluginLst);
 
-    //--------------------------
-    //设置原始组件排序表样式
-    //--------------------------
     ui->tableOrigPluginsSort->setColumnCount(3);
     ui->tableOrigPluginsSort->setRowCount(0);
 
     nHeadLst.clear();
-    //如果下面出现乱码，就把环境设置为：
-    //1.工具->选项->默认编码->UTF-8;
-    //2.工具->选项->UTF-8 BOM->如果编码是UTF-8则添加
     nHeadLst<<tr("No.")<<tr("Plugin ID")<<tr("Path");
 
     ui->tableOrigPluginsSort->setHorizontalHeaderLabels(nHeadLst);
@@ -145,16 +121,11 @@ int PluginManager::setConfigToUI()
 
     setTableStyle(ui->tableOrigPluginsSort);
 
-    //--------------------------
-    //设置所有可用组件排序表样式
-    //--------------------------
     ui->tableAllValidPluginsSort->setColumnCount(4);
     ui->tableAllValidPluginsSort->setRowCount(0);
 
     nHeadLst.clear();
-    //如果下面出现乱码，就把环境设置为：
-    //1.工具->选项->默认编码->UTF-8;
-    //2.工具->选项->UTF-8 BOM->如果编码是UTF-8则添加
+
     nHeadLst<<tr("No")<<tr("Plugin ID")<<tr("Copy ID")<<tr("Plugin Type");
 
     ui->tableAllValidPluginsSort->setHorizontalHeaderLabels(nHeadLst);
@@ -166,13 +137,6 @@ int PluginManager::setConfigToUI()
 
     setTableStyle(ui->tableAllValidPluginsSort);
 
-    //========================================================================
-    //加载数据
-    //========================================================================
-
-    //--------------------------
-    //为原始组件信息列表加载数据
-    //--------------------------
     int pluginCount = _core->I_NSysOrigPlugins.count();
     for(int i=0; i<pluginCount; i++)
     {
@@ -188,7 +152,6 @@ int PluginManager::setConfigToUI()
 
         QString tOrigPluginID = ((Plugin_Interface *)_core->I_NSysOrigPlugins[i])->I_PluginID;
 
-        //查找已选组件集合中是否已经有该项，如果有则设置选中状态，否则不选中
         int tIndex = -1;
         for(int i=0; i<_core->_config._nSysPlugins_Sel.count(); i++)
         {
@@ -223,12 +186,6 @@ int PluginManager::setConfigToUI()
         box->setProperty("OrigPluginFilePath", ((Plugin_Interface *)_core->I_NSysOrigPlugins[i])->I_PluginFilePath);
     }
 
-    //=============================================
-    //设置克隆组件树, 遍历I_nSysAllValidPlugins，这样可以保证加载顺序与排序一致
-    //=============================================
-    //--------------------------
-    //设置克隆树样式
-    //--------------------------
     ui->treePluginClone->setColumnCount(4);
     nHeadLst.clear();
     nHeadLst<<tr("Original Plugin ID")<<QStringLiteral("Copy ID")<<QStringLiteral("Copy Alias")<<QStringLiteral("Copy Detail");
@@ -238,7 +195,7 @@ int PluginManager::setConfigToUI()
     ui->treePluginClone->setColumnWidth(1, 120);
     ui->treePluginClone->setColumnWidth(2, 120);
     ui->treePluginClone->setColumnWidth(3, 150);
-    //设置表头颜色
+
     ui->treePluginClone->header()->setStyleSheet("QHeaderView::section{color:black; border:1px gray;background-color:lightgray;font:9pt '微软雅黑';padding:5px;min-height:1em;}");
     ui->treePluginClone->header()->setDefaultAlignment (Qt::AlignLeft | Qt::AlignVCenter); //居中
     ui->treePluginClone->header()->setStretchLastSection(true);
@@ -247,9 +204,7 @@ int PluginManager::setConfigToUI()
     "QTreeView::item:selected{color: white}"
     "QTreeWidget::item{border-right: 1px solid silver; font:9pt '微软雅黑';}"
      );
-    //--------------------------
-    //为克隆树加载数据
-    //--------------------------
+
     foreach(ClonePluginInfo *tp, _core->_config._nSysClonePlugins)
     {
         //find the item from origin plugin list
@@ -305,7 +260,6 @@ int PluginManager::setConfigToUI()
     ui->treePluginClone->repaint();
     ui->treePluginClone->expandAll();
 
-    //加载原始组件的时候，就会自动给cbOriginPluginLst中添加item
     for(int i=0; i<_core->_config._nSysPlugins_Sel.count(); i++)
     {
         //find the item from origin plugin list
@@ -334,7 +288,6 @@ int PluginManager::setConfigToUI()
         ui->cbOriginPluginLst->addItem(_core->_config._nSysPlugins_Sel[i]->_pluginID);
     }
 
-    //给原始组件排序列表中填充数据
     for(int i=0; i<_core->_config._nSysPlugins_Sel.count(); i++)
     {
         //find the item from origin plugin list
@@ -368,7 +321,6 @@ int PluginManager::setConfigToUI()
         ui->tableOrigPluginsSort->setItem(tRowCount, 2, new QTableWidgetItem(_core->I_NonSysPluginDirPath + _core->_config._nSysPlugins_Sel[i]->_pluginFileName));
     }
 
-    //给所有原始组件和克隆组件表填充数据
     for(int i=0; i<_core->_config._nSysAllValidPlugins.count(); i++)
     {
         //find the item from origin plugin list
@@ -404,13 +356,6 @@ int PluginManager::setConfigToUI()
         ui->tableAllValidPluginsSort->setItem(tRowCount, 3, new QTableWidgetItem(_core->_config._nSysAllValidPlugins[i]->_isCopy?tr("Copy"):tr("Original")));
     }
 
-    //=============================================
-    //设置其他参数
-    //=============================================
-
-    //============================================
-    //样式
-    //============================================
     if(ui->tablePluginLst->rowCount()<=30)
         ui->tablePluginLst->setRowCount(30);
 
@@ -419,23 +364,22 @@ int PluginManager::setConfigToUI()
 
 void PluginManager::setTableStyle(QTableWidget *table)
 {
-    //设置表头颜色
     table->horizontalHeader()->setStyleSheet("QHeaderView::section{color:black; border:1px gray;background-color:lightgray;font:9pt '微软雅黑';padding:5px;min-height:1em;}");
-    table->horizontalHeader()->setDefaultAlignment (Qt::AlignLeft | Qt::AlignVCenter); //居左
-   //设置相邻行颜色交替显示
+    table->horizontalHeader()->setDefaultAlignment (Qt::AlignLeft | Qt::AlignVCenter);
+
     table->setAlternatingRowColors(true);
-    //垂直表头不显示
+
     table->verticalHeader()->setVisible(false);
-    //水平表头显示
+
     table->horizontalHeader()->setVisible(true);
 
     table->horizontalHeader()->setStretchLastSection(true);
 
-    table->horizontalHeader()->setHighlightSections(false);//取消表头的在选中单元格时的高亮状态。
-    table->setEditTriggers(QAbstractItemView::NoEditTriggers);//设为不可编辑
-    table->setSelectionBehavior(QAbstractItemView::SelectRows);//设置选中模式为选中行
-    table->setSelectionMode( QAbstractItemView::SingleSelection);//设置选中单个
-    table->horizontalHeader()->setStretchLastSection(true);//最后一列自动调整列宽
+    table->horizontalHeader()->setHighlightSections(false);
+    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    table->setSelectionMode( QAbstractItemView::SingleSelection);
+    table->horizontalHeader()->setStretchLastSection(true);
     table->setStyleSheet("font:9pt '微软雅黑';");
 
     table->setSortingEnabled(false);
@@ -450,16 +394,16 @@ void PluginManager::slot_SelAllOrNot(bool flag)
 {
     int row=0,col=0;
     int i=0,j=0;
-    //row=ui->tablePluginLst->rowCount();
+
     row = _core->I_NSysOrigPlugins.count();
 
     if(flag == true)
     {
         for(;i<row;i++)
         {
-            if (QWidget *w = ui->tablePluginLst->cellWidget(i, 0))//先获取widget
+            if (QWidget *w = ui->tablePluginLst->cellWidget(i, 0))
             {
-                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));  //通过children来访问checkbox
+                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));
                 checkBox->setChecked(true);
             }
         }
@@ -468,9 +412,9 @@ void PluginManager::slot_SelAllOrNot(bool flag)
     {
         for(;i<row;i++)
         {
-            if (QWidget *w = ui->tablePluginLst->cellWidget(i, 0))//先获取widget
+            if (QWidget *w = ui->tablePluginLst->cellWidget(i, 0))
             {
-                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));  //通过children来访问checkbox
+                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));
                 checkBox->setChecked(false);
             }
         }
@@ -479,11 +423,6 @@ void PluginManager::slot_SelAllOrNot(bool flag)
 }
  int PluginManager::getConfigFromUI()
  {
-     //====================================================================
-     //内核配置项赋值
-     //====================================================================
-
-     //已选的原始组件，时序配置
      _core->_config._nSysPlugins_Sel.clear();
      for(int i=0; i<ui->tableOrigPluginsSort->rowCount(); i++)
      {
@@ -493,9 +432,8 @@ void PluginManager::slot_SelAllOrNot(bool flag)
              continue;
          _core->_config._nSysPlugins_Sel.append(new PluginInfo(_core->_config._this, tOriginPluginID, tOriginPluginFileName));
      }
-     _core->_config._count_nSysPlugins_Sel = _core->_config._nSysPlugins_Sel.count();//这个值若不给，序列化和反序列化时，将内存将无法对齐
+     _core->_config._count_nSysPlugins_Sel = _core->_config._nSysPlugins_Sel.count();
 
-     //克隆配置
      _core->_config._nSysClonePlugins.clear();
      for (int i=0; i<ui->treePluginClone->topLevelItemCount(); i++)
      {
@@ -509,9 +447,8 @@ void PluginManager::slot_SelAllOrNot(bool flag)
              _core->_config._nSysClonePlugins.append(new ClonePluginInfo(_core->_config._this, tOrigPluginID, tCopyID, tCopyAliasName, tCopyComment));
          }
      }
-     _core->_config._count_nSysClonePlugins = _core->_config._nSysClonePlugins.count();//这个值若不给，序列化和反序列化时，将内存将无法对齐
+     _core->_config._count_nSysClonePlugins = _core->_config._nSysClonePlugins.count();
 
-     //所有组件顺序配置
      _core->_config._nSysAllValidPlugins.clear();
      for(int i=0; i<ui->tableAllValidPluginsSort->rowCount(); i++)
      {
@@ -520,22 +457,13 @@ void PluginManager::slot_SelAllOrNot(bool flag)
          bool tIsCopy = tCopyID==""?false:true;
          _core->_config._nSysAllValidPlugins.append(new ValidPluginInfo(_core->_config._this, tOrigPluginID, tCopyID, tIsCopy));
      }
-     _core->_config._count_nSysAllValidPlugins = _core->_config._nSysAllValidPlugins.count();//这个值若不给，序列化和反序列化时，内存将无法对齐
+     _core->_config._count_nSysAllValidPlugins = _core->_config._nSysAllValidPlugins.count();
 
-     //------------
-
-     //====================================================================
-     //框架配置项赋值
-     //====================================================================
-     //((MainWindow*)this->parent())->setWindowTitle(ui->txtSystemName->text());
      return 0;
  }
 
 void PluginManager::on_btnOk_clicked()
 {
-    //====================================================================
-    //保存配置(发送保存信号, 让_core自己进行存储自己的config信息)
-    //====================================================================
     getConfigFromUI();
     emit sig_Save();
     this->close();
@@ -583,7 +511,6 @@ void PluginManager::on_btnClone_clicked()
     QString tCopyAliasName = ui->txtCopyAliasName->text();
     QString tCopyComment = ui->txtCopyComment->toPlainText();
 
-    //查找是否已经存在item
     for(int i=0; i<ui->treePluginClone->topLevelItemCount(); i++)
     {
         for(int j=0; j<ui->treePluginClone->topLevelItem(i)->childCount(); j++)
@@ -596,7 +523,6 @@ void PluginManager::on_btnClone_clicked()
         }
     }
 
-    //遍历树根集合，查找目标根
     QTreeWidgetItem* tOrigItem = nullptr;
     for(int i=0; i<ui->treePluginClone->topLevelItemCount(); i++)
     {
@@ -607,7 +533,6 @@ void PluginManager::on_btnClone_clicked()
         }
     }
 
-    //如果有目标根，就直接追加，否则就新建目标根
     if(tOrigItem==nullptr)
     {
         tOrigItem = new QTreeWidgetItem();
@@ -626,7 +551,7 @@ void PluginManager::on_btnClone_clicked()
     }
     ui->treePluginClone->repaint();
     ui->treePluginClone->expandAll();
-    //------------------------------向所有组件表里添加数据。
+
     int tRowCount = ui->tableAllValidPluginsSort->rowCount();
     ui->tableAllValidPluginsSort->insertRow(tRowCount);
 
@@ -642,9 +567,8 @@ void PluginManager::on_btnDeleteClone_clicked()
     if(tItem==nullptr)
         return;
 
-    if(""==tItem->text(0))//说明是子项
+    if(""==tItem->text(0))
     {
-        //如果该子节点的父节点只有它这一个项，则直接删除父节点
         if(tItem->parent()->childCount()==1)
         {
             int tIndex=-1;
@@ -663,7 +587,7 @@ void PluginManager::on_btnDeleteClone_clicked()
         else
             tItem->parent()->removeChild(tItem);
     }
-    else//如果选择的是根节点，则删除这个根节点
+    else
     {
         int tIndex=-1;
         for(int i=0; i<ui->treePluginClone->topLevelItemCount(); i++)
@@ -678,15 +602,14 @@ void PluginManager::on_btnDeleteClone_clicked()
         if(tIndex!=-1)
             ui->treePluginClone->takeTopLevelItem(tIndex);
     }
-    //===============================对tableAllValidPluginLst做出更新
-   for(int i=ui->tableAllValidPluginsSort->rowCount()-1; i>=0; i--)//在tableAllValidPluginLst中，按从上到下的顺序找出克隆组件，然后再到克隆树上看有没有这个克隆体，如果没有就直接把它删掉。
+
+   for(int i=ui->tableAllValidPluginsSort->rowCount()-1; i>=0; i--)
    {
        QString tItemCloneID = ui->tableAllValidPluginsSort->item(i, 2)->text();
        if(tItemCloneID!="")
        {
            QList<QTreeWidgetItem*> itemLst = ui->treePluginClone->findItems(tItemCloneID, Qt::MatchFlag::MatchRecursive | Qt::MatchFlag::MatchExactly, 1);
 
-           //成立说明在克隆树上没找到这个克隆体
            if(itemLst.count()==0)
                ui->tableAllValidPluginsSort->removeRow(i);
        }
@@ -700,11 +623,9 @@ void PluginManager::on_pluginCheckbox_selChanged(int state)
     QString origPluginID = chkBox->property("OrigPluginID").toString();
     QString origPluginFilePath = chkBox->property("OrigPluginFilePath").toString();
 
-    //在cbOriginPluginLst查看是否已经存在原始组件item
     int tCbIndex = -1;
     tCbIndex = ui->cbOriginPluginLst->findText(origPluginID);
 
-    //在克隆树上的第一列查找符合条件的根节点
     int tTreeTopItemIndex = -1;
     for(int i=0; i<ui->treePluginClone->topLevelItemCount(); i++)
     {
@@ -715,7 +636,6 @@ void PluginManager::on_pluginCheckbox_selChanged(int state)
         }
     }
 
-    //在tableOrigPluginsSort查看是否已经存在原始组件item
     int tOrigPluginIndex = -1;
     for(int i=0; i<ui->tableOrigPluginsSort->rowCount(); i++)
     {
@@ -726,9 +646,8 @@ void PluginManager::on_pluginCheckbox_selChanged(int state)
         }
     }
 
-    //在tableAllValidPluginsSort查看是否已经存在原始组件item
-    int tAllValidOrigPluginIndex = -1;//在所有可用组件列表中，目标原始组件的索引
-    QList<int> tAllValidPluginIndexLst;//在所有可用组件列表中，目标原始组件及其克隆体的索引集合
+    int tAllValidOrigPluginIndex = -1;
+    QList<int> tAllValidPluginIndexLst;
     for(int i=0; i<ui->tableAllValidPluginsSort->rowCount(); i++)
     {
         if(ui->tableAllValidPluginsSort->item(i, 1)->text()==origPluginID)
@@ -742,7 +661,6 @@ void PluginManager::on_pluginCheckbox_selChanged(int state)
     }
 
     //===============================================================================
-    //如果原始组件被选中，则需要分别给cbOriginPluginLst, tableOrigPluginsSort和tableAllValidPluginsSort追加item，否则删除其他控件中与之关联的项
     if(chkBox->checkState() == Qt::CheckState::Checked)
     {
         if(tCbIndex==-1)
@@ -791,12 +709,11 @@ void PluginManager::on_pluginCheckbox_selChanged(int state)
                 ui->tableOrigPluginsSort->setItem(i, 0, new QTableWidgetItem(QString::number(i+1)));
         }
 
-        //倒着删，否则顺序对不上
         for(int i=tAllValidPluginIndexLst.count()-1; i>=0; i--)
         {
             ui->tableAllValidPluginsSort->removeRow(tAllValidPluginIndexLst[i]);
         }
-        //重新编号
+
         for(int i=0; i<ui->tableAllValidPluginsSort->rowCount(); i++)
             ui->tableAllValidPluginsSort->setItem(i, 0, new QTableWidgetItem(QString::number(i+1)));
     }
@@ -804,7 +721,6 @@ void PluginManager::on_pluginCheckbox_selChanged(int state)
 
 void PluginManager::on_treePluginClone_itemPressed(QTreeWidgetItem *item, int column)
 {
-    //只要点过一下就使能删除克隆按钮
     ui->btnDeleteClone->setEnabled(true);
 }
 

@@ -35,7 +35,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void showEvent(QShowEvent *);
-    bool eventFilter(QObject *target, QEvent *event);//事件过滤器
+    bool eventFilter(QObject *target, QEvent *event);
 
 signals:
     int sig_DoCoreInitialize(QString user, QString pwd, QString extInfo);

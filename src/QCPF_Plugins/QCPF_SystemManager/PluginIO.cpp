@@ -43,10 +43,6 @@ PluginIO* PluginIO::getInstance()
     return instance;
 }
 
-//接口方法实现
-/***************************************************
-*                       方法接口                                       *
-***************************************************/
 void PluginIO::InitActionList(Plugin_Interface* plugin)
 {
     PluginActionInfo* paiSysMgr = new PluginActionInfo();
@@ -133,21 +129,10 @@ int PluginIO::slot_InputInfo(tagOutputInfo& info)
 {
     if(info._type == INFT_PLUGIN_COLLECT_FINISHED)
         SystemManager::getInstance()->setConfigToUI();
-//    else if(info._type == INFT_CORE_CONFIG_CHANGED)
-//    {
-//        if(SystemManager::getInstance()!=nullptr)
-//        {
-//            QMessageBox::information(SystemManager::getInstance(), tr("information"), tr("System configuration has changed, please restart application for updating."));
-//            SystemManager::getInstance()->close();
-//        }
-//    }
 
     return 0;
 }
 
-/***********************************************************************
- *  action 函数指针所对应的回调函数
- * *********************************************************************/
 void PluginIO::Action_ShowSystemPluginManager(bool checkState)
 {
     QAction* actSender = (QAction*)sender();

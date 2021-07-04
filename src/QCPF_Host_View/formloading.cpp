@@ -58,13 +58,12 @@ formLoading::formLoading(QCPF_ViewModel* view, QDialog *parent) :
     ui->labCoreVersion->setText(QString(tr("Core Version : %1")).arg(_core->I_SystemVersion));
     ui->labViewVersion->setText(QString(tr("View Version : %1")).arg(_view->_version));
 
-    //注册面板显示后的信号槽
     _timer = new QTimer(this);
     _timer->setSingleShot(true);
     connect(_timer, SIGNAL(timeout()), this, SLOT(slot_OnULoaded()));
 
-    ui->txtUser->installEventFilter(this);//设置完后自动调用其eventFilter函数
-    ui->txtPwd->installEventFilter(this);//设置完后自动调用其eventFilter函数
+    ui->txtUser->installEventFilter(this);
+    ui->txtPwd->installEventFilter(this);
 }
 
 formLoading::~formLoading()
@@ -98,7 +97,7 @@ bool formLoading::eventFilter(QObject *target, QEvent *event)
             {
                  QKeyEvent *k = static_cast<QKeyEvent *>(event);
 
-                 if(k->key() == Qt::Key_Return)//回车键
+                 if(k->key() == Qt::Key_Return)
                  {
                      on_btnOk_clicked();
                      return true;
@@ -117,7 +116,7 @@ void formLoading::on_btnCancel_clicked()
         cmd = QString("kill -9 %1").arg(pidLinux);
         system(cmd.toLocal8Bit().data());
     #else
-        DWORD pidwin = GetCurrentProcessId(); // 当前进程ID
+        DWORD pidwin = GetCurrentProcessId();
         cmd = QString("TASKKILL /PID %1 /T /F").arg(pidwin);
         system(cmd.toLocal8Bit().data());
     #endif
@@ -144,16 +143,14 @@ void formLoading::setTxtQss(QLineEdit *txt, QString normalColor, QString focusCo
     txt->setStyleSheet(qss.join(""));
 }
 
-//拖拽操作
 void formLoading::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton)
     {
         m_bDrag = true;
-        //获得鼠标的初始位置
+
         mouseStartPoint = event->globalPos();
-        //mouseStartPoint = event->pos();
-        //获得窗口的初始位置
+
         windowTopLeftPoint = this->frameGeometry().topLeft();
     }
 }
@@ -162,10 +159,8 @@ void formLoading::mouseMoveEvent(QMouseEvent *event)
 {
     if(m_bDrag)
     {
-        //获得鼠标移动的距离
         QPoint distance = event->globalPos() - mouseStartPoint;
-        //QPoint distance = event->pos() - mouseStartPoint;
-        //改变窗口的位置
+
         this->move(windowTopLeftPoint + distance);
     }
 }
@@ -213,7 +208,6 @@ void formLoading::on_btnOk_clicked()
         return;
     }
 
-    //通过函数指针调用用户管理组件的验证功能，旨在将用户管理与框架解耦，即有一天用户管理的密码验证要升级为加密形式，只需要更新用户管理模块。
     bool isVerifyLoginInfoExisted = false;
     bool isLegal = false;
 
@@ -226,7 +220,6 @@ void formLoading::on_btnOk_clicked()
 
     int ret =_core->Invoke_PluginFunction(PT_SYS,  "QCPF_UserManager", "VerifyLoginInfo", var_In, var_Out);
 
-    //-1表示没找到组件, -2表示没找到函数指针对象
     if(ret==-1 || ret ==-2)
     {
         this->close();

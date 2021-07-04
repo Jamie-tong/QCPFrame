@@ -24,10 +24,6 @@ PluginIO::PluginIO()
 
 PluginIO::~PluginIO(){}
 
-//接口方法实现
-/***************************************************
-*                       方法接口                                       *
-***************************************************/
 void PluginIO::InitActionList(Plugin_Interface* plugin)
 {
     //--------------------------------------------
@@ -127,9 +123,6 @@ void PluginIO::InitWidgetList(Plugin_Interface* plugin)
     plugin->I_WidgetList.append(nWdtMap);
 }
 
-/***********************************************************************
- *  action 函数指针所对应的回调函数
- * *********************************************************************/
 void PluginIO::Action_SumWidget(bool checkState)
 {
     int i = 3+4;

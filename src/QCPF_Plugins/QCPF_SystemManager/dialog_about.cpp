@@ -19,11 +19,9 @@ Dialog_About::Dialog_About(QWidget *parent) :
 
     PluginIO* pluginInst = PluginIO::getInstance();
 
-    //去掉问号按钮
     setWindowFlags(Qt::Dialog
                    | Qt::WindowCloseButtonHint | Qt::WindowMaximizeButtonHint);
 
-    //禁止调整大小
     QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     sizePolicy.setHorizontalStretch(0);
     sizePolicy.setVerticalStretch(0);

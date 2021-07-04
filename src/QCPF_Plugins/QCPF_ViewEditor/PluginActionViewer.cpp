@@ -21,11 +21,11 @@ PluginActionViewer::PluginActionViewer(QCPF_Interface* model, QTreeWidgetItem* i
     _selTreeItem = item;
     this->setParent(parent);
 
-    //去掉问号按钮
+
     setWindowFlags(Qt::Dialog
                    | Qt::WindowCloseButtonHint | Qt::WindowMaximizeButtonHint);
 
-    //禁止调整大小
+
     QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     sizePolicy.setHorizontalStretch(0);
     sizePolicy.setVerticalStretch(0);
@@ -35,7 +35,6 @@ PluginActionViewer::PluginActionViewer(QCPF_Interface* model, QTreeWidgetItem* i
     setMaximumSize(QSize(362, 440));
     setSizeGripEnabled(false);
 
-    //注册面板显示后的信号槽
     _timer = new QTimer(this);
     _timer->setSingleShot(true);
     connect(_timer, SIGNAL(timeout()), this, SLOT(slot_OnULoaded()));
@@ -68,14 +67,14 @@ void PluginActionViewer::on_tabWidget_currentChanged(int index)
     ui->txtActionDetail->clear();
 
     ui->cbCopyID->clear();
-    if(index==0)//系统组件
+    if(index==0)
     {
         foreach(Plugin_Interface* pi,  _core->I_SysPlugins_Sel)
         {
             ui->cbPluginID->addItem(pi->I_PluginID);
         }
     }
-    else//非系统组件
+    else
     {
         foreach(Plugin_Interface* pi,  _core->I_NSysOrigPlugins_Sel)
         {
@@ -96,7 +95,7 @@ void PluginActionViewer::on_cbPluginID_currentIndexChanged(int index)
         return;
 
     ui->cbCopyID->clear();
-    if(tabIndex==0)//系统组件
+    if(tabIndex==0)
     {
 
         if(index >=_core->I_SysPlugins.count())
@@ -106,7 +105,7 @@ void PluginActionViewer::on_cbPluginID_currentIndexChanged(int index)
             ui->cbPluginAction->addItem(pai->_actionName);
         }
     }
-    else//非系统组件
+    else
     {
         if(index >=_core->I_NSysOrigPlugins_Sel.count())
             return;
@@ -132,7 +131,7 @@ void PluginActionViewer::on_cbPluginAction_currentIndexChanged(int index)
 
     int tabIndex = ui->tabWidget->currentIndex();
     int plugIndex = ui->cbPluginID->currentIndex();
-    if(tabIndex==0)//系统组件
+    if(tabIndex==0)
     {
         if(plugIndex >=_core->I_SysPlugins_Sel.count() || index >= _core->I_SysPlugins_Sel[plugIndex]->I_ActionList.count())
             return;
@@ -140,7 +139,7 @@ void PluginActionViewer::on_cbPluginAction_currentIndexChanged(int index)
         ui->txtActionName->setText(_core->I_SysPlugins_Sel[plugIndex]->I_ActionList[index]->_actionName);
         ui->txtActionDetail->setText(_core->I_SysPlugins_Sel[plugIndex]->I_ActionList[index]->_actionDetail);
     }
-    else//非系统组件
+    else
     {
         if(plugIndex >=_core->I_NSysOrigPlugins_Sel.count() || index >= _core->I_NSysOrigPlugins_Sel[plugIndex]->I_ActionList.count())
             return;

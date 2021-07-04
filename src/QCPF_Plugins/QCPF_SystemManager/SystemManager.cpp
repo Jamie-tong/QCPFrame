@@ -32,9 +32,8 @@ SystemManager::SystemManager(QCPF_Model* model, QWidget *parent) :
     _core = model;
 
     sysMgrInstance = this;
-    connect(this,SIGNAL(sig_SelAllOrNot(bool)),this,SLOT(slot_SelAllOrNot(bool)));//for 全选/不选复选框
+    connect(this,SIGNAL(sig_SelAllOrNot(bool)),this,SLOT(slot_SelAllOrNot(bool)));
 
-    //去掉问号按钮
     setWindowFlags(Qt::Dialog
                    | Qt::WindowCloseButtonHint | Qt::WindowMaximizeButtonHint);
 
@@ -46,7 +45,6 @@ SystemManager::SystemManager(QCPF_Model* model, QWidget *parent) :
     connect(this, SIGNAL(sig_Cancel(void)), _core, SLOT(slot_CancelConfig(void)));
     connect(this, SIGNAL(sig_Apply(void)), _core, SLOT(slot_ApplyConfig(void)));
 
-    //注册面板显示后的信号槽
     _timer = new QTimer(this);
     _timer->setSingleShot(true);
     connect(_timer, SIGNAL(timeout()), this, SLOT(slot_OnULoaded()));
@@ -62,7 +60,6 @@ SystemManager::~SystemManager()
 
 void SystemManager::resizeEvent(QResizeEvent *event)
 {
-    //如果不是第一次显示
     if(!_isFirstResize)
         return;
     else
@@ -81,28 +78,14 @@ void SystemManager::slot_OnULoaded()
 
 int SystemManager::setConfigToUI()
 {
-    //========================================================================
-    //清空数据
-    //========================================================================
     ui->tablePluginLst->clear();
     ui->tableOrigPluginsSort->clear();
 
-    //读配置文件
-    //_core->slot_LoadConfigFile(_core->_config);//model已经读过配置，因此这里不需要再读
-
-    //========================================================================
-    //设置样式
-    //========================================================================
-    //---------------------
-    //设置原始组件信息列表
-    //---------------------
     ui->tablePluginLst->setColumnCount(8);
     ui->tablePluginLst->setRowCount(0);
 
     QStringList nHeadLst;
-    //如果下面出现乱码，就把环境设置为：
-    //1.工具->选项->默认编码->UTF-8;
-    //2.工具->选项->UTF-8 BOM->如果编码是UTF-8则添加
+
     nHeadLst<<""<<tr("No.")<<tr("Plugin ID")<<tr("Alias Name")<<tr("Tag")<<tr("Developor")<<tr("Version")<<tr("Detail");
 
     CCheckBoxHeaderView *myHeader = new CCheckBoxHeaderView(0, Qt::Horizontal, ui->tablePluginLst);
@@ -121,16 +104,11 @@ int SystemManager::setConfigToUI()
 
     setTableStyle(ui->tablePluginLst);
 
-    //---------------------
-    //设置原始组件排序表
-    //---------------------
     ui->tableOrigPluginsSort->setColumnCount(2);
     ui->tableOrigPluginsSort->setRowCount(0);
 
     nHeadLst.clear();
-    //如果下面出现乱码，就把环境设置为：
-    //1.工具->选项->默认编码->UTF-8;
-    //2.工具->选项->UTF-8 BOM->如果编码是UTF-8则添加
+
     nHeadLst<<tr("No.")<<tr("Plugin ID");
 
     ui->tableOrigPluginsSort->setHorizontalHeaderLabels(nHeadLst);
@@ -139,12 +117,7 @@ int SystemManager::setConfigToUI()
     ui->tableOrigPluginsSort->setColumnWidth(1, 150);
 
     setTableStyle(ui->tableOrigPluginsSort);
-    //========================================================================
-    //加载数据
-    //========================================================================
-    //---------------------
-    //设置原始组件信息列表
-    //---------------------
+
     int pluginCount = _core->I_SysPlugins.count();
     for(int i=0; i<pluginCount; i++)
     {
@@ -160,7 +133,6 @@ int SystemManager::setConfigToUI()
 
         QString tOrigPluginID = ((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginID;
 
-        //查找已选组件集合中是否已经有该项，如果有则设置选中状态，否则不选中
         int tIndex = -1;
         for(int i=0; i<_core->_config._sysPlugins_Sel.count(); i++)
         {
@@ -181,7 +153,7 @@ int SystemManager::setConfigToUI()
         int tRowCount = ui->tablePluginLst->rowCount();
         ui->tablePluginLst->insertRow(tRowCount);
 
-        ui->tablePluginLst->setCellWidget(tRowCount, 0, widget);//插入复选框
+        ui->tablePluginLst->setCellWidget(tRowCount, 0, widget);
         ui->tablePluginLst->setItem(tRowCount, 1, new QTableWidgetItem(QString::number(i+1)));
         ui->tablePluginLst->setItem(tRowCount, 2, new QTableWidgetItem(((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginID));
         ui->tablePluginLst->setItem(tRowCount, 3, new QTableWidgetItem(((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginAliasName));
@@ -194,23 +166,18 @@ int SystemManager::setConfigToUI()
         box->setProperty("OrigPluginFilePath", ((Plugin_Interface *)_core->I_SysPlugins[i])->I_PluginFilePath);
     }
 
-    //------------------------------
-    //给原始组件排序列表中填充数据
-    //------------------------------
     for(int i=0; i<_core->_config._sysPlugins_Sel.count(); i++)
     {
-        //find the item from origin plugin list
         bool canShow = false;
         for(int j=0; j<ui->tablePluginLst->rowCount(); j++)
         {
             QString pluginID_OrigTable = ui->tablePluginLst->item(j, 2)->text();
             bool isChecked = false;
-            if (QWidget *w = ui->tablePluginLst->cellWidget(j, 0))//先获取widget
+            if (QWidget *w = ui->tablePluginLst->cellWidget(j, 0))
             {
-                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));  //通过children来访问checkbox
+                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));
                 isChecked = checkBox->checkState()==2?true:false;
             }
-            //if pluginId in the origin talbe and it's checked, then insert the item to talbOriginPluginSort
             if(pluginID_OrigTable == _core->_config._sysPlugins_Sel[i]->_pluginID &&
                isChecked)
             {
@@ -229,13 +196,9 @@ int SystemManager::setConfigToUI()
         ui->tableOrigPluginsSort->setItem(tRowCount, 1, new QTableWidgetItem(_core->_config._sysPlugins_Sel[i]->_pluginID));
     }
 
-    //============================================
-    //样式
-    //============================================
     if(ui->tablePluginLst->rowCount()<=30)
         ui->tablePluginLst->setRowCount(30);
 
-    //utility
     ui->txtSystemID->setText(_core->_config._systemID);
     ui->txtSystemName->setText(_core->_config._systemName);
 
@@ -244,23 +207,19 @@ int SystemManager::setConfigToUI()
 
 void SystemManager::setTableStyle(QTableWidget *table)
 {
-    //设置表头颜色
     table->horizontalHeader()->setStyleSheet("QHeaderView::section{color:black; border:1px gray;background-color:lightgray;font:9pt '微软雅黑';padding:5px;min-height:1em;}");
     table->horizontalHeader()->setDefaultAlignment (Qt::AlignLeft | Qt::AlignVCenter); //居左
-   //设置相邻行颜色交替显示
     table->setAlternatingRowColors(true);
-    //垂直表头不显示
     table->verticalHeader()->setVisible(false);
-    //水平表头显示
     table->horizontalHeader()->setVisible(true);
 
     table->horizontalHeader()->setStretchLastSection(true);
 
-    table->horizontalHeader()->setHighlightSections(false);//取消表头的在选中单元格时的高亮状态。
-    table->setEditTriggers(QAbstractItemView::NoEditTriggers);//设为不可编辑
-    table->setSelectionBehavior(QAbstractItemView::SelectRows);//设置选中模式为选中行
-    table->setSelectionMode( QAbstractItemView::SingleSelection);//设置选中单个
-    table->horizontalHeader()->setStretchLastSection(true);//最后一列自动调整列宽
+    table->horizontalHeader()->setHighlightSections(false);
+    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    table->setSelectionMode( QAbstractItemView::SingleSelection);
+    table->horizontalHeader()->setStretchLastSection(true);
     table->setStyleSheet("font:9pt '微软雅黑';");
 
     table->setSortingEnabled(false);
@@ -275,16 +234,16 @@ void SystemManager::slot_SelAllOrNot(bool flag)
 {
     int row=0,col=0;
     int i=0,j=0;
-    //row=ui->tablePluginLst->rowCount();
+
     row = _core->I_SysPlugins.count();
 
     if(flag == true)
     {
         for(;i<row;i++)
         {
-            if (QWidget *w = ui->tablePluginLst->cellWidget(i, 0))//先获取widget
+            if (QWidget *w = ui->tablePluginLst->cellWidget(i, 0))
             {
-                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));  //通过children来访问checkbox
+                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));
                 checkBox->setChecked(true);
             }
         }
@@ -293,9 +252,9 @@ void SystemManager::slot_SelAllOrNot(bool flag)
     {
         for(;i<row;i++)
         {
-            if (QWidget *w = ui->tablePluginLst->cellWidget(i, 0))//先获取widget
+            if (QWidget *w = ui->tablePluginLst->cellWidget(i, 0))
             {
-                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));  //通过children来访问checkbox
+                QCheckBox * checkBox = qobject_cast<QCheckBox*>(w->children().at(1));
                 checkBox->setChecked(false);
             }
         }
@@ -304,7 +263,6 @@ void SystemManager::slot_SelAllOrNot(bool flag)
 }
  int SystemManager::getConfigFromUI()
  {
-     //已选的系统组件，时序配置
      _core->_config._sysPlugins_Sel.clear();
      for(int i=0; i<ui->tableOrigPluginsSort->rowCount(); i++)
      {
@@ -320,28 +278,6 @@ void SystemManager::slot_SelAllOrNot(bool flag)
          QString fileName = tFullFilePath.split("/").last();
          _core->_config._sysPlugins_Sel.append(new PluginInfo(_core->_config._this, tOriginPluginID, fileName));
 
-//         //如果有新加入的组件，则将其动态加入到原始组件集合里去
-//         bool isExisted = false;
-//         foreach(Plugin_Interface* pi, _core->I_SysPlugins_Sel)
-//         {
-//            if(pi->I_PluginID == tOriginPluginID)
-//            {
-//                isExisted = true;
-//                break;
-//            }
-//         }
-//         //如果已选集合里没有当前组件，则I_SysPlugins里面有当前所有扫描出来的组件，从里面找到当前组件，并加入到Sel中
-//         if(!isExisted)
-//         {
-//             foreach(Plugin_Interface* pi, _core->I_SysPlugins)
-//             {
-//                if(pi->I_PluginID == tOriginPluginID)
-//                {
-//                    _core->I_SysPlugins_Sel.append(pi);
-//                    break;
-//                }
-//             }
-//         }
      }
      _core->_config._count_sysPlugins_Sel = _core->_config._sysPlugins_Sel.count();//这个值若不给，序列化和反序列化时，将内存将无法对齐
      //-----------------------
@@ -352,9 +288,6 @@ void SystemManager::slot_SelAllOrNot(bool flag)
 
 void SystemManager::on_btnOk_clicked()
 {
-    //====================================================================
-    //保存配置(发送保存信号, 让_core自己进行存储自己的config信息)
-    //====================================================================
     getConfigFromUI();
 
     emit sig_Save();
@@ -373,7 +306,6 @@ void SystemManager::on_pluginCheckbox_selChanged(int state)
     QString origPluginID = chkBox->property("OrigPluginID").toString();
     QString origPluginFilePath = chkBox->property("OrigPluginFilePath").toString();
 
-    //在tableOrigPluginsSort查看是否已经存在原始组件item
     int tOrigPluginIndex = -1;
     for(int i=0; i<ui->tableOrigPluginsSort->rowCount(); i++)
     {
@@ -384,8 +316,6 @@ void SystemManager::on_pluginCheckbox_selChanged(int state)
         }
     }
 
-    //===============================================================================
-    //如果原始组件被选中，则需要给tableOrigPluginsSort追加item，否则删除其他控件中与之关联的项
     if(chkBox->checkState() == Qt::CheckState::Checked)
     {
         if(tOrigPluginIndex==-1)

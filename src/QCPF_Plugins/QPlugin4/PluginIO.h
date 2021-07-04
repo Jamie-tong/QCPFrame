@@ -13,7 +13,7 @@ public:
     ~PluginIO();
 
 public:
-    static PluginIO* getInstance();//静态获取实例
+    static PluginIO* getInstance();
 };
 
 #endif // QPLUGIN2_H

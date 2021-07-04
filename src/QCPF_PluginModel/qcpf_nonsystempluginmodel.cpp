@@ -35,9 +35,8 @@ Plugin_Interface* QCPF_NonSystemPluginModel::Clone(QString copyID, QString copyA
     foreach(QVariant v, this->I_PluginVarList)
         _clonePlugin->I_PluginVarList.append(v);
 
-    //action没必要深拷贝，保持和原始组件一样的触发功能即可
     _clonePlugin->I_ActionList = this->I_ActionList;
-    //function和widget需要深拷贝
+
     InitFunctionList(_clonePlugin);
     if(_core->I_RunMode == RM_APPLICATION)
             InitWidgetList(_clonePlugin);

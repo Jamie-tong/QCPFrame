@@ -33,7 +33,7 @@ public:
 
 public:
     tagOutputInfo tinfo;
-    static PluginIO* getInstance();//静态获取实例
+    static PluginIO* getInstance();
 
 public slots:
     int slot_InputInfo(tagOutputInfo& info);

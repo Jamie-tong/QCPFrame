@@ -32,7 +32,7 @@ class QCPF_MODEL_EXPORT QCPF_Model :  public QCPF_Interface
             ConfigModel _config;
             QObject* _view;
         signals:
-            int sig_OutputInfo(tagOutputInfo& info);//向槽函数发送初始化信息
+            int sig_OutputInfo(tagOutputInfo& info);
             int sig_Core(QVariant arg_in, QVariant &arg_out);
 
             void sig_PluginSelOrNSelFinished(QString origPluginID, bool isSel);

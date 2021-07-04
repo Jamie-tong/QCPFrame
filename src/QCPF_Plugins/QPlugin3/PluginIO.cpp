@@ -24,10 +24,6 @@ PluginIO::PluginIO()
 
 PluginIO::~PluginIO(){}
 
-//接口方法实现
-/***************************************************
-*                       方法接口                    *
-***************************************************/
 void PluginIO::InitActionList(Plugin_Interface* plugin)
 {
     //--------------------------------------------
@@ -80,9 +76,6 @@ void PluginIO::InitFunctionList(Plugin_Interface* plugin)
     emit sig_OutputInfo(tInfo);
 }
 
-/***********************************************************************
- *  action 函数指针所对应的回调函数
- * *********************************************************************/
 void PluginIO::Action_sum(bool checkState)
 {
     int sum = 1+1;

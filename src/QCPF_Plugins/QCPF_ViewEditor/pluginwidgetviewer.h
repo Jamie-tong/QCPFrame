@@ -45,7 +45,7 @@ public:
     QString _pluginID;
     QString _copyID;
     QString _widgetObjectName;
-    int _statusbarItemType;//StatusbarItemType
+    int _statusbarItemType;
 
     QString _itemTag;
     QString _itemDetail;

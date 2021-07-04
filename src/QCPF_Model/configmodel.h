@@ -78,7 +78,7 @@ public:
     friend QDataStream& operator>>(QDataStream&, ConfigModel&);
     friend QDataStream& operator<<(QDataStream&, ConfigModel&);
 
-public://Model相关数据成员
+public:
     void resetData();
     ConfigModel* _this;
     QString  _systemName= "通用组件式框架";
@@ -91,18 +91,11 @@ public://Model相关数据成员
     int _count_nSysClonePlugins=0;
     int _count_nSysAllValidPlugins=0;
 
-    QList<PluginInfo*> _sysPlugins_Sel;//被选中的系统组件集合
+    QList<PluginInfo*> _sysPlugins_Sel;
 
-    QList<PluginInfo*> _nSysPlugins_Sel;//被选中的非系统原始组件集合
-    QVector<ClonePluginInfo*> _nSysClonePlugins;//克隆非系统组件信息集合
-    QVector<ValidPluginInfo*> _nSysAllValidPlugins;//包括原始和克隆组件在内的所有非系统组件加载顺序
-
-    /* 说明：
-               1. 系统组件优先与非系统组件被加载
-               1. Plugins_Sel Order决定了原始组件文件初次被QPluginLoader创建为实例，即被构造时的先后顺序，而此时克隆组件还未被创建。
-               2. ClonePlugins Order决定了第1步以后，克隆组件被克隆的先后顺序。
-               3. AllValidPlugins Order决定了接口OnLoading，OnMainFrameCreated，OnMainFrameLoad及OnMainFrameClosing时的先后顺序。
-    */
+    QList<PluginInfo*> _nSysPlugins_Sel;
+    QVector<ClonePluginInfo*> _nSysClonePlugins;
+    QVector<ValidPluginInfo*> _nSysAllValidPlugins;
 };
 
 #endif // CONFIGMODEL_H

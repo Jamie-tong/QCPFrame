@@ -47,11 +47,11 @@ protected:
     {
         if (visualIndexAt(event->pos().x()) == m_checkColIdx)
         {
-    //        setSortIndicatorShown( false );
+
             if (isOn)
             {
                 isOn = false;
-               ViewEditor::getInstance()->sig_SelAllOrNot(false);///发送信号使槽函数跟新界面的复选框。
+               ViewEditor::getInstance()->sig_SelAllOrNot(false);
             }
             else
             {
