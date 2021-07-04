@@ -47,7 +47,7 @@ QCPF_ViewModel::QCPF_ViewModel(QCPF_Model* model, QObject* parent, QString confi
     slot_LoadConfigFile(_config);
 }
 
-//*******************************************
+
 int CompareMsg(char* msg1, char* msg2)
 {
     FILE *pOne, *pTwe;
@@ -67,7 +67,7 @@ int CompareMsg(char* msg1, char* msg2)
 
     fseek(pOne, 0, SEEK_END);
     lsize1 = ftell(pOne);
-    //rewind(pOne);
+
     fseek(pOne, 0, SEEK_SET);
     fseek(pTwe, 0, SEEK_END);
     lsize2 = ftell(pTwe);
@@ -282,7 +282,7 @@ void QCPF_ViewModel::parseMenu(QMenu* nMenu, JMenuNode* nNode)
 {
     if(nNode->_children.count()==0)
     {
-        if(nNode->_menuIsSeprator)//判断是否为分隔符
+        if(nNode->_menuIsSeprator)
         {
             nMenu->addSeparator();
         }
@@ -308,7 +308,7 @@ void QCPF_ViewModel::parseMenu(QMenu* nMenu, JMenuNode* nNode)
             if(QFile::exists(_core->I_ApplicationDirPath + "/Images/" + tFileName))
                 finalIconPath = _core->I_ApplicationDirPath + "/Images/" + tFileName;
         }
-        //===========
+        //--------------------------
         childMenu->setIcon(QIcon(finalIconPath));
         nMenu->addMenu(childMenu);
 
@@ -320,7 +320,7 @@ void QCPF_ViewModel::parseMenu(QMenu* nMenu, JMenuNode* nNode)
         for(int i=0; i<nNode->_children.count(); i++)
         {
             JMenuNode* childNode = nNode->_children[i];
-            //递归
+
             parseMenu(childMenu, childNode);
         }
     }

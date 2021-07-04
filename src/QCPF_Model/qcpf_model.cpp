@@ -144,7 +144,6 @@ bool copyDirectoryDllFiles(const QString &fromDir, const QString &toDir, bool co
 #endif
             if(isValidFile)
             {
-                /// 进行文件copy, 拷贝失败继续拷贝下一个文件。
                 if(!QFile::copy(fileInfo.filePath(),
                     targetDir.filePath(fileInfo.fileName()))){
                     continue;
@@ -167,7 +166,7 @@ int QCPF_Model::pluginsCollect(QString pluginDirPath,  QList<PluginInfo*> select
 
     QString tempDirPath = pluginDirPath + "Temp";
     QDir tempDir(tempDirPath);
-    //清空临时文件夹
+
     foreach (QFileInfo fi, tempDir.entryInfoList()) {
         tempDir.remove(fi.fileName());
     }
@@ -468,15 +467,14 @@ int QCPF_Model::installConfig(ConfigModel &config)
         if(!isExsitInSysPlugins)
         {
             _outputInfo._type = InfoType::INFT_STATUS_INFO;
-            //_outputInfo._content = QStringLiteral("装载已选系统组件时，在系统组件集合中未找到ID为\"") + tSelOrigPluginID + QStringLiteral("\"的组件.");
+
             _outputInfo._content = QString(tr("Can't find the plugin which plugin id = %1,when loading the selected system plugins.")).arg(tSelOrigPluginID);
             emit sig_OutputInfo(_outputInfo);
         }
     }
 
-    //---------------------------------------------------------------装载已选非系统组件
     _outputInfo._type = InfoType::INFT_STATUS_INFO;
-    //_outputInfo._content = QStringLiteral("装载非系统组件.");
+
     _outputInfo._content = tr("Loading selected non-system plugins.");
     emit sig_OutputInfo(_outputInfo);
 
@@ -518,9 +516,8 @@ int QCPF_Model::installConfig(ConfigModel &config)
         }
     }
 
-    //---------------------------------------------------------------装/卸载克隆组件
     _outputInfo._type = InfoType::INFT_STATUS_INFO;
-    //_outputInfo._content = QStringLiteral("卸载禁用的克隆组件.");
+
     _outputInfo._content = tr("Uninstalling clone plugins.");
     emit sig_OutputInfo(_outputInfo);
 
@@ -542,7 +539,7 @@ int QCPF_Model::installConfig(ConfigModel &config)
     }
 
     _outputInfo._type = InfoType::INFT_STATUS_INFO;
-    //_outputInfo._content = QStringLiteral("装载创建的克隆组件.");
+
    _outputInfo._content = tr("Installing clone plugins.");
     emit sig_OutputInfo(_outputInfo);
 
