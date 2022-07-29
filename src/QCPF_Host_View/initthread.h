@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QThread>
-#include "../QCPF_Model/qcpf_model.h"
+#include "qcpf_model.h"
 
 
 class InitThread : public QThread

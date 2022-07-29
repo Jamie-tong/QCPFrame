@@ -15,7 +15,7 @@ License: GPL v3.0
 #include <QAction>
 
 #include "viewConfigModel.h"
-#include "../QCPF_Model/qcpf_model.h"
+#include "qcpf_model.h"
 
 #if defined(QCPF_VIEWMODEL_LIBRARY)
 #  define QCPF_VIEWMODEL_EXPORT Q_DECL_EXPORT

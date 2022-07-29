@@ -47,11 +47,15 @@ FORMS += \
     ViewEditor.ui \
     pluginwidgetviewer.ui
 
+unix|win32: LIBS += -L$$PWD/../../../bin/ -lQCPF_Model
 
-unix|win32: LIBS += -L$$PWD/../../bin/ -lQCPF_ViewModel
+INCLUDEPATH += $$PWD/../../QCPF_Model
+DEPENDPATH += $$PWD/../../QCPF_Model
 
-INCLUDEPATH += $$PWD/../QCPF_ViewModel
-DEPENDPATH += $$PWD/../QCPF_ViewModel
+unix|win32: LIBS += -L$$PWD/../../../bin/ -lQCPF_ViewModel
+
+INCLUDEPATH += $$PWD/../../QCPF_ViewModel
+DEPENDPATH += $$PWD/../../QCPF_ViewModel
 
 unix|win32: LIBS += -L$$PWD/../../../bin/ -lQCPF_PluginModel
 

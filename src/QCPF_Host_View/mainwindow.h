@@ -10,8 +10,8 @@ License: GPL v3.0
 
 #include <QMainWindow>
 #include "formloading.h"
-#include "../QCPF_Model/qcpf_model.h"
-#include "../QCPF_ViewModel/qcpf_viewmodel.h"
+#include "qcpf_model.h"
+#include "qcpf_viewmodel.h"
 
 namespace Ui {
 class MainWindow;

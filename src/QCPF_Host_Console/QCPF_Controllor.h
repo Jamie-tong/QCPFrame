@@ -2,7 +2,7 @@
 #define COMMANDHANDLER_H
 
 #include <QObject>
-#include "../QCPF_Model/qcpf_model.h"
+#include "qcpf_model.h"
 class QCPF_Controllor: public QObject
 {
     Q_OBJECT

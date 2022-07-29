@@ -10,7 +10,7 @@ License: GPL v3.0
 
 #include <QDialog>
 #include "PluginIO.h"
-#include "../../QCPF_Model/qcpf_model.h"
+#include "qcpf_model.h"
 #include <QTreeWidget>
 
 namespace Ui {

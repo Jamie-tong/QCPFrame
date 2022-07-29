@@ -67,3 +67,12 @@ unix|win32: LIBS += -L$$PWD/../../bin/ -lQCPF_ViewModel
 
 INCLUDEPATH += $$PWD/../QCPF_ViewModel
 DEPENDPATH += $$PWD/../QCPF_ViewModel
+
+###########################
+#                    更新日志
+###########################
+#【版本】1.0.0.2
+#【日期】2022.05.24
+#【内容】
+# 1. 适配了2.0.0.4版本的QCPF_Model
+# 2. 对mainwindow构造函数进行了优化，使OnCoreInitialize在构造最初被调用。

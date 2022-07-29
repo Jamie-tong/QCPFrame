@@ -30,7 +30,7 @@ PluginIO::PluginIO()
     I_PluginID = tr("QCPF_UserManager");
     I_PluginAliasName = tr("User Manager");
     I_PluginAuther = tr("Jamie.T");
-    I_PluginVersion = tr("1.0.0.1");
+    I_PluginVersion = tr("1.0.0.2");
     I_PluginComment = tr("Manage users.");
     I_PluginTag = tr("SINGLETON\\SYSTEM\\USER_MANAGER");
     I_PluginAuthority = AT_MANAGER1;

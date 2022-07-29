@@ -5,7 +5,7 @@ Data    : 2020-09-07
 License: GPL v3.0
 */
 
-#include "configmodel.h"
+#include "configModel.h"
 
 #include <QFile>
 #include <QDataStream>
@@ -26,7 +26,8 @@ ConfigModel& ConfigModel::operator = (const ConfigModel& other)
 {
     this->_systemName = other._systemName;
     this->_systemID = other._systemID;
-    this->_isEnable_UserLoad = other._isEnable_UserLoad;
+    this->_enableLogin = other._enableLogin;
+    this->_enableHotPlug = other._enableHotPlug;
     this->_count_sysPlugins_Sel = other._count_sysPlugins_Sel;
     this->_count_nSysPlugins_Sel = other._count_nSysPlugins_Sel;
     this->_count_nSysClonePlugins = other._count_nSysClonePlugins;
@@ -64,9 +65,14 @@ ConfigModel& ConfigModel::operator = (const ConfigModel& other)
 
 QDataStream& operator>>(QDataStream& src, ConfigModel& data)
 {
+    /*
+     错误:C2679: 二进制“>>”: 没有找到接受“quint32”类型的右操作数的运算
+    解决方法：因为没有添加头文件<QDataStream>
+    */
     src >> data._systemName;
     src >> data._systemID;
-    src >> data._isEnable_UserLoad;
+    src >> data._enableLogin;
+    src >> data._enableHotPlug;
     src >> data._count_sysPlugins_Sel;
     src >> data._count_nSysPlugins_Sel;
     src >> data._count_nSysClonePlugins;
@@ -121,7 +127,8 @@ QDataStream& operator<<(QDataStream& out, ConfigModel& data)
 {
     out << data._systemName;
     out << data._systemID;
-    out << data._isEnable_UserLoad;
+    out << data._enableLogin;
+    out << data._enableHotPlug;
     out << data._count_sysPlugins_Sel;
     out << data._count_nSysPlugins_Sel;
     out << data._count_nSysClonePlugins;
@@ -161,7 +168,8 @@ void ConfigModel::resetData()
 {
     _systemName= "";
     _systemID = "";
-    _isEnable_UserLoad = false;
+    _enableLogin = true;
+    _enableHotPlug = false;
     _count_sysPlugins_Sel = 0;
     _count_nSysPlugins_Sel = 0;
     _count_nSysClonePlugins = 0;

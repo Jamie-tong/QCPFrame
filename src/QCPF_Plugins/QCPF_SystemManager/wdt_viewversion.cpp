@@ -3,6 +3,8 @@
 #include "PluginIO.h"
 #include <QTimer>
 
+#include "qcpf_viewmodel.h"
+
 wdt_ViewVersion::wdt_ViewVersion(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::wdt_ViewVersion)

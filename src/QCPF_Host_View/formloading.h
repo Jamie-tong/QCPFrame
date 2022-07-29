@@ -11,8 +11,8 @@ License: GPL v3.0
 #include <QDialog>
 #include <QMouseEvent>
 
-#include "../QCPF_Model/qcpf_model.h"
-#include "../QCPF_ViewModel/qcpf_viewmodel.h"
+#include "qcpf_model.h"
+#include "qcpf_viewmodel.h"
 #include "initthread.h"
 
 class QPushButton;

@@ -92,5 +92,5 @@ void QCPF_Controllor::PerformFunction(QString pluginID, QString copyID, QString 
     QVariant var_in;
     QVariant var_out;
     qDebug() <<"";
-    _core->Invoke_PluginFunction(PT_NON_SYS, pluginID, copyID, functionName, var_in, var_out);
+    _core->Invoke_PluginFunction_Copy(PT_NON_SYS, pluginID, copyID, functionName, var_in, var_out);
 }

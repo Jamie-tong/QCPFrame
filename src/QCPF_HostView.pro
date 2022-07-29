@@ -3,7 +3,6 @@ TEMPLATE = subdirs
 SUBDIRS += \
     QCPF_Model \
     QCPF_PluginModel \
-    QCPF_Plugins/QPluginChart \
     QCPF_ViewModel \
     QCPF_Host_View/QCPF_HostView.pro \
     QCPF_Plugins/QCPF_PluginManager \

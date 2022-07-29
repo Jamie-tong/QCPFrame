@@ -44,3 +44,8 @@ unix|win32: LIBS += -L$$PWD/../../../bin/ -lQCPF_PluginModel
 
 INCLUDEPATH += $$PWD/../../QCPF_PluginModel
 DEPENDPATH += $$PWD/../../QCPF_PluginModel
+
+unix|win32: LIBS += -L$$PWD/../../../bin/ -lQCPF_Model
+
+INCLUDEPATH += $$PWD/../../QCPF_Model
+DEPENDPATH += $$PWD/../../QCPF_Model

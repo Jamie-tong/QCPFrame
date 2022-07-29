@@ -30,7 +30,7 @@ PluginIO::PluginIO()
     I_PluginID = tr("QCPF_SystemManager");
     I_PluginAliasName = tr("System Manager");
     I_PluginAuther = tr("Jamie.T");
-    I_PluginVersion = tr("1.0.0.2");
+    I_PluginVersion = tr("1.0.0.3");
     I_PluginComment = tr("Manage the system params.");
     I_PluginTag = tr("SINGLETON\\SYSTEM\\SYS_PLUGIN_MANAGER");
     I_PluginAuthority = AT_MANAGER1;

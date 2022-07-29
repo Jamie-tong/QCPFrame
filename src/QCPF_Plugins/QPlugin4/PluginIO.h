@@ -1,7 +1,7 @@
 ﻿#ifndef QPLUGIN2_H
 #define QPLUGIN2_H
 
-#include "../../QCPF_PluginModel/qcpf_nonsystempluginmodel.h"
+#include "qcpf_nonsystempluginmodel.h"
 
 class PluginIO : public QCPF_NonSystemPluginModel
 {

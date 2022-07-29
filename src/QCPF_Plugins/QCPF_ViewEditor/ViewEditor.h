@@ -11,8 +11,8 @@ License: GPL v3.0
 #include <QDialog>
 #include <QTreeWidget>
 #include "PluginIO.h"
-#include "../../QCPF_ViewModel/qcpf_viewmodel.h"
-#include "../../QCPF_ViewModel/viewconfigmodel.h"
+#include "qcpf_viewmodel.h"
+#include "viewconfigmodel.h"
 #include <QTreeWidget>
 #include <QTableWidget>
 

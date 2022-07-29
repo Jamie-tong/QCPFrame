@@ -51,7 +51,7 @@ public:
 enum RunMode
 {
     RM_CORE_APPLICATION,//运行模式基于控制台
-    RM_APPLICATION//运行模式基于widget
+    RM_APPLICATION//运行模式基于UI
 };
 
 class QCPF_Interface : public QObject
@@ -65,11 +65,17 @@ class QCPF_Interface : public QObject
          *     3. 系统为单例组件，可排序，但是不容许被克隆。
          **********************************************************************************/
         RunMode I_RunMode;
+
+        //基于控制台的Application对象
+        QCoreApplication* I_CoreApplication;
+        //基于UI的Application对象
+        QApplication* I_Application;
         //所有系统组件集合
         QList<Plugin_Interface*> I_SysPlugins;
         //所有被选中的系统组件集合
         QList<Plugin_Interface*> I_SysPlugins_Sel;
-
+        //被卸载掉的系统组件的集合
+        QList<Plugin_Interface*> I_SysDiscardedPlugins;
         /**********************************************************************************
          * 非系统组件:
          *     1. 用以实现业务层功能，在系统组件加载完成过后被加载。
@@ -84,6 +90,8 @@ class QCPF_Interface : public QObject
         QList<Plugin_Interface*>  I_NSysClonePlugins;
         //包括已选择的原始组件和克隆组件在内的所有非系统组件的集合
         QList<Plugin_Interface*> I_NSysAllValidPlugins;
+        //被卸载掉的非系统组件的集合
+        QList<Plugin_Interface*> I_NSysDiscardedPlugins;
         //=====================当前配置文件目录和组件目录
         QString I_SystemID;
         QString I_SystemName;
@@ -99,6 +107,7 @@ class QCPF_Interface : public QObject
         //用户信息
         QList<UserInfo*> I_UserInfoLst;
         UserInfo I_CurrentUserInfo;
+        bool I_EnableLogin;
         //================================================SharedMemory
         //组件间共享内存
         bool I_SMBoolVar1;
@@ -129,8 +138,24 @@ signals:
 public slots:
         virtual int slot_InputInfo(tagOutputInfo& info) { return 0; }
         virtual int slot_Core(QVariant arg_in, QVariant &arg_out) { return 0; }
+
+        virtual Plugin_Interface* GetPlugin(PluginType pType, QString pluginID) {return nullptr;};
+        virtual PluginActionInfo* GetActionInfo(PluginType pType, QString pluginID, QString actionName) {return nullptr;};
+        virtual PluginWidgetInfo* GetWidgetInfo(PluginType pType, QString pluginID, QString widgetName) {return nullptr;};
+        virtual PluginFunctionInfo* GetFunctionInfo(PluginType pType, QString pluginID, QString functionName) {return nullptr;};
+
+        virtual Plugin_Interface* GetPlugin_Copy(PluginType pType, QString pluginID, QString copyID) {return nullptr;};
+        virtual PluginActionInfo* GetActionInfo_Copy(PluginType pType, QString pluginID, QString copyID, QString actionName) {return nullptr;};
+        virtual PluginWidgetInfo* GetWidgetInfo_Copy(PluginType pType, QString pluginID, QString copyID, QString widgetName) {return nullptr;};
+        virtual PluginFunctionInfo* GetFunctionInfo_Copy(PluginType pType, QString pluginID, QString copyID, QString functionName) {return nullptr;};
+
+        virtual int Invoke_PluginFunction(PluginType pType, QString pluginID, QString pluginFunctionName) { return 0; }
+        virtual int Invoke_PluginFunction(PluginType pType, QString pluginID, QString pluginFunctionName, QVariant arg_in) { return 0; }
         virtual int Invoke_PluginFunction(PluginType pType, QString pluginID, QString pluginFunctionName, QVariant arg_in, QVariant& arg_out) { return 0; }
-        virtual int Invoke_PluginFunction(PluginType pType, QString pluginID, QString copyID, QString pluginFunctionName, QVariant arg_in, QVariant& arg_out) { return 0; }
+
+        virtual int Invoke_PluginFunction_Copy(PluginType pType, QString pluginID, QString copyID, QString pluginFunctionName) { return 0; }
+        virtual int Invoke_PluginFunction_Copy(PluginType pType, QString pluginID, QString copyID, QString pluginFunctionName, QVariant arg_in) { return 0; }
+        virtual int Invoke_PluginFunction_Copy(PluginType pType, QString pluginID, QString copyID, QString pluginFunctionName, QVariant arg_in, QVariant& arg_out) { return 0; }
 };
 
 //这个宏将一个给定的字符串标识符和ClassName所表示的接口相关联，其中Identifier必须唯一。

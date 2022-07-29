@@ -47,6 +47,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //------------set ui from config model
     setWindowTitle(_core->_config._systemName);
 
+    //用于在_core被构造后就马上与插件进行通讯，执行OnCoreInitialize
+    //Load界面启动后，执行slot_Initialize才建立信号槽连接。
+    _core->slot_PreInitialize();
+
     //------------load view
     formLoading *view_load = new formLoading(_view);
 

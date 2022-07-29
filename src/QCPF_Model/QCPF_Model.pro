@@ -1,5 +1,12 @@
 QT += widgets
+
+win32{
 TARGET =  ../../../bin/QCPF_Model
+}
+unix{
+TARGET =  ../../bin/QCPF_Model
+}
+
 
 TEMPLATE = lib
 DEFINES += QCPF_MODEL_LIBRARY
@@ -24,7 +31,7 @@ SOURCES += \
 HEADERS += \
     ../../interface/coreinterface.h \
     ../../interface/plugininterface.h \
-    configmodel.h \
+    configModel.h \
     qcpf_model.h
 
 # Default rules for deployment.
@@ -32,3 +39,36 @@ unix {
     target.path = /usr/lib
 }
 !isEmpty(target.path): INSTALLS += target
+
+###########################
+#                    更新日志
+###########################
+#【版本】2.0.0.4
+#【日期】2022.05.24
+#【内容】
+# 1. 优化了整个生命周期内的调用逻辑。
+# 2. 优化了插件加载。
+
+#【版本】2.0.0.3
+#【日期】2022.05.19
+#【内容】
+# 1. 增加了基于控制台和基于QMainWindow的Application接口。
+# 2. 增加了slot_PreInitialize，用于在Core构造完成就调用插件功能，即提供界面没绘制前的功能调用，而slot_Initialize用于在Loading界面显示时进行的调用。
+
+#【版本】2.0.0.2
+#【日期】2022.03.24
+#【内容】
+# 1. 优化了初始化时多次installConfig导致的问题。
+# 2. 优化了InfoType，增加了INFT_EXT_BASE
+
+#【版本】2.0.0.1
+#【日期】2021.07.30
+#【内容】
+# 1. 进一步优化了热拔功能
+
+#【版本】1.0.0.9
+#【日期】2021.07.10
+#【内容】
+# 1. 优化了热插拔功能
+# 2. 增加了热插拔配置项，当处于调试状态时，请禁用热插拔，发布时可以开启热插
+

@@ -1,18 +1,21 @@
 ﻿/*
-Author : Jamie.Tong
-QQ      : 260271262
-Data    : 2020-09-07
-License: GPL v3.0
+Author       : Jamie.Tong
+QQ           : 260271262
+Data From    : 2020-09-07
+License      : GPL v3.0
 */
 
 #include "qcpf_model.h"
-#include <QPluginLoader>
+
 #include <QDataStream>
 #include <QStringLiteral>
 #include <QMap>
+#include <QWidget>
+#include <QCoreApplication>
+#include <QString>
 
 #define MASK_END_STR "_tp"
-#define SYSTEM_VERSION "1.0.0.6"
+#define SYSTEM_VERSION "2.0.0.4"
 #define ORGANIZATION_NAME "Jamie.T"
 
 QCPF_Model::QCPF_Model(RunMode runMode, QObject* parent):_config(this)
@@ -22,9 +25,19 @@ QCPF_Model::QCPF_Model(RunMode runMode, QObject* parent):_config(this)
     I_OrganizationName = ORGANIZATION_NAME;
     this->setParent(parent);
 
-    slot_LoadConfigFile(_config);
+    slot_LoadConfigFile(_config);//由于系统起来便要显示系统名称，因此在构造的时候就读取一次配置文件。
     I_SystemName = _config._systemName;
     I_SystemID = _config._systemID;
+    I_EnableLogin = _config._enableLogin;
+
+    if(!I_EnableLogin)
+    {
+        I_CurrentUserInfo._userName = "defaultUser";
+        I_CurrentUserInfo._password = "";
+        I_CurrentUserInfo._detail = "Non-login user.";
+        I_CurrentUserInfo._authority = AT_MANAGER1;
+        I_CurrentUserInfo._createDatetime = "";
+    }
 }
 
 QCPF_Model::QCPF_Model(RunMode runMode, QObject* parent, QString applicationDirPath, QString sysPluginDirPath, QString nSysPluginDirPath, QString configDirPath, QString configFileName):_config(this)
@@ -45,9 +58,19 @@ QCPF_Model::QCPF_Model(RunMode runMode, QObject* parent, QString applicationDirP
     else
         I_ConfigFullFilePath = I_ConfigDirPath + QStringLiteral("/") + I_ConfigFileName;
 
-    slot_LoadConfigFile(_config);
+    slot_LoadConfigFile(_config);//由于系统起来便要显示系统名称，因此在构造的时候就读取一次配置文件。
     I_SystemName = _config._systemName;
     I_SystemID = _config._systemID;
+    I_EnableLogin = _config._enableLogin;
+
+    if(!I_EnableLogin)
+    {
+        I_CurrentUserInfo._userName = "defaultUser";
+        I_CurrentUserInfo._password = "";
+        I_CurrentUserInfo._detail = "Non-login user.";
+        I_CurrentUserInfo._authority = AT_MANAGER1;
+        I_CurrentUserInfo._createDatetime = "";
+    }
 }
 
 QCPF_Model::~QCPF_Model()
@@ -55,6 +78,7 @@ QCPF_Model::~QCPF_Model()
 
 }
 
+//拷贝文件：
 bool copyFileToPath(QString sourceDir ,QString toDir, bool coverFileIfExist)
 {
     toDir.replace("\\","/");
@@ -79,6 +103,7 @@ bool copyFileToPath(QString sourceDir ,QString toDir, bool coverFileIfExist)
     return true;
 }
 
+//拷贝文件夹：
 bool copyDirectoryFiles(const QString &fromDir, const QString &toDir, bool coverFileIfExist)
 {
     QDir sourceDir(fromDir);
@@ -114,8 +139,10 @@ bool copyDirectoryFiles(const QString &fromDir, const QString &toDir, bool cover
     return true;
 }
 
-bool copyDirectoryDllFiles(const QString &fromDir, const QString &toDir, bool coverFileIfExist)
+//只拷贝*.dll文件到temp文件夹，并且把文件名进行掩码，不递归：
+bool copyDirectoryLibraryFiles(const QString &fromDir, const QString &toDir, QStringList& copyFileLst, bool coverFileIfExist)
 {
+    copyFileLst.clear();
     QDir sourceDir(fromDir);
     QDir targetDir(toDir);
     if(!targetDir.exists()){    /**< 如果目标目录不存在，则进行创建 */
@@ -144,8 +171,15 @@ bool copyDirectoryDllFiles(const QString &fromDir, const QString &toDir, bool co
 #endif
             if(isValidFile)
             {
-                if(!QFile::copy(fileInfo.filePath(),
+                /// 进行文件copy, 拷贝失败继续拷贝下一个文件。
+                if(QFile::copy(fileInfo.filePath(),
                     targetDir.filePath(fileInfo.fileName()))){
+                    copyFileLst.append(targetDir.filePath(fileInfo.fileName()));
+                }
+                else
+                {
+                    if(targetDir.exists(fileInfo.fileName()))
+                        copyFileLst.append(targetDir.filePath(fileInfo.fileName()));
                     continue;
                 }
             }
@@ -156,7 +190,7 @@ bool copyDirectoryDllFiles(const QString &fromDir, const QString &toDir, bool co
 int QCPF_Model::pluginsCollect(QString pluginDirPath,  QList<PluginInfo*> selectedPluginInfoList, PluginType type)
 {
     QDir dir(pluginDirPath);
-    if(!dir.exists())
+    if(!dir.exists()) //判断文件夹是否存在
     {
         _outputInfo._type = InfoType::INFT_STATUS_INFO;
         _outputInfo._content = QString(tr("Can not find the plugin dir path \"%1\"")).arg(pluginDirPath);
@@ -166,25 +200,50 @@ int QCPF_Model::pluginsCollect(QString pluginDirPath,  QList<PluginInfo*> select
 
     QString tempDirPath = pluginDirPath + "Temp";
     QDir tempDir(tempDirPath);
-
+    //清空临时文件夹
     foreach (QFileInfo fi, tempDir.entryInfoList()) {
         tempDir.remove(fi.fileName());
     }
 
     QFileInfoList fileList;
+    QStringList copyFileLst;
+    //是否做热插拔处理
+    if(_config._enableHotPlug)
+    {
+        if(!copyDirectoryLibraryFiles(pluginDirPath, tempDirPath, copyFileLst, true))
+        {
+            _outputInfo._type = InfoType::INFT_STATUS_INFO;
+            _outputInfo._content = QString(tr("There is an error on copying plugin files."));
+            emit sig_OutputInfo(_outputInfo);
+            return -3;
+        }
 
-    dir.setFilter(QDir::Files);
-    fileList = dir.entryInfoList();
+        tempDir.setFilter(QDir::Files);//设置dir的过滤模式,表示只遍历本文件夹内的文件
+        fileList = tempDir.entryInfoList();//获取本文件夹内所有文件的信息
+    }
+    else
+    {
+        dir.setFilter(QDir::Files);//设置dir的过滤模式,表示只遍历本文件夹内的文件
+        fileList = dir.entryInfoList();//获取本文件夹内所有文件的信息
+    }
 
-    int fileCount =fileList.count();
+    int fileCount =fileList.count();//获取本文件夹内的文件个数
 
+    //=========================================================================
+    //按配置文件中原始组件顺序，查找指定组件文件,如果找到了就进行实例化，实现原始组件构造运行时可配
+    //=========================================================================
     for(int i=0; i<selectedPluginInfoList.count(); i++)
     {
         bool isExit = false;
         foreach (QFileInfo fi, fileList) {
+            QCoreApplication::processEvents();//给KeyPress事件一个中断的机会
+
             QString tFileName = fi.fileName();
             QString tFilePath = fi.filePath();
-            if(tFileName==selectedPluginInfoList[i]->_pluginFileName)
+            QString tPluginFileName = selectedPluginInfoList[i]->_pluginFileName;
+            //<Modified by jamie 2022.07.28
+            //if(tFilePath==tPluginFileName)
+            if(tFileName==tPluginFileName)//>
             {
                 QList<Plugin_Interface*> pluginLst;
                 if(type == PT_SYS)
@@ -202,6 +261,7 @@ int QCPF_Model::pluginsCollect(QString pluginDirPath,  QList<PluginInfo*> select
                         break;
                     }
                 }
+                //如果已经实例化过，就不在实例化该plugin
                 if(!isHasInstance)
                     pluginInstance(tFilePath, type);
 
@@ -209,6 +269,7 @@ int QCPF_Model::pluginsCollect(QString pluginDirPath,  QList<PluginInfo*> select
                 break;
             }
         }
+        //如果按顺序没在指定文件夹找到目标文件，则提示，并继续查找下一个
         if(!isExit)
         {
             _outputInfo._type = InfoType::INFT_STATUS_INFO;
@@ -217,49 +278,154 @@ int QCPF_Model::pluginsCollect(QString pluginDirPath,  QList<PluginInfo*> select
         }
     }
 
+    //=========================================================================
+    //继续收集非配置文件的组件，如果上面已经按配置文件顺序构造过的组件，这里就不在构造了，反之则构造
+    //=========================================================================
     for(int i=0;i<fileCount;i++)
     {
         bool isExit = false;
         for(int j=0; j<selectedPluginInfoList.count(); j++)
         {
+            QCoreApplication::processEvents();//给KeyPress事件一个中断的机会
+
+            //如果上面已经按配置文件顺序构造过的组件，这里就不在构造了
             if(fileList[i].fileName() == selectedPluginInfoList[j]->_pluginFileName)
             {
                 isExit = true;
                 break;
             }
         }
-
+        //如果上面没有构造过，则在这里按收集到的文件顺序依次构造
         if(!isExit)
         {
             QList<Plugin_Interface*> pluginLst;
             if(type == PT_SYS)
+            {
                 pluginLst = I_SysPlugins;
+            }
             else
+            {
                 pluginLst = I_NSysOrigPlugins;
+            }
 
 
             bool isHasInstance = false;
             foreach(Plugin_Interface* pi, pluginLst)
             {
+                QCoreApplication::processEvents();//给KeyPress事件一个中断的机会
+
                 if(pi->I_PluginFilePath == fileList[i].filePath())
                 {
                     isHasInstance = true;
                     break;
                 }
             }
-
+            //如果已经实例化过，就不在实例化该plugin
             if(!isHasInstance)
-                pluginInstance(fileList[i], type);
+                pluginInstance(fileList[i], type);  
         }
     }
+
+    //是否做热插拔处理
+    if(_config._enableHotPlug)
+    {
+        QList<Plugin_Interface*> pluginLst;
+        QList<Plugin_Interface*> discardedPluginLst;
+        if(type == PT_SYS)
+        {
+            pluginLst = I_SysPlugins;
+            discardedPluginLst = I_SysDiscardedPlugins;
+        }
+        else
+        {
+            pluginLst = I_NSysOrigPlugins;
+            discardedPluginLst = I_NSysDiscardedPlugins;
+        }
+
+        foreach(Plugin_Interface* pi, pluginLst)
+        {
+            //在拔掉插件时，pluginLst集合应该要多余copyFileLst，如果copyFileLst里没有这个插件，说明这个插件被拔掉了，那就从已有插件集合里去掉它，并把它放入discardedPluginLst中
+            if(0>copyFileLst.indexOf(pi->I_PluginFilePath))
+            {//第一启动不会进入，组件集合没发生改变，不会进入。
+                if(type == PT_SYS)
+                {
+                    I_SysPlugins.removeOne(pi);
+
+                    if(0<=I_SysPlugins_Sel.indexOf(pi))
+                        I_SysPlugins_Sel.removeOne(pi);
+
+                     //-----------
+                    I_SysDiscardedPlugins.append(pi);
+
+                    //------------
+                    //如果上一次配置中已经选中了该项，那么这次也默认将他加入I_SysPlugins_Sel，因为组件管理器是以读配置文件来决定是否checked，这里与他保持一致即可。
+                    for(int i=0; i<_config._sysPlugins_Sel.count(); i++)
+                    {
+                        if(_config._sysPlugins_Sel[i]->_pluginID == pi->I_PluginID && _config._sysPlugins_Sel[i]->_pluginFileName == pi->I_PluginFilePath)
+                        {
+                            _config._sysPlugins_Sel.removeAt(i);
+                            _config._count_sysPlugins_Sel -=1;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    if(0<=I_NSysOrigPlugins.indexOf(pi))
+                        I_NSysOrigPlugins.removeOne(pi);
+
+                    if(0<=I_NSysOrigPlugins_Sel.indexOf(pi))
+                        I_NSysOrigPlugins_Sel.removeOne(pi);
+
+                    if(0<=I_NSysClonePlugins.indexOf(pi))
+                        I_NSysClonePlugins.removeOne(pi);
+
+                    if(0<=I_NSysAllValidPlugins.indexOf(pi))
+                        I_NSysAllValidPlugins.removeOne(pi);
+
+                    //-----------
+                   I_NSysDiscardedPlugins.append(pi);
+
+                   //------------
+                   //如果上一次配置中已经选中了该项，那么这次也默认将他加入I_SysPlugins_Sel，因为组件管理器是以读配置文件来决定是否checked，这里与他保持一致即可。
+                   for(int i=0; i<_config._nSysPlugins_Sel.count(); i++)
+                   {
+                       if(_config._nSysPlugins_Sel[i]->_pluginID == pi->I_PluginID && _config._nSysPlugins_Sel[i]->_pluginFileName == pi->I_PluginFilePath)
+                       {
+                           _config._nSysPlugins_Sel.removeAt(i);
+                           _config._count_nSysPlugins_Sel -=1;
+                           break;
+                       }
+                   }
+                }
+            }
+            else
+            {
+                //与上相反，如果又插回去了，那么就从discardedPluginLst中把该项去掉。
+                if(type == PT_SYS)
+                {
+                    if(0<=I_SysDiscardedPlugins.indexOf(pi))
+                        I_SysDiscardedPlugins.removeOne(pi);
+                }
+                else
+                {
+                    if(0<=I_NSysDiscardedPlugins.indexOf(pi))
+                        I_NSysDiscardedPlugins.removeOne(pi);
+                }
+            }
+        }
+    }
+
+    //2022.03.16 Modified by Jamie.T
+    //slot_SaveConfigFile();
     return 0;
 }
 
 int QCPF_Model::pluginInstance(QFileInfo fi, PluginType type)
 {
-    QFileInfo fileInfo = fi;
-    QString suffix = fileInfo.suffix();
-
+    QFileInfo fileInfo = fi; //获取每个文件信息
+    QString suffix = fileInfo.suffix(); //获取文件后缀名
+    //筛选出所有dll文件(如果要筛选其他格式的文件则根据需要修改tr("dll")中的字符串即可)
     bool isValidFile = false;
 #ifdef Q_OS_LINUX
     if(QString::compare(suffix, QString("so"), Qt::CaseInsensitive) == 0)
@@ -272,8 +438,8 @@ int QCPF_Model::pluginInstance(QFileInfo fi, PluginType type)
 #endif
     if(isValidFile)
     {
-        QString filePath = fileInfo.absoluteFilePath();
-        QString fileName = fileInfo.baseName();
+        QString filePath = fileInfo.absoluteFilePath();//获取文件绝对路径即全路径
+        QString fileName = fileInfo.baseName();//获取文件后名(不带后缀的文件名)
 
         Plugin_Interface *plugin = nullptr;
         QObject *tInstance = nullptr;
@@ -282,11 +448,17 @@ int QCPF_Model::pluginInstance(QFileInfo fi, PluginType type)
                 pluginLoader = new QPluginLoader(filePath);
                 tInstance = pluginLoader->instance();
 
+                if(!pluginLoader->isLoaded())
+                {
+                    _outputInfo._type = InfoType::INFT_STATUS_INFO;
+                    _outputInfo._content = QString(tr("There is an Error when loading plugin : \"%1\"")).arg( pluginLoader->errorString());
+                    emit sig_OutputInfo(_outputInfo);
+                }
         } catch(int){
-            _outputInfo._type = InfoType::INFT_STATUS_INFO;
-            _outputInfo._content = QString(tr("There is a Error when loading plugin \"%1\"")).arg(fileName);
+            _outputInfo._type = InfoType::INFT_MSG_WARN;
+            _outputInfo._content = QString(tr("There is an Error when loading plugin : \"%1\"")).arg(fileName);
             emit sig_OutputInfo(_outputInfo);
-            return -254;
+            return -254; //实例化组件时异常
         }
 
         if(tInstance)
@@ -294,6 +466,7 @@ int QCPF_Model::pluginInstance(QFileInfo fi, PluginType type)
             plugin = qobject_cast<Plugin_Interface*>(tInstance);
             if(plugin)
             {
+                //检查是否已经有同ID的组件，如果有就不添加，没有则添加
                 QString tDestPluginID = plugin->I_PluginID;
 
                 Plugin_Interface *tp = new Plugin_Interface();
@@ -326,21 +499,32 @@ int QCPF_Model::pluginInstance(QFileInfo fi, PluginType type)
                 plugin->I_PluginFilePath = filePath;
 
                 try {
-                    if(!plugin->ConnectCore(this))
+                    if(!plugin->ConnectCore(this))//使Plugin获得model和viewmodel对象实例,如果连接失败则不加载这个plugin
                         return -2;
+
                 } catch (int) {
                     _outputInfo._type = InfoType::INFT_STATUS_INFO;
                     _outputInfo._content = QString(tr("There is a exception when connecting plugin:\"1%\"")).arg(fileName);
                     emit sig_OutputInfo(_outputInfo);
-                    return -244;
+                    return -244;//连接组件时出现异常
                 }
 
-                if(plugin->I_PluginType == PT_SYS && type == PT_SYS)
+                if(plugin->I_PluginType == PT_SYS && type == PT_SYS)//两个条件的限制结果是，系统组件放到非系统组件目录不会被加载，反之非系统组件放到系统组件目录也不会被加载。
+                {
                     this->I_SysPlugins.append(plugin);
 
-                if(plugin->I_PluginType == PT_NON_SYS && type == PT_NON_SYS)
-                    this->I_NSysOrigPlugins.append(plugin);
+                    I_PluginLoaderLst_Sys.append(pluginLoader);
+                }
 
+                if(plugin->I_PluginType == PT_NON_SYS && type == PT_NON_SYS)
+                {
+                    this->I_NSysOrigPlugins.append(plugin);
+                    this->I_NSysAllValidPlugins.append(plugin);
+
+                    I_PluginLoaderLst_NSys.append(pluginLoader);
+                }
+
+                //发送组件信息信号，通过LoadingControllor连接到需要显示的view里去
                 _outputInfo._type = InfoType::INFT_STATUS_INFO;
 
                 if(type==PT_SYS)
@@ -354,17 +538,65 @@ int QCPF_Model::pluginInstance(QFileInfo fi, PluginType type)
     }
 }
 
-int QCPF_Model::collectPlutins()
+int QCPF_Model::collectPlugins(PluginType type)
 {
+    if(type == PT_SYS)
+    {
+        //收集系统组件信息
+        if(0!=pluginsCollect(I_SystemPluginDirPath, _config._sysPlugins_Sel, PT_SYS))
+            return -1;
+    }
+    else
+    {
+        //收集非系统组件信息
+        if(0!=pluginsCollect(I_NonSysPluginDirPath, _config._nSysPlugins_Sel, PT_NON_SYS))
+           return -2;
+    }
+
+    tagOutputInfo info;
+    info._type = INFT_PLUGIN_COLLECT_FINISHED;
+    emit sig_OutputInfo(info);
+    return 0;
+}
+
+int QCPF_Model::collectPlugins()
+{
+    //收集系统组件信息
     if(0!=pluginsCollect(I_SystemPluginDirPath, _config._sysPlugins_Sel, PT_SYS))
         return -1;
 
+    //收集非系统组件信息
     if(0!=pluginsCollect(I_NonSysPluginDirPath, _config._nSysPlugins_Sel, PT_NON_SYS))
        return -2;
 
     tagOutputInfo info;
     info._type = INFT_PLUGIN_COLLECT_FINISHED;
+    info._content = "Plugins collection finished!";
     emit sig_OutputInfo(info);
+    return 0;
+}
+
+int QCPF_Model::slot_PreInitialize()
+{
+    _config.resetData();
+    slot_LoadConfigFile(_config);
+
+    //收集组件信息
+    collectPlugins();
+
+    //安装配置信息
+    installConfig(_config);
+
+    //invoke plugin functions
+    foreach (Plugin_Interface* tp, this->I_SysPlugins) {
+        QString pid = tp->I_PluginID;
+        tp->OnCoreInitialize();
+    }
+    foreach (Plugin_Interface* tp, this->I_NSysAllValidPlugins) {
+        QString pid = tp->I_PluginID;
+        tp->OnCoreInitialize();
+    }
+
     return 0;
 }
 
@@ -375,28 +607,28 @@ int QCPF_Model::slot_Initialize()
         _config.resetData();
         slot_LoadConfigFile(_config);
 
-        collectPlutins();
+        //收集组件信息
+        collectPlugins();
 
+        //安装配置信息
         installConfig(_config);
 
+        //为所有组件建立公共信号槽连接
         foreach (Plugin_Interface* pi, I_SysPlugins_Sel) {
+
+            //动态建立信号槽的连接
             connect(this, &QCPF_Model::sig_Core, pi, &Plugin_Interface::slot_Plugin);
             connect(pi, &Plugin_Interface::sig_Plugin, this, &QCPF_Model::slot_Core);
             connect(this, &QCPF_Model::sig_OutputInfo, pi, &Plugin_Interface::slot_InputInfo);
             connect(pi, &Plugin_Interface::sig_OutputInfo, this, &QCPF_Model::slot_InputInfo);
         }
         foreach (Plugin_Interface* npi, I_NSysAllValidPlugins) {
+
+            //动态建立信号槽的连接
             connect(this, &QCPF_Model::sig_Core, npi, &Plugin_Interface::slot_Plugin);
             connect(npi, &Plugin_Interface::sig_Plugin, this, &QCPF_Model::slot_Core);
             connect(this, &QCPF_Model::sig_OutputInfo, npi, &Plugin_Interface::slot_InputInfo);
             connect(npi, &Plugin_Interface::sig_OutputInfo, this, &QCPF_Model::slot_InputInfo);
-        }
-
-        foreach (Plugin_Interface* tp, this->I_SysPlugins) {
-            tp->OnCoreInitialize();
-        }
-        foreach (Plugin_Interface* tp, this->I_NSysAllValidPlugins) {
-            tp->OnCoreInitialize();
         }
     }
     catch(int)
@@ -420,7 +652,12 @@ int QCPF_Model::slot_InputInfo(tagOutputInfo& info)
 {
     switch (info._type) {
         case INFT_PLUGIN_COLLECT:
-            collectPlutins();
+            if(info._title == "NonSys")
+                collectPlugins(PT_NON_SYS);
+            else if(info._title == "Sys")
+                collectPlugins(PT_SYS);
+            else
+                collectPlugins();
         break;
     default:
         emit sig_OutputInfo(info);
@@ -431,6 +668,7 @@ int QCPF_Model::slot_InputInfo(tagOutputInfo& info)
 
 int QCPF_Model::installConfig(ConfigModel &config)
 {
+    //---------------------------------------------------------------装载已选系统组件
     _outputInfo._type = InfoType::INFT_STATUS_INFO;
     _outputInfo._content = tr("Loading selected system plugins.");
     emit sig_OutputInfo(_outputInfo);
@@ -446,6 +684,7 @@ int QCPF_Model::installConfig(ConfigModel &config)
             QString tPluginID = ((Plugin_Interface*)this->I_SysPlugins[j])->I_PluginID;
             if(tSelOrigPluginID==tPluginID)
             {
+                //如果I_SysPlugins_Sel中已经有该对象，则不添加
                 bool isHasOne = false;
                 foreach (Plugin_Interface*pi, this->I_SysPlugins_Sel) {
                     if(pi->I_PluginID == tSelOrigPluginID)
@@ -467,14 +706,23 @@ int QCPF_Model::installConfig(ConfigModel &config)
         if(!isExsitInSysPlugins)
         {
             _outputInfo._type = InfoType::INFT_STATUS_INFO;
-
+            //_outputInfo._content = QStringLiteral("装载已选系统组件时，在系统组件集合中未找到ID为\"") + tSelOrigPluginID + QStringLiteral("\"的组件.");
             _outputInfo._content = QString(tr("Can't find the plugin which plugin id = %1,when loading the selected system plugins.")).arg(tSelOrigPluginID);
             emit sig_OutputInfo(_outputInfo);
         }
     }
-
+//    //把没选中的系统组件卸载掉
+//    foreach (Plugin_Interface* pi, this->I_SysPlugins) {
+//        if(!pi->I_IsEnable)
+//        {
+//           QPluginLoader* pluginLoader = new QPluginLoader(pi->I_PluginFilePath);
+//           if(pluginLoader!=nullptr)
+//               pluginLoader->unload();
+//        }
+//    }
+    //---------------------------------------------------------------装载已选非系统组件
     _outputInfo._type = InfoType::INFT_STATUS_INFO;
-
+    //_outputInfo._content = QStringLiteral("装载非系统组件.");
     _outputInfo._content = tr("Loading selected non-system plugins.");
     emit sig_OutputInfo(_outputInfo);
 
@@ -489,6 +737,7 @@ int QCPF_Model::installConfig(ConfigModel &config)
             QString tPluginID = ((Plugin_Interface*)this->I_NSysOrigPlugins[j])->I_PluginID;
             if(tSelOrigPluginID==tPluginID)
             {
+                //如果I_SysPlugins_Sel中已经有该对象，则不添加
                 bool isHasOne = false;
                 foreach (Plugin_Interface*pi, this->I_NSysOrigPlugins_Sel) {
                     if(pi->I_PluginID == tSelOrigPluginID)
@@ -516,8 +765,22 @@ int QCPF_Model::installConfig(ConfigModel &config)
         }
     }
 
-    _outputInfo._type = InfoType::INFT_STATUS_INFO;
+    //把没选中的非系统组件卸载掉
+    foreach (Plugin_Interface* pi, this->I_NSysOrigPlugins) {
+        if(!pi->I_IsEnable)
+        {
+           QPluginLoader* pluginLoader = new QPluginLoader(pi->I_PluginFilePath);
 
+           if(pluginLoader!=nullptr)
+           {
+                bool ret = pluginLoader->unload();
+                int i=0;
+           }
+        }
+    }
+    //---------------------------------------------------------------装/卸载克隆组件
+    _outputInfo._type = InfoType::INFT_STATUS_INFO;
+    //_outputInfo._content = QStringLiteral("卸载禁用的克隆组件.");
     _outputInfo._content = tr("Uninstalling clone plugins.");
     emit sig_OutputInfo(_outputInfo);
 
@@ -531,6 +794,7 @@ int QCPF_Model::installConfig(ConfigModel &config)
             }
         }
 
+        //如果在配置文件里没找到该项，说明该项在配置时被干掉了，则卸载该项
         if(!isExsit)
         {
             this->I_NSysClonePlugins.removeOne(pi);
@@ -539,13 +803,14 @@ int QCPF_Model::installConfig(ConfigModel &config)
     }
 
     _outputInfo._type = InfoType::INFT_STATUS_INFO;
-
+    //_outputInfo._content = QStringLiteral("装载创建的克隆组件.");
    _outputInfo._content = tr("Installing clone plugins.");
     emit sig_OutputInfo(_outputInfo);
 
     for(int i=0; i<config._nSysClonePlugins.count(); i++)
     {
         bool isCloneExsit = false;
+        //如果I_NSysClonePlugins里面已经有该克隆体，则不再重新克隆它，这在初始化时没有意义，但是在保存信息时，可以使原有克隆体不被干掉
         foreach (Plugin_Interface* pi, this->I_NSysClonePlugins) {
             if(pi->I_PluginID == config._nSysClonePlugins[i]->_originalPluginID &&
                pi->I_CopyID == config._nSysClonePlugins[i]->_copyID)
@@ -565,7 +830,7 @@ int QCPF_Model::installConfig(ConfigModel &config)
                 if(config._nSysClonePlugins[i]->_originalPluginID==tPluginID)
                 {
                     Plugin_Interface* tClonePlugin = ((Plugin_Interface*)this->I_NSysOrigPlugins_Sel[j])->Clone(config._nSysClonePlugins[i]->_copyID, config._nSysClonePlugins[i]->_copyAliasName, config._nSysClonePlugins[i]->_copyComment);
-                    tClonePlugin->setParent(this->I_NSysOrigPlugins_Sel[j]);
+                    tClonePlugin->setParent(this->I_NSysOrigPlugins_Sel[j]);//与已选原始组件进行关联
                     this->I_NSysClonePlugins.append(tClonePlugin);
                     isOrigSelExsit = true;
                     break;
@@ -596,7 +861,7 @@ int QCPF_Model::installConfig(ConfigModel &config)
         Plugin_Interface* tPlugin = nullptr;
 
         bool isExsit = false;
-        if(!tItem->_isCopy)
+        if(!tItem->_isCopy)//如果是原始组件
         {
             for(int j=0; j<this->I_NSysOrigPlugins_Sel.count(); j++)
             {
@@ -617,7 +882,7 @@ int QCPF_Model::installConfig(ConfigModel &config)
                 emit sig_OutputInfo(_outputInfo);
             }
         }
-        else
+        else//如果是克隆组件
         {
             for(int j=0; j<this->I_NSysClonePlugins.count(); j++)
             {
@@ -644,6 +909,7 @@ int QCPF_Model::installConfig(ConfigModel &config)
 
 int CompareMsg(char* msg1, char* msg2)
 {
+    //将2个消息各自读取到buffer中
     FILE *pOne, *pTwe;
     long lsize1, lsize2;
     char* buffer1 = NULL;
@@ -652,12 +918,8 @@ int CompareMsg(char* msg1, char* msg2)
 
     pOne = fopen(msg1, "rb");
     pTwe = fopen(msg2, "rb");
-    if ((pOne == NULL) || (pTwe == NULL))
-    {
-        fclose(pOne);
-        fclose(pTwe);
+    if ((pOne == nullptr) || (pTwe == nullptr))
         return 1;
-    }
 
     fseek(pOne, 0, SEEK_END);
     lsize1 = ftell(pOne);
@@ -722,6 +984,7 @@ int QCPF_Model::saveConfigFile(QString filePath)
 
     QFile file(filePath);
 
+    //写入
     file.open(QIODevice::WriteOnly);
     QDataStream out(&file);
     out << _config;
@@ -763,7 +1026,11 @@ int QCPF_Model::slot_SaveConfigFile()
 
     QFileInfo tFi(I_ConfigFullFilePath);
     if(!tFi.exists())
-        return -1;
+    {
+        QFile fp;
+        fp.setFileName(I_ConfigFullFilePath);
+        fp.open(QIODevice::ReadWrite|QIODevice::Text);
+    }
 
     QString tempConfigFullFilePath = I_ConfigDirPath + QStringLiteral("temp_") + I_ConfigFileName;
     if(0!=saveConfigFile(tempConfigFullFilePath))
@@ -776,6 +1043,7 @@ int QCPF_Model::slot_SaveConfigFile()
         emit sig_OutputInfo(_outputInfo);
     }
 
+    //保存完配置文件，再重新读取并安装一次配置
     slot_LoadConfigFile(_config);
     installConfig(_config);
      return 0;
@@ -784,6 +1052,7 @@ int QCPF_Model::slot_SaveConfigFile()
 int QCPF_Model::slot_ApplyConfig()
 {
     _outputInfo._type = InfoType::INFT_STATUS_INFO;
+    //_outputInfo._content = QStringLiteral("应用内核配置.");
     _outputInfo._content = tr("Applying the core config file.");
     emit sig_OutputInfo(_outputInfo);
 
@@ -803,6 +1072,7 @@ int QCPF_Model::slot_ApplyConfig()
 int QCPF_Model::slot_CancelConfig()
 {
     _outputInfo._type = InfoType::INFT_STATUS_INFO;
+    //_outputInfo._content = QStringLiteral("恢复内核配置.");
     _outputInfo._content = tr("Recovering the core config file.");
     emit sig_OutputInfo(_outputInfo);
 
@@ -818,10 +1088,158 @@ int QCPF_Model::slot_CancelConfig()
     {
         _config.resetData();
         slot_LoadConfigFile(_config);
-
         installConfig(_config);
     }
     return 0;
+}
+
+Plugin_Interface* QCPF_Model::GetPlugin(PluginType pType, QString pluginID)
+{
+    QList<Plugin_Interface*> pluginLst;
+    if (pType == PT_SYS)
+        pluginLst = I_SysPlugins_Sel;
+    else
+        pluginLst = I_NSysOrigPlugins_Sel;
+
+    foreach(Plugin_Interface* pi, pluginLst)
+    {
+        if(pi->I_PluginID == pluginID)
+        {
+            return pi;
+        }
+    }
+    return nullptr;
+}
+
+PluginActionInfo* QCPF_Model::GetActionInfo(PluginType pType, QString pluginID, QString actionName)
+{
+    Plugin_Interface* dstPi = GetPlugin(pType, pluginID);
+
+    if (dstPi == nullptr)
+        return nullptr;
+
+    foreach(PluginActionInfo* pai, dstPi->I_ActionList)
+    {
+        if(pai->_actionName == actionName)
+        {
+            return pai;
+        }
+    }
+
+    return nullptr;
+}
+
+PluginWidgetInfo* QCPF_Model::GetWidgetInfo(PluginType pType, QString pluginID, QString widgetName)
+{
+    Plugin_Interface* dstPi = GetPlugin(pType, pluginID);
+
+    if (dstPi == nullptr)
+        return nullptr;
+
+    foreach(PluginWidgetInfo* pwi, dstPi->I_WidgetList)
+    {
+        if(pwi->_widget->objectName() == widgetName)
+            return pwi;
+    }
+
+    return nullptr;
+}
+
+PluginFunctionInfo* QCPF_Model::GetFunctionInfo(PluginType pType, QString pluginID, QString functionName)
+{
+    Plugin_Interface* dstPi = GetPlugin(pType, pluginID);
+
+    if (dstPi == nullptr)
+        return nullptr;
+
+    foreach(PluginFunctionInfo* pfi, dstPi->I_FunctionList)
+    {
+        if(pfi->_functionName == functionName)
+            return pfi;
+    }
+
+    return nullptr;
+}
+
+
+Plugin_Interface* QCPF_Model::GetPlugin_Copy(PluginType pType, QString pluginID, QString copyID)
+{
+    QList<Plugin_Interface*> pluginLst;
+    if (pType == PT_SYS)
+        pluginLst = I_SysPlugins_Sel;
+    else
+        pluginLst = I_NSysOrigPlugins_Sel;
+
+    foreach(Plugin_Interface* pi, pluginLst)
+    {
+        if(pi->I_PluginID == pluginID && pi->I_CopyID == copyID)
+        {
+            return pi;
+        }
+    }
+    return nullptr;
+}
+
+PluginActionInfo* QCPF_Model::GetActionInfo_Copy(PluginType pType, QString pluginID, QString copyID, QString actionName)
+{
+    Plugin_Interface* dstPi = GetPlugin_Copy(pType, pluginID, copyID);
+
+    if (dstPi == nullptr)
+        return nullptr;
+
+    foreach(PluginActionInfo* pai, dstPi->I_ActionList)
+    {
+        if(pai->_actionName == actionName)
+        {
+            return pai;
+        }
+    }
+
+    return nullptr;
+}
+
+PluginWidgetInfo* QCPF_Model::GetWidgetInfo_Copy(PluginType pType, QString pluginID, QString copyID, QString widgetName)
+{
+    Plugin_Interface* dstPi = GetPlugin_Copy(pType, pluginID, copyID);
+
+    if (dstPi == nullptr)
+        return nullptr;
+
+    foreach(PluginWidgetInfo* pwi, dstPi->I_WidgetList)
+    {
+        if(pwi->_widget->objectName() == widgetName)
+            return pwi;
+    }
+
+    return nullptr;
+}
+
+PluginFunctionInfo* QCPF_Model::GetFunctionInfo_Copy(PluginType pType, QString pluginID, QString copyID, QString functionName)
+{
+    Plugin_Interface* dstPi = GetPlugin_Copy(pType, pluginID, copyID);
+
+    if (dstPi == nullptr)
+        return nullptr;
+
+    foreach(PluginFunctionInfo* pfi, dstPi->I_FunctionList)
+    {
+        if(pfi->_functionName == functionName)
+            return pfi;
+    }
+
+    return nullptr;
+}
+
+int QCPF_Model::Invoke_PluginFunction(PluginType pType, QString pluginID, QString pluginFunctionName)
+{
+    QVariant tv;
+    return Invoke_PluginFunction(pType, pluginID, pluginFunctionName, tv, tv);
+}
+
+int QCPF_Model::Invoke_PluginFunction(PluginType pType, QString pluginID, QString pluginFunctionName, QVariant arg_in)
+{
+    QVariant tv;
+    return Invoke_PluginFunction(pType, pluginID, pluginFunctionName, arg_in, tv);
 }
 
 int QCPF_Model::Invoke_PluginFunction(PluginType pType, QString pluginID, QString pluginFunctionName, QVariant arg_in, QVariant& arg_out)
@@ -859,7 +1277,19 @@ int QCPF_Model::Invoke_PluginFunction(PluginType pType, QString pluginID, QStrin
     return 0;
 }
 
-int QCPF_Model::Invoke_PluginFunction(PluginType pType, QString pluginID, QString copyID, QString pluginFunctionName, QVariant arg_in, QVariant& arg_out)
+int QCPF_Model::Invoke_PluginFunction_Copy(PluginType pType, QString pluginID, QString copyID, QString pluginFunctionName)
+{
+    QVariant tv;
+    return Invoke_PluginFunction_Copy(pType, pluginID, copyID, pluginFunctionName, tv, tv);
+}
+
+int QCPF_Model::Invoke_PluginFunction_Copy(PluginType pType, QString pluginID, QString copyID, QString pluginFunctionName, QVariant arg_in)
+{
+    QVariant tv;
+    return Invoke_PluginFunction_Copy(pType, pluginID, copyID, pluginFunctionName, arg_in, tv);
+}
+
+int QCPF_Model::Invoke_PluginFunction_Copy(PluginType pType, QString pluginID, QString copyID, QString pluginFunctionName, QVariant arg_in, QVariant& arg_out)
 {
     QList<Plugin_Interface*> pluginLst;
     if(pType == PT_SYS)

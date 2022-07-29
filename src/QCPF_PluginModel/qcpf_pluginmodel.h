@@ -4,7 +4,7 @@
 //包含接口定义
 #include "../../../interface/plugininterface.h"
 #include "../../../interface/coreinterface.h"
-#include "../QCPF_ViewModel/qcpf_viewmodel.h"
+#include "../QCPF_Model/qcpf_model.h"
 
 #if defined(QCPF_PLUGINMODEL_LIBRARY)
 #  define QCPF_PLUGINMODEL_EXPORT Q_DECL_EXPORT

@@ -12,7 +12,7 @@ License: GPL v3.0
 
 #include <QTreeWidgetItem>
 #include <QTableWidget>
-#include "../../QCPF_Model/qcpf_model.h"
+#include "qcpf_model.h"
 
 namespace Ui {
 class SystemManager;

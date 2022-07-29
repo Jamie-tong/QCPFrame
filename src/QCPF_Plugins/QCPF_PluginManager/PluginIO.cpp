@@ -24,7 +24,7 @@ PluginIO::PluginIO()
     I_PluginID = tr("QCPF_PluginManager");
     I_PluginAliasName = tr("Plugin Manager");
     I_PluginAuther = tr("Jamie.T");
-    I_PluginVersion = tr("1.0.0.2");
+    I_PluginVersion = tr("1.0.0.3");
     I_PluginComment = tr("Manager the Non-system plugins, configure, clone and ordering.");
     I_PluginTag = tr("SINGLETON\\SYSTEM\\PLUGIN_MANAGER");
     I_PluginAuthority = AT_MANAGER1;

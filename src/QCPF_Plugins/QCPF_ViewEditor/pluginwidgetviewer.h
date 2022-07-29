@@ -9,7 +9,7 @@ License: GPL v3.0
 #define PLUGINWIDGETVIEWER_H
 
 #include <QDialog>
-#include "../../QCPF_Model/qcpf_model.h"
+#include "qcpf_model.h"
 #include <QTableWidget>
 
 namespace Ui {

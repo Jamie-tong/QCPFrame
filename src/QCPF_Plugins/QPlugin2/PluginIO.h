@@ -1,7 +1,7 @@
 ﻿#ifndef QPLUGIN2_H
 #define QPLUGIN2_H
 
-#include "../../QCPF_PluginModel/qcpf_nonsystempluginmodel.h"
+#include "qcpf_nonsystempluginmodel.h"
 
 class PluginIO : public QCPF_NonSystemPluginModel
 {
@@ -15,7 +15,6 @@ public:
     void InitWidgetList(Plugin_Interface* plugin) Q_DECL_OVERRIDE;
 
 public:
-    QCPF_ViewModel *_view;
     static PluginIO* getInstance();
 };
 

@@ -35,3 +35,9 @@ unix {
     target.path = /usr/lib
 }
 !isEmpty(target.path): INSTALLS += target
+
+
+unix|win32: LIBS += -L$$PWD/../../bin/ -lQCPF_Model
+
+INCLUDEPATH += $$PWD/../QCPF_Model
+DEPENDPATH += $$PWD/../QCPF_Model

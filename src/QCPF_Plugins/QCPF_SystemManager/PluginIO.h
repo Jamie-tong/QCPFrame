@@ -8,7 +8,7 @@ License: GPL v3.0
 #ifndef QPLUGIN1_H
 #define QPLUGIN1_H
 
-#include "../../QCPF_PluginModel/qcpf_systempluginmodel.h"
+#include "qcpf_systempluginmodel.h"
 
 class MyClass
 {

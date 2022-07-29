@@ -13,6 +13,8 @@ License: GPL v3.0
 #include <QVector>
 #include <QVariant>
 #include <QIcon>
+#include <QPluginLoader>
+#include <QTranslator>
 
 class Plugin_Interface;
 
@@ -26,9 +28,13 @@ enum InfoType
     INFT_MSG_QUESTION,
 
     INFT_STATUS_INFO,
-    INFT_APPLICATION_CLOSE,
 
-    INFT_WRITE_LOG,
+    INFT_APPLICATION_CLOSE,
+    INFT_APPLICATION_READ_SETTINGS,
+    INFT_APPLICATION_WRITE_SETTINGS,
+    INFT_APPLICATION_REFRESH,
+    INFT_APPLICATION_ID_CHANGED,
+    INFT_APPLICATION_TITLE_CHANGED,
 
     INFT_PLUGIN_COLLECT,
     INFT_PLUGIN_COLLECT_FINISHED,
@@ -41,12 +47,13 @@ enum InfoType
 
     INFT_STATUSBAR_TEMP,
 
-    INFT_LOG_ACTION,
-    INFT_LOG_ERROR,
+    INFT_EXT_BASE,//从这条开始往后扩展。可以写自己的枚举定义，每增一个，给INFT_EXT_BASE+1
 };
 
 enum AuthorityType
     {
+        AT_ORIGINATOR,
+
         AT_DEVELOPER1,
         AT_DEVELOPER2,
         AT_DEVELOPER3,
@@ -70,9 +77,10 @@ enum PluginType
 
 enum WidgetShowType
 {
-        ST_NONE,
-        ST_POPUP,
-        ST_DOCK,
+        ST_NONE,//无分类
+        ST_WIDGET,//部件，用于显示在工具栏或者状态栏
+        ST_POPUP,//弹出式窗体，用于显示不停靠于Docker的对话框窗体
+        ST_DOCK,//嵌入式窗体，用于显示停靠于Docker的窗体
 };
 
 struct tagOutputInfo
@@ -90,6 +98,7 @@ public:
 typedef int (*FPTR_FUNC_NCLS)(QVariant arg_in, QVariant &arg_out);
 typedef int (Plugin_Interface::*FPTR_FUNC_CLS)(QVariant arg_in, QVariant &arg_out);
 typedef void (Plugin_Interface::*FPTR_ACTION)(bool);
+typedef void (Plugin_Interface::*FPTR_TRANSLATE)(void);
 struct PluginActionInfo
 {
     public:
@@ -144,6 +153,7 @@ public:
     QList<PluginActionInfo*> I_ActionList;//通用组件Action集合
     QList<PluginFunctionInfo*> I_FunctionList;//通用组件Function集合
     QVector<PluginWidgetInfo*> I_WidgetList;//通用组件部件集合
+    QTranslator* I_Translator;//组件多语言翻译器
 
 public:
     virtual Plugin_Interface* Clone(QString copyID, QString copyAliasName, QString copyComment) {return nullptr;}
@@ -161,13 +171,13 @@ public slots:
     virtual int slot_InputInfo(tagOutputInfo& info) { return 0; }
     virtual int slot_Plugin(QVariant arg_in, QVariant &arg_out) { return 0; }
     virtual void slot_Action(bool checkState) { }
-    //当core初始化时要执行的过程
+    //当core构造完成时要执行的过程
     virtual int OnCoreInitialize() { return 0; }
-    //当view视图构造完成后，Load前要执行的过程
+    //当QMainWindow主视图构造完成后，显示前
     virtual int OnViewCreated() { return 0; }
-    //当view视图Load时要执行的过程
+    //当QMainWindow主视图Load时要执行的过程
     virtual int OnViewLoaded() { return 0; }
-    //当view视图Closeing时要执行的过程
+    //当QMainWindow主视图Closeing时要执行的过程
     virtual int OnViewClosing() { return 0; }
 };
 

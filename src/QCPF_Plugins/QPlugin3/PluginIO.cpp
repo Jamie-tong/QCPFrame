@@ -16,7 +16,7 @@ PluginIO::PluginIO()
     I_PluginID = QStringLiteral("QPlugin3");
     I_PluginAliasName = QStringLiteral("QPlugin3");
     I_PluginAuther = QStringLiteral("Jamie.T");
-    I_PluginVersion = QStringLiteral("1.0.0.3");
+    I_PluginVersion = QStringLiteral("1.0.0.4");
     I_PluginComment = QStringLiteral("QPlugin3 comment");
     I_PluginTag = QStringLiteral("NON-SINGLETON\\NON_SYSTEM\\DataHandle");
     I_PluginAuthority = AT_USER1;
