@@ -2,7 +2,7 @@ QT += widgets
 
 DEFINES += QCFMANAGER_LIBRARY
 
-TARGET =  ../../../../bin/Bin/Plugins/QCPF_ViewEditor
+TARGET =  ../../../../bin/Bin/Plugin/QCPF_ViewEditor
 TEMPLATE = lib
 CONFIG += c++11
 

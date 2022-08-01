@@ -1,0 +1,15 @@
+﻿
+QCPF_HostView 执行说明
+
+1. 用户名:tt1，密码:1
+2. 单击插件管理器和系统管理器时弹出警告,是因为插件路径与配置文件不符,你需要重新确认（单击确定即可）。
+
+
+
+QCPF_HostConsole执行说明
+
+1. 在QCPF_Host_Console.exe所在目录下运行cmd
+2. 执行命令 QCPF_HostConsole.exe --PSysInfo 获取系统信息，例 ：QCPF_HostConsole.exe --PSysInfo
+3. 执行命令 QCPF_HostConsole.exe --PLst 获取插件信息信息，例 ：QCPF_HostConsole.exe --PLst
+4. 执行命令 QCPF_HostConsole.exe --PFLst PluginID 获取指定PluginID的插件中的函数列表信息，例 ：QCPF_HostConsole.exe --PFLst QPlugin3
+5. 执行命令 QCPF_HostConsole.exe --PFunc Plugin ID, Copy ID, Function Name 执行指定PluginID，CopyID的插件中的执行函数，例 ：QCPF_HostConsole.exe --PFunc QPlugin3 --PFunc StepUp

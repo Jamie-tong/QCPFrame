@@ -1,6 +1,6 @@
 QT += widgets
 
-TARGET =  ../../../../bin/Plugins/QPlugin3
+TARGET =  ../../../../bin/Plugin/QPlugin3
 TEMPLATE = lib
 DEFINES += QPLUGIN3_LIBRARY
 

@@ -51,12 +51,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    ../../bin/Images/docker.png \
+    ../../bin/Images/app.png \
     Core.json
 
 RESOURCES += \
     HostViewRes.qrc
 
+RC_FILE = app.rc
 
 unix|win32: LIBS += -L$$PWD/../../bin/ -lQCPF_Model
 

@@ -5,7 +5,7 @@
 #-------------------------------------------------
 QT += widgets
 
-TARGET =  ../../../../bin/Plugins/QPlugin1
+TARGET =  ../../../../bin/Plugin/QPlugin1
 TEMPLATE = lib
 CONFIG += c++11
 

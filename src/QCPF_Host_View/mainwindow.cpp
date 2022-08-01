@@ -30,8 +30,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setDockNestingEnabled(true);
 
     QString appDirPath = QCoreApplication::applicationDirPath();
-    QString sysPluginDirPath = appDirPath + "/Bin/Plugins/";
-    QString nSyspluginDirPath = appDirPath + "/Plugins/";
+    QString sysPluginDirPath = appDirPath + "/Bin/Plugin/";
+    QString nSyspluginDirPath = appDirPath + "/Plugin/";
 
     QString _coreConfigFileDirPath = appDirPath + "/Config/Core/";
     QString _coreConfigFileName = "CoreConfig.dat";

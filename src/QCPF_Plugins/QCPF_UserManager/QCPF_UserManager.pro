@@ -1,6 +1,6 @@
 QT += widgets
 
-TARGET =  ../../../../bin/Bin/Plugins/QCPF_UserManager
+TARGET =  ../../../../bin/Bin/Plugin/QCPF_UserManager
 TEMPLATE = lib
 DEFINES += QCPF_USERMANAGER_LIBRARY
 
