@@ -323,7 +323,7 @@ color: rgb(104, 104, 104);</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/bin/Images/gbLoad.jpg);</string>
+    <string notr="true">border-image: url(:/bin/Image/gbLoad.jpg);</string>
    </property>
    <property name="text">
     <string/>
