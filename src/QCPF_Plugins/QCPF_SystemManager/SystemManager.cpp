@@ -202,6 +202,7 @@ int SystemManager::setConfigToUI()
     ui->txtSystemID->setText(_core->_config._systemID);
     ui->txtSystemName->setText(_core->_config._systemName);
 
+    ui->chkEnableHotPlug->setCheckState(_core->_config._enableHotPlug?(Qt::CheckState::Checked):(Qt::CheckState::Unchecked));
     return 0;
 }
 
@@ -283,6 +284,8 @@ void SystemManager::slot_SelAllOrNot(bool flag)
      //-----------------------
     _core->_config._systemID = ui->txtSystemID->text();
     _core->_config._systemName = ui->txtSystemName->text();
+
+    _core->_config._enableHotPlug = (ui->chkEnableHotPlug->checkState() == Qt::CheckState::Checked)?true:false;
      return 0;
  }
 

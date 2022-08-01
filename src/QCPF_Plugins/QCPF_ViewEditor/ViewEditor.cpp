@@ -210,9 +210,9 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
                     return -1;
 
                 tWidgetItem->_widgetObjectName = splitStrLst[0];
-                if(splitStrLst[1] == tr(CONST_STR_SYSTEM))
+                if(splitStrLst[1] == CONST_STR_SYSTEM)
                     tWidgetItem->_pluginType = 0;
-                else if(splitStrLst[1] == tr(CONST_STR_NONSYSTEM))
+                else if(splitStrLst[1] == CONST_STR_NONSYSTEM)
                     tWidgetItem->_pluginType = 1;
 
                 tWidgetItem->_pluginID = splitStrLst[2];
@@ -236,7 +236,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
         StatusbarItem* tStatusbarItem = new StatusbarItem();
         _view->_config._statusBarItemLst.append(tStatusbarItem);
 
-        QStringList splitStrLst =  ui->tableStatusbarEditer->item(i, 1)->text().split(tr(";"));
+        QStringList splitStrLst =  ui->tableStatusbarEditer->item(i, 1)->text().split(";");
         if(splitStrLst.count()!=4)
             return -1;
 
@@ -450,13 +450,13 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
         switch(bar->_textStyle)
         {
             case BarItemSytle::BS_NO_TEXT:
-                tTopTreeNode->setText(2, tr(CONST_STR_NO_TEXT));
+                tTopTreeNode->setText(2, CONST_STR_NO_TEXT);
                 break;
             case BarItemSytle::BS_TEXT_BESIDE_ICON:
-                tTopTreeNode->setText(2, tr(CONST_STR_TEXT_BESIDE_ICON));
+                tTopTreeNode->setText(2, CONST_STR_TEXT_BESIDE_ICON);
                 break;
             case BarItemSytle::BS_TEXT_UNDER_ICON:
-                tTopTreeNode->setText(2, tr(CONST_STR_TEXT_UNDER_ICON));
+                tTopTreeNode->setText(2, CONST_STR_TEXT_UNDER_ICON);
                 break;
         }
         tTopTreeNode->setText(3, QString::number(bar->_IconSize.width()));
@@ -482,26 +482,26 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
                 tItemTreeNode->setIcon(0, tIcon);
 
                 tItemTreeNode->setText(0, item->_actionItem->_actionObjectName);
-                tItemTreeNode->setText(1, tr(CONST_STR_ITEMTYPE_ACTION));
+                tItemTreeNode->setText(1, CONST_STR_ITEMTYPE_ACTION);
             }
             else if(item->_type == BT_WIDGET)
             {
-                QString pluginType = item->_widgetItem->_pluginType==PT_SYS?tr(CONST_STR_SYSTEM):tr(CONST_STR_NONSYSTEM);
+                QString pluginType = item->_widgetItem->_pluginType==PT_SYS?CONST_STR_SYSTEM:CONST_STR_NONSYSTEM;
                 QString _itemTag = item->_widgetItem->_widgetObjectName + ";" +  pluginType + ";" + item->_widgetItem->_pluginID + ";" + item->_widgetItem->_copyID;
                 tItemTreeNode->setText(0,_itemTag);
-                tItemTreeNode->setText(1, tr(CONST_STR_ITEMTYPE_WIDGET));
+                tItemTreeNode->setText(1, CONST_STR_ITEMTYPE_WIDGET);
                 tItemTreeNode->setText(3, QString::number(item->_widgetItem->_widgetOrigWidth));
                 tItemTreeNode->setText(4, QString::number(item->_widgetItem->_widgetOrigHeight));
             }
             else if(item->_type == BT_SEPARATOR)
             {
-                tItemTreeNode->setText(0, tr(CONST_STR_SEPARATOR));
-                tItemTreeNode->setText(1, tr(CONST_STR_ITEMTYPE_SEPARATOR));
+                tItemTreeNode->setText(0, CONST_STR_SEPARATOR);
+                tItemTreeNode->setText(1, CONST_STR_ITEMTYPE_SEPARATOR);
             }
             else if(item->_type == BT_SPACER)
             {
-                tItemTreeNode->setText(0, tr(CONST_STR_SPACER));
-                tItemTreeNode->setText(1, tr(CONST_STR_ITEMTYPE_SPACER));
+                tItemTreeNode->setText(0, CONST_STR_SPACER);
+                tItemTreeNode->setText(1, CONST_STR_ITEMTYPE_SPACER);
             }
         }
     }
@@ -532,14 +532,14 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
 
         ui->tableStatusbarEditer->setItem(tRowCount, 0, new QTableWidgetItem(QString::number(++count)));
 
-        QString pluginType = item->_pluginType==PT_SYS?tr(CONST_STR_SYSTEM):tr(CONST_STR_NONSYSTEM);
+        QString pluginType = item->_pluginType==PT_SYS?CONST_STR_SYSTEM:CONST_STR_NONSYSTEM;
         QString _itemTag = item->_widgetObjectName + ";" +  pluginType + ";" + item->_pluginID + ";" + item->_copyID;
         ui->tableStatusbarEditer->setItem(tRowCount, 1, new QTableWidgetItem(_itemTag));
 
         if(item->_statusbarItemType == StatusbarItemType::SBT_COMMON)
-            ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(tr(CONST_STR_STATUSITEM_COMMON)));
+            ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(CONST_STR_STATUSITEM_COMMON));
         else if(item->_statusbarItemType == StatusbarItemType::SBT_PERMANENT)
-            ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(tr(CONST_STR_STATUSITEM_PERMANENT)));
+            ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(CONST_STR_STATUSITEM_PERMANENT));
 
         ui->tableStatusbarEditer->setItem(tRowCount, 1, new QTableWidgetItem(_itemTag));
         ui->tableStatusbarEditer->setItem(tRowCount, 3, new QTableWidgetItem(QString::number(item->_widgetOrigWidth)));
@@ -603,7 +603,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
 
             ui->tablePluginWidget->setItem(tRowCount, 1, new QTableWidgetItem(QString::number(++count)));
             ui->tablePluginWidget->setItem(tRowCount, 2, new QTableWidgetItem(pwi->_widget->objectName()));
-            ui->tablePluginWidget->setItem(tRowCount, 3, new QTableWidgetItem(tr(CONST_STR_SYSTEM)));
+            ui->tablePluginWidget->setItem(tRowCount, 3, new QTableWidgetItem(CONST_STR_SYSTEM));
             ui->tablePluginWidget->setItem(tRowCount, 4, new QTableWidgetItem(pi->I_PluginID));
             ui->tablePluginWidget->setItem(tRowCount, 5, new QTableWidgetItem(pi->I_CopyID));
             ui->tablePluginWidget->setItem(tRowCount, 6, new QTableWidgetItem(tr("No")));
@@ -643,7 +643,7 @@ int getConfigFromChildNode(QTreeWidgetItem* treeTopNode, JMenuNode* configParent
 
             ui->tablePluginWidget->setItem(tRowCount, 1, new QTableWidgetItem(QString::number(++count)));
             ui->tablePluginWidget->setItem(tRowCount, 2, new QTableWidgetItem(pwi->_widget->objectName()));
-            ui->tablePluginWidget->setItem(tRowCount, 3, new QTableWidgetItem(tr(CONST_STR_NONSYSTEM)));
+            ui->tablePluginWidget->setItem(tRowCount, 3, new QTableWidgetItem(CONST_STR_NONSYSTEM));
             ui->tablePluginWidget->setItem(tRowCount, 4, new QTableWidgetItem(pi->I_PluginID));
             ui->tablePluginWidget->setItem(tRowCount, 5, new QTableWidgetItem(pi->I_CopyID));
             ui->tablePluginWidget->setItem(tRowCount, 6, new QTableWidgetItem(pi->I_CopyID==""?tr("No"):tr("Yes")));
@@ -829,7 +829,7 @@ void ViewEditor::on_btnAddSeparator_clicked()
     else
     {
         QTreeWidgetItem* Separator = new QTreeWidgetItem();
-        Separator->setText(0, tr(CONST_STR_SEPARATOR));
+        Separator->setText(0, CONST_STR_SEPARATOR);
         curSelItem->parent()->addChild(Separator);
     }
 }
@@ -1004,7 +1004,7 @@ void ViewEditor::on_btnAddAction_Toolbar_clicked()
     }
     tChildItem->setIcon(0, tIcon);
     tChildItem->setText(0, ui->cbActionFromMenu_Toolbar->currentText());
-    tChildItem->setText(1, tr(CONST_STR_ITEMTYPE_ACTION));
+    tChildItem->setText(1, CONST_STR_ITEMTYPE_ACTION);
     rootItem->addChild(tChildItem);
     tChildItem->setText(3, rootItem->text(3));
     tChildItem->setText(4, rootItem->text(4));
@@ -1035,8 +1035,8 @@ void ViewEditor::on_btnAddSeparator_Toolbar_clicked()
         rootItem = tItem->parent();
 
     QTreeWidgetItem* tChildItem = new QTreeWidgetItem();
-    tChildItem->setText(0, tr(CONST_STR_SEPARATOR));
-    tChildItem->setText(1, tr(CONST_STR_ITEMTYPE_SEPARATOR));
+    tChildItem->setText(0, CONST_STR_SEPARATOR);
+    tChildItem->setText(1, CONST_STR_ITEMTYPE_SEPARATOR);
     rootItem->addChild(tChildItem);
 
     rootItem->setExpanded(true);
@@ -1101,7 +1101,7 @@ void ViewEditor::on_btnAddWidget_Toolbar_clicked()
     {
         QTreeWidgetItem* tChildItem = new QTreeWidgetItem();
         tChildItem->setText(0, ce->_itemTag);
-        tChildItem->setText(1, tr(CONST_STR_ITEMTYPE_WIDGET));
+        tChildItem->setText(1, CONST_STR_ITEMTYPE_WIDGET);
         tChildItem->setText(3, QString::number(ce->_widgetOrigWidth));
         tChildItem->setText(4, QString::number(ce->_widgetOrigHeight));
         rootItem->addChild(tChildItem);
@@ -1401,9 +1401,9 @@ void ViewEditor::on_btnAddWidget_Statusbar_clicked()
         ui->tableStatusbarEditer->setItem(tRowCount, 1, new QTableWidgetItem(ce->_itemTag));
 
         if(ce->_statusbarItemType == StatusbarItemType::SBT_COMMON)
-            ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(tr(CONST_STR_STATUSITEM_COMMON)));
+            ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(CONST_STR_STATUSITEM_COMMON));
         else if(ce->_statusbarItemType == StatusbarItemType::SBT_PERMANENT)
-            ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(tr(CONST_STR_STATUSITEM_PERMANENT)));
+            ui->tableStatusbarEditer->setItem(tRowCount, 2, new QTableWidgetItem(CONST_STR_STATUSITEM_PERMANENT));
 
         ui->tableStatusbarEditer->setItem(tRowCount, 3, new QTableWidgetItem(QString::number(ce->_widgetOrigWidth)));
         ui->tableStatusbarEditer->setItem(tRowCount, 4, new QTableWidgetItem(QString::number(ce->_widgetOrigHeight)));
@@ -1434,7 +1434,7 @@ void ViewEditor::on_btnAddToolbar_clicked()
     int tCurrTopNodeCount = ui->treeToolbarEdit->topLevelItemCount();
     QTreeWidgetItem* tTopNode = new QTreeWidgetItem();
     if(ui->txtBarTitle->text()=="")
-        tTopNode->setText(0, QString(tr("Bar%1")).arg(tCurrTopNodeCount+1));
+        tTopNode->setText(0, QString("Bar%1").arg(tCurrTopNodeCount+1));
     else
         tTopNode->setText(0, ui->txtBarTitle->text());
 
@@ -1465,7 +1465,7 @@ void ViewEditor::on_btnDeleteToolbar_clicked()
 
     for(int i=0; i<ui->treeToolbarEdit->topLevelItemCount(); i++)
     {
-        ui->treeToolbarEdit->topLevelItem(i)->setText(0, tr("Bar") + (i+1));
+        ui->treeToolbarEdit->topLevelItem(i)->setText(0, "Bar" + (i+1));
     }
 }
 
@@ -1533,7 +1533,7 @@ void ViewEditor::on_tablePluginWidget_itemClicked(QTableWidgetItem *item)
 
 QString ViewEditor::getPluginWidgetTag(int rowIndex)
 {
-    return QString(tr("%1;%2;%3;%4")).arg(ui->tablePluginWidget->item(rowIndex, 2)->text()).arg(ui->tablePluginWidget->item(rowIndex, 3)->text()).arg(ui->tablePluginWidget->item(rowIndex, 4)->text()).arg(ui->tablePluginWidget->item(rowIndex, 5)->text());
+    return QString("%1;%2;%3;%4").arg(ui->tablePluginWidget->item(rowIndex, 2)->text()).arg(ui->tablePluginWidget->item(rowIndex, 3)->text()).arg(ui->tablePluginWidget->item(rowIndex, 4)->text()).arg(ui->tablePluginWidget->item(rowIndex, 5)->text());
 }
 
 void ViewEditor::on_btnAddSpacer_Toolbar_clicked()
@@ -1559,8 +1559,8 @@ void ViewEditor::on_btnAddSpacer_Toolbar_clicked()
         rootItem = tItem->parent();
 
     QTreeWidgetItem* tChildItem = new QTreeWidgetItem();
-    tChildItem->setText(0, tr(CONST_STR_SPACER));
-    tChildItem->setText(1, tr(CONST_STR_ITEMTYPE_SPACER));
+    tChildItem->setText(0, CONST_STR_SPACER);
+    tChildItem->setText(1, CONST_STR_ITEMTYPE_SPACER);
     rootItem->addChild(tChildItem);
 
     rootItem->setExpanded(true);
@@ -1766,8 +1766,8 @@ void ViewEditor::on_tableStatusbarEditer_itemDoubleClicked(QTableWidgetItem *ite
 
         QComboBox* cbBox = new QComboBox(this);
 
-        cbBox->insertItem(0, tr(CONST_STR_STATUSITEM_COMMON));
-        cbBox->insertItem(1, tr(CONST_STR_STATUSITEM_PERMANENT));
+        cbBox->insertItem(0, CONST_STR_STATUSITEM_COMMON);
+        cbBox->insertItem(1, CONST_STR_STATUSITEM_PERMANENT);
 
         cbBox->setCurrentText(item->text());
         connect(cbBox, SIGNAL(activated(int)), this, SLOT(OnComboBox_Activated_Text_Table(int)));

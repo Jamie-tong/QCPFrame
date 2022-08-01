@@ -27,12 +27,12 @@ PluginIO::PluginIO()
 {
     instance = this;
 
-    I_PluginID = tr("QCPF_UserManager");
-    I_PluginAliasName = tr("User Manager");
-    I_PluginAuther = tr("Jamie.T");
-    I_PluginVersion = tr("1.0.0.2");
+    I_PluginID = "QCPF_UserManager";
+    I_PluginAliasName = "User Manager";
+    I_PluginAuther = "Jamie.T";
+    I_PluginVersion = "1.0.0.2";
     I_PluginComment = tr("Manage users.");
-    I_PluginTag = tr("SINGLETON\\SYSTEM\\USER_MANAGER");
+    I_PluginTag = "SINGLETON\\SYSTEM\\USER_MANAGER";
     I_PluginAuthority = AT_MANAGER1;
 }
 
@@ -51,7 +51,7 @@ int PluginIO::OnCoreInitialize()
 void PluginIO::InitActionList(Plugin_Interface* plugin)
 {
     PluginActionInfo* pai = new PluginActionInfo();
-    pai->_actionName = tr("User Manager");
+    pai->_actionName = "User Manager";
     pai->_actionDetail = tr("User Manager.");
     pai->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowUserManager);
 
@@ -63,7 +63,7 @@ void PluginIO::InitFunctionList(Plugin_Interface* plugin)
 {
     //--------------------------------------------
     PluginFunctionInfo* pfi_verifyLoginInfo = new PluginFunctionInfo();
-    pfi_verifyLoginInfo->_functionName = tr("VerifyLoginInfo");
+    pfi_verifyLoginInfo->_functionName = "VerifyLoginInfo";
     pfi_verifyLoginInfo->_functionDetail = tr("Verify login info.");
     pfi_verifyLoginInfo->_pFunction = (FPTR_FUNC_CLS)(&PluginIO::Function_VerifyLoginInfo);
 

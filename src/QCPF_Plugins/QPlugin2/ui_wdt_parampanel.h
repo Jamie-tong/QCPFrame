@@ -30,7 +30,7 @@ public:
         frame = new QFrame(wdt_ParamPanel);
         frame->setObjectName(QString::fromUtf8("frame"));
         frame->setGeometry(QRect(0, 0, 452, 771));
-        frame->setStyleSheet(QString::fromUtf8("background-image: url(:/bin/Images/status.png);"));
+        frame->setStyleSheet(QString::fromUtf8("background-image: url(:/bin/Image/status.png);"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
 

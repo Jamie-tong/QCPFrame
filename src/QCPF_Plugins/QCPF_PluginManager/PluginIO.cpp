@@ -21,12 +21,12 @@ PluginIO::PluginIO()
 {
     instance = this;
 
-    I_PluginID = tr("QCPF_PluginManager");
-    I_PluginAliasName = tr("Plugin Manager");
-    I_PluginAuther = tr("Jamie.T");
-    I_PluginVersion = tr("1.0.0.3");
+    I_PluginID = "QCPF_PluginManager";
+    I_PluginAliasName = "Plugin Manager";
+    I_PluginAuther = "Jamie.T";
+    I_PluginVersion = "1.0.0.3";
     I_PluginComment = tr("Manager the Non-system plugins, configure, clone and ordering.");
-    I_PluginTag = tr("SINGLETON\\SYSTEM\\PLUGIN_MANAGER");
+    I_PluginTag = "SINGLETON\\SYSTEM\\PLUGIN_MANAGER";
     I_PluginAuthority = AT_MANAGER1;
 }
 
@@ -40,7 +40,7 @@ PluginIO* PluginIO::getInstance()
 void PluginIO::InitActionList(Plugin_Interface* plugin)
 {
     PluginActionInfo* pai = new PluginActionInfo();
-    pai->_actionName = tr("Plugin Manager");
+    pai->_actionName = "Plugin Manager";
     pai->_actionDetail = tr("Plugin Manage and sort.");
     pai->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowPluginManager);
 

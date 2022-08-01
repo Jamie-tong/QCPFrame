@@ -15,12 +15,12 @@ PluginIO::PluginIO()
 {
     instance = this;
 
-    I_PluginID = QStringLiteral("QPlugin2");
-    I_PluginAliasName = QStringLiteral("QPlugin2");
-    I_PluginAuther = QStringLiteral("Jamie.T");
-    I_PluginVersion = QStringLiteral("1.0.0.3");
-    I_PluginComment = QStringLiteral("QPlugin2 comment");
-    I_PluginTag = QStringLiteral("NON-SINGLETON\\NON_SYSTEM\\DataUpLoad");
+    I_PluginID = "QPlugin2";
+    I_PluginAliasName = "QPlugin2";
+    I_PluginAuther = "Jamie.T";
+    I_PluginVersion = "1.0.0.3";
+    I_PluginComment = tr("QPlugin2 comment");
+    I_PluginTag = "NON-SINGLETON\\NON_SYSTEM\\DataUpLoad";
     I_PluginAuthority = AT_USER1;
 }
 

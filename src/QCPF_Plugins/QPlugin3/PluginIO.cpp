@@ -13,12 +13,12 @@ PluginIO* instance;
 
 PluginIO::PluginIO()
 {
-    I_PluginID = QStringLiteral("QPlugin3");
-    I_PluginAliasName = QStringLiteral("QPlugin3");
-    I_PluginAuther = QStringLiteral("Jamie.T");
-    I_PluginVersion = QStringLiteral("1.0.0.4");
-    I_PluginComment = QStringLiteral("QPlugin3 comment");
-    I_PluginTag = QStringLiteral("NON-SINGLETON\\NON_SYSTEM\\DataHandle");
+    I_PluginID = "QPlugin3";
+    I_PluginAliasName = "QPlugin3";
+    I_PluginAuther = "Jamie.T";
+    I_PluginVersion = "1.0.0.4";
+    I_PluginComment = tr("QPlugin3 comment");
+    I_PluginTag = "NON-SINGLETON\\NON_SYSTEM\\DataHandle";
     I_PluginAuthority = AT_USER1;
 }
 
@@ -28,7 +28,7 @@ void PluginIO::InitActionList(Plugin_Interface* plugin)
 {
     //--------------------------------------------
     PluginActionInfo* pai1 = new PluginActionInfo();
-    pai1->_actionName = tr("StepUp");
+    pai1->_actionName = "StepUp";
     pai1->_actionDetail = tr("Step Up form 0 ~ 10.");
     pai1->_pAction = (FPTR_ACTION)(&PluginIO::Action_sum);
 
@@ -39,7 +39,7 @@ void PluginIO::InitFunctionList(Plugin_Interface* plugin)
 {
     //--------------------------------------------
     PluginFunctionInfo* pai_stepUp = new PluginFunctionInfo();
-    pai_stepUp->_functionName = tr("StepUp");
+    pai_stepUp->_functionName = "StepUp";
     pai_stepUp->_functionDetail = tr("Step Up form 0 ~ 10.");
     pai_stepUp->_pFunction = (FPTR_FUNC_CLS)(&PluginIO::Function_StepUp);
 
@@ -47,7 +47,7 @@ void PluginIO::InitFunctionList(Plugin_Interface* plugin)
 
     //--------------------------------------------
     PluginFunctionInfo* pai_stepDown = new PluginFunctionInfo();
-    pai_stepDown->_functionName = tr("StepDown");
+    pai_stepDown->_functionName = "StepDown";
     pai_stepDown->_functionDetail = tr("Step Up form 10 ~ 0.");
     pai_stepDown->_pFunction = (FPTR_FUNC_CLS)(&PluginIO::Function_StepDown);
 
@@ -55,7 +55,7 @@ void PluginIO::InitFunctionList(Plugin_Interface* plugin)
 
     //--------------------------------------------
     PluginFunctionInfo* pai_stepStartTimer = new PluginFunctionInfo();
-    pai_stepStartTimer->_functionName = tr("StepTimer");
+    pai_stepStartTimer->_functionName = "StepTimer";
     pai_stepStartTimer->_functionDetail = tr("Start Timer Step Up");
     pai_stepStartTimer->_pFunction = (FPTR_FUNC_CLS)(&PluginIO::Function_StepStartTimer);
 
@@ -63,7 +63,7 @@ void PluginIO::InitFunctionList(Plugin_Interface* plugin)
 
     //--------------------------------------------
     PluginFunctionInfo* pai_stepThread = new PluginFunctionInfo();
-    pai_stepThread->_functionName = tr("StepThread");
+    pai_stepThread->_functionName = "StepThread";
     pai_stepThread->_functionDetail = tr("Thread1 Step Up form 0 ~ 10. and Thread2 Step Down form 100 ~ 90");
     pai_stepThread->_pFunction = (FPTR_FUNC_CLS)(&PluginIO::Function_StepThread);
 
@@ -71,7 +71,7 @@ void PluginIO::InitFunctionList(Plugin_Interface* plugin)
 
     tagOutputInfo tInfo;
     tInfo._type = INFT_STATUS_INFO;
-    tInfo._title = QStringLiteral("Sum");
+    tInfo._title = tr("Sum");
     tInfo._content = QString("the Sum Action end = %1");
     emit sig_OutputInfo(tInfo);
 }
@@ -82,7 +82,7 @@ void PluginIO::Action_sum(bool checkState)
 
     tagOutputInfo tInfo;
     tInfo._type = INFT_STATUS_INFO;
-    tInfo._title = QStringLiteral("Sum");
+    tInfo._title = tr("Sum");
     tInfo._content = QString("the Sum Action end = %1").arg(sum);
     emit sig_OutputInfo(tInfo);
 }
@@ -95,7 +95,7 @@ int PluginIO::Function_StepUp(QVariant arg_in, QVariant& arg_out)
     {
         i++;
         tInfo._type = INFT_STATUS_INFO;
-        tInfo._title = QStringLiteral("StepUp");
+        tInfo._title = tr("StepUp");
         tInfo._content = QString("the StepUp end = %1").arg(i);
         emit sig_OutputInfo(tInfo);
 
@@ -113,7 +113,7 @@ int PluginIO::Function_StepDown(QVariant arg_in, QVariant& arg_out)
     while(i>0)
     {
         tInfo._type = INFT_STATUS_INFO;
-        tInfo._title = QStringLiteral("StepDown");
+        tInfo._title = tr("StepDown");
         tInfo._content = QString("the StepDown end = %1").arg(i);
         emit sig_OutputInfo(tInfo);
          i--;
@@ -136,7 +136,7 @@ void PluginIO::handleTimeout()
 {
     tagOutputInfo tInfo;
     tInfo._type = INFT_STATUS_INFO;
-    tInfo._title = QStringLiteral("Timeout");
+    tInfo._title = tr("Timeout");
     tInfo._content = QString("the Timer Started.");
     emit sig_OutputInfo(tInfo);
 }

@@ -236,7 +236,7 @@ Makefile: QCPF_ViewModel.pro C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msv
 		C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\features\qt_config.prf \
 		C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc\qmake.conf \
 		C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\features\spec_post.prf \
-		..\.qmake.stash \
+		.qmake.stash \
 		C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\features\exclusive_builds.prf \
 		C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\common\msvc-version.conf \
 		C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\features\toolchain.prf \
@@ -422,7 +422,7 @@ C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\features\qt_functions.prf:
 C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\features\qt_config.prf:
 C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc\qmake.conf:
 C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\features\spec_post.prf:
-..\.qmake.stash:
+.qmake.stash:
 C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\features\exclusive_builds.prf:
 C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\common\msvc-version.conf:
 C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\features\toolchain.prf:
@@ -469,7 +469,7 @@ clean: debug-clean release-clean  FORCE
 	-$(DEL_FILE) ..\..\..\bin\QCPF_ViewModel.idb
 distclean: debug-distclean release-distclean  FORCE
 	-$(DEL_FILE) Makefile
-	-$(DEL_FILE) ..\..\..\bin\QCPF_ViewModel.lib ..\..\..\bin\QCPF_ViewModel.pdb
+	-$(DEL_FILE) .qmake.stash ..\..\..\bin\QCPF_ViewModel.lib ..\..\..\bin\QCPF_ViewModel.pdb
 
 debug-mocclean:
 	@set MAKEFLAGS=$(MAKEFLAGS)

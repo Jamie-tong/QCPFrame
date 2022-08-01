@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
@@ -53,6 +54,7 @@ public:
     QLabel *label_2;
     QLineEdit *txtSystemID;
     QLineEdit *txtSystemName;
+    QCheckBox *chkEnableHotPlug;
 
     void setupUi(QDialog *SystemManager)
     {
@@ -220,6 +222,9 @@ public:
         txtSystemName = new QLineEdit(tab);
         txtSystemName->setObjectName(QString::fromUtf8("txtSystemName"));
         txtSystemName->setGeometry(QRect(30, 120, 251, 20));
+        chkEnableHotPlug = new QCheckBox(tab);
+        chkEnableHotPlug->setObjectName(QString::fromUtf8("chkEnableHotPlug"));
+        chkEnableHotPlug->setGeometry(QRect(30, 190, 121, 16));
         tabPlugin_Sort->addTab(tab, QString());
 
         gridLayout_5->addWidget(tabPlugin_Sort, 0, 0, 1, 1);
@@ -249,6 +254,7 @@ public:
         tabPlugin_Sort->setTabText(tabPlugin_Sort->indexOf(tabOrder), QCoreApplication::translate("SystemManager", "System module ordering", nullptr));
         label->setText(QCoreApplication::translate("SystemManager", "System ID:", nullptr));
         label_2->setText(QCoreApplication::translate("SystemManager", "System Name:", nullptr));
+        chkEnableHotPlug->setText(QCoreApplication::translate("SystemManager", "Enable Hot Plug", nullptr));
         tabPlugin_Sort->setTabText(tabPlugin_Sort->indexOf(tab), QCoreApplication::translate("SystemManager", "Utility", nullptr));
     } // retranslateUi
 

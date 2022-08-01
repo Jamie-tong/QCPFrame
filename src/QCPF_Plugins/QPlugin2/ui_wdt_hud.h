@@ -30,7 +30,7 @@ public:
         frame = new QFrame(wdt_Hud);
         frame->setObjectName(QString::fromUtf8("frame"));
         frame->setGeometry(QRect(0, 0, 451, 331));
-        frame->setStyleSheet(QString::fromUtf8("border-image: url(:/bin/Images/hud.png);"));
+        frame->setStyleSheet(QString::fromUtf8("border-image: url(:/bin/Image/hud.png);"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
 

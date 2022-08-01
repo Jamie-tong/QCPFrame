@@ -141,7 +141,7 @@ public:
         labelBackgroud = new QLabel(formLoading);
         labelBackgroud->setObjectName(QString::fromUtf8("labelBackgroud"));
         labelBackgroud->setGeometry(QRect(0, 0, 611, 451));
-        labelBackgroud->setStyleSheet(QString::fromUtf8("border-image: url(:/bin/Images/gbLoad.jpg);"));
+        labelBackgroud->setStyleSheet(QString::fromUtf8("border-image: url(:/bin/Image/gbLoad.jpg);"));
         lb_LoadingInfo = new QLabel(formLoading);
         lb_LoadingInfo->setObjectName(QString::fromUtf8("lb_LoadingInfo"));
         lb_LoadingInfo->setGeometry(QRect(173, 375, 430, 51));

@@ -67,3 +67,8 @@ unix|win32: LIBS += -L$$PWD/../../../bin/ -lQCPF_ViewModel
 
 INCLUDEPATH += $$PWD/../../QCPF_ViewModel
 DEPENDPATH += $$PWD/../../QCPF_ViewModel
+
+#【版本】1.0.0.4
+#【日期】2021.07.10
+#【内容】
+#1. 优化了热插拔功能

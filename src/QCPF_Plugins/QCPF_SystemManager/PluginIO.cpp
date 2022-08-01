@@ -27,12 +27,12 @@ PluginIO::PluginIO()
 {
     instance = this;
 
-    I_PluginID = tr("QCPF_SystemManager");
-    I_PluginAliasName = tr("System Manager");
-    I_PluginAuther = tr("Jamie.T");
-    I_PluginVersion = tr("1.0.0.3");
+    I_PluginID = "QCPF_SystemManager";
+    I_PluginAliasName = "System Manager";
+    I_PluginAuther = "Jamie.T";
+    I_PluginVersion = "1.0.0.3";
     I_PluginComment = tr("Manage the system params.");
-    I_PluginTag = tr("SINGLETON\\SYSTEM\\SYS_PLUGIN_MANAGER");
+    I_PluginTag = "SINGLETON\\SYSTEM\\SYS_PLUGIN_MANAGER";
     I_PluginAuthority = AT_MANAGER1;
 }
 
@@ -46,21 +46,21 @@ PluginIO* PluginIO::getInstance()
 void PluginIO::InitActionList(Plugin_Interface* plugin)
 {
     PluginActionInfo* paiSysMgr = new PluginActionInfo();
-    paiSysMgr->_actionName = tr("System Manager");
+    paiSysMgr->_actionName = "System Manager";
     paiSysMgr->_actionDetail = tr("Manage the system module and params.");
     paiSysMgr->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowSystemPluginManager);
 
     plugin->I_ActionList.append(paiSysMgr);
 
     PluginActionInfo* paiExit = new PluginActionInfo();
-    paiExit->_actionName = tr("Exit");
+    paiExit->_actionName = "Exit";
     paiExit->_actionDetail = tr("Exit and close the main application.");
     paiExit->_pAction = (FPTR_ACTION)(&PluginIO::Action_CloseMainApplication);
 
     plugin->I_ActionList.append(paiExit);
 
     PluginActionInfo* paiAbout = new PluginActionInfo();
-    paiAbout->_actionName = tr("About");
+    paiAbout->_actionName = "About";
     paiAbout->_actionDetail = tr("show about form.");
     paiAbout->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowAboutForm);
 

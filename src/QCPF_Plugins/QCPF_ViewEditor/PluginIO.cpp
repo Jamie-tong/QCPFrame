@@ -22,12 +22,12 @@ PluginIO::PluginIO()
 {
     instance = this;
 
-    I_PluginID = tr("QCPF_ViewEditor");
-    I_PluginAliasName = tr("View Editor");
-    I_PluginAuther = tr("Jamie.T");
-    I_PluginVersion = tr("1.1.0.1");
+    I_PluginID = "QCPF_ViewEditor";
+    I_PluginAliasName = "View Editor";
+    I_PluginAuther = "Jamie.T";
+    I_PluginVersion = "1.1.0.1";
     I_PluginComment = tr("Edit the view of main window, such as menu-bar, tool-bar, status-bar and workspace.");
-    I_PluginTag = tr("SINGLETON\\SYSTEM\\VIEW_EDITER");
+    I_PluginTag = "SINGLETON\\SYSTEM\\VIEW_EDITER";
     I_PluginAuthority = AT_DEVELOPER1;
 }
 
@@ -42,7 +42,7 @@ void PluginIO::InitActionList(Plugin_Interface* plugin)
 {
     //--------------------------------------------
     PluginActionInfo* pai1 = new PluginActionInfo();
-    pai1->_actionName = tr("View editor");
+    pai1->_actionName = "View editor";
     pai1->_actionDetail = tr("It's used for editing menubar,toolbar,statusbar,workspace and any other ui elements of main appliction frame.");
     pai1->_pAction = (FPTR_ACTION)(&PluginIO::Action_ShowViewEditor);
 

@@ -482,6 +482,19 @@
           </rect>
          </property>
         </widget>
+        <widget class="QCheckBox" name="chkEnableHotPlug">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>190</y>
+           <width>121</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Enable Hot Plug</string>
+         </property>
+        </widget>
        </widget>
       </widget>
      </item>

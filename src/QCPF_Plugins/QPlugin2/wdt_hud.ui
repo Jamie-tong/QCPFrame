@@ -26,7 +26,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/bin/Images/hud.png);</string>
+    <string notr="true">border-image: url(:/bin/Image/hud.png);</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::StyledPanel</enum>
