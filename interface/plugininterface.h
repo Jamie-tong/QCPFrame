@@ -42,12 +42,12 @@ enum InfoType
     INFT_CORE_CONFIG_CHANGED,
     INFT_VIEW_CONFIG_CHANGED,
 
-    INFT_PLUGIN_BROADCAST,//表示组件发起了事件广播，广播内容见参数
-    INFT_PLUGIN_SPECIAL,//表示组件向另一个指定组件发送消息，消息内容见参数
+    INFT_PLUGIN_BROADCAST,
+    INFT_PLUGIN_SPECIAL,
 
     INFT_STATUSBAR_TEMP,
 
-    INFT_EXT_BASE,//从这条开始往后扩展。可以写自己的枚举定义，每增一个，给INFT_EXT_BASE+1
+    INFT_EXT_BASE,
 };
 
 enum AuthorityType
@@ -71,16 +71,16 @@ enum AuthorityType
 
 enum PluginType
 {
-    PT_SYS,//系统组件，用于升级框架本身
-    PT_NON_SYS,//非系统组件，用于实现或升级业务模块
+    PT_SYS,
+    PT_NON_SYS,
 };
 
 enum WidgetShowType
 {
-        ST_NONE,//无分类
-        ST_WIDGET,//部件，用于显示在工具栏或者状态栏
-        ST_POPUP,//弹出式窗体，用于显示不停靠于Docker的对话框窗体
-        ST_DOCK,//嵌入式窗体，用于显示停靠于Docker的窗体
+        ST_NONE,
+        ST_WIDGET,
+        ST_POPUP,
+        ST_DOCK,
 };
 
 struct tagOutputInfo
@@ -105,7 +105,7 @@ struct PluginActionInfo
         QString _actionName;
         QString _actionDetail;
         QIcon _actionIcon;
-        FPTR_ACTION _pAction;//函数指针指向组件函数
+        FPTR_ACTION _pAction;
 };
 
 struct PluginFunctionInfo
@@ -114,7 +114,7 @@ struct PluginFunctionInfo
         QString _functionName;
         QString _functionDetail;
 
-        FPTR_FUNC_CLS _pFunction;//函数指针指向组件函数
+        FPTR_FUNC_CLS _pFunction;
 };
 
 struct PluginWidgetInfo
@@ -132,28 +132,28 @@ class Plugin_Interface:public QObject
 {
         Q_OBJECT
 public:
-    QString I_PluginID;//组件ID，该属性是组件间唯一的
-    PluginType I_PluginType;//组件类型，系统组件或非系统组件
-    QString I_PluginAliasName;//组件别名
-    QString I_PluginVersion;//组件版本
-    QString I_PluginAuther;//组件开发者
-    QString I_PluginComment;//组件功能说明
-    QString I_PluginFilePath;//组件路径
-    QVariant I_PluginTag;//组件类型,用于区别业务类型或者结构类型
-    AuthorityType I_PluginAuthority;//组件的访问权限
-    bool I_IsEnable;//是否被选中
+    QString I_PluginID;
+    PluginType I_PluginType;
+    QString I_PluginAliasName;
+    QString I_PluginVersion;
+    QString I_PluginAuther;
+    QString I_PluginComment;
+    QString I_PluginFilePath;
+    QVariant I_PluginTag;
+    AuthorityType I_PluginAuthority;
+    bool I_IsEnable;
 
-    bool I_IsCopy;//我是谁？我是不是一个克隆体?
-    QString I_CopyID;//副本ID，该属性是副本间唯一的
-    QString I_CopyAliasName;//副本别名
-    QString I_CopyComment;//副本功能说明
+    bool I_IsCopy;
+    QString I_CopyID;
+    QString I_CopyAliasName;
+    QString I_CopyComment;
 
-    QVariant I_PluginVar;//通用组件变量
-    QList<QVariant> I_PluginVarList;//通用组件变量集合
-    QList<PluginActionInfo*> I_ActionList;//通用组件Action集合
-    QList<PluginFunctionInfo*> I_FunctionList;//通用组件Function集合
-    QVector<PluginWidgetInfo*> I_WidgetList;//通用组件部件集合
-    QTranslator* I_Translator;//组件多语言翻译器
+    QVariant I_PluginVar;
+    QList<QVariant> I_PluginVarList;
+    QList<PluginActionInfo*> I_ActionList;
+    QList<PluginFunctionInfo*> I_FunctionList;
+    QVector<PluginWidgetInfo*> I_WidgetList;
+    QTranslator* I_Translator;
 
 public:
     virtual Plugin_Interface* Clone(QString copyID, QString copyAliasName, QString copyComment) {return nullptr;}
@@ -171,18 +171,17 @@ public slots:
     virtual int slot_InputInfo(tagOutputInfo& info) { return 0; }
     virtual int slot_Plugin(QVariant arg_in, QVariant &arg_out) { return 0; }
     virtual void slot_Action(bool checkState) { }
-    //当core构造完成时要执行的过程
+
     virtual int OnCoreInitialize() { return 0; }
-    //当QMainWindow主视图构造完成后，显示前
+
     virtual int OnViewCreated() { return 0; }
-    //当QMainWindow主视图Load时要执行的过程
+
     virtual int OnViewLoaded() { return 0; }
-    //当QMainWindow主视图Closeing时要执行的过程
+
     virtual int OnViewClosing() { return 0; }
 };
 
-//这个宏将一个给定的字符串标识符和ClassName所表示的接口相关联，其中Identifier必须唯一。
 #define Plugin_Interface_iid "io.qt.interface.plugin_interface"
 Q_DECLARE_INTERFACE(Plugin_Interface, Plugin_Interface_iid)
 
-#endif // PLUGININTERFACE_H
+#endif 
