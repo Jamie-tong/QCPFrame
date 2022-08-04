@@ -65,10 +65,6 @@ ConfigModel& ConfigModel::operator = (const ConfigModel& other)
 
 QDataStream& operator>>(QDataStream& src, ConfigModel& data)
 {
-    /*
-     错误:C2679: 二进制“>>”: 没有找到接受“quint32”类型的右操作数的运算
-    解决方法：因为没有添加头文件<QDataStream>
-    */
     src >> data._systemName;
     src >> data._systemID;
     src >> data._enableLogin;

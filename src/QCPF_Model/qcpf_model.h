@@ -33,11 +33,11 @@ class QCPF_MODEL_EXPORT QCPF_Model :  public QCPF_Interface
             ConfigModel _config;
             QObject* _view;
         signals:
-            int sig_OutputInfo(tagOutputInfo& info);//向槽函数发送初始化信息
+            int sig_OutputInfo(tagOutputInfo& info);
             int sig_Core(QVariant arg_in, QVariant &arg_out);
 
             void sig_PluginSelOrNSelFinished(QString origPluginID, bool isSel);
-            void sig_CloneFinished(bool isExist, QString origPluginID, QString copyID, QString copyAlisaName, QString copyComment);//向槽函数发送克隆组件完成信号
+            void sig_CloneFinished(bool isExist, QString origPluginID, QString copyID, QString copyAlisaName, QString copyComment);
             void sig_DestroyCloneFinished(QString origPluginID, QString copyID);
         private:
             QList<QPluginLoader*> I_PluginLoaderLst_Sys;
@@ -77,4 +77,4 @@ class QCPF_MODEL_EXPORT QCPF_Model :  public QCPF_Interface
             int slot_CancelConfig();
 };
 
-#endif // QCPF_MODEL_H
+#endif 
