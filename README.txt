@@ -29,7 +29,7 @@
 1. git init
 2. git pull https://github.com/Jamie-tong/QCPFrame.git 或者 git pull https://gitee.com/JamieT/QCPFrame.git，后者为码云地址，速度快一点。
 3. 打开 src/QCPF_HostView.pro
-4. 编译运行(先编译QCPF_Model，QCPF_ViewModel和QCPF_PluginModel)。
+4. 编译运行(先编译QCPF_Model，再编译QCPF_ViewModel和QCPF_PluginModel，最后再把整个工程进行编译)。
 5. 愉快的玩积木吧，默认登录名：tt1  密码：1。
 
 
