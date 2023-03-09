@@ -515,6 +515,7 @@ int QCPF_Model::pluginInstance(QFileInfo fi, PluginType type)
             }
         }
     }
+    return 0;
 }
 
 int QCPF_Model::collectPlugins(PluginType type)
